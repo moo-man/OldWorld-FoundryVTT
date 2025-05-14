@@ -1,0 +1,140 @@
+.application.whtow.actor.character {
+
+    .sheet-header {
+        display: flex;
+        text-align: center;
+        input {
+            text-align: center;
+        }
+        .header-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            .header-row {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                > * {
+                    flex: 1;
+                    label {
+                        margin: 0.5rem 0px;                
+                    }
+                }
+                .status {
+                    flex: 0.5;
+                }
+            }
+
+        }
+    }
+
+    section.tab.main {
+        overflow: auto;
+        padding-top: 1rem;
+        &.active {
+            display: flex;
+            gap: 1rem;
+        }
+    }
+
+    .like-input  {
+        width: 100%;
+        height: var(--input-height);
+        line-height: var(--input-height);
+        padding: 0 0.5rem;
+        background: var(--color-cool-4);
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: var(--input-text-color);
+
+        display: flex;
+        align-items: center;
+        > * {
+            flex: 1;
+        };
+        .control {
+            flex: 0 0 1rem;
+        }
+    }
+
+    .characteristics {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 50%;
+        border: 1px solid var(--color-cool-3);
+
+        .characteristic {
+            display: flex;
+
+            border-bottom: 1px solid var(--color-cool-3);
+            &:last-child
+            {
+                border-bottom: 0px;
+            }
+            padding-left: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .characteristic-data {
+            display: flex;
+            align-items: center;
+            flex: 1;
+
+            .ch-data {
+                flex: 1;
+                > div {
+                    display: flex;
+                    justify-content: start;
+                    label {
+                        font-size: var(--font-size-20);
+                        flex: 1;
+                    }
+                    input {
+                        width: 2rem;
+                        height: 1.8rem;
+                        padding: 0px;
+                        margin-right: 40%;
+                    }
+                }
+                p {
+                    font-size: var(--font-size-12);
+                }
+            }
+
+            .ch-label {
+                flex: 0 0 6rem;
+
+                label {
+                    font-size: var(--font-size-20)
+                }
+
+     
+            }
+        }
+    }
+
+    .skills {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex: 1;
+        .skill {
+            display: flex;
+            align-items: center;
+            input {
+                width: 1.5rem;
+                height: 1.5rem;
+                padding: 0px;
+                margin-right: 0.5rem;
+            }
+        }
+    }
+    
+    .lists {
+        flex: 1;
+    }
+}

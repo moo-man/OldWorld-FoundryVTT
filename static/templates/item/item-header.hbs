@@ -1,0 +1,24 @@
+<div class="sheet-header">
+    <img data-action="editImage" data-edit="img" src="{{item.img}}" {{#if (eq item.img "modules/warhammer-lib.assets/blank.png")}}class="img-border"{{/if}}>
+    <div class="header-fields">
+        <div class="header-row">
+            <input type="text" name="name" value="{{source.name}}">
+        </div>
+        {{#if item.system.isPhysical}}
+        <div class="header-row">
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Quantity"}}</label></div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="number" name="system.quantity" value="{{source.system.quantity}}"></div>
+            </div>
+            <div class="attribute-box single">
+                <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Cost"}}</label></div>
+                <div class="field" style="grid-column: 9 / span 4">
+                    <select name="system.cost">
+                        {{selectOptions (config "status") selected=source.system.cost}}
+                    </select>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>

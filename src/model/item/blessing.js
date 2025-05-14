@@ -1,5 +1,6 @@
-import { BaseItemModel } from "./base";
+import { BaseItemModel } from "./components/base";
 
+let fields = foundry.data.fields;
 export class BlessingModel extends BaseItemModel 
 {   
     

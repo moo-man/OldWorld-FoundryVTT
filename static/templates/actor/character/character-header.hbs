@@ -1,0 +1,40 @@
+<div class="sheet-header">
+    <img src="{{actor.img}}" height="100" width="100">
+    <div class="header-details">
+        <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize " Name"}}">
+        <div class="header-row">
+            <div class="origin">
+
+                <label>{{localize "TOW.Sheet.Origin"}}</label>
+                {{#if actor.system.origin.document}}
+                    <div class="like-input" data-uuid="{{actor.system.origin.document.uuid}}">
+                        <span class="control" ></span>
+                        <a type="text" data-action="editEmbedded"
+                            name="actor.system.origin.name">{{actor.system.origin.name}}</a>
+                        <a class="control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
+                    </div>
+                {{else}}
+                    <input type="text" name="actor.system.origin.name" value="{{actor.system.origin.name}}">
+                {{/if}}
+            </div>
+
+            <div class="career">
+                <label>{{localize "TOW.Sheet.Career"}}</label>
+                {{#if actor.system.career.document}}
+                    <div class="like-input" data-uuid="{{actor.system.career.document.uuid}}">
+                        <span class="control" ></span>
+                        <a type="text" data-action="editEmbedded"
+                            name="actor.system.career.name">{{actor.system.career.name}}</a>
+                        <a class="control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
+                    </div>
+                {{else}}
+                    <input type="text" name="actor.system.career.name" value="{{actor.system.career.name}}">
+                {{/if}}
+            </div>
+            <div class="status">
+            <label>{{localize "TOW.Sheet.Status"}}</label>
+            <input type="text" name="" value="">
+            </div>
+        </div>
+    </div>
+</div>

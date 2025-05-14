@@ -1,4 +1,5 @@
 import { PhysicalItem } from "./components/physical";
+let fields = foundry.data.fields;
 
 export class AssetModel extends PhysicalItem 
 {

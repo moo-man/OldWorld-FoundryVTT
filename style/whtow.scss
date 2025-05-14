@@ -1,0 +1,76 @@
+@use "./sheets/index";
+
+
+
+@font-face {
+    font-family: "OnlySkulls";
+    src: url('./assets/fonts/only-skulls.ttf');
+}
+
+
+.application.test-dialog {
+
+    
+    .dialog-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .field-control {
+        display: flex;
+        align-items: center;
+        > * {
+            margin: 0px 5px;
+        }
+    }
+
+
+    .dice-modifiers {
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+        input {
+            width: 2rem;
+        }
+        > div {
+        }
+    }
+
+    .dice {
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+
+        .die {
+            &.bonus {
+                color: green;
+            }
+            &.penalty {
+                color: red;
+                opacity: 0.5;
+            }
+        }
+    }
+
+    .vs {
+        text-align: center;
+    }
+
+    .target {
+        display: flex;
+        justify-content: center;
+        div {
+
+            height: 2rem;
+            width: 2rem;
+            line-height: 2rem;
+            font-size: 20px;
+            background: var(--color-cool-3);
+            border: 1px solid var(--color-cool-4);
+            border-radius: 50%;
+            text-align: center;
+        }
+    }
+}

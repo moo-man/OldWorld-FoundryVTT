@@ -1,8 +1,9 @@
 import { DamageModel } from "./components/damage";
+import { EquippableItem } from "./components/equippable";
 import { PhysicalItem } from "./components/physical";
 let fields = foundry.data.fields;
 
-export class WeaponModel extends PhysicalItem 
+export class WeaponModel extends EquippableItem 
 {
     static LOCALIZATION_PREFIXES = ["WH.Models.weapon"]
     static defineSchema()

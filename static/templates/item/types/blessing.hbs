@@ -1,0 +1,22 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        <h3 class="divider">{{localize "TOW.Sheet.Favour"}}</h3>
+    <div class="editor-section">
+        {{{enriched.system.favour}}}
+        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.favour"><i class="fa-solid fa-pen-to-square"></i></button>
+
+    </div>
+        <h3 class="divider">{{localize "TOW.Sheet.Prayers"}}</h3>
+        {{#each system.prayers.list}}
+        <div class="editor-section" >
+        <div class="header" data-index="{{@key}}" ><input type="text" value="{{this.name}}" data-action="editList" data-path="system.prayers" data-ipath="name"  placeholder="Name"><a data-action="editRichText" data-index="{{@key}}" data-path="system.prayers.list" data-ipath="description"><i class="fas fa-edit"></i></a><a data-action="listDelete" data-path="system.prayers"><i class="fas fa-xmark"></i></a></div>
+        {{{lookup ../enriched.system.prayers @key}}}
+        </div>
+        {{/each}}
+        <button type="button" style="margin:auto" data-action="listCreate" data-path="system.prayers"><i class="fa-solid fa-plus"></i></button>
+        {{!-- {{formInput fields.favour value=source.system.favour enriched=enriched.system.favour toggled=true}} --}}
+                <h3 class="divider">{{localize "TOW.Sheet.Miracles"}}</h3>
+    <div class="editor-section">
+        {{{enriched.system.miracles}}}
+        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.miracles"><i class="fa-solid fa-pen-to-square"></i></button>
+    </div>
+</section>

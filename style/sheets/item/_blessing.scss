@@ -1,0 +1,20 @@
+.application.application.whtow.item
+{
+
+    .editor-section {
+        .header {
+            display: flex;
+
+            input {
+                flex: 1;
+                background: none;
+                border: none;
+                height: 100%;
+            }
+            a {
+                flex: 0 0 20px;
+            }
+        }
+    }
+
+}

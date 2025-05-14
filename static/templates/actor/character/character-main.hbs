@@ -1,0 +1,105 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="characteristics">
+        {{#each characteristics}}
+            <div class="characteristic">
+                <div class="characteristic-data">
+                    <div class="ch-data">
+                        <div>
+                            <label>{{configLookup "characteristicAbbrev" @key}}</label>
+                            <input type="number" value="{{this.base}}" name="system.characteristics.{{@key}}.base">
+                        </div>
+                        <p>{{configLookup "characteristics" @key}}</p>
+                    </div>
+                </div>
+                <div class="skills">
+                    {{#each this.skills}}
+                        <div class="skill">
+                            <input class="skill-value" type="number" name="system.skills.{{@key}}.base" value="{{this.base}}" />
+                            <a data-action="rollTest" data-skill="{{@key}}"> {{configLookup "skills" @key}}</a>
+                            <!--
+                        <div class="skill-pips" data-path="system.skills.{{@key}}.base">
+                            {{#each this.pips}}
+                                {{#if this}}
+                                    {{!-- <a data-action="togglePip" data-index="{{@key}}"><i class="fa-regular fa-square-check"></i></a> --}}
+                                    <a data-action="togglePip" data-index="{{@key}}" style="font-family:OnlySkulls">0</a>
+                                {{else}}
+                                    <a data-action="togglePip" data-index="{{@key}}"></a>
+                                {{/if}}
+                            {{/each}}
+                        </div>
+                        -->
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <div class="lists">
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label
+                    class="centered">{{localize "TOW.Sheet.Fate"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.status.wounds.value"
+                    value="{{system.status.wounds.value}}"></div>
+            <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.status.wounds.max"
+                    value="{{system.status.wounds.max}}"></div>
+        </div>
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Talents"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="talent">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each items.talent}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                                <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                            </div>
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "TOW.Sheet.Lores"}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="createItem" data-type="lore">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each items.lore}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name">
+                                    <img src="{{this.img}}">
+                                    <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control context-menu"><i
+                                            class="fa-regular fa-ellipsis-vertical"></i></a>
+                                </div>
+                            </div>
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+</section>

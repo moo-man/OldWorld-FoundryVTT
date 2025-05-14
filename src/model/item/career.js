@@ -1,4 +1,5 @@
-import { BaseItemModel } from "./base";
+import { BaseItemModel } from "./components/base";
+
 let fields = foundry.data.fields;
 
 export class CareerModel extends BaseItemModel 
@@ -23,7 +24,7 @@ export class CareerModel extends BaseItemModel
                 value : new fields.NumberField({initial : 1, min: 0}),
                 chosen : new fields.StringField({})
             }),
-            choices : {
+            choices : new fields.SchemaField({
                 melee : new fields.BooleanField(),
                 defence : new fields.BooleanField(),
                 shooting : new fields.BooleanField(),
@@ -40,7 +41,7 @@ export class CareerModel extends BaseItemModel
                 recall : new fields.BooleanField(),
                 leadership : new fields.BooleanField(),
                 charm : new fields.BooleanField()
-            }
+            })
         }),
 
         schema.status = new fields.StringField({choices : game.oldworld.config.status})

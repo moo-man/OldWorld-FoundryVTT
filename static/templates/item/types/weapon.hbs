@@ -1,0 +1,24 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+
+    {{formGroup system.schema.fields.category value=source.system.category localize=true}}
+    {{formGroup system.schema.fields.grip value=source.system.grip blank=false}}
+    {{> itemDamage}}
+    {{#if system.isMelee}}
+    {{formGroup system.schema.fields.range.fields.melee value=source.system.range.melee blank=false localize=true label="TOW.Sheet.Range"}}
+    {{else if system.isRanged}}
+    <div class="form-group">
+        <label>{{localize "TOW.Sheet.OptimumRange"}}</label>
+        <div class="form-fields">
+            <select name="system.range.min">
+                {{selectOptions (config "range") selected=source.system.range.min}}    
+            </select>
+            -
+            <select name="system.range.max">
+                {{selectOptions (config "range") selected=source.system.range.max}}    
+            </select>
+        </div>
+    </div>
+    {{/if}}
+    {{formGroup system.schema.fields.traits value=source.system.traits}}
+
+</section>
