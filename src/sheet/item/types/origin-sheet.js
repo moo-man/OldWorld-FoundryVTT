@@ -15,5 +15,30 @@ export default class OriginSheet extends BaseOldWorldItemSheet {
         details: { scrollable: [""], template: `systems/whtow/templates/item/types/${this.type}.hbs` },
         effects: { scrollable: [""], template: 'systems/whtow/templates/item/item-effects.hbs' },
       }
+
+      async _onDropRollTable(data, ev)
+      {
+        let table = await RollTable.implementation.fromDropData(data);
+
+        this.document.update(this.document.system.talents.table.set(table));
+      }
+
+      async _onDropItem(data, ev)
+      {
+        let item = await Item.implementation.fromDropData(data);
+
+        if (item.type == "talent")
+        {
+          if (ev.target.closest(".replacement"))
+          {
+            this.document.update(this.document.system.talents.replacements.add(item));
+          }
+          else 
+          {
+            this.document.update(this.document.system.talents.gain.add(item));
+
+          }
+        }
+      }
   }
   
