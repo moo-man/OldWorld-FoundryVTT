@@ -1,0 +1,67 @@
+<div class="dialog-fields">
+    <div class="dice-modifiers">
+        <div>
+            Penalty
+            <div class="field-control">
+                <a data-action="dec" data-target="penalty"><i class="fa-solid fa-minus"></i></a>
+                <input type="number" name="penalty" value="{{fields.penalty}}" readonly>
+                <a data-action="inc" data-target="penalty"><i class="fa-solid fa-plus"></i></a>
+            </div>
+        </div>
+        <div>
+            Bonus
+            <div class="field-control">
+                <a data-action="dec" data-target="bonus"><i class="fa-solid fa-minus"></i></a>
+                <input type="number" name="bonus" value="{{fields.bonus}}" readonly>
+                <a data-action="inc" data-target="bonus"><i class="fa-solid fa-plus"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="dice">
+        {{log dice}}
+        {{#each dice}}
+            <div class="die {{this.type}}">
+                <i class="fa-solid fa-dice-d10"></i>
+            </div>
+        {{/each}}
+    </div>
+    <div class="vs">
+        VS.
+    </div>
+    <div class="target field-control">
+        <a data-action="dec" data-target="target"><i class="fa-solid fa-minus"></i></a>
+        <div>{{fields.target}}</div>
+        <a data-action="inc" data-target="target"><i class="fa-solid fa-plus"></i></a>
+    </div>
+
+    <div class="state-field">
+        <div>
+            <label>Grim</label>
+            <input type="radio" id="grim" name="state" {{checked (eq fields.state "grim")}}>
+        </div>
+        <div>
+            <label>Normal</label>
+            <input type="radio" id="normal" name="state" {{checked (eq fields.state "normal")}}>
+        </div>
+        <div>
+            <label>Glorious</label>
+            <input type="radio" id="glorious" name="state" {{checked (eq fields.state "glorious")}}>
+        </div>
+    </div>
+
+    {{{subTemplate}}}
+
+    <div class="form-group">
+        <label>Roll Mode</label>
+        <div class="form-fields">
+            <select name="rollMode">
+                {{#select fields.rollMode}}
+                    <option value="publicroll">{{localize "CHAT.RollPublic"}}</option>
+                    <option value="gmroll">{{localize "CHAT.RollPrivate"}}</option>
+                    <option value="blindroll">{{localize "CHAT.RollBlind"}}</option>
+                    <option value="selfroll">{{localize "CHAT.RollSelf"}}</option>
+                {{/select}}
+            </select>
+        </div>
+    </div>
+</div>

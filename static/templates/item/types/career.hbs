@@ -1,3 +1,60 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
-    <p>Test</p>
+    <div class="name-list droppable">
+        <label>{{localize "TOW.Sheet.Origins"}}</label>
+        <div class="list-content">
+            {{#each system.origins.list}}
+                <div class="list-element" data-index="{{@key}}" data-uuid="{{this.uuid}}">
+                    <a data-action="editEmbedded">{{this.name}}</a>
+                    <a class="floating" data-document="this" data-action="listDelete" data-path="system.origins"><i class="fa-solid fa-xmark"></i></a>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="characteristics">
+        <div class="label">
+            <label>{{localize "TOW.Sheet.FavouredCharacteristics"}}</label>
+        </div>
+        <div class="list">
+            {{#each system.characteristics}}
+                <div class="characteristic  {{#if this}}selected{{/if}}">
+                    <a data-action="toggleProperty" data-path="system.characteristics.{{@key}}"><i
+                            class="fa-solid fa-check" {{#unless this}}style="visibility: hidden" {{/unless}}></i>
+                        {{configLookup "characteristicAbbrev" @key}}</a>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="skills">
+        <div class="label">
+            <div class="choices"></div>
+            <label>{{localize "TOW.Sheet.SkillBonuses"}}</label>
+            <div class="choices">
+                {{localize "TOW.Sheet.Choices"}}
+                <input type="number" name="system.skills.bonus.value" value="{{system.skills.bonus.value}}">
+            </div>
+        </div>
+        <div class="list">
+            {{#each system.skills.choices}}
+                <div class="skill  {{#if this}}selected{{/if}}">
+                    <a data-action="toggleProperty" data-path="system.skills.choices.{{@key}}"><i
+                            class="fa-solid fa-check" {{#unless this}}style="visibility: hidden" {{/unless}}></i>
+                        {{configLookup "skills" @key}}</a>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="flexrow" style="gap: 0.5rem;">
+        {{> choiceDisplay system.lore display=item.system.lore.textDisplay path="lore" label="TOW.Sheet.Lores"}}
+        {{> choiceDisplay system.trappings display=item.system.trappings.textDisplay path="trappings" label="TOW.Sheet.Trappings"}}
+    </div>
+    <div class="flexrow" style="gap: 0.5rem;">
+        {{> choiceDisplay system.assets display=item.system.assets.textDisplay path="assets" label="TOW.Sheet.Assets"}}
+        {{> choiceDisplay system.contacts display=item.system.contacts.textDisplay path="contacts" label="TOW.Sheet.Contacts"}}
+    </div>
+
+    {{> documentReference document=system.talent path="system.talent" label="TOW.Sheet.CareerTalent"}}
+
 </section>

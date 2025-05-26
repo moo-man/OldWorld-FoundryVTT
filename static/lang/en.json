@@ -1,0 +1,351 @@
+{
+
+
+    "TYPES.Actor.character" : "Player Character",
+    "TYPES.Actor.npc" : "Non-Player Character",
+    "TYPES.Actor.vehicle" : "Vehicle",
+    "TYPES.Actor.party" : "Party",
+
+    "TYPES.Item.weapon" : "Weapon",
+    "TYPES.Item.talent" : "Talent",
+    "TYPES.Item.lore" : "Lore",
+    "TYPES.Item.origin" : "Origin",
+    "TYPES.Item.blessing" : "Blessing",
+    "TYPES.Item.toolKit" : "Tool / Kit",
+    "TYPES.Item.tool" : "Tool",
+    "TYPES.Item.spell" : "Spell",
+    "TYPES.Item.wound" : "Wound",
+    "TYPES.Item.trapping" : "Trapping",
+    "TYPES.Item.career" : "Career",
+    "TYPES.Item.armour" : "Armour",
+    "TYPES.Item.asset" : "Asset",
+
+    "TOW" : {
+
+        "CharName" : {
+            "WeaponSkill" : "Weapon Skill",
+            "BallisticSkill" : "Ballistic Skill",
+            "Strength" : "Strength",
+            "Toughness" : "Toughness",
+            "Initiative" : "Initiative",
+            "Agility" : "Agility",
+            "Reason" : "Reason",
+            "Fellowship" : "Fellowship"
+        },
+
+        "CharAbbrev" : {
+            "WeaponSkill" : "WS",
+            "BallisticSkill" : "BS",
+            "Strength" : "S",
+            "Toughness" : "T",
+            "Initiative" : "I",
+            "Agility" : "Ag",
+            "Reason" : "Re",
+            "Fellowship" : "Fel"
+        },
+
+        "SkillName" : {
+            "Melee" : "Melee",
+            "Defence" : "Defence",
+            "Shooting" : "Shooting",
+            "Maintenance" : "Maintenance",
+            "Brawn" : "Brawn",
+            "Toil" : "Toil",
+            "Survival" : "Survival",
+            "Endurance" : "Endurance",
+            "Awareness" : "Awareness",
+            "Dexterity" : "Dexterity",
+            "Athletics" : "Athletics",
+            "Stealth" : "Stealth",
+            "Willpower" : "Willpower",
+            "Recall" : "Recall",
+            "Leadership" : "Leadership",
+            "Charm" : "Charm"
+        },
+
+        "StatusName" : {
+            "Brass" : "Brass",
+            "Silver" : "Silver",
+            "Gold" : "Gold"
+        },
+
+        "Range" : {
+            "Close" : "Close",
+            "Short" : "Short",
+            "Medium" : "Medium",
+            "Long" : "Long",
+            "Extreme" : "Extreme"
+        },
+
+        "Melee" : "Melee",
+        "Ranged" : "Ranged",
+
+        "Glorious" : "Glorious",
+        "Grim" : "Grim",
+
+        "AssetCategory" : {
+            "AnimalVehicle" : "Animal / Vehicle",
+            "BuildingEstablishment" : "Building / Establishment",
+            "Other" : "Other"
+        },
+
+        "Sheet" : {
+            "Tab" : {
+                "Description" : "Description",
+                "Details" : "Details",
+                "Effects" : "Effects"
+            },
+
+            "MeleeWeapons" : "Melee Weapons",
+            "RangedWeapons" : "Ranged Weapons",
+
+            "Talents" : "Talents",
+            "Lores" : "Lores",
+            "Career" : "Career",
+            "Origin" : "Origin",
+            "Weapons" : "Weapons",
+            "Blessings" : "Blessings",
+            "ToolsKits" : "Tools & Kits",
+            "Armour" : "Armour",
+            "Trappings" : "Trappings",
+            "Assets" : "Assets",
+            "Spells" : "Spells",
+            "Wounds" : "Wounds",
+            "Contacts" : "Contacts",
+            "CareerTalent" : "Career Talent",
+            "Res" : "Res.",
+            "Equipped" : "Equipped",
+
+            "Status" : "Status",
+            "Resilience" : "Resilience",
+            "Speed" : "Speed",
+            "Fate" : "Fate",
+
+            "DescriptionPublic" : "Description (Public)",
+            "DescriptionGM" : "Description (GM)",
+
+            "Quantity" : "Quantity",
+            "Cost" : "Cost",
+
+            "Damage" : "Damage",
+            "Range" : "Range",
+            "OptimumRange" : "Optimum Range",
+
+            "Favour" : "Favour",
+            "Prayers" : "Prayers",
+            "Miracles" : "Miracles",
+
+            "Effects" : "Effects",
+            "TemporaryEffects" : "Temporary Effects",
+            "PassiveEffects" : "Passive Effects",
+            "DisabledEffects" : "Disabled Effects",
+            "Source" : "Source",
+            "Careers" : "Careers",
+            "Origins" : "Origins",
+            
+            "Value" : "Value",
+
+            "FavouredCharacteristics" : "Favoured Characteristics",
+            "SkillBonuses" : "Skill Bonuses",
+
+            "Choices" : "Choices",
+
+            "Starting" : "Starting",
+            "Maximum" : "Maximum",
+
+            "Table" : "Table",
+
+            "Replacements" : "Replacements",
+            "Gained" : "Gained",
+
+            "Group" : "Group",
+            "Healing" : "Healing",
+
+            "Brass" : "Brass",
+            "Silver" : "Silver",
+            "Gold" : "Gold",
+
+            "Speeds" :  {
+                "Slow" : "Slow",
+                "Normal" : "Normal",
+                "Fast" : "Fast"
+            },
+
+            "MagicLore" : {
+                "Battle" : "Battle",
+                "Elementalism" : "Elementalism",
+                "Illusion" : "Illusion",
+                "Necromancy" : "Necromancy"
+            },
+
+            "TargetType" : {
+                "Self" : "Self",
+                "Creature" : "Creature",
+                "Zone" : "Zone",
+                "Object" : "Object"
+            },
+
+            "DurationType" : {
+                "Immediate" : "Immediate",
+                "Battle" : "Battle",
+                "Permanent" : "Permanent",
+                "Varies" : "Varies",
+                "Turns" : "Turns"
+            }
+
+        },
+        
+        "Test" : {
+            "SkillTest" : "{skill} Test",
+            "WeaponTest" : "{weapon} Test",
+
+            "RerollGlorious" : "Reroll (Glorious)",
+            "RerollGrim" : "Reroll (Grim)",
+            "Reroll" : "Reroll"
+        },
+
+        "Chat" : {
+            "OpposedTitle" : "{attacker} is targeting {defender}",
+            "Successes" : "{successes} Successes"
+        },
+        
+        "WoundHealing" : {
+            "CatchYourBreath" : "Catch your breath",
+            "Respite" : "A night's respite",
+            "RestRecovery" : "Rest and Recovery",
+            "Surgery" : "Surgery, Rest and Recovery",
+            "NA" : "N/A"
+        },
+        
+        "Tooltips" : { 
+            "ToggleEffect" : "Toggle Effect",
+            "CannotDeleteItemEffect" : "This effect is from an Item on this Actor. Delete the Item itself or the effect from the Item's sheet."
+        },
+
+        "ConditionName" : {
+            "Ablaze" : "Ablaze",
+            "Blinded" : "Blinded",
+            "Broken" : "Broken",
+            "Burdened" : "Burdened",
+            "CriticallyInjured" : "Critically Injured",
+            "Deafened" : "Deafened",
+            "Defenceless" : "Defenceless",
+            "Distracted" : "Distracted",
+            "Drained" : "Drained",
+            "Prone" : "Prone",
+            "Staggered" : "Staggered"
+        }
+
+    },
+
+    "WH" : {
+        "Models" : {
+            "weapon"  : {
+                "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    },
+                    "grip" : {
+                        "label" : "Grip"
+                    },
+                    "traits" : {
+                        "label" : "Traits"
+                    }
+                }
+            },
+            "talent"  : {
+                "FIELDS" : {
+                    "cost" : {
+                        "label" : "XP Cost"
+                    },
+                    "requirement" : {
+                        "text.label" : "Requirement",
+                        "script.label" : "Requirement Script"
+                    }
+                }
+            },
+            "lore"  : {
+                "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    }
+                }
+            },
+            "armour"  : {
+                "FIELDS" : {
+                    "resilience" : {
+                        "label" : "Resilience",
+                        "hint" : "e.g. @system.characteristics.t.value + 1" 
+                    },
+                    "traits" : {
+                        "label" : "Traits"
+                    }
+                }
+            },
+            "spell"  : {
+                "FIELDS" : {}
+            },
+            "blessing"  : {
+                "FIELDS" : {}
+            },
+            "origin"  : {
+                "FIELDS" : {
+                    "fate" : {
+                        "label" : "Fate"
+                    },
+                    "talents" : {
+                        "rolls" : {
+                            "label" : "Rolls"
+                        },
+                        "keep" : {
+                            "label" : "Keep"
+                        }
+                    }
+                }
+            },
+            "career"  : {
+                "FIELDS" : {}
+            },
+            "trapping"  : {
+                "FIELDS" : {}
+            },
+            "asset"  : {
+                "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    }
+                }
+            },
+            "toolKit"  : {
+                "FIELDS" : {
+                    "tests" : {
+                        "label" : "Relevant Tests"
+                    },
+                    "lore" : {
+                        "label" : "Required Lore"
+                    }
+                }
+            },
+            "wound" : {
+                "FIELDS" : {
+                    "healing" : {
+                        "label" : "Healing"
+                    }
+                }
+            }
+        },
+        "Components" : {
+            "Locational" : {
+                "FIELDS" : {
+                    "prompt" : {
+                        "label" : "Prompt Location",
+                        "hint" : "Prompt for a location when added to an Actor."
+                    },
+                    "location.value" : {
+                        "label" : "Location"
+                    }
+                }
+            }
+        }
+    }
+}

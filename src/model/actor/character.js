@@ -13,6 +13,11 @@ export class CharacterModel extends StandardActorModel
         let schema = super.defineSchema();
         schema.origin = new fields.EmbeddedDataField(SingletonItemModel);
         schema.career = new fields.EmbeddedDataField(SingletonItemModel);
+        schema.coins = new fields.SchemaField({
+            brass : new fields.NumberField(),
+            silver : new fields.NumberField(),
+            gold : new fields.NumberField()
+        })
         schema.xp = new fields.SchemaField({
             value : new fields.NumberField({initial: 0, min: 0})
         })
@@ -58,8 +63,8 @@ export class CharacterModel extends StandardActorModel
 
     _addModelProperties()
     {
-        this.origin.relative = this.parent.actor.items;
-        this.career.relative = this.parent.actor.items;
+        this.origin.relative = this.parent.items;
+        this.career.relative = this.parent.items;
     }
 }
 

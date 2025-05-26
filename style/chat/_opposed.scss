@@ -1,0 +1,26 @@
+@use "../mixins/border" as *;
+
+.message {
+    .opposed {
+        h4 {
+            text-align: center;
+            font-size: var(--font-size-16);
+        }
+        .tokens {
+            display: flex;
+            justify-content: space-around;
+            img {
+                border: 2px dotted black;
+                border-radius: 50%;
+                &.winner {
+                    border-color: darkgreen
+                };
+
+                &.loser {
+                    border-color: darkred;
+                }
+                height: 75px;
+            }
+        }
+    }
+}

@@ -51,6 +51,8 @@ export class CareerModel extends BaseItemModel
         schema.assets = new fields.EmbeddedDataField(ChoiceModel, {restrictType : ["asset"]})
         schema.contacts = new fields.EmbeddedDataField(DocumentReferenceListModel)
 
+        schema.origins = new fields.EmbeddedDataField(DocumentReferenceListModel);
+
         schema.talent = new fields.EmbeddedDataField(DocumentReferenceModel);
 
         return schema;

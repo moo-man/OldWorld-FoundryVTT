@@ -1,0 +1,19 @@
+.application.application.whtow.item.origin
+{
+    table {
+        margin: 0px;
+        margin-bottom: 0.5rem;
+        th {
+            text-align: center;
+        }
+        td  {
+            &:first-of-type{
+                text-align: left;
+            }
+            padding: 0.5rem;
+        }
+        input {
+            padding: 0px;
+        }
+    }
+}

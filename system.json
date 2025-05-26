@@ -1,0 +1,93 @@
+{
+  "id": "whtow",
+  "title": "Warhammer: The Old World Roleplaying Game",
+  "description": "",
+  "version": "0.0.1",
+  "compatibility" : {
+    "minimum" : 13,
+    "verified" : 13,
+    "maximum" : 13    
+  },
+  "templateVersion": 2,
+  "authors" : [
+    {
+      "name": "Moo Man",
+      "email": "russellt@cubicle7games.com",
+      "discord": "moo.man",
+      "reddit": "u/mooman10"
+    }
+  ],
+  "scripts": ["./whtow.js"],
+  "esmodules": [],
+  "styles": ["./whtow.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "media": [
+    {
+      "type": "cover",
+      "url": ""
+    }
+  ],
+  "flags" : {
+      "hotReload": { 
+        "extensions": ["css", "hbs", "json"]
+      }
+  },
+  "relationships": {
+    "requires": [{
+      "id": "warhammer-lib",
+      "type": "module",
+      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.0.0/module.json",
+      "compatibility": {
+        "minimum" : "2.0.0",
+        "verified": "2.0.0"
+      }
+    }]
+  },
+  "background" : "",
+  "initiative": "",
+  "grid": {
+    "distance": 1,
+    "units": "",
+    "type": 1,
+    "diagonals": 4
+  },
+  "documentTypes": {
+    "Actor": {
+      "character": { "htmlFields": [] },
+      "npc": { "htmlFields": [] }
+    },
+    "Item": {
+      "weapon" : {},
+      "armour" : {},
+      "talent" : {},
+      "lore" : {},
+      "toolKit" : {},
+      "spell" : {},
+      "blessing" : {},
+      "origin" : {},
+      "career" : {},
+      "wound" : {},
+      "trapping" : {},
+      "asset" : {}
+    },
+    "ChatMessage": {
+      "test" : {},
+      "opposed" : {}
+    }
+  },
+  "primaryTokenAttribute": null,
+  "secondaryTokenAttribute": null,
+  "url": "https://github.com/moo-man/OldWorld-FoundryVTT",
+  "socket": true,
+  "manifest": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/latest/download/system.json",
+  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/0.0.1/whtow.zip",
+  "license": "LICENSE.txt"
+}
+

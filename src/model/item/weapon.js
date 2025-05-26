@@ -31,4 +31,8 @@ export class WeaponModel extends EquippableItem
         return this.category == "ranged";
     }
 
+    computeOwned(actor) 
+    {
+        this.damage.compute(actor);
+    }
 }

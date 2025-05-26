@@ -30,40 +30,46 @@ export class OriginModel extends BaseItemModel
             fel : new fields.NumberField({min: 1, initial: 6})
         });
 
-        schema.skills  = new fields.SchemaField({
-            melee : new fields.NumberField({min: 1, initial : 3}),
-            defence : new fields.NumberField({min: 1, initial : 3}),
-            shooting : new fields.NumberField({min: 1, initial : 3}),
-            maintenance : new fields.NumberField({min: 1, initial : 3}),
-            brawn : new fields.NumberField({min: 1, initial : 3}),
-            toil : new fields.NumberField({min: 1, initial : 3}),
-            survival : new fields.NumberField({min: 1, initial : 3}),
-            endurance : new fields.NumberField({min: 1, initial : 3}),
-            awareness : new fields.NumberField({min: 1, initial : 3}),
-            dexterity : new fields.NumberField({min: 1, initial : 3}),
-            athletics : new fields.NumberField({min: 1, initial : 3}),
-            stealth : new fields.NumberField({min: 1, initial : 3}),
-            willpower : new fields.NumberField({min: 1, initial : 3}),
-            recall : new fields.NumberField({min: 1, initial : 3}),
-            leadership : new fields.NumberField({min: 1, initial : 3}),
-            charm : new fields.NumberField({min: 1, initial : 3})
-        }),
+
+        // schema.skills  = new fields.SchemaField({
+        //     melee : new fields.NumberField({min: 1, initial : 3}),
+        //     defence : new fields.NumberField({min: 1, initial : 3}),
+        //     shooting : new fields.NumberField({min: 1, initial : 3}),
+        //     maintenance : new fields.NumberField({min: 1, initial : 3}),
+        //     brawn : new fields.NumberField({min: 1, initial : 3}),
+        //     toil : new fields.NumberField({min: 1, initial : 3}),
+        //     survival : new fields.NumberField({min: 1, initial : 3}),
+        //     endurance : new fields.NumberField({min: 1, initial : 3}),
+        //     awareness : new fields.NumberField({min: 1, initial : 3}),
+        //     dexterity : new fields.NumberField({min: 1, initial : 3}),
+        //     athletics : new fields.NumberField({min: 1, initial : 3}),
+        //     stealth : new fields.NumberField({min: 1, initial : 3}),
+        //     willpower : new fields.NumberField({min: 1, initial : 3}),
+        //     recall : new fields.NumberField({min: 1, initial : 3}),
+        //     leadership : new fields.NumberField({min: 1, initial : 3}),
+        //     charm : new fields.NumberField({min: 1, initial : 3})
+        // }),
+
+        schema.skills = ListModel.createListModel(new fields.SchemaField({
+            value : new fields.NumberField({initial: 3}),
+            skill : new fields.StringField({}), // blank for default, * for choice
+            group : new fields.NumberField({})
+        }))
 
         schema.talents = new fields.SchemaField({
             table : new fields.EmbeddedDataField(DocumentReferenceModel),
             rolls: new fields.NumberField({initial : 2}),
             keep: new fields.NumberField({initial : 0}),
-            talents: new fields.EmbeddedDataField(DocumentReferenceListModel),
+            gain: new fields.EmbeddedDataField(DocumentReferenceListModel),
             replacements: new fields.EmbeddedDataField(DocumentReferenceListModel)
         })
 
         schema.lores = ListModel.createListModel(new fields.SchemaField({
             name : new fields.StringField({}),
+            choices : new fields.NumberField({}),
             group : new fields.NumberField({nullable : true, required: false, blank: true})
         }))
-
-        schema.careers = new fields.EmbeddedDataField(DocumentReferenceModel);
-
+        schema.careers = new fields.EmbeddedDataField(DocumentReferenceModel),
         schema.fate = new fields.NumberField({min : 0});
         return schema;
     }

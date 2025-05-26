@@ -1,0 +1,26 @@
+{
+  "name": "oldworld-foundryvtt",
+  "version": "1.0.0",
+  "description": "The **official** system for playing *Warhammer: The Old World* on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.",
+  "main": "foundry-path.js",
+  "type": "module",
+  "scripts": {
+    "build": "node scriptPacker.js&& cross-env NODE_ENV=development rollup --config rollup.config.mjs --watch",
+    "release": "node scriptPacker.js&& cross-env NODE_ENV=production rollup --config rollup.config.mjs&& cross-env NODE_ENV=production node dbpacker.js",
+    "pack": "node dbpacker.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "rollup": "^4.36.0",
+    "rollup-plugin-baked-env": "^1.0.1",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-copy-watch": "^0.0.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.86.0",
+    "scss": "^0.2.4"
+  }
+}

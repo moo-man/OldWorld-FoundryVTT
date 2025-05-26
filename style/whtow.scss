@@ -1,5 +1,7 @@
 @use "./sheets/index";
-
+@use "./apps/test-dialog";
+@use "./chat/test";
+@use "./chat/opposed";
 
 
 @font-face {
@@ -8,69 +10,32 @@
 }
 
 
-.application.test-dialog {
+body.theme-light .whtow {
+    --input-bg : transparent;
+}
 
-    
-    .dialog-fields {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+.whtow {
+    --input-bg : var(--color-cool-4);
 
-    .field-control {
+    .like-input  {
+        width: 100%;
+        height: var(--input-height);
+        line-height: var(--input-height);
+        padding: 0 0.5rem;
+        background: var(--input-bg);
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: var(--input-text-color);
+        text-align: center;
         display: flex;
         align-items: center;
         > * {
-            margin: 0px 5px;
-        }
-    }
-
-
-    .dice-modifiers {
-        display: flex;
-        text-align: center;
-        justify-content: space-between;
-        input {
-            width: 2rem;
-        }
-        > div {
-        }
-    }
-
-    .dice {
-        font-size: 24px;
-        display: flex;
-        justify-content: center;
-        gap: 5px;
-
-        .die {
-            &.bonus {
-                color: green;
-            }
-            &.penalty {
-                color: red;
-                opacity: 0.5;
-            }
-        }
-    }
-
-    .vs {
-        text-align: center;
-    }
-
-    .target {
-        display: flex;
-        justify-content: center;
-        div {
-
-            height: 2rem;
-            width: 2rem;
-            line-height: 2rem;
-            font-size: 20px;
-            background: var(--color-cool-3);
-            border: 1px solid var(--color-cool-4);
-            border-radius: 50%;
-            text-align: center;
+            flex: 1;
+        };
+        .control {
+            flex: 0 0 1rem;
         }
     }
 }
+
+

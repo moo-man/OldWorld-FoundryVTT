@@ -1,5 +1,21 @@
 .application.application.whtow.item
 {
+
+    .sheet-header {
+        display: flex;
+        align-items: center;
+        .header-fields {
+            width: 100%;
+        }
+        input {
+            text-align: center;
+        }
+        img {
+            height: 100px;
+            width: 100px;
+        }
+    }
+
     section.tab {
         overflow-y: auto
     }

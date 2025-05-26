@@ -1,4 +1,50 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    
+    <div class="coins">
+        <div class="type brass">
+            <label>{{localize "TOW.Sheet.Brass"}} ({{system.coins.brass}})</label>
+            <div class="pips">
+                {{#each coins.brass}}
+                <a class="pip" data-action="togglePip" data-index="{{@key}}" data-path="system.coins.brass">
+                    {{#if this.filled}}
+                    <i class="fa-solid fa-square"></i>
+                    {{else}}
+                    <i class="fa-regular fa-square"></i>
+                    {{/if}}
+                </a>
+                {{/each}}
+            </div>
+        </div>
+        <div class="type silver">
+            <label>{{localize "TOW.Sheet.Silver"}} ({{system.coins.silver}})</label>
+            <div class="pips">
+                {{#each coins.silver}}
+                <a class="pip" data-action="togglePip" data-index="{{@key}}" data-path="system.coins.silver">
+                    {{#if this.filled}}
+                    <i class="fa-solid fa-square"></i>
+                    {{else}}
+                    <i class="fa-regular fa-square"></i>
+                    {{/if}}
+                </a>
+                {{/each}}
+            </div>
+        </div>
+        <div class="type gold">
+            <label>{{localize "TOW.Sheet.Gold"}} ({{system.coins.gold}})</label>
+            <div class="pips">
+                {{#each coins.gold}}
+                <a class="pip" data-action="togglePip" data-index="{{@key}}" data-path="system.coins.gold">
+                    {{#if this.filled}}
+                    <i class="fa-solid fa-square"></i>
+                    {{else}}
+                    <i class="fa-regular fa-square"></i>
+                    {{/if}}
+                </a>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "TOW.Sheet.Weapons"}}</div>
@@ -39,6 +85,7 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "TOW.Sheet.Armour"}}</div>
+            <div>{{localize "TOW.Sheet.Equipped"}}</div>
             <div class="list-controls">
                 <a class="list-control" data-action="createItem" data-type="armour">
                     <i class="fas fa-plus"></i>
@@ -52,6 +99,13 @@
                         <div class="list-name">
                             <img src="{{this.img}}">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div>
+                            {{#if this.system.isEquipped}}
+                                <a data-action="toggleProperty" data-path="system.equipped.value"><i class="fa-regular fa-circle-check"></i></a>
+                            {{else}}
+                                <a data-action="toggleProperty" data-path="system.equipped.value"><i class="fa-regular fa-circle"></i></a>
+                            {{/if}}
                         </div>
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>

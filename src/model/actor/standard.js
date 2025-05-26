@@ -14,6 +14,10 @@ export class StandardActorModel extends BaseActorModel
         let schema = super.defineSchema();
         schema.characteristics = new fields.EmbeddedDataField(CharacteristicsModel);
         schema.skills = new fields.EmbeddedDataField(SkillsModel);
+        schema.speed = new fields.SchemaField({
+            land : new  fields.StringField({initial : "normal"}),
+            fly : new  fields.StringField({initial : "none"})
+        })
         return schema;
     }
 
@@ -33,11 +37,18 @@ export class StandardActorModel extends BaseActorModel
         super.computeBase();
         this.characteristics.compute();
         this.skills.compute();
+        this.resilience = 0;
     }
-
-    computeDerived() 
+    computeDerived()
     {
         super.computeDerived();
+        try {
+            this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => this.resilience +=  (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0))
+        }
+        catch(e)
+        {
+            console.error(`(${this.parent.name}) Error when computing resilience: ` + e)
+        }
     }
 }
 

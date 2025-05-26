@@ -5,8 +5,8 @@ export class BaseItemModel extends BaseWarhammerItemModel
     {
         let schema = {};
         schema.description = new fields.SchemaField({
-            public : new fields.StringField(),
-            gm : new fields.StringField()
+            public : new fields.HTMLField(),
+            gm : new fields.HTMLField()
         })
         return schema;
     }

@@ -1,4 +1,3 @@
-
 const OLDWORLD = {
     characteristics : {
         ws : "TOW.CharName.WeaponSkill",
@@ -85,6 +84,20 @@ const OLDWORLD = {
         // Needs to support Potency Turns, custom text, 
     },
 
+    woundHealing : {
+        1 : "TOW.WoundHealing.CatchYourBreath",
+        2 : "TOW.WoundHealing.Respite",
+        3 : "TOW.WoundHealing.RestRecovery",
+        4 : "TOW.WoundHealing.Surgery",
+        5 : "TOW.WoundHealing.NA",
+    },
+
+
+    speed : {
+        "slow" : "TOW.Speeds.Slow",
+        "normal" : "TOW.Speeds.Normal",
+        "fast" : "TOW.Speeds.Fast",
+    },
 
     effectScripts : {},
 
@@ -96,7 +109,9 @@ const OLDWORLD = {
         other : "WH.TransferType.Other"
     },
 
+    conditions : {
 
+    },
     
     // mergeObject(scriptTriggers, {
     
@@ -140,102 +155,81 @@ const OLDWORLD = {
 const TOW_CONFIG = {
     statusEffects : [
         {
-            icon: "systems/whtow/assets/icons/conditions/ablaze.svg",
+            img: "systems/whtow/assets/icons/conditions/ablaze.svg",
             id: "ablaze",
+            description : "You are on fire, scorched by flames that burn your clothes and sear your flesh.",
             statuses : ["ablaze"],
-            name: "IMPMAL.ConditionAblaze",
-            title: "IMPMAL.ConditionAblaze"
+            name: "TOW.ConditionName.Ablaze"
         },
         {
-            icon: "systems/whtow/assets/icons/conditions/bleeding.svg",
-            id: "bleeding",
-            statuses : ["bleeding"],
-            name: "IMPMAL.ConditionBleeding",
-            title: "IMPMAL.ConditionBleeding"
-        },
-        {
-            icon: "systems/whtow/assets/icons/conditions/blinded.svg",
+            img: "systems/whtow/assets/icons/conditions/blinded.svg",
             id: "blinded",
-            statuses : ["blinded"],
-            name: "IMPMAL.ConditionBlinded",
-            title: "IMPMAL.ConditionBlinded"
+            description : "You cannot see — you’re stumbling around in the dark, trying to orient yourself.",
+            statuses : ["blinded", "blind"],
+            name: "TOW.ConditionName.Blinded"
         },
         {
-            icon: "systems/whtow/assets/icons/conditions/deafened.svg",
+            img: "systems/whtow/assets/icons/conditions/broken.svg",
+            id: "broken",
+            description : "Your courage has failed, and all you can think of is retreating to a place of safety.",
+            statuses : ["broken"],
+            name: "TOW.ConditionName.Broken"
+        },
+        {
+            img: "systems/whtow/assets/icons/conditions/burdened.svg",
+            id: "burdened",
+            description : "You are encumbered by heavy equipment, binding restraints, or an incapacitating injury.",
+            statuses : ["burdened"],
+            name: "TOW.ConditionName.Burdened"
+        },
+        {
+            img: "systems/whtow/assets/icons/conditions/critical.svg",
+            id: "critical",
+            description : "Your wounds are so severe you might expire from blood loss, shock, or suffocation.",
+            statuses : ["critical"],
+            name: "TOW.ConditionName.CriticallyInjured"
+        },
+        {
+            img: "systems/whtow/assets/icons/conditions/deafened.svg",
             id: "deafened",
+            description : "You can’t hear anything, or are subjected to a loud noise that drowns out other sounds.",
             statuses : ["deafened"],
-            name: "IMPMAL.ConditionDeafened",
-            title: "IMPMAL.ConditionDeafened"
+            name: "TOW.ConditionName.Deafened"
         },
         {
-            icon: "systems/whtow/assets/icons/conditions/fatigued.svg",
-            id: "fatigued",
-            statuses : ["fatigued"],
-            name: "IMPMAL.ConditionFatigued",
-            title: "IMPMAL.ConditionFatigued"
+            img: "systems/whtow/assets/icons/conditions/defenceless.svg",
+            id: "defenceless",
+            description : "You are entirely at your enemy’s mercy.",
+            statuses : ["defenceless"],
+            name: "TOW.ConditionName.Defenceless"
         },
         {
-            icon: "systems/whtow/assets/icons/conditions/frightened.svg",
-            id: "frightened",
-            statuses : ["frightened"],
-            name: "IMPMAL.ConditionFrightened",
-            title: "IMPMAL.ConditionFrightened"
+            img: "systems/whtow/assets/icons/conditions/distracted.svg",
+            id: "distracted",
+            description : "Your attention wanders to feelings of doubt, rage, shame, or desire, instead of focussing on the task at hand. ",
+            statuses : ["distracted"],
+            name: "TOW.ConditionName.Distracted"
         },
         {
-            icon: "systems/whtow/assets/icons/conditions/incapacitated.svg",
-            id: "incapacitated",
-            statuses : ["incapacitated"],
-            name: "IMPMAL.ConditionIncapacitated",
-            title: "IMPMAL.ConditionIncapacitated"
+            img: "systems/whtow/assets/icons/conditions/drained.svg",
+            id: "drained",
+            description : "Your concentration and fighting strength is compromised by sickness or exhaustion.",
+            statuses : ["drained"],
+            name: "TOW.ConditionName.Drained"
         },
         {
-            icon: "systems/whtow/assets/icons/conditions/overburdened.svg",
-            id: "overburdened",
-            statuses : ["overburdened"],
-            name: "IMPMAL.ConditionOverburdened",
-            title: "IMPMAL.ConditionOverburdened"
-        },
-        {
-            icon: "systems/whtow/assets/icons/conditions/poisoned.svg",
-            id: "poisoned",
-            statuses : ["poisoned"],
-            name: "IMPMAL.ConditionPoisoned",
-            title: "IMPMAL.ConditionPoisoned"
-        },
-        {
-            icon: "systems/whtow/assets/icons/conditions/prone.svg",
+            img: "systems/whtow/assets/icons/conditions/prone.svg",
             id: "prone",
+            description : "You are knocked flat, lying down, or kneeling on the floor.",
             statuses : ["prone"],
-            name: "IMPMAL.ConditionProne",
-            title: "IMPMAL.ConditionProne"
+            name: "TOW.ConditionName.Prone"
         },
         {
-            icon: "systems/whtow/assets/icons/conditions/restrained.svg",
-            id: "restrained",
-            statuses : ["restrained"],
-            name: "IMPMAL.ConditionRestrained",
-            title: "IMPMAL.ConditionRestrained"
-        },
-        {
-            icon: "systems/whtow/assets/icons/conditions/stunned.svg",
-            id: "stunned",
-            statuses : ["stunned"],
-            name: "IMPMAL.ConditionStunned",
-            title: "IMPMAL.ConditionStunned",
-        },
-        {
-            icon: "systems/whtow/assets/icons/conditions/unconscious.svg",
-            id: "unconscious",
-            statuses : ["unconscious"],
-            name: "IMPMAL.ConditionUnconscious",
-            title: "IMPMAL.ConditionUnconscious",
-        },
-        {
-            icon: "systems/whtow/assets/icons/conditions/dead.svg",
-            id: "dead",
-            statuses : ["dead"],
-            name: "IMPMAL.Dead",
-            title: "IMPMAL.Dead",
+            img: "systems/whtow/assets/icons/conditions/staggered.svg",
+            id: "staggered",
+            description : "You are battered, bruised, or otherwise reeling from an enemy attack.",
+            statuses : ["staggered"],
+            name: "TOW.ConditionName.Staggered"
         },
     ]
 };
@@ -251,7 +245,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     //         let label = options[0];
     //         if (table)
     //         {
-    //             return $(await ImpMalUtility.tableToHTML(table, label, options))[0];
+    //             return $(await TOW.ConditionName.ML(table, label, options))[0];
     //         }
     //         else 
     //         {

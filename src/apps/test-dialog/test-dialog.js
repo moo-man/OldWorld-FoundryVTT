@@ -68,34 +68,57 @@ export default class TestDialog extends WarhammerRollDialogV2
     {
         return foundry.utils.mergeObject(super._defaultFields(), {
             bonus : 0,
-            penalty : 0
+            penalty : 0,
+            state : "normal"
         });
     }
 
-        async _prepareContext(options) 
+    async _prepareContext(options) 
+    {
+        let context = await super._prepareContext(options);
+
+        context.dice = Array(context.data.dice).fill(null).map(i => {return {}});
+        + context.fields.bonus
+
+        context.dice = context.dice.concat(Array(context.fields.bonus).fill(null).map(i => {return {type : "bonus"}}));
+
+        for(let i = 0; i < context.fields.penalty; i++)
         {
-            let context = await super._prepareContext(options);
-
-            context.dice = Array(context.data.dice).fill(null).map(i => {return {}});
-            + context.fields.bonus
-
-            context.dice = context.dice.concat(Array(context.fields.bonus).fill(null).map(i => {return {type : "bonus"}}));
-
-            for(let i = 0; i < context.fields.penalty; i++)
+            if (context.dice[i])
             {
-                if (context.dice[i])
-                {
-                    context.dice[context.dice.length - (1 + i)] = {type : "penalty"};
-                }
+                context.dice[context.dice.length - (1 + i)] = {type : "penalty"};
             }
-
-            return context;
         }
-        
+
+        return context;
+    }
+    
 
     async computeFields() 
     {
+        this.computeState()
+    }
 
+    computeState()
+    {
+
+        if (this.data.grim > 0 && this.data.glorious > 0)
+        {
+            this.fields.state = "normal";
+        }
+        else if (this.data.grim > 0 && this.data.glorious <= 0) 
+        {
+            this.fields.state = "grim";
+        }
+        else if (this.data.glorious > 0 && this.data.grim <= 0)
+        {
+            this.fields.state = "glorious";
+        }
+
+        if (this.userEntry.state)
+        {
+            this.fields.state = this.userEntry.state;
+        }
     }
 
     static _onInc(ev, target) 
@@ -128,6 +151,17 @@ export default class TestDialog extends WarhammerRollDialogV2
         foundry.utils.setProperty(this.userEntry, target.dataset.target, value)
         this.render(true);
     }
+
+    _onFieldChange(ev) 
+    {
+        // If the user clicks advantage or disadvantage, force that state to be true despite calculations
+        if (ev.target.name == "state")
+        {
+            this.userEntry.state = ev.target.id;
+            this.render(true);
+        }
+        else return super._onFieldChange(ev);
+    }
    
     /**
      * 
@@ -143,11 +177,13 @@ export default class TestDialog extends WarhammerRollDialogV2
         dialogData.data.skill = skill;
         dialogData.data.characteristic = actor.system.skills[skill].characteristic;
 
-        context.title = context.title || game.i18n.format("SkillTest", {skill: skill.name});
+        context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill: game.oldworld.config.skills[skill]});
         context.title += context.appendTitle || "";
 
         foundry.utils.mergeObject(dialogData.fields, context.fields);
 
+        dialogData.data.glorious = context.glorious || 0;
+        dialogData.data.grim = context.grim || 0;
         dialogData.data.dice = actor.system.characteristics[dialogData.data.characteristic].base;
         dialogData.fields.target = actor.system.skills[skill].base;
 

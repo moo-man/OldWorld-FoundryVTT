@@ -1,0 +1,8 @@
+.idea/
+.vscode/launch.json
+debug.log
+node_modules
+foundryconfig.json
+loadScripts.js
+build
+static/assets/icons/conditions/reference.png

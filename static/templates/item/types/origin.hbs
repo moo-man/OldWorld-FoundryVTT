@@ -1,3 +1,156 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="characteristics">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    {{#each system.characteristics}}
+                        <th>
+                            <label>{{configLookup "characteristicAbbrev" @key}}</label>
+                        </th>
+                    {{/each}}
+                </tr>
+            </thead>
+            <tbody>
 
+                <tr>
+                    <td>
+                        {{localize "TOW.Sheet.Starting"}}
+                    </td>
+                    {{#each system.characteristics}}
+                        <td>
+                            <input type="number" name="system.characteristics.{{@key}}" value="{{this}}">
+                        </td>
+                    {{/each}}
+                </tr>
+                <tr>
+                    <td>
+                        {{localize "TOW.Sheet.Maximum"}}
+                    </td>
+                    {{#each system.maxCharacteristics}}
+                        <td>
+                            <input type="number" name="system.maxCharacteristics.{{@key}}" value="{{this}}">
+                        </td>
+                    {{/each}}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {{formGroup fields.fate value=source.system.fate}}
+
+
+        <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.SkillBonuses"}}</div>
+            <div class="small">{{localize "TOW.Sheet.Value"}}</div>
+            <div class="small">{{localize "TOW.Sheet.Group"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="listCreate" data-path="system.skills">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each system.skills.list}}
+                <div class="list-row" data-index="{{@key}}" data-path="system.skills">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <select data-action="editList" data-ipath="skill">
+                                {{#select this.skill}}
+                                    <option value="*">Any</option>
+                                    <option value="">All other Skills</option>
+                                {{#each (config "skills")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="small"><input type="number" data-action="editList" data-ipath="value" value="{{this.value}}"></div>
+                        <div class="small"><input type="number" data-action="editList" data-ipath="group" value="{{this.group}}"></div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="listDelete">
+                                <i class="fas fa-xmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.Lores"}}</div>
+            <div class="small">{{localize "TOW.Sheet.Choices"}}</div>
+            <div class="small">{{localize "TOW.Sheet.Group"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="listCreate" data-path="system.lores">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each system.lores.list}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-index="{{@key}}" data-path="system.lores">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <input type="text" data-action="editList" data-ipath="name" value="{{this.name}}">
+                        </div>
+                        <div class="small"><input type="number" data-action="editList" data-ipath="choices" value="{{this.choices}}"></div>
+                        <div class="small"><input type="number" data-action="editList" data-ipath="group" value="{{this.group}}"></div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="listDelete">
+                                <i class="fas fa-xmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    {{> documentReference document=system.careers path="system.careers" label="TOW.Sheet.Careers" classes="careers"}}
+
+    {{!-- <fieldset>
+            <legend>{{localize "TOW.Sheet.Talents"}}</legend> --}}
+
+    <h3 class="divider">{{localize "TOW.Sheet.Talents"}}</h3>
+
+    <div class="flexrow">
+
+    <div class="name-list droppable gain">
+        <label>{{localize "TOW.Sheet.Gained"}}</label>
+        <div class="list-content">
+            {{#each system.talents.gain.list}}
+                <div class="list-element" data-index="{{@key}}" data-uuid="{{this.uuid}}">
+                    <a data-action="editEmbedded">{{this.name}}</a>
+                    <a class="floating" data-document="this" data-action="listDelete" data-path="system.talents.gain"><i
+                            class="fa-solid fa-xmark"></i></a>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+        <div class="name-list droppable replacement">
+        <label>{{localize "TOW.Sheet.Replacements"}}</label>
+        <div class="list-content">
+            {{#each system.talents.replacements.list}}
+                <div class="list-element" data-index="{{@key}}" data-uuid="{{this.uuid}}">
+                    <a data-action="editEmbedded">{{this.name}}</a>
+                    <a class="floating" data-document="this" data-action="listDelete"
+                        data-path="system.talents.replacements"><i class="fa-solid fa-xmark"></i></a>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    </div>
+
+
+    {{> documentReference document=system.talents.table path="system.talents.table" label="TOW.Sheet.Table" classes="talents"}}
+
+    {{formGroup fields.talents.fields.rolls value=source.system.talents.rolls}}
+    {{formGroup fields.talents.fields.keep value=source.system.talents.keep}}
+
+
+    {{!-- </fieldset> --}}
 </section>

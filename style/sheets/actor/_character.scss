@@ -36,25 +36,9 @@
             display: flex;
             gap: 1rem;
         }
-    }
 
-    .like-input  {
-        width: 100%;
-        height: var(--input-height);
-        line-height: var(--input-height);
-        padding: 0 0.5rem;
-        background: var(--color-cool-4);
-        border: 1px solid transparent;
-        border-radius: 4px;
-        color: var(--input-text-color);
-
-        display: flex;
-        align-items: center;
-        > * {
-            flex: 1;
-        };
-        .control {
-            flex: 0 0 1rem;
+        .attribute-box {
+            margin: 0px;
         }
     }
 
@@ -64,7 +48,7 @@
         gap: 0.5rem;
         width: 50%;
         border: 1px solid var(--color-cool-3);
-
+        height: 40rem;
         .characteristic {
             display: flex;
 
@@ -136,5 +120,29 @@
     
     .lists {
         flex: 1;
+    }
+
+    .coins {
+        border: 1px solid var(--color-cool-3);
+        padding: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: space-around;
+        text-align: center;
+        label {
+            font-weight: bold;
+        }
+
+        .gold {
+            color: gold;
+        }
+
+        .silver {
+            color: silver;
+        }
+
+        .brass {
+            color: orange;
+        }
     }
 }

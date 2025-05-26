@@ -1,0 +1,33 @@
+<div>
+
+<input type="text" name="name" value="{{actor.name}}">
+    <div class="characteristics">
+        {{#each characteristics}}
+            <hr>
+        <div class="flexrow">
+            <div class="characteristic">
+                <label data-tooltip="{{configLookup " characteristics" @key}}"
+                    data-tooltip-direction="LEFT">{{configLookup "characteristicAbbrev" @key}}</label>
+                <input type="number" value="{{this.base}}" name="system.characteristics.{{@key}}.base">
+            </div>
+            <div class="skills">
+                {{#each this.skills}}
+                    <div class="skill">
+                        <label><a data-action="rollTest" data-type="skill" data-skill="{{@key}}">{{configLookup "skills" @key}}</a></label>
+                        <div class="skill-pips" data-path="system.skills.{{@key}}.base">
+                            {{#each this.pips}}
+                                {{#if this}}
+                                    {{!-- <a data-action="togglePip" data-index="{{@key}}"><i class="fa-regular fa-square-check"></i></a> --}}
+                                    <a data-action="togglePip" data-index="{{@key}}" style="font-family:OnlySkulls">0</a>
+                                {{else}}
+                                    <a data-action="togglePip" data-index="{{@key}}"></a>
+                                {{/if}}
+                            {{/each}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            </div>
+        {{/each}}
+    </div>
+</div>

@@ -15,7 +15,7 @@
                     {{#each this.skills}}
                         <div class="skill">
                             <input class="skill-value" type="number" name="system.skills.{{@key}}.base" value="{{this.base}}" />
-                            <a data-action="rollTest" data-skill="{{@key}}"> {{configLookup "skills" @key}}</a>
+                            <a data-action="rollTest"  data-type="skill" data-skill="{{@key}}"> {{configLookup "skills" @key}}</a>
                             <!--
                         <div class="skill-pips" data-path="system.skills.{{@key}}.base">
                             {{#each this.pips}}

@@ -1,0 +1,128 @@
+@use "../mixins/border" as *;
+
+.message {
+    .test {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        .title {
+            font-size: var(--font-size-18);
+            font-weight: bold;
+            @include gradient-border;
+        }
+        .target {
+            width: 20%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 7px inset black;
+            justify-content: center;
+            border: 1px solid black;
+            border-radius: 20%;
+            aspect-ratio: 1 / 1;
+            font-size: 2rem;
+
+            &.failed {
+                border: 1px solid darkred;
+                box-shadow: 0 0 7px inset darkred;
+            }
+        }
+
+        h4 {
+            text-align: center;
+            font-size: var(--font-size-16);
+            margin: 0px;
+        }
+
+        &.succeeded {
+            h4  { color: darkgreen }
+
+            .target {
+                border: 1px solid darkgreen;
+                box-shadow: 0 0 7px inset darkgreen;
+            }
+        }
+
+        &.failed {
+
+            h4 {color: darkred;}
+
+            .target {
+                border: 1px solid darkred;
+                box-shadow: 0 0 7px inset darkred;
+            }
+        }
+
+
+        .reroll-breakdown {
+            &:not(.expanded) {
+                display: none;
+            }
+            cursor: pointer;
+        }
+
+        .reroll-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dice-set {
+
+            justify-content:center;
+            column-gap: 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            .die {
+                position: relative;
+                width: 40px;
+                padding: 5px;
+
+                span.reroll-icon {
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    text-shadow: 0px 0px 10px black;
+                    color: var(--color-light-2)
+                }
+
+                span.result {
+                    text-shadow: 0px 0px 10px black;
+                    position: absolute;
+                    font-size: var(--font-size-18);
+                    left: 15px;
+                    top: 8px;
+                    color: var(--color-light-2)
+                }   
+
+                cursor: pointer;
+                &.selected {
+                    border-radius: 50%;
+                    background: gold;
+                }
+            }
+
+        }
+
+        .set-label {
+            text-align: center;
+            font-size: var(--font-size-18);
+            opacity: 0.7;
+        }
+
+        .result {
+            font-weight: bold;
+            font-size: var(--font-size-18);
+            &.succeeded {
+                color: var(--color-level-success);
+                // text-shadow: 0px 0px 10px var(--color-level-success-bg);
+            }
+            &.failed {
+                color: var(--color-level-error-bg);
+                // text-shadow: 0px 0px 10px black;
+            }
+        }
+    }
+}

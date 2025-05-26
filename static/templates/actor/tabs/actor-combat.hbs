@@ -1,63 +1,148 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="attribute-row flexrow">
+        <div class="attribute-box single">
+            <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Resilience"}}</label></div>
+            <div class="field" style="grid-column: 9 / span 4"><input type="number" data-tooltip=""
+                    value="{{system.resilience}}" disabled></div>
+        </div>
+
+        <div class="attribute-box single">
+            <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Speed"}}</label></div>
+            <div class="field" style="grid-column: 9 / span 4"><input type="text" data-tooltip=""
+                    value="{{localize (configLookup "speed" system.speed.land)}}" disabled></div>
+        </div>
+    </div>
+
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "TOW.Sheet.MeleeWeapons"}}</div>
-            <div class="list-controls">
-                <a class="list-control" data-action="createItem" data-type="weapon">
-                    <i class="fas fa-plus"></i>
-                </a>
-            </div>
+            <div>{{localize "TOW.Sheet.Damage"}}</div>
+            <div class="large">{{localize "TOW.Sheet.Range"}}</div>
+
         </div>
         <div class="list-content">
             {{#each items.weapon}}
                 {{#if (and this.system.isMelee this.system.isEquipped)}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
-                    <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
-                            <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                    <div class="list-row combat" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            </div>
+                            <div>{{this.system.damage.value}}</div>
+                            <div class="large">{{configLookup "range" this.system.range.melee}}</div>
                         </div>
-                        <div class="list-controls">
-                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        <div class="row-content weapon-properties">
+                            <div class="tiny grip">
+                                {{this.system.grip}}
+                            </div>
+                            <div class="fit traits">
+                                {{this.system.traits}}
+                            </div>
                         </div>
-                    </div>
-                    {{> sheetButtons document=this}}
-                    <div class="dropdown-content collapsed">
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
 
+                        </div>
                     </div>
-                </div>
                 {{/if}}
             {{/each}}
         </div>
     </div>
-        <div class="sheet-list">
+    <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "TOW.Sheet.RangedWeapons"}}</div>
+            <div>{{localize "TOW.Sheet.Damage"}}</div>
+            <div class="large">{{localize "TOW.Sheet.Range"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each items.weapon}}
+                {{#if (and this.system.isRanged this.system.isEquipped)}}
+                    <div class="list-row combat" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            </div>
+                            <div>{{this.system.damage.value}}</div>
+                            <div class="large">{{configLookup "range" this.system.range.max}} - {{configLookup "range" this.system.range.max}}</div>
+                        </div>
+                        <div class="row-content weapon-properties">
+                            <div class="tiny grip">
+                                {{this.system.grip}}
+                            </div>
+                            <div class="fit traits">
+                                {{this.system.traits}}
+                            </div>
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.Armour"}}</div>
+            <div>{{localize "TOW.Sheet.Res"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each items.armour}}
+                {{#if this.system.isEquipped}}
+                    <div class="list-row combat" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <div>{{this.name}}</div>
+                            </div>
+                            <div>{{this.system.resilience}}</div>
+                        </div>
+                        {{#if this.system.traits}}
+                        <div class="fit traits">
+                            {{this.system.traits}}
+                        </div>
+                        {{/if}}
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.Wounds"}}</div>
+            <div class="large">{{localize "TOW.Sheet.Healing"}}</div>
             <div class="list-controls">
-                <a class="list-control" data-action="createItem" data-type="weapon">
+                <a class="list-control" data-action="createItem" data-type="wound">
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
         </div>
         <div class="list-content">
-            {{#each items.weapon}}
-                {{#if (and this.system.isRanged this.system.isEquipped)}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
-                    <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
-                            <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+            {{#each items.wound}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            </div>
+                            <div class="large">{{configLookup "woundHealing" this.system.healing}}</div>
+                            <div class="list-controls">
+                                <a class="list-control context-menu combat"><i
+                                        class="fa-regular fa-ellipsis-vertical"></i></a>
+                            </div>
                         </div>
-                        <div class="list-controls">
-                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
-                        </div>
-                    </div>
-                    {{> sheetButtons document=this}}
-                    <div class="dropdown-content collapsed">
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
 
+                        </div>
                     </div>
-                </div>
-                {{/if}}
             {{/each}}
         </div>
     </div>

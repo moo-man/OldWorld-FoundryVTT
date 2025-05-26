@@ -1,0 +1,95 @@
+<div class="test {{#if this.result.succeeded}}succeeded{{else}}failed{{/if}}">
+    <div class="title">
+        {{context.title}}
+    </div>
+    <div class="target">
+        {{testData.target}}
+    </div>
+    vs.
+
+    <h4>{{localize "TOW.Chat.Successes" successes=this.result.successes}}</h4>
+
+    <div class="dice-set">
+        {{#each result.dice}}
+            <div data-action="toggleDie" data-index="{{@key}}"
+                class="die {{#if this.success}}success{{else}}failure{{/if}}">
+                <span class="result">{{this.result}}</span>
+                {{#if this.rerolled}}
+                    <span class="reroll-icon"><i class="fa-solid fa-rotate"></i></span>
+                {{/if}}
+                {{#if this.success}}
+                    <img src="systems/whtow/assets/dice/d10-success.svg">
+                {{else}}
+                    <img src="systems/whtow/assets/dice/d10-failure.svg">
+                {{/if}}
+            </div>
+        {{/each}}
+    </div>
+
+    {{#if result.rerolls.length}}
+        <div class="reroll-container">
+            <div class="control">
+                <a data-action="expandDice"><i class="fa-solid fa-caret-down"></i></a>
+            </div>
+            <div class="reroll-breakdown">
+
+                <div class="set-label">Initial</div>
+                <div class="dice-set">
+                    {{#each result.initialDice}}
+                        <div class="die {{#if this.success}}success{{else}}failure{{/if}}" data-index="{{@key}}">
+                            <span class="result">{{this.result}}</span>
+                            {{#if this.success}}
+                                <img src="systems/whtow/assets/dice/d10-success.svg">
+                            {{else}}
+                                <img src="systems/whtow/assets/dice/d10-failure.svg">
+                            {{/if}}
+                        </div>
+                    {{/each}}
+                </div>
+
+                {{#each result.rerolls as |reroll|}}
+                    <div class="set-label">{{reroll.label}}<i class="fa-solid fa-rotate"></i></div>
+                    <div class="dice-set">
+                        {{#each reroll.dice}}
+                            <div class="die {{#if this.success}}success{{else}}failure{{/if}}" data-index="{{@key}}">
+                                {{#if this.active}}
+                                    <span class="result">{{this.result}}</span>
+                                    {{#if this.success}}
+                                        <img src="systems/whtow/assets/dice/d10-success.svg">
+                                    {{else}}
+                                        <img src="systems/whtow/assets/dice/d10-failure.svg">
+                                    {{/if}}
+                                {{/if}}
+
+                            </div>
+                        {{/each}}
+                    </div>
+                {{/each}}
+
+                <div class="set-label">Active</div>
+                <div class="dice-set">
+                    {{#each result.dice}}
+                        <div data-action="toggleDie" data-index="{{@key}}"
+                            class="die {{#if this.success}}success{{else}}failure{{/if}}">
+                            <span class="result">{{this.result}}</span>
+                            {{#if this.success}}
+                                <img src="systems/whtow/assets/dice/d10-success.svg">
+                            {{else}}
+                                <img src="systems/whtow/assets/dice/d10-failure.svg">
+                            {{/if}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+        </div>
+    {{/if}}
+
+    {{subTemplate}}
+
+
+
+    {{!-- <div class="result {{#if this.result.succeeded}}succeeded{{else}}failed{{/if}}"> --}}
+    {{!-- {{#if this.result.succeeded}}Success!{{else}}Failure!{{/if}} --}}
+    {{!-- </div> --}}
+</div>

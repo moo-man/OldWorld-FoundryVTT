@@ -20,7 +20,15 @@ export default class OriginSheet extends BaseOldWorldItemSheet {
       {
         let table = await RollTable.implementation.fromDropData(data);
 
-        this.document.update(this.document.system.talents.table.set(table));
+        if (ev.target.closest(".careers"))
+        {
+          this.document.update(this.document.system.careers.set(table));
+
+        }
+        else if (ev.target.closest(".talents"))
+        {
+          this.document.update(this.document.system.talents.table.set(table));
+        }
       }
 
       async _onDropItem(data, ev)
