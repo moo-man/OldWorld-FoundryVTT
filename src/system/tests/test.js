@@ -98,7 +98,7 @@ export class OldWorldTest extends WarhammerTestBase
     {
         let dice = this._getActiveDice();
         this.result.successes = dice.filter(i => i.success).length
-        this.result.succeeded = this.result.successes >= this.testData.target;
+        this.result.succeeded = this.result.successes >= 1;
         this.result.dice = dice;
     }
 

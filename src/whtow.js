@@ -37,6 +37,7 @@ import { OldWorldActiveEffectModel } from "./model/effect/effect";
 import OldWorldActiveEffectConfig from "./sheet/effect";
 import { WeaponTest } from "./system/tests/weapon";
 import { OldWorldOpposedMessageModel } from "./model/message/opposed";
+import registerSettings from "./system/settings";
 
 Hooks.once("init", () => 
 {
@@ -108,7 +109,7 @@ Hooks.once("init", () =>
         "WeaponTest" : WeaponTest
     }
 
-    // registerSettings();
+    registerSettings();
     registerHandlebars();
     
     mergeObject(CONFIG, TOW_CONFIG);

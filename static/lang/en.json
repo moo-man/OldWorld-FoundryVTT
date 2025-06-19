@@ -175,6 +175,13 @@
 
             "DefendingAgainst" : "Defending Against"
         },
+
+        "TableSetting.wounds" : "Wounds",
+        "TableSetting.miscast" : "Miscast",
+
+        "Setting.TableSettings" : "Table Settings",
+        "Setting.TableConfigure" : "Configure Tables",
+        "Setting.TableSettingsHint" : "Configure what tables to use by the system.",
         
         "Speeds" :  {
             "Slow" : "Slow",
