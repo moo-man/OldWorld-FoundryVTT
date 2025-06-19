@@ -123,6 +123,7 @@
         <div class="list-header row-content">
             <div class="list-name">{{localize "TOW.Sheet.Wounds"}}</div>
             <div class="large">{{localize "TOW.Sheet.Healing"}}</div>
+            <div>{{localize "TOW.Sheet.Treated"}}</div>
             <div class="list-controls">
                 <a class="list-control" data-action="createItem" data-type="wound">
                     <i class="fas fa-plus"></i>
@@ -138,6 +139,13 @@
                                 <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
                             </div>
                             <div class="large">{{configLookup "woundHealing" this.system.healing}}</div>
+                            <div>
+                                {{#if this.system.treated}}
+                                    <a data-action="toggleProperty" data-path="system.treated"><i class="fa-regular fa-circle-check"></i></a>
+                                {{else}}
+                                    <a data-action="toggleProperty" data-path="system.treated"><i class="fa-regular fa-circle"></i></a>
+                                {{/if}}
+                            </div>
                             <div class="list-controls">
                                 <a class="list-control context-menu combat"><i
                                         class="fa-regular fa-ellipsis-vertical"></i></a>

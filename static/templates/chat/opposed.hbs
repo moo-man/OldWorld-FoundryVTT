@@ -19,8 +19,11 @@
         <div class="result">
             <h4>{{localize result.description}}</h4>
             {{#if result.damage}}
-                <button data-action="applyDamage"><i class="fa-solid fa-user-minus"></i>
-                    {{localize "TOW.Chat.ApplyDamage" damage=result.damage.value}}</button>
+                {{#if result.damage.applied}}
+                <div class="applied">{{{localize result.damage.message name=defender.name}}}</div>
+                {{else}}
+                <button data-action="applyDamage"><i class="fa-solid fa-user-minus"></i> {{localize "TOW.Chat.ApplyDamage" damage=result.damage.value}}</button>
+                {{/if}}
             {{/if}}
         </div>
     {{else}}

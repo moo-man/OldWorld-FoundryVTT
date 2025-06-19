@@ -39,6 +39,7 @@ import { WeaponTest } from "./system/tests/weapon";
 import { OldWorldOpposedMessageModel } from "./model/message/opposed";
 import registerSettings from "./system/settings";
 import { NPCModel } from "./model/actor/npc";
+import OldWorldTables from "./system/tables";
 
 Hooks.once("init", () => 
 {
@@ -96,9 +97,9 @@ Hooks.once("init", () =>
     CONFIG.ChatMessage.dataModels["opposed"] = OldWorldOpposedMessageModel;
 
     game.oldworld = {
-        config : OLDWORLD
+        config : OLDWORLD,
         // utility : OldWorldUtility,
-        // tables : OldWorldTables,
+        tables : OldWorldTables,
         // migration : Migration,
         // testClasses : {
 
@@ -108,6 +109,30 @@ Hooks.once("init", () =>
     game.oldworld.config.rollClasses = {
         "OldWorldTest" : OldWorldTest,
         "WeaponTest" : WeaponTest
+    }
+
+    CONFIG.queries.addCondition = async (data) => {
+        let actor = await fromUuid(data.uuid);
+        if (actor)
+        {
+            actor.addCondition(data.condition);
+        }
+    }
+
+    CONFIG.queries.updateUnopposed = async (data) => {
+        let message = game.messages.get(data.id);
+        if (message?.system)
+        {
+            message.system.setUnopposed()
+        }
+    }
+
+    CONFIG.queries.updateAppliedDamage = async (data) => {
+        let message = game.messages.get(data.id);
+        if (message?.system)
+        {
+            message.system.updateAppliedDamage(data.message)
+        }
     }
 
     registerSettings();

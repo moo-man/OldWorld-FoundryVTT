@@ -41,7 +41,7 @@ export default class OldWorldTables
 
             if (result)
             {
-                let document = await game.impmal.utility.findId(result.documentId);
+                let document = await fromUuid(result.documentUuid);
                 if (document) // Assumed item
                 {
                     document.postItem();

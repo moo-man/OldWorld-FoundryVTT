@@ -60,7 +60,9 @@
             }
 
             .result {
-                color: darkgreen;
+                h4 {
+                    color: darkgreen;
+                }
             }
         }
         
@@ -68,6 +70,9 @@
         .result {
             button {
                 margin: 0px auto;
+            }
+            .applied {
+                text-align: center;
             }
         }
     }

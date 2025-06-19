@@ -170,6 +170,7 @@
 
             "Group" : "Group",
             "Healing" : "Healing",
+            "Treated" : "Treated",
 
             "Brass" : "Brass",
             "Silver" : "Silver",
@@ -255,7 +256,11 @@
             "MarginalSuccesss" : "Marginal Successs",
             "Success" : "Success",
             "TotalSuccess" : "Total Success!",
-            "ApplyDamage" : "Apply {damage} Damage"
+            "ApplyDamage" : "Apply {damage} Damage",
+
+            "TakesWound" : "<p><strong>{name}</strong> takes a Wound!</p>",
+            "GainsStaggered" : "<p><strong>{name}</strong> gets Staggered!</p>",
+            "AppliedDamage" : "Applied Damage"
         },
         
         "WoundHealing" : {
@@ -283,6 +288,11 @@
             "Drained" : "Drained",
             "Prone" : "Prone",
             "Staggered" : "Staggered"
+        },
+
+        "Dialog" : {
+            "Staggered" : "Staggered!",
+            "StaggeredPrompt" : "You've been Staggered again! Choose from the following options."
         }
     },
 

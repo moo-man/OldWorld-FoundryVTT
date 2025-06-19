@@ -38,7 +38,7 @@ export class OldWorldTest extends WarhammerTestBase
             messageId : null,
             targetSpeakers : data.targets,
             opposedIds : {}, // map of token IDs to opposed message IDs
-            rollClass : "WeaponTest"
+            rollClass : "OldWorldTest"
         }, data.context)
 
         return {testData, context}

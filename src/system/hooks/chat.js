@@ -1,4 +1,4 @@
-import { OldWorldChatMessage } from "../chat-message";
+import { OldWorldChatMessage } from "../../document/message";
 
 export default function()
 {

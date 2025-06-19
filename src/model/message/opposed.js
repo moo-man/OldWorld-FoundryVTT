@@ -38,7 +38,9 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
             success : new fields.BooleanField(),
             computed : new fields.BooleanField({initial : false}),
             damage : new fields.SchemaField({
-                value : new fields.NumberField({nullable : true, initial: null})
+                value : new fields.NumberField({nullable : true, initial: null}),
+                applied : new fields.BooleanField(),
+                message : new fields.StringField()
             }, {nullable : true})
         })
         return schema;
@@ -154,11 +156,23 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
      */
     async setUnopposed()
     {
+        let owner = warhammer.utility.getActiveDocumentOwner(this.parent)
+        if (owner.id != game.user.id)
+        {
+            return owner.query("updateUnopposed", {id : this.parent.id})
+        }
+
         let responseData = {
             result : this.attackerMessage.system.test.computeOpposedResult(),
             unopposed : true
         }
         await this.parent.update({system : responseData})
+        this.renderResult();
+    }
+
+    async updateAppliedDamage(message) 
+    {
+        await this.parent.update({"system.result.damage" : {applied : true, message}})
         this.renderResult();
     }
 
@@ -181,20 +195,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
 
     static async  _onApplyDamage(ev, target)
     {
-
         let actor = ChatMessage.getSpeakerActor(this.defender);
-
-        actor.system.applyDamage(this.result.damage, {opposed : this})
-
-        switch(type)
-        {
-            case "unopposed":
-                return this.setUnopposed()
-            case "athletics":
-                return actor.setupSkillTest(type)
-            default: 
-                return actor.setupWeaponTest(type)
-
-        }
+        actor.system.applyDamage(this.result.damage.value, {opposed : this})
     }
 }

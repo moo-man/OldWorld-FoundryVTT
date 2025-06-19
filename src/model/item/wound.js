@@ -8,6 +8,7 @@ export class WoundModel extends BaseItemModel
     {
         let schema = super.defineSchema();
         schema.healing = new fields.NumberField({initial : 1, choices : game.oldworld.config.woundHealing});
+        schema.treated = new fields.BooleanField();
         return schema;
     }
 

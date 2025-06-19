@@ -18,9 +18,21 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
 
     async addCondition(condition)
     {
+        let owner = warhammer.utility.getActiveDocumentOwner(this);
+
+        if (game.user.id != owner.id)
+        {
+            await owner.query("addCondition", {uuid: this.uuid, condition})
+            return this.hasCondition(condition);
+        }
+
         if (!this.hasCondition(condition))
         {
             this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], {condition: true})
+        }
+        else if (this.hasCondition(condition) && condition == "staggered")
+        {
+           await this.system.promptStaggeredChoice({excludeOptions : this.system.excludeStaggeredOptions});
         }
     }
 
