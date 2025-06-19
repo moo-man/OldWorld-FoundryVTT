@@ -1,3 +1,5 @@
+import { CharacteristicsModel } from "./components/characteristics";
+import { SkillsModel } from "./components/skills";
 import { StandardActorModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -11,6 +13,8 @@ export class CharacterModel extends StandardActorModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
+        schema.characteristics = new fields.EmbeddedDataField(CharacteristicsModel);
+        schema.skills = new fields.EmbeddedDataField(SkillsModel);
         schema.origin = new fields.EmbeddedDataField(SingletonItemModel);
         schema.career = new fields.EmbeddedDataField(SingletonItemModel);
         schema.coins = new fields.SchemaField({
@@ -19,7 +23,15 @@ export class CharacterModel extends StandardActorModel
             gold : new fields.NumberField({initial: 0, min: 0})
         })
         schema.xp = new fields.SchemaField({
-            value : new fields.NumberField({initial: 0, min: 0})
+            total : new fields.NumberField({initial: 0, min: 0}),
+            offsets : ListModel.createListModel(new fields.SchemaField({
+                description : new fields.StringField(),
+                amount : new fields.NumberField()
+            })),
+            log : ListModel.createListModel(new fields.SchemaField({
+                description : new fields.StringField(),
+                amount : new fields.NumberField()
+            }))
         })
         schema.fate = new fields.SchemaField({
             current : new fields.NumberField({initial : 0}),
@@ -48,23 +60,33 @@ export class CharacterModel extends StandardActorModel
         }
     }
 
-    computeBase()
-    {
-        super.computeBase();
-        this.characteristics.compute();
-        this.skills.compute();
-    }
-
-
-    computeDerived()
-    {
-        super.computeDerived();
-    }
-
     _addModelProperties()
     {
         this.origin.relative = this.parent.items;
         this.career.relative = this.parent.items;
+    }
+
+    computeDerived()
+    {
+        super.computeDerived();
+        this.computeXP();
+    }
+
+    computeXP()
+    {
+        let spent = 0;
+
+        // Talent Costs
+        spent += this.parent.itemTypes.talent.reduce((xp, talent) => xp + talent.system.cost, 0)
+
+        // Characteristic Costs
+        for(let c of Object.values(this.characteristics))
+        {
+            spent += Array.fromRange(c.value + 1).slice(c.base + 1).reduce((sum, num) => sum + num, 0);
+        }
+
+        this.xp.spent = spent;
+        this.xp.available = this.xp.total - spent;
     }
 }
 

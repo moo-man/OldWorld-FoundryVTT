@@ -89,6 +89,8 @@
         "Glorious" : "Glorious",
         "Grim" : "Grim",
 
+        "Advancement" : "Advancement",
+
         "AssetCategory" : {
             "AnimalVehicle" : "Animal / Vehicle",
             "BuildingEstablishment" : "Building / Establishment",
@@ -173,8 +175,31 @@
             "Silver" : "Silver",
             "Gold" : "Gold",
 
-            "DefendingAgainst" : "Defending Against"
+            "DefendingAgainst" : "Defending Against",
+
+            "Experience" : "Experience",
+            "Available" : "Available",
+            "Spent" : "Spent",
+            "Total" : "Total",
+
+            "Characteristic" : "Characteristic",
+            "Base" : "Base",
+            "Skill" : "Skill",
+            "Advances" : "Advances",
+            "Item" : "Item",
+            "Reason" : "Reason",
+            "Description" : "Description",
+            "XP" : "XP",
+
+            "Characteristics" : "Characteristics",
+            "Skills" : "Skills",
+            "Items" : "Items",
+            "Log" : "Log",
+            "Offsets" : "Offsets",
+            "Improvement" : "Improvement"
         },
+
+
 
         "TableSetting.wounds" : "Wounds",
         "TableSetting.miscast" : "Miscast",

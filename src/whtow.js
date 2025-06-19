@@ -38,6 +38,7 @@ import OldWorldActiveEffectConfig from "./sheet/effect";
 import { WeaponTest } from "./system/tests/weapon";
 import { OldWorldOpposedMessageModel } from "./model/message/opposed";
 import registerSettings from "./system/settings";
+import { NPCModel } from "./model/actor/npc";
 
 Hooks.once("init", () => 
 {
@@ -74,7 +75,7 @@ Hooks.once("init", () =>
     DocumentSheetConfig.registerSheet(ActiveEffect, "whtow", OldWorldActiveEffectConfig, {makeDefault : true});
 
     CONFIG.Actor.dataModels["character"] = CharacterModel;
-    // CONFIG.Actor.dataModels["npc"] = OldWorldNPCModel;
+    CONFIG.Actor.dataModels["npc"] = NPCModel;
 
     CONFIG.Item.dataModels["weapon"] = WeaponModel;
     CONFIG.Item.dataModels["talent"] = TalentModel;

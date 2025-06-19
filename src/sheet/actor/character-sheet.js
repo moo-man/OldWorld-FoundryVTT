@@ -1,3 +1,4 @@
+import { AdvancementForm } from "../../apps/advancement";
 import TestDialogV2 from "../../apps/test-dialog/test-dialog";
 import StandardOldWorldActorSheet from "./standard-sheet";
 
@@ -15,7 +16,8 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
           height: 900
         },
         actions : {
-          rollTest : this._onRollTest
+          rollTest : this._onRollTest,
+          advancement : this._onAdvancement
         },
         defaultTab : "main"
     }
@@ -81,5 +83,10 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
 
         // let roll = await new Roll(`${characteristic}d10cs<${skill.value}`).roll();
         // roll.toMessage({flavor : game.oldworld.config.skills[skill], speaker : ChatMessage.getSpeaker({actor : this.actor})})
+      }
+
+      static _onAdvancement(ev, target)
+      {
+        new AdvancementForm(this.actor).render({force : true})
       }
 }

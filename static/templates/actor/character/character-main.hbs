@@ -4,9 +4,9 @@
             <div class="characteristic">
                 <div class="characteristic-data">
                     <div class="ch-data">
-                        <div>
+                        <div data-tooltip="{{this.base}} (Base) + {{this.advances}} (Advances)" data-tooltip-direction="LEFT">
                             <label>{{configLookup "characteristicAbbrev" @key}}</label>
-                            <input type="number" value="{{this.base}}" name="system.characteristics.{{@key}}.base">
+                            <input type="number" value="{{this.value}}" disabled>
                         </div>
                         <p>{{configLookup "characteristics" @key}}</p>
                     </div>
@@ -14,7 +14,7 @@
                 <div class="skills">
                     {{#each this.skills}}
                         <div class="skill">
-                            <input class="skill-value" type="number" name="system.skills.{{@key}}.base" value="{{this.base}}" />
+                            <input class="skill-value" type="number" disabled value="{{this.value}}" />
                             <a data-action="rollTest"  data-type="skill" data-skill="{{@key}}"> {{configLookup "skills" @key}}</a>
                             <!--
                         <div class="skill-pips" data-path="system.skills.{{@key}}.base">

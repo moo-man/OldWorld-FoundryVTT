@@ -126,4 +126,20 @@
             color: orange;
         }
     }
+
+    .advancement {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        > * {
+            flex: 1;
+
+        }
+
+        button 
+        {
+            flex: 0.5;
+        }
+    }
 }

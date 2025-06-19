@@ -1,4 +1,15 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="advancement">
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 4"><label class="centered">{{localize "TOW.Sheet.Available"}}</label></div>
+            <div class="label" style="grid-column: 5 / span 4"><label class="centered">{{localize "TOW.Sheet.Spent"}}</label></div>
+            <div class="label" style="grid-column: 9 / span 4"><label class="centered">{{localize "TOW.Sheet.Experience"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 4"><input type="number" disabled value="{{system.xp.available}}"></div>
+            <div class="field" style="grid-column: 5 / span 4"><input type="number" disabled value="{{system.xp.spent}}"></div>
+            <div class="field" style="grid-column: 9 / span 4"><input type="number" name="system.xp.total" value="{{system.xp.total}}"></div>
+        </div>
+        <button data-action="advancement"><i class="fa-solid fa-chevrons-up"></i> {{localize "TOW.Advancement"}}</button>
+    </div>
     {{#if (isGM)}}
         <div class="editor-section">
             <div class="header">{{localize "GM Notes"}}</div>
