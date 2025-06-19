@@ -1,0 +1,18 @@
+<div class="item-summary">
+    <div class="item-header" data-action="expandItem">
+        {{#unless noImage}}
+            <img src="{{item.img}}">
+        {{/unless}}
+        <p>{{item.name}}</p>
+    </div>
+    <div class="description">
+        <div class="description-expander">
+            <div class="public">
+                {{{enriched.public}}}
+            </div>
+            <div class="gm-only">
+                {{{enriched.gm}}}
+            </div>
+        </div>
+    </div>
+</div>

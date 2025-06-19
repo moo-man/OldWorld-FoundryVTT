@@ -11,8 +11,29 @@ export class BaseActorModel extends BaseWarhammerActorModel
         schema.description = new fields.SchemaField({
             public : new fields.HTMLField(),
             gm : new fields.HTMLField()
-        })
+        });
+        schema.opposed = new fields.ForeignDocumentField(foundry.documents.BaseChatMessage, {nullable: true, initial : null})
         return schema;
+    }
+
+    get opposedTest()
+    {
+        return this.opposed?.test;
+    }
+
+    registerOpposed(test)
+    {
+        this.parent.update({"system.opposed" : test.message});
+    }
+
+    clearOpposed()
+    {
+        this.parent.update({"system.opposed" : null});
+    }
+
+    applyDamage()
+    {
+        
     }
     
     async _preCreate(data, options, user) 

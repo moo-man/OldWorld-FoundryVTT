@@ -48,11 +48,11 @@ const OLDWORLD = {
     },
 
     range : {
-        0 : "TOW.Range.Close",
-        1 : "TOW.Range.Short",
-        2 : "TOW.Range.Medium",
-        3 : "TOW.Range.Long",
-        4 : "TOW.Range.Extreme"
+        0 : "TOW.RangeType.Close",
+        1 : "TOW.RangeType.Short",
+        2 : "TOW.RangeType.Medium",
+        3 : "TOW.RangeType.Long",
+        4 : "TOW.RangeType.Extreme"
     },
 
     assetCategory : {
@@ -110,7 +110,72 @@ const OLDWORLD = {
     },
 
     conditions : {
-
+        ablaze : {
+            img: "systems/whtow/assets/icons/conditions/ablaze.svg",
+            description : "You are on fire, scorched by flames that burn your clothes and sear your flesh.",
+            statuses : ["ablaze"],
+            name: "TOW.ConditionName.Ablaze"
+        },
+        blinded : {
+            img: "systems/whtow/assets/icons/conditions/blinded.svg",
+            description : "You cannot see — you’re stumbling around in the dark, trying to orient yourself.",
+            statuses : ["blinded", "blind"],
+            name: "TOW.ConditionName.Blinded"
+        },
+        broken : {
+            img: "systems/whtow/assets/icons/conditions/broken.svg",
+            description : "Your courage has failed, and all you can think of is retreating to a place of safety.",
+            statuses : ["broken"],
+            name: "TOW.ConditionName.Broken"
+        },
+        burdened : {
+            img: "systems/whtow/assets/icons/conditions/burdened.svg",
+            description : "You are encumbered by heavy equipment, binding restraints, or an incapacitating injury.",
+            statuses : ["burdened"],
+            name: "TOW.ConditionName.Burdened"
+        },
+        critical : {
+            img: "systems/whtow/assets/icons/conditions/critical.svg",
+            description : "Your wounds are so severe you might expire from blood loss, shock, or suffocation.",
+            statuses : ["critical"],
+            name: "TOW.ConditionName.CriticallyInjured"
+        },
+        deafened : {
+            img: "systems/whtow/assets/icons/conditions/deafened.svg",
+            description : "You can’t hear anything, or are subjected to a loud noise that drowns out other sounds.",
+            statuses : ["deafened"],
+            name: "TOW.ConditionName.Deafened"
+        },
+        defenceless : {
+            img: "systems/whtow/assets/icons/conditions/defenceless.svg",
+            description : "You are entirely at your enemy’s mercy.",
+            statuses : ["defenceless"],
+            name: "TOW.ConditionName.Defenceless"
+        },
+        distracted : {
+            img: "systems/whtow/assets/icons/conditions/distracted.svg",
+            description : "Your attention wanders to feelings of doubt, rage, shame, or desire, instead of focussing on the task at hand. ",
+            statuses : ["distracted"],
+            name: "TOW.ConditionName.Distracted"
+        },
+        drained : {
+            img: "systems/whtow/assets/icons/conditions/drained.svg",
+            description : "Your concentration and fighting strength is compromised by sickness or exhaustion.",
+            statuses : ["drained"],
+            name: "TOW.ConditionName.Drained"
+        },
+        prone : {
+            img: "systems/whtow/assets/icons/conditions/prone.svg",
+            description : "You are knocked flat, lying down, or kneeling on the floor.",
+            statuses : ["prone"],
+            name: "TOW.ConditionName.Prone"
+        },
+        staggered : {
+            img: "systems/whtow/assets/icons/conditions/staggered.svg",
+            description : "You are battered, bruised, or otherwise reeling from an enemy attack.",
+            statuses : ["staggered"],
+            name: "TOW.ConditionName.Staggered"
+        }
     },
     
     // mergeObject(scriptTriggers, {

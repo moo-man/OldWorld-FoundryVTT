@@ -5,10 +5,13 @@
         h4 {
             text-align: center;
             font-size: var(--font-size-16);
+            margin: 1rem 0px;
         }
         .tokens {
             display: flex;
             justify-content: space-around;
+            padding: 0px 1rem;
+
             img {
                 border: 2px dotted black;
                 border-radius: 50%;
@@ -20,6 +23,51 @@
                     border-color: darkred;
                 }
                 height: 75px;
+            }
+        }
+
+        .responses {
+            display: flex;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            flex-direction: row-reverse;
+            height: 1.5rem;
+            button {
+                padding: 0px;
+                height: 100%;
+                flex: 0 0 2rem;
+                min-height: unset;;
+            }
+        }
+
+        .successes {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            h3 {
+                width: 100%;
+                text-align: center;
+                margin: 0px;
+            }
+        }
+
+        &.success {
+            .successes {
+                h3 {
+                    color: darkgreen
+                }
+            }
+
+            .result {
+                color: darkgreen;
+            }
+        }
+        
+
+        .result {
+            button {
+                margin: 0px auto;
             }
         }
     }

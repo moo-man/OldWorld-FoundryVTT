@@ -30,14 +30,18 @@ export default class WeaponDialog extends TestDialog
     static PARTS = {
         fields : {
             template : "systems/whtow/templates/apps/test-dialog/test-dialog.hbs",
-            container : {id : "base", classes : ["dialog-base"]}
+            fields: true
+        },
+        weapon : {
+            template : "systems/whtow/templates/apps/test-dialog/weapon-dialog.hbs",
+            fields: true
         },
         modifiers : {
             template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
-            container : {id : "base", classes : ["dialog-base"]}
+            modifiers: true
         },
-        specific : {
-            template : "systems/whtow/templates/apps/test-dialog/weapon-dialog.hbs",
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
         },
         footer : {
             template : "templates/generic/form-footer.hbs"
@@ -52,8 +56,6 @@ export default class WeaponDialog extends TestDialog
      */
     static async setupData(weapon, actor, context={}, options={})
     {
-
-
         if (typeof weapon == "string")
         {
             if (weapon.includes("."))
@@ -66,10 +68,17 @@ export default class WeaponDialog extends TestDialog
             }
         }
 
-        let skill = weapon.system.isMelee ? "melee" : "ranged"
+        let skill = weapon.system.skill;
 
-        context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill : game.oldworld.config.skills[skill]}) + ` - ${weapon.name}`;
+        if (actor.system.opposed)
+        {
+            skill = "defence";
+        }
+
+        context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill : game.oldworld.config.skills[skill]});
         context.title += context.appendTitle || "";
+
+        context.itemUuid = weapon.uuid;
 
         let dialogData = super.setupData(skill, actor, context, options);
 

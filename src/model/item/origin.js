@@ -31,25 +31,6 @@ export class OriginModel extends BaseItemModel
         });
 
 
-        // schema.skills  = new fields.SchemaField({
-        //     melee : new fields.NumberField({min: 1, initial : 3}),
-        //     defence : new fields.NumberField({min: 1, initial : 3}),
-        //     shooting : new fields.NumberField({min: 1, initial : 3}),
-        //     maintenance : new fields.NumberField({min: 1, initial : 3}),
-        //     brawn : new fields.NumberField({min: 1, initial : 3}),
-        //     toil : new fields.NumberField({min: 1, initial : 3}),
-        //     survival : new fields.NumberField({min: 1, initial : 3}),
-        //     endurance : new fields.NumberField({min: 1, initial : 3}),
-        //     awareness : new fields.NumberField({min: 1, initial : 3}),
-        //     dexterity : new fields.NumberField({min: 1, initial : 3}),
-        //     athletics : new fields.NumberField({min: 1, initial : 3}),
-        //     stealth : new fields.NumberField({min: 1, initial : 3}),
-        //     willpower : new fields.NumberField({min: 1, initial : 3}),
-        //     recall : new fields.NumberField({min: 1, initial : 3}),
-        //     leadership : new fields.NumberField({min: 1, initial : 3}),
-        //     charm : new fields.NumberField({min: 1, initial : 3})
-        // }),
-
         schema.skills = ListModel.createListModel(new fields.SchemaField({
             value : new fields.NumberField({initial: 3}),
             skill : new fields.StringField({}), // blank for default, * for choice

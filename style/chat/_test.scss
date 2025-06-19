@@ -1,6 +1,61 @@
 @use "../mixins/border" as *;
 
 .message {
+
+    .message-header {
+        align-items: center;
+        
+        .message-token {
+            margin-right: 0.5rem;
+            display: flex;
+            flex: 0 0 50px;
+            &.mounted {
+                flex: 0 0 100px;
+            }
+            img {
+                height: 50px;
+                width: 50px;
+            }
+            &.mounted {
+                img {
+                    &:last-of-type {
+                        margin-left: -25px;
+                    }
+                }
+            }
+        }
+    }
+
+    .item-summary {
+        padding: 0.5rem;
+        background: rgba(0, 0, 0, 0.1);
+        width: 100%;
+        .item-header {
+            cursor: pointer;
+            width:100%;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            img {
+                height: 50px;
+            }
+            p {
+                font-size: var(--font-size-18);
+                font-weight: bold;
+            }
+        }
+
+        .description {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 250ms;
+            > * {overflow:hidden};
+            &.expanded {
+                grid-template-rows:  1fr;
+            }
+        }
+    }
+
     .test {
         width: 100%;
         display: flex;
@@ -57,10 +112,16 @@
 
 
         .reroll-breakdown {
-            &:not(.expanded) {
-                display: none;
+        }
+
+        .reroll-expander {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 250ms;
+            > * {overflow:hidden};
+            &.expanded {
+                grid-template-rows:  1fr;
             }
-            cursor: pointer;
         }
 
         .reroll-container {
@@ -122,6 +183,56 @@
             &.failed {
                 color: var(--color-level-error-bg);
                 // text-shadow: 0px 0px 10px black;
+            }
+        }
+
+        .defending,
+        .targets {
+            width: 100%;
+            .header {
+                text-align: center;
+                font-size: var(--text-size-24);
+                font-weight:bold;
+                margin: 0px 20%;
+                @include gradient-border;
+            }
+
+            .defending-list,
+            .target-list {
+                display: flex;
+                flex-direction: column;
+            }
+
+            // .target-list {
+            //     .success {
+            //         background-color: linear-gradient(to right, darkgreen, yellow)
+            //     }
+            //     .failure {
+            //         background-color: darkred;
+
+            //     }
+            // }
+
+            // .defending-list {
+            //     .success {
+            //         background-color: darkgreen
+            //     }
+            //     .failure {
+            //         background-color: darkred;
+            //     }
+            // }
+
+
+            .token {
+                img {
+                    height: 30px;
+                }
+                display :flex;
+                justify-content: center;
+                flex-direction: row;
+                align-items: center;
+                width: 100%;
+                gap: 1rem;
             }
         }
     }

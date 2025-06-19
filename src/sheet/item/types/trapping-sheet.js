@@ -2,7 +2,7 @@ import BaseOldWorldItemSheet from "../base-item"
 
 export default class TrappingSheet extends BaseOldWorldItemSheet {
 
-    static type = "origin"
+    static type = "trapping"
 
     static DEFAULT_OPTIONS = {
       classes: [this.type],

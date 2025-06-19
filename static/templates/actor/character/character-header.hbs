@@ -7,14 +7,14 @@
 
                 <label>{{localize "TOW.Sheet.Origin"}}</label>
                 {{#if actor.system.origin.document}}
-                    <div class="like-input" data-uuid="{{actor.system.origin.document.uuid}}">
+                    <div class="like-input" data-uuid="{{system.origin.document.uuid}}">
                         <span class="control" ></span>
                         <a type="text" data-action="editEmbedded"
-                            name="actor.system.origin.name">{{actor.system.origin.name}}</a>
+                            name="actor.system.origin.name">{{system.origin.name}}</a>
                         <a class="control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
                     </div>
                 {{else}}
-                    <input type="text" name="actor.system.origin.name" value="{{actor.system.origin.name}}">
+                    <input type="text" name="system.origin.name" value="{{system.origin.name}}">
                 {{/if}}
             </div>
 
@@ -28,7 +28,7 @@
                         <a class="control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
                     </div>
                 {{else}}
-                    <input type="text" name="actor.system.career.name" value="{{actor.system.career.name}}">
+                    <input type="text" name="system.career.name" value="{{system.career.name}}">
                 {{/if}}
             </div>
             <div class="status">

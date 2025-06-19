@@ -34,6 +34,7 @@ export class OldWorldTest extends WarhammerTestBase
             rollMode : data.rollMode,
             skill: data.skill,
             speaker : data.speaker,
+            itemUuid : data.itemUuid,
             messageId : null,
             targetSpeakers : data.targets,
             opposedIds : {}, // map of token IDs to opposed message IDs
@@ -110,8 +111,11 @@ export class OldWorldTest extends WarhammerTestBase
             subTemplate = await foundry.applications.handlebars.renderTemplate(this.subTemplate, this);
         }
         this.subTemplate = subTemplate
+        if (this.item)
+        {
+            this.itemSummary = await this.formatItemSummary()
+        }
         let content = await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/tests/test.hbs", this);
-        
         
         if (!this.message || newMessage)
         {
@@ -132,25 +136,118 @@ export class OldWorldTest extends WarhammerTestBase
         }
     }
 
-    async handleOpposed(message)
+    async formatItemSummary()
+    {
+        let item = this.item;
+        let enriched = {
+            public : await foundry.applications.ux.TextEditor.enrichHTML(item.system.description.public, {async: true, relativeTo: item, secrets : false}),
+            gm : await foundry.applications.ux.TextEditor.enrichHTML(item.system.description.gm, {async: true, relativeTo: item, secrets : false})
+        }
+        return await renderTemplate("systems/whtow/templates/chat/item-summary.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item });
+    }
+
+
+    /**
+     * Checks targets and creates opposed messages for any targets that don't have them
+     */
+    async handleOpposed()
     {
         let targets = this.targetTokens;
 
+        let opposedIds = foundry.utils.deepClone(this.context.opposedIds);
 
-        // Attacking
-        if (targets.length != this.context.opposedIds.length)
+        // For each target, if no opposed test has been created, create one
+        // If already created, rerender the message
+        for(let target of targets)
         {
-            let opposedIds = foundry.utils.deepClone(this.context.opposedIds);
-            for(let target of targets)
+            if (!opposedIds[target.id])
             {
-                if (!this.context.opposedIds[target.id])
+                let message = await OldWorldOpposedMessageModel.createFromTest(this, target)
+                opposedIds[target.id] = message.id;
+            }
+            else 
+            {
+                let message = game.messages.get(opposedIds[target.id])
+                if (message)
                 {
-                    let message = await OldWorldOpposedMessageModel.createFromTest(this, target)
-                    opposedIds[target.id] = message.id;
+                    message.system.renderResult(true);
                 }
             }
-            this.update({"context.opposedIds" : opposedIds});
         }
+        this.update({"context.opposedIds" : opposedIds});        
+    }
+
+
+    /** 
+     * Retrieves the opposed test handler message and sets the provided test as defending
+     * 
+     * @param {OldWorldTest} test Defending test
+     */
+    registerOpposedResponse(test)
+    {
+        game.messages.get(this.context.opposedIds[test.context.speaker.token])?.system.registerResponse(test);
+    }
+
+
+    /**
+     * Compute opposed test result with defending test
+     * 
+     * @param {OldWorldTest} test Test defending against this test, undefined if unopposed
+     */
+    computeOpposedResult(test)
+    {
+        let successes // Opposing test successes
+
+        // Unopposed
+        if (!test)
+        {
+            successes = 0;
+        }
+        else 
+        {
+            successes = test.result.successes;
+        }
+        let opposed = {
+            outcome : this.result.successes >= successes ? "success" : "failure",
+            successes : this.result.successes - successes,
+            success : this.result.successes >= successes,
+            description : "",
+            unopposed : !test,
+            computed : true
+        }
+
+        // If the result of THIS test is 0 successes, that means both tests had 0, no one wins
+        if (opposed.success)
+        {
+            if (this.result.successes == 0)
+            {
+                opposed.outcome = "tie"
+                opposed.description = "TOW.Chat.Tie"
+            }
+            else 
+            {
+                // difference of 0 is considered marginal success
+                if (opposed.successes <= 1)
+                {
+                    opposed.description = "TOW.Chat.MarginalSuccesss"
+                }
+                else if (opposed.successes == 2)
+                {
+                    opposed.description = "TOW.Chat.Success"
+                }
+                else if (opposed.successes >= 3)
+                {
+                    opposed.description = "TOW.Chat.TotalSuccess"
+                }
+
+            }
+        }
+        else 
+        {
+            opposed.description = "TOW.Chat.Failure"
+        }
+
+        return opposed;
     }
 
     update(data)
@@ -250,5 +347,21 @@ export class OldWorldTest extends WarhammerTestBase
     get targetTokens() 
     {
         return this.targets.map(i => i.getActiveTokens()[0]?.document);
+    }
+
+    get defendingAgainst()
+    {
+        return game.messages.get(this.context.defending)?.system.test;
+    }
+
+    // If defending, get the opposed message handling the result
+    get opposedMessage()
+    {
+        return game.messages.get(this.defendingAgainst?.context.opposedIds[this.context.speaker.token])
+    }
+
+    get item()
+    {
+        return fromUuidSync(this.context.itemUuid);
     }
 }

@@ -1,7 +1,34 @@
-<div class="opposed">
+<div
+    class="opposed {{#if (eq result.outcome 'success')}}success{{else if (eq result.outcome 'failure')}}failure{{/if}}">
     <h4>{{localize "TOW.Chat.OpposedTitle" attacker=attacker.name defender=defender.name}}</h4>
     <div class="tokens">
-        <img src="{{attacker.texture.src}}">
-        <img src="{{defender.texture.src}}">
+        {{log this}}
+        <img src="{{attacker.texture.src}}" {{#if (eq result.outcome "success" )}}class="winner" {{else if (eq
+            result.outcome "failure" )}}class="loser" {{/if}}>
+        <div class="successes">
+            {{#if result.computed}}
+                <h3>{{numberFormat result.successes sign=true}}</h3>
+            {{/if}}
+        </div>
+        <img src="{{defender.texture.src}}" {{#if (eq result.outcome "failure" )}}class="winner" {{else if (eq
+            result.outcome "success" )}}class="loser" {{/if}}>
     </div>
+
+
+    {{#if result.computed}}
+        <div class="result">
+            <h4>{{localize result.description}}</h4>
+            {{#if result.damage}}
+                <button data-action="applyDamage"><i class="fa-solid fa-user-minus"></i>
+                    {{localize "TOW.Chat.ApplyDamage" damage=result.damage.value}}</button>
+            {{/if}}
+        </div>
+    {{else}}
+        <div class="responses">
+            {{#each responseOptions}}
+                <button data-action="opposedResponse" data-type="{{this.id}}" data-tooltip="{{this.tooltip}}"><i
+                        class="fa-solid {{this.icon}}"></i></button>
+            {{/each}}
+        </div>
+    {{/if}}
 </div>

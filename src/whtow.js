@@ -30,6 +30,13 @@ import SpellSheet from "./sheet/item/types/spell-sheet";
 import ToolKitSheet from "./sheet/item/types/toolKit-sheet";
 import TrappingSheet from "./sheet/item/types/trapping-sheet";
 import WoundSheet from "./sheet/item/types/wound-sheet";
+import { OldWorldChatMessage } from "./document/message";
+import { OldWorldTest } from "./system/tests/test";
+import { OldWorldTestMessageModel } from "./model/message/test";
+import { OldWorldActiveEffectModel } from "./model/effect/effect";
+import OldWorldActiveEffectConfig from "./sheet/effect";
+import { WeaponTest } from "./system/tests/weapon";
+import { OldWorldOpposedMessageModel } from "./model/message/opposed";
 
 Hooks.once("init", () => 
 {
@@ -42,7 +49,7 @@ Hooks.once("init", () =>
     CONFIG.Actor.documentClass = OldWorldActor;
     CONFIG.Item.documentClass = OldWorldItem;
     CONFIG.ActiveEffect.documentClass = OldWorldEffect;
-    // CONFIG.ChatMessage.documentClass = OldWorldChatMessage;
+    CONFIG.ChatMessage.documentClass = OldWorldChatMessage;
 
     Actors.registerSheet("whtow", ActorSheetOldWorldCharacter, { types: ["character"], makeDefault: true });
     // Actors.registerSheet("whtow", OldWorldPatronSheet, { types: ["patron"], makeDefault: true });
@@ -63,10 +70,7 @@ Hooks.once("init", () =>
     Items.registerSheet("whtow", WoundSheet, {types : ["wound"], makeDefault: true });
     // Items.registerSheet("whtow", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
 
-    // DocumentSheetConfig.registerSheet(ActiveEffect, "whtow", OldWorldActiveEffectConfig, {makeDefault : true});
-
-    // CONFIG.ActiveEffect.sheetClass = undefined;
-    // DocumentSheetConfig.registerSheet(JournalEntryPage, "whtow", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });
+    DocumentSheetConfig.registerSheet(ActiveEffect, "whtow", OldWorldActiveEffectConfig, {makeDefault : true});
 
     CONFIG.Actor.dataModels["character"] = CharacterModel;
     // CONFIG.Actor.dataModels["npc"] = OldWorldNPCModel;
@@ -85,8 +89,9 @@ Hooks.once("init", () =>
     CONFIG.Item.dataModels["armour"] = ArmourModel;
     CONFIG.Item.dataModels["asset"] = AssetModel;
 
-    // CONFIG.ActiveEffect.dataModels["base"] = OldWorldActiveEffectModel
-    // CONFIG.ChatMessage.dataModels["test"] = WarhammerTestMessageModel;
+    CONFIG.ActiveEffect.dataModels["base"] = OldWorldActiveEffectModel
+    CONFIG.ChatMessage.dataModels["test"] = OldWorldTestMessageModel;
+    CONFIG.ChatMessage.dataModels["opposed"] = OldWorldOpposedMessageModel;
 
     game.oldworld = {
         config : OLDWORLD
@@ -97,6 +102,11 @@ Hooks.once("init", () =>
 
         // },
     };
+
+    game.oldworld.config.rollClasses = {
+        "OldWorldTest" : OldWorldTest,
+        "WeaponTest" : WeaponTest
+    }
 
     // registerSettings();
     registerHandlebars();

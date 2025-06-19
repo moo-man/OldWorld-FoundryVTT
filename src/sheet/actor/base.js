@@ -13,22 +13,33 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
       ]
     },
     actions: {
-      toggleSummary: this._toggleSummary,
-      createItem: this._onCreateItem,
+      removeOpposed : this._onRemoveOpposed
     },
     defaultTab: "main"
   }
 
   async _prepareContext(options) {
     let context = await super._prepareContext(options);
+    context.conditions = this.formatConditions();
     return context;
   }
 
 
   _addEventListeners() {
     super._addEventListeners();
-
   }
+  
+
+  formatConditions()
+  {
+      let conditions = foundry.utils.deepClone(game.oldworld.config.conditions);
+      for(let key in conditions)
+      {
+        conditions[key].existing = this.document.hasCondition(key)
+      }
+      return conditions;
+  }
+
 
 
   async _handleEnrichment() {
@@ -81,6 +92,11 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
         }
       }
     ];
+  }
+
+  static _onRemoveOpposed(ev, target)
+  {
+    this.actor.system.clearOpposed();
   }
 
 }

@@ -1,3 +1,31 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{formGroup system.schema.fields.lore value=source.system.lore choices=(config "magicLore")}}
+    {{formGroup system.schema.fields.cv value=source.system.cv}}
+
+
+    <div class="form-group">
+        <label>{{localize "TOW.Target"}}</label>
+        <div class="form-fields">
+            {{formInput system.schema.fields.target.fields.value value=source.system.target.value choices=(config "target")}}
+        </div>
+        {{formInput system.schema.fields.target.fields.custom value=source.system.target.custom classes="custom" placeholder=(localize 'TOW.Sheet.Custom')}}
+    </div>
+
+        <div class="form-group">
+        <label>{{localize "TOW.Range"}}</label>
+        <div class="form-fields">
+            {{formInput system.schema.fields.range.fields.value value=source.system.range.value choices=(config "range")}}
+        </div>
+        {{formInput system.schema.fields.range.fields.custom value=source.system.range.custom classes="custom" placeholder=(localize 'TOW.Sheet.Custom')}}
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "TOW.Duration"}}</label>
+        <div class="form-fields">
+            <input type="text" name="system.duration.custom" value="{{source.system.duration.custom}}">
+            {{formInput system.schema.fields.duration.fields.value value=source.system.duration.value choices=(config "duration")}}
+        </div>
+    </div>
+    {{formGroup system.schema.fields.damage.fields.formula value=source.system.damage.formula}}
 
 </section>

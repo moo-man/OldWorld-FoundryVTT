@@ -21,15 +21,27 @@ export class WeaponTest extends OldWorldTest
         // this.result.dice = dice;
     }
 
-
-
     get weapon()
     {
-
+        return this.item;
     }
 
-    get item()
+   /**
+    * Computes damage ontop of normal opposed test evaluation
+    * @inheritdoc
+    */
+    computeOpposedResult(test)
     {
+        let result = super.computeOpposedResult(test);
 
+        if (result.success && result.computed)
+        {
+            result.damage = {
+                value : this.weapon.system.damage.value + result.successes,
+                ignoreArmour : this.weapon.system.damage.ignoreArmour
+            }
+        }
+
+        return result;
     }
 }

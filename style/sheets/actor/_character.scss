@@ -1,44 +1,25 @@
 .application.whtow.actor.character {
 
-    .sheet-header {
-        display: flex;
-        text-align: center;
-        input {
-            text-align: center;
-        }
-        .header-details {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            .header-row {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                > * {
-                    flex: 1;
-                    label {
-                        margin: 0.5rem 0px;                
-                    }
-                }
-                .status {
-                    flex: 0.5;
-                }
-            }
-
-        }
-    }
 
     section.tab.main {
         overflow: auto;
-        padding-top: 1rem;
         &.active {
             display: flex;
+            flex-direction: row;
             gap: 1rem;
         }
 
         .attribute-box {
             margin: 0px;
+        }
+
+        .lists {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            .attribute-box {
+                flex: unset;
+            }
         }
     }
 

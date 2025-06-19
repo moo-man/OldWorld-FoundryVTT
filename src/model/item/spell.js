@@ -8,9 +8,24 @@ export class SpellModel extends BaseItemModel
     {
         let schema = super.defineSchema();
         schema.cv = new fields.NumberField({min: 0});
-        schema.target = new fields.StringField({})
-        schema.range = new fields.StringField({});
-        schema.duration = new fields.StringField({});
+        schema.successes = new fields.NumberField({min: 0});
+        schema.lore = new fields.StringField({});
+        schema.target = new fields.SchemaField({
+            custom : new fields.StringField({}),
+            value : new fields.StringField({})
+        });
+        schema.range = new fields.SchemaField({
+            custom : new fields.StringField({}),
+            value : new fields.StringField({})
+        });
+        schema.duration = new fields.SchemaField({
+            custom : new fields.StringField({}),
+            value : new fields.StringField({})
+        });
+        schema.damage = new fields.SchemaField({
+            formula: new fields.StringField(),
+            potency : new fields.BooleanField()
+        })
         return schema;
     }
 }

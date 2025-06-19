@@ -69,7 +69,7 @@
             "Gold" : "Gold"
         },
 
-        "Range" : {
+        "RangeType" : {
             "Close" : "Close",
             "Short" : "Short",
             "Medium" : "Medium",
@@ -79,6 +79,12 @@
 
         "Melee" : "Melee",
         "Ranged" : "Ranged",
+        "Brawn" : "Brawn",
+
+        "Duration" : "Duration",
+        "Target" : "Target",
+        "Range" : "Range",
+        "Damage" : "Range",
 
         "Glorious" : "Glorious",
         "Grim" : "Grim",
@@ -115,6 +121,8 @@
             "CareerTalent" : "Career Talent",
             "Res" : "Res.",
             "Equipped" : "Equipped",
+
+            "Custom" : "Custom",
 
             "Status" : "Status",
             "Resilience" : "Resilience",
@@ -165,36 +173,37 @@
             "Silver" : "Silver",
             "Gold" : "Gold",
 
-            "Speeds" :  {
-                "Slow" : "Slow",
-                "Normal" : "Normal",
-                "Fast" : "Fast"
-            },
-
-            "MagicLore" : {
-                "Battle" : "Battle",
-                "Elementalism" : "Elementalism",
-                "Illusion" : "Illusion",
-                "Necromancy" : "Necromancy"
-            },
-
-            "TargetType" : {
-                "Self" : "Self",
-                "Creature" : "Creature",
-                "Zone" : "Zone",
-                "Object" : "Object"
-            },
-
-            "DurationType" : {
-                "Immediate" : "Immediate",
-                "Battle" : "Battle",
-                "Permanent" : "Permanent",
-                "Varies" : "Varies",
-                "Turns" : "Turns"
-            }
-
+            "DefendingAgainst" : "Defending Against"
         },
         
+        "Speeds" :  {
+            "Slow" : "Slow",
+            "Normal" : "Normal",
+            "Fast" : "Fast"
+        },
+
+        "MagicLore" : {
+            "Battle" : "Battle",
+            "Elementalism" : "Elementalism",
+            "Illusion" : "Illusion",
+            "Necromancy" : "Necromancy"
+        },
+
+        "TargetType" : {
+            "Self" : "Self",
+            "Creature" : "Creature",
+            "Zone" : "Zone",
+            "Object" : "Object"
+        },
+
+        "DurationType" : {
+            "Immediate" : "Immediate",
+            "Battle" : "Battle",
+            "Permanent" : "Permanent",
+            "Varies" : "Varies",
+            "Turns" : "Turns"
+        },
+
         "Test" : {
             "SkillTest" : "{skill} Test",
             "WeaponTest" : "{weapon} Test",
@@ -206,7 +215,15 @@
 
         "Chat" : {
             "OpposedTitle" : "{attacker} is targeting {defender}",
-            "Successes" : "{successes} Successes"
+            "Unopposed" : "Unopposed",
+            "Successes" : "{successes} Successes",
+            "Tie" : "Tie",
+
+            "Failure" : "Failure!",
+            "MarginalSuccesss" : "Marginal Successs",
+            "Success" : "Success",
+            "TotalSuccess" : "Total Success!",
+            "ApplyDamage" : "Apply {damage} Damage"
         },
         
         "WoundHealing" : {
@@ -235,15 +252,14 @@
             "Prone" : "Prone",
             "Staggered" : "Staggered"
         }
-
     },
 
     "WH" : {
         "Models" : {
             "weapon"  : {
                 "FIELDS" : {
-                    "category" : {
-                        "label" : "Category"
+                    "skill" : {
+                        "label" : "Skill"
                     },
                     "grip" : {
                         "label" : "Grip"
@@ -283,7 +299,34 @@
                 }
             },
             "spell"  : {
-                "FIELDS" : {}
+                "FIELDS" : {
+                    "cv" : {
+                        "label" : "Casting Value"
+                    },
+                    "lore" : {
+                        "label" : "Lore"
+                    },
+                    "target" : {
+                        "value" : {
+                            "label" : "Target"
+                        }
+                    },
+                    "range" : {
+                        "value" : {
+                            "label" : "Range"
+                        }
+                    },
+                    "duration" : {
+                        "value" : {
+                            "label" : "Duration"
+                        }
+                    },
+                    "damage" : {
+                        "formula" : {
+                            "label" : "Damage"
+                        }
+                    }
+                }
             },
             "blessing"  : {
                 "FIELDS" : {}

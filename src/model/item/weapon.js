@@ -9,7 +9,7 @@ export class WeaponModel extends EquippableItem
     static defineSchema()
     {
         let schema = super.defineSchema();
-        schema.category = new fields.StringField({choices : {melee : "TOW.Melee", ranged : "TOW.Ranged"}, initial : "melee"})
+        schema.skill = new fields.StringField({choices : {melee : "TOW.Melee", ranged : "TOW.Ranged", brawn : "TOW.Brawn"}, initial : "melee"})
         schema.range = new fields.SchemaField({
             min : new fields.NumberField({choices : game.oldworld.config.range, initial : 0}),
             max : new fields.NumberField({choices : game.oldworld.config.range, initial : 0}),
@@ -23,12 +23,12 @@ export class WeaponModel extends EquippableItem
 
     get isMelee()
     {
-        return this.category == "melee";
+        return ["melee", "brawn"].includes(this.skill);
     }
 
     get isRanged()
     {
-        return this.category == "ranged";
+        return this.skill == "ranged";
     }
 
     computeOwned(actor) 

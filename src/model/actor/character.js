@@ -14,9 +14,9 @@ export class CharacterModel extends StandardActorModel
         schema.origin = new fields.EmbeddedDataField(SingletonItemModel);
         schema.career = new fields.EmbeddedDataField(SingletonItemModel);
         schema.coins = new fields.SchemaField({
-            brass : new fields.NumberField(),
-            silver : new fields.NumberField(),
-            gold : new fields.NumberField()
+            brass : new fields.NumberField({initial: 0, min: 0}),
+            silver : new fields.NumberField({initial: 0, min: 0}),
+            gold : new fields.NumberField({initial: 0, min: 0})
         })
         schema.xp = new fields.SchemaField({
             value : new fields.NumberField({initial: 0, min: 0})

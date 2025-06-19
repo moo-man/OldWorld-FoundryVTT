@@ -1,4 +1,4 @@
-<div class="dialog-fields">
+<div class="dice-fields">
     <div class="dice-modifiers">
         <div>
             Penalty
@@ -49,19 +49,4 @@
         </div>
     </div>
 
-    {{{subTemplate}}}
-
-    <div class="form-group">
-        <label>Roll Mode</label>
-        <div class="form-fields">
-            <select name="rollMode">
-                {{#select fields.rollMode}}
-                    <option value="publicroll">{{localize "CHAT.RollPublic"}}</option>
-                    <option value="gmroll">{{localize "CHAT.RollPrivate"}}</option>
-                    <option value="blindroll">{{localize "CHAT.RollBlind"}}</option>
-                    <option value="selfroll">{{localize "CHAT.RollSelf"}}</option>
-                {{/select}}
-            </select>
-        </div>
-    </div>
 </div>

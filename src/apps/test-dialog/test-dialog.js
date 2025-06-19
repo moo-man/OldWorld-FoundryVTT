@@ -48,11 +48,14 @@ export default class TestDialog extends WarhammerRollDialogV2
     static PARTS = {
         fields : {
             template : "systems/whtow/templates/apps/test-dialog/test-dialog.hbs",
-            container : {id : "base", classes : ["dialog-base"]}
+            fields: true
         },
         modifiers : {
             template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
-            container : {id : "base", classes : ["dialog-base"]}
+            modifiers: true
+        },
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
         },
         footer : {
             template : "templates/generic/form-footer.hbs"
@@ -141,11 +144,11 @@ export default class TestDialog extends WarhammerRollDialogV2
         let value;
         if (!(target.dataset.target in this.userEntry))
         {
-            value = this.fields[target.dataset.target] - 1;
+            value = Math.max(0, this.fields[target.dataset.target] - 1);
         }
         else 
         {
-            value = this.userEntry[target.dataset.target] - 1;
+            value = Math.max(0, this.userEntry[target.dataset.target] - 1);
         }
 
         foundry.utils.setProperty(this.userEntry, target.dataset.target, value)
@@ -180,12 +183,16 @@ export default class TestDialog extends WarhammerRollDialogV2
         context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill: game.oldworld.config.skills[skill]});
         context.title += context.appendTitle || "";
 
+        context.defending = actor.system.opposed?.id;
+
         foundry.utils.mergeObject(dialogData.fields, context.fields);
 
         dialogData.data.glorious = context.glorious || 0;
         dialogData.data.grim = context.grim || 0;
         dialogData.data.dice = actor.system.characteristics[dialogData.data.characteristic].base;
         dialogData.fields.target = actor.system.skills[skill].base;
+
+
 
         return dialogData;
     }

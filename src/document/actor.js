@@ -6,12 +6,6 @@ import OldWorldDocumentMixin from "./mixin";
 
 export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
 {
-    clearOpposed()
-    {
-        return this.update({"flags.whtow.-=opposed" : null});
-    }
-
-
     async setupSkillTest(skill, context, options)
     {
         await this._setupTest(TestDialog, OldWorldTest, skill, context, options)
@@ -20,5 +14,19 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
     async setupWeaponTest(weapon, context, options)
     {
         await this._setupTest(WeaponDialog, WeaponTest, weapon,  context, options)
+    }
+
+    async addCondition(condition)
+    {
+        if (!this.hasCondition(condition))
+        {
+            this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], {condition: true})
+        }
+    }
+
+    async removeCondition(condition)
+    {
+        let existing = this.hasCondition(condition)
+        existing?.delete();
     }
 }
