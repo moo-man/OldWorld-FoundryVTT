@@ -1,4 +1,3 @@
-import { NPCCombatModel } from "./components/combat";
 import { StandardActorModel } from "./standard";
 let fields = foundry.data.fields;
 
