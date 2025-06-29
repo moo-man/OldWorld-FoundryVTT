@@ -28,4 +28,13 @@ export class SpellModel extends BaseItemModel
         })
         return schema;
     }
+
+    get progress()
+    {
+        if (this.parent.actor?.system.magic.casting.spell?.id == this.parent.id)
+        {
+            return this.parent.actor?.system.magic.casting.progress
+        }
+        else return 0
+    }
 }

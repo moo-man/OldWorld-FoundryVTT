@@ -55,6 +55,33 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
     let getParent = this._getParent.bind(this);
     return [
       {
+        name: "Clear Progress",
+        icon: '<i class="fa-solid fa-broom-wide"></i>',
+        condition: li => {
+          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
+          if (uuid)
+          {
+            let parsed = foundry.utils.parseUuid(uuid);
+            if (parsed.type == "Item")
+            {
+              let item = this.actor.items.get(parsed.id);
+              if (item?.type == "spell" && item.system.progress)
+              return true;
+            }
+            else
+            {
+              return false;
+            }
+          }
+          else return false
+        },
+        callback: async li => {
+          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+          let parsed = foundry.utils.parseUuid(uuid);
+          this.actor.update({[`system.magic.casting.-=${parsed.id}`] : null});
+        }
+      },
+      {
         name: "Edit",
         icon: '<i class="fas fa-edit"></i>',
         condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),

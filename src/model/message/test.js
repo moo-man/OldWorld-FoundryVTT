@@ -3,8 +3,9 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
 
     static actions = {
         toggleDie : this._onToggleDie,
-        expandDice : this._onExpandDice,
-        expandItem : this._onExpandItem
+        expandItem : this._onExpandItem,
+        rollMiscast : this._onRollMiscast,
+        castSpell : this._onCastSpell
     }
 
     /**
@@ -92,13 +93,15 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
     {
       let header = html.querySelector(".message-header");
 
+      let test = this.test;
+
       let div = document.createElement("div")
       div.classList.add("message-token");
       let image = document.createElement("img");
       image.src = await this.getHeaderToken();
       image.style.zIndex = 1;
       div.appendChild(image);
-      if (this.test.actor.isMounted && this.test.actor.mount)
+      if (test.actor.isMounted && test.actor.mount)
       {
         div.classList.add("mounted");
         let mount = document.createElement("img");
@@ -109,6 +112,19 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
       header.insertBefore(div, header.firstChild);
 
       warhammer.utility.replacePopoutTokens(html);
+
+
+
+      if (test.result.rerolls.length)
+      {
+        let dice = html.querySelector(".dice");
+        dice.addEventListener("mouseenter", async ev => {
+            let breakdown = await renderTemplate("systems/whtow/templates/chat/tests/dice-breakdown.hbs", test)
+            game.tooltip.activate(ev.target, {html: breakdown, direction:"LEFT"})
+        })
+        
+      }
+
 
       this._checkOpposed(html)
     }
@@ -155,20 +171,6 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
         }
     }
 
-    static _onExpandDice(ev, target)
-    {
-        let expander = target.closest(".reroll-container").querySelector(".reroll-expander")
-        expander?.classList.toggle("expanded");
-        if (expander.classList.contains("expanded"))
-        {
-            target.querySelector("i").classList.replace("fa-caret-down", "fa-caret-up");
-        }
-        else 
-        {
-            target.querySelector("i").classList.replace("fa-caret-up", "fa-caret-down");
-        }
-    }
-
     static _onExpandItem(ev, target) {
         target.parentElement.querySelector(".description").classList.toggle("expanded");
     }
@@ -176,5 +178,16 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
     static _onToggleDie(ev, target)
     {
         target.classList.toggle("selected");
+    }
+
+    static _onRollMiscast(ev, target)
+    {
+        let test = this.test;
+        test.actor.system.rollMiscast();
+    }
+    static _onCastSpell(ev, target)
+    {
+        let test = this.test;
+        test.actor.system.castSpell(test.spell, test.result.potency);
     }
 }

@@ -3,8 +3,6 @@ import TestDialog from "./test-dialog";
 export default class WeaponDialog extends TestDialog
 {
 
-    subTemplate = "systems/whtow/templates/apps/test-dialog/weapon-dialog.hbs"
-
     static DEFAULT_OPTIONS = {
         classes: ["weapon-dialog"]
     };
@@ -16,7 +14,10 @@ export default class WeaponDialog extends TestDialog
         });
     }
 
-    
+    get weapon()
+    {
+        return this.data.weapon;
+    }
 
     async computeFields() 
     {

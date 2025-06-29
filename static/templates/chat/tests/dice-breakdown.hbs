@@ -1,0 +1,50 @@
+<div class="reroll-breakdown">
+
+    <div class="set-label">Initial</div>
+    <div class="dice-set">
+        {{#each result.initialDice}}
+            <div class="die {{#if this.success}}success{{else}}failure{{/if}}" data-index="{{@key}}">
+                <span class="die-result">{{this.result}}</span>
+                {{#if this.success}}
+                    <img src="systems/whtow/assets/dice/d10-success.svg">
+                {{else}}
+                    <img src="systems/whtow/assets/dice/d10-failure.svg">
+                {{/if}}
+            </div>
+        {{/each}}
+    </div>
+
+    {{#each result.rerolls as |reroll|}}
+        <div class="set-label">{{reroll.label}}<i class="fa-solid fa-rotate"></i></div>
+        <div class="dice-set">
+            {{#each reroll.dice}}
+                <div class="die {{#if this.success}}success{{else}}failure{{/if}}" data-index="{{@key}}">
+                    {{#if this.active}}
+                        <span class="die-result">{{this.result}}</span>
+                        {{#if this.success}}
+                            <img src="systems/whtow/assets/dice/d10-success.svg">
+                        {{else}}
+                            <img src="systems/whtow/assets/dice/d10-failure.svg">
+                        {{/if}}
+                    {{/if}}
+
+                </div>
+            {{/each}}
+        </div>
+    {{/each}}
+
+    <div class="set-label">Active</div>
+    <div class="dice-set">
+        {{#each result.dice}}
+            <div data-action="toggleDie" data-index="{{@key}}"
+                class="die {{#if this.success}}success{{else}}failure{{/if}}">
+                <span class="die-result">{{this.result}}</span>
+                {{#if this.success}}
+                    <img src="systems/whtow/assets/dice/d10-success.svg">
+                {{else}}
+                    <img src="systems/whtow/assets/dice/d10-failure.svg">
+                {{/if}}
+            </div>
+        {{/each}}
+    </div>
+</div>

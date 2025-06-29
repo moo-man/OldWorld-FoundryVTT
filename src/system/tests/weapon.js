@@ -3,14 +3,10 @@ import { OldWorldTest } from "./test";
 export class WeaponTest extends OldWorldTest
 {
 
-    subTemplate = "";
-
     static _separateDialogData(data)
     {
         return foundry.utils.mergeObject(super._separateDialogData(data), {context : {rollClass : "WeaponTest"}});
     }
-
-
 
     computeResult()
     {

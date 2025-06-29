@@ -47,6 +47,7 @@ export class OldWorldTest extends WarhammerTestBase
 
     async roll()
     {
+        await this.preRollOperations();
         this.result = {
             rerolls : []
         };
@@ -68,6 +69,7 @@ export class OldWorldTest extends WarhammerTestBase
             await this.grimReroll(false);
         }
         this.computeResult();
+        await this.postRollOperations();
     }
 
 
@@ -102,13 +104,28 @@ export class OldWorldTest extends WarhammerTestBase
         this.result.dice = dice;
     }
 
+
+    // Perform any updates based on test result
+    async postRollOperations()
+    {
+
+    }
+
+    // Perform any updates before the roll is performed
+    async preRollOperations()
+    {
+
+    }
+    
+
+
     async sendToChat({newMessage=false}={})
     {
 
         let subTemplate 
         if (this.constructor.subTemplate)
         {
-            subTemplate = await foundry.applications.handlebars.renderTemplate(this.subTemplate, this);
+            subTemplate = await foundry.applications.handlebars.renderTemplate(this.constructor.subTemplate, this);
         }
         this.subTemplate = subTemplate
         if (this.item)
@@ -291,11 +308,11 @@ export class OldWorldTest extends WarhammerTestBase
     async gloriousReroll(compute=true)
     {
         let indices = this.result.dice.map((d, index) => {
-            if (!d.success)
+            if (!d.success && !d.preventReroll)
             {
                 return index
             }
-        });
+        }).filter(i => i);
         if (indices.length)
         {
             await this.reroll(game.i18n.localize("TOW.Glorious"), indices, compute);
@@ -305,11 +322,11 @@ export class OldWorldTest extends WarhammerTestBase
     async grimReroll(compute=true)
     {
         let indices = this.result.dice.map((d, index) => {
-            if (d.success)
+            if (d.success && !d.preventReroll)
             {
                 return index
             }
-        });
+        }).filter(i => i);
 
         if (indices.length)
         {

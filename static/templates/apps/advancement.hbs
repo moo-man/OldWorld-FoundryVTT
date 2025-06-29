@@ -57,7 +57,7 @@
 
                         <div class="small">
                             {{#if (isGM)}}
-                                <input type="number" value="{{this.value}}" data-action="editSkill">
+                                <input type="number" value="{{this.value}}" data-action="editBase" data-type="skill" data-skill="{{@key}}">
                             {{else}}
                                 {{this.value}}
                             {{/if}}
@@ -93,7 +93,7 @@
                         <div class="row-content">
                             <div class="list-name">
                                 <img src="{{this.img}}">
-                                <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                                <a class="label">{{this.name}}</a>
                             </div>
                             <div>
                                 <input type="number" disabled value="{{this.system.cost}}">

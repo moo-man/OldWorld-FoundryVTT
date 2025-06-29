@@ -10,7 +10,7 @@ export class BaseItemModel extends BaseWarhammerItemModel
         })
         return schema;
     }
-
+    
     /**
      * Used by sheet dropdowns, posting to chat, and test details
      */

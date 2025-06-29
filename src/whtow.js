@@ -40,6 +40,7 @@ import { OldWorldOpposedMessageModel } from "./model/message/opposed";
 import registerSettings from "./system/settings";
 import { NPCModel } from "./model/actor/npc";
 import OldWorldTables from "./system/tables";
+import { CastingTest } from "./system/tests/cast";
 
 Hooks.once("init", () => 
 {
@@ -108,7 +109,8 @@ Hooks.once("init", () =>
 
     game.oldworld.config.rollClasses = {
         "OldWorldTest" : OldWorldTest,
-        "WeaponTest" : WeaponTest
+        "WeaponTest" : WeaponTest,
+        "CastingTest" : CastingTest
     }
 
     CONFIG.queries.addCondition = async (data) => {

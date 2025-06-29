@@ -1,5 +1,7 @@
+import CastingDialog from "../apps/test-dialog/spell-dialog";
 import TestDialog from "../apps/test-dialog/test-dialog";
 import WeaponDialog from "../apps/test-dialog/weapon-dialog";
+import { CastingTest } from "../system/tests/cast";
 import { OldWorldTest } from "../system/tests/test";
 import { WeaponTest } from "../system/tests/weapon";
 import OldWorldDocumentMixin from "./mixin";
@@ -14,6 +16,11 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
     async setupWeaponTest(weapon, context, options)
     {
         await this._setupTest(WeaponDialog, WeaponTest, weapon,  context, options)
+    }
+
+    async setupCastingTest(spell, context, options)
+    {
+        await this._setupTest(CastingDialog, CastingTest, spell, context, options)
     }
 
     async addCondition(condition)

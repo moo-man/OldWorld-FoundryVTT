@@ -1,0 +1,57 @@
+aside#tooltip {
+    &:has(.reroll-breakdown)
+    {
+        background: url(/ui/parchment.jpg);
+        color: black;
+    }
+    .reroll-breakdown {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        .set-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: var(--font-size-18);
+            opacity: 0.7;
+        }
+    }
+    .dice-set {
+
+        justify-content:center;
+        column-gap: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        .die {
+            position: relative;
+            width: 40px;
+            padding: 5px;
+
+            span.reroll-icon {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                text-shadow: 0px 0px 10px black;
+                color: var(--color-light-2)
+            }
+
+            span.die-result {
+                font-weight: bold;
+                text-shadow: 0px 0px 10px black;
+                position: absolute;
+                font-size: var(--font-size-18);
+                left: 15px;
+                top: 10px;
+                color: var(--color-light-2)
+            }   
+
+            cursor: pointer;
+            &.selected {
+                border-radius: 50%;
+                background: gold;
+            }
+        }
+
+    }
+}

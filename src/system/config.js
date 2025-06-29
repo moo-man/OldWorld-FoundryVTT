@@ -301,23 +301,7 @@ const TOW_CONFIG = {
 
 
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
-    // {
-    //     pattern : /@TableHTML\[(.+?)\](?:{(.+?)})?/gm,
-    //     enricher : async (match) => 
-    //     {
-    //         let table = await fromUuid(match[1]);
-    //         let options = match[2].split(",").map(i => i.trim());
-    //         let label = options[0];
-    //         if (table)
-    //         {
-    //             return $(await TOW.ConditionName.ML(table, label, options))[0];
-    //         }
-    //         else 
-    //         {
-    //             return `Error - Table ${match[0]} not Found`;
-    //         }
-    //     }
-    // }
+
 ]);
 
 foundry.utils.mergeObject(OLDWORLD, defaultWarhammerConfig)

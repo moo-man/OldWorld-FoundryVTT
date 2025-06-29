@@ -1,0 +1,63 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+
+    <div class="miscast-container">
+
+        <div class="miscast-pool">
+            <label>{{localize "TOW.Sheet.MiscastPool"}}</label>
+
+            <div class="dice">
+                {{#each miscasts}}
+                    <div {{#if (isGM)}}data-action="togglePip" {{/if}} data-index="{{@key}}"
+                        data-path="system.magic.miscasts"
+                        class="die {{#if active}}active{{#if exceeds}} exceeds {{/if}} {{else}}inactive{{/if}}">
+                        <img src="systems/whtow/assets/dice/d10.svg">
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="miscast-controls">
+            <button data-action="disposeMiscast" {{#unless actor.system.magic.miscasts}}disabled{{/unless}}>{{localize "TOW.Sheet.Dispose"}}</button>
+            <button data-action="rollMiscast" {{#unless actor.system.magic.miscasts}}disabled{{/unless}}>{{localize "TOW.Sheet.Miscast"}}</button>
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.Spells"}}</div>
+            <div class="small">{{localize "TOW.Sheet.CV"}}</div>
+            <div>{{localize "TOW.Sheet.Target"}}</div>
+            <div>{{localize "TOW.Sheet.Range"}}</div>
+            <div>{{localize "TOW.Sheet.Duration"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="spell"><i
+                        class="fa-regular fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.spell}}
+                <div class="list-row combat" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="spell">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div class="small">{{this.system.cv}}</div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{#if this.system.progress}}
+                    <div class="progress-bar">
+                        <div class="fill {{this.system.lore}}"  style="width:{{pct this.system.progress this.system.cv}}%">
+                        </div>
+                    </div>
+                    {{/if}}
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

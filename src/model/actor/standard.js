@@ -1,5 +1,7 @@
+import OldWorldTables from "../../system/tables";
 import { BaseActorModel } from "./base";
 import { CharacteristicsModel } from "./components/characteristics";
+import { MagicDataModel } from "./components/magic";
 import { NPCCharacteristicsModel } from "./components/npc-characteristics";
 import { NPCSkillsModel } from "./components/npc-skills";
 import { SkillsModel } from "./components/skills";
@@ -22,7 +24,8 @@ export class StandardActorModel extends BaseActorModel
         })
         schema.resilience = new fields.SchemaField({
             value : new fields.NumberField(),
-        })
+        }),
+        schema.magic = new fields.EmbeddedDataField(MagicDataModel)
         return schema;
     }
 
@@ -55,6 +58,16 @@ export class StandardActorModel extends BaseActorModel
         catch(e)
         {
             console.error(`(${this.parent.name}) Error when computing resilience: ` + e)
+        }
+    }
+
+        
+    _addModelProperties()
+    {
+        super._addModelProperties();
+        for(let cast of Object.values(this.magic.casting))
+        {
+            cast.spell.relative = this.parent.items;
         }
     }
 
@@ -165,6 +178,20 @@ export class StandardActorModel extends BaseActorModel
             }
 
             return choice;
+    }
+
+    rollMiscast()
+    {
+        OldWorldTables.rollTable("miscast", `${this.magic.miscasts}d10`)
+        this.parent.update({"system.magic.miscasts" : 0})
+    }
+
+    async castSpell(spell, potency)
+    {
+        if(this.magic.casting.spell.id == spell.id)
+        {
+            await this.parent.update({"system.magic.casting" : {spell : {uuid : "", id : "", name : ""}, progress : 0}});
+        }
     }
 }
 

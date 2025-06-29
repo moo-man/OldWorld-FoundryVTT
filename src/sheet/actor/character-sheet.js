@@ -27,6 +27,8 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
         tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
         main: { scrollable: [""], classes: ["main"], template: 'systems/whtow/templates/actor/character/character-main.hbs' },
         combat: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-combat.hbs' },
+        magic: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-magic.hbs' },
+        religion: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-religion.hbs' },
         effects: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-effects.hbs' },
         trappings: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-trappings.hbs' },
         notes: { scrollable: [""], template: 'systems/whtow/templates/actor/character/character-notes.hbs' },
@@ -80,9 +82,11 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
         {
           this.actor.setupWeaponTest(this._getUUID(ev));
         }
+        else if (target.dataset.type == "spell")
+        {
+          this.actor.setupCastingTest(this._getUUID(ev));
+        }
 
-        // let roll = await new Roll(`${characteristic}d10cs<${skill.value}`).roll();
-        // roll.toMessage({flavor : game.oldworld.config.skills[skill], speaker : ChatMessage.getSpeaker({actor : this.actor})})
       }
 
       static _onAdvancement(ev, target)

@@ -7,7 +7,7 @@
     <div class="title">
         {{context.title}}
     </div>
-    
+
     <div class="target">
         {{testData.target}}
     </div>
@@ -15,113 +15,53 @@
 
     <h4>{{localize "TOW.Chat.Successes" successes=this.result.successes}}</h4>
 
-    <div class="dice-set">
-        {{#each result.dice}}
-            <div data-action="toggleDie" data-index="{{@key}}"
-                class="die {{#if this.success}}success{{else}}failure{{/if}}">
-                <span class="result">{{this.result}}</span>
-                {{#if this.rerolled}}
-                    <span class="reroll-icon"><i class="fa-solid fa-rotate"></i></span>
-                {{/if}}
-                {{#if this.success}}
-                    <img src="systems/whtow/assets/dice/d10-success.svg">
-                {{else}}
-                    <img src="systems/whtow/assets/dice/d10-failure.svg">
-                {{/if}}
-            </div>
-        {{/each}}
-    </div>
-
-    {{#if result.rerolls.length}}
-        <div class="reroll-container">
-            <div class="control">
-                <a data-action="expandDice"><i class="fa-solid fa-caret-down"></i></a>
-            </div>
-
-            <div class="reroll-expander">
-                <div class="reroll-breakdown">
-
-                    <div class="set-label">Initial</div>
-                    <div class="dice-set">
-                        {{#each result.initialDice}}
-                            <div class="die {{#if this.success}}success{{else}}failure{{/if}}" data-index="{{@key}}">
-                                <span class="result">{{this.result}}</span>
-                                {{#if this.success}}
-                                    <img src="systems/whtow/assets/dice/d10-success.svg">
-                                {{else}}
-                                    <img src="systems/whtow/assets/dice/d10-failure.svg">
-                                {{/if}}
-                            </div>
-                        {{/each}}
-                    </div>
-
-                    {{#each result.rerolls as |reroll|}}
-                        <div class="set-label">{{reroll.label}}<i class="fa-solid fa-rotate"></i></div>
-                        <div class="dice-set">
-                            {{#each reroll.dice}}
-                                <div class="die {{#if this.success}}success{{else}}failure{{/if}}"
-                                    data-index="{{@key}}">
-                                    {{#if this.active}}
-                                        <span class="result">{{this.result}}</span>
-                                        {{#if this.success}}
-                                            <img src="systems/whtow/assets/dice/d10-success.svg">
-                                        {{else}}
-                                            <img src="systems/whtow/assets/dice/d10-failure.svg">
-                                        {{/if}}
-                                    {{/if}}
-
-                                </div>
-                            {{/each}}
-                        </div>
-                    {{/each}}
-
-                    <div class="set-label">Active</div>
-                    <div class="dice-set">
-                        {{#each result.dice}}
-                            <div data-action="toggleDie" data-index="{{@key}}"
-                                class="die {{#if this.success}}success{{else}}failure{{/if}}">
-                                <span class="result">{{this.result}}</span>
-                                {{#if this.success}}
-                                    <img src="systems/whtow/assets/dice/d10-success.svg">
-                                {{else}}
-                                    <img src="systems/whtow/assets/dice/d10-failure.svg">
-                                {{/if}}
-                            </div>
-                        {{/each}}
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-    {{/if}}
-
-    {{subTemplate}}
-
-    {{#if targetTokens.length}}
-    <div class="targets">
-        <p class="header">Targets <i class="fa-solid fa-crosshairs"></i></p>
-        <div class="target-list">
-            {{#each targetTokens}}
-                <div class="token" data-id="{{this.id}}">
-                    <img src="{{this.texture.src}}">
-                    <p>{{this.name}}</p>
+    <div class="dice">
+        <div class="dice-set">
+            {{#each result.dice}}
+                <div data-action="toggleDie" data-index="{{@key}}"
+                    class="die {{#if this.success}}success{{else}}failure{{/if}}">
+                    <span class="die-result">{{this.result}}</span>
+                    {{#if this.rerolled}}
+                        <span class="reroll-icon"><i class="fa-solid fa-rotate"></i></span>
+                    {{/if}}
+                    {{#if this.success}}
+                        <img src="systems/whtow/assets/dice/d10-success.svg">
+                    {{else if this.preventReroll}}
+                        <img src="systems/whtow/assets/dice/d10-black.svg">
+                    {{else}}
+                        <img src="systems/whtow/assets/dice/d10-failure.svg">
+                    {{/if}}
                 </div>
             {{/each}}
         </div>
     </div>
+
+    {{{subTemplate}}}
+
+    {{#if targetTokens.length}}
+        <div class="targets">
+            <p class="header">Targets <i class="fa-solid fa-crosshairs"></i></p>
+            <div class="target-list">
+                {{#each targetTokens}}
+                    <div class="token" data-id="{{this.id}}">
+                        <img src="{{this.texture.src}}">
+                        <p>{{this.name}}</p>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
     {{/if}}
 
     {{#if defendingAgainst}}
-    <div class="defending">
-        <p class="header">Defending <i class="fa-solid fa-shield"></i></p>
-        <div class="defending-list">
+        <div class="defending">
+            <p class="header">Defending <i class="fa-solid fa-shield"></i></p>
+            <div class="defending-list">
                 <div class="token" data-id="{{context.defending}}">
                     <img src="{{defendingAgainst.token.texture.src}}">
                     <p>{{defendingAgainst.token.name}}</p>
                 </div>
+            </div>
         </div>
-    </div>
     {{/if}}
 
 

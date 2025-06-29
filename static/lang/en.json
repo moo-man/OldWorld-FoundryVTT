@@ -197,7 +197,16 @@
             "Items" : "Items",
             "Log" : "Log",
             "Offsets" : "Offsets",
-            "Improvement" : "Improvement"
+            "Improvement" : "Improvement",
+
+            "CV" : "CV",
+            "Target" : "Target",
+            "Duration" : "Duration",
+
+            "MiscastPool" : "Miscast Pool",
+
+            "Dispose" : "Dispose",
+            "Miscast" : "Miscast"
         },
 
 
@@ -260,7 +269,11 @@
 
             "TakesWound" : "<p><strong>{name}</strong> takes a Wound!</p>",
             "GainsStaggered" : "<p><strong>{name}</strong> gets Staggered!</p>",
-            "AppliedDamage" : "Applied Damage"
+            "AppliedDamage" : "Applied Damage",
+
+            "DisposingMiscasts" : "Disposing Miscasts",
+            "DisposingMiscastsCombat" : "Used Recover to dispose of a Miscast die",
+            "DisposingMiscastsNonCombat" : "Cleared {miscasts} Miscast dice"
         },
         
         "WoundHealing" : {
@@ -273,7 +286,9 @@
         
         "Tooltips" : { 
             "ToggleEffect" : "Toggle Effect",
-            "CannotDeleteItemEffect" : "This effect is from an Item on this Actor. Delete the Item itself or the effect from the Item's sheet."
+            "CannotDeleteItemEffect" : "This effect is from an Item on this Actor. Delete the Item itself or the effect from the Item's sheet.",
+            "Mixing" : "Mixing the Winds",
+            "WearingArmour" : "Wearing Armour"
         },
 
         "ConditionName" : {
@@ -291,8 +306,17 @@
         },
 
         "Dialog" : {
+
+            "BonusDice" : "Bonus Dice",
+            "DicePenalty" : "Dice Penalty",
+            "Mixing" : "Mixing the Winds",
+
             "Staggered" : "Staggered!",
             "StaggeredPrompt" : "You've been Staggered again! Choose from the following options."
+        },
+
+        "Error" : {
+            "MiscastReroll" : "Cannot reroll Miscasts"
         }
     },
 

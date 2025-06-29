@@ -20,7 +20,8 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
         actions: {
             stepValue: this._onStepValue,
             togglePip : this._onTogglePip,
-            advanceSkill : this._onAdvanceSkill
+            advanceSkill : this._onAdvanceSkill,
+            editSkill : this._onEditSkill
         }
     };
 
@@ -100,8 +101,14 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
 
     static _onEditBase(ev, target)
     {
-        let characteristic = target.dataset.characteristic;
-        this.actorCopy.updateSource({ [`system.characteristics.${characteristic}.base`]: target.value});
+        if (target.dataset.type == "skill")
+        {
+            this.actorCopy.updateSource({ [`system.skills.${target.dataset.skill}.base`]: target.value });
+        }
+        else if (target.dataset.characteristic)
+        {
+            this.actorCopy.updateSource({ [`system.characteristics.${target.dataset.characteristic}.base`]: target.value});
+        }
         this.render({force : true})
     }
 
@@ -128,6 +135,11 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
         }
         this.actorCopy.updateSource({[`system.skills.${skill}`] : skillData});
         this.render({force : true})
+    }
+
+    static _onEditSkill(ev, target)
+    {
+
     }
 
     async _onRender(options)

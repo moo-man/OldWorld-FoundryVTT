@@ -21,26 +21,26 @@ export default class TestDialog extends WarhammerRollDialogV2
     get tooltipConfig() 
     {
         return {
-            modifier: {
-                label: "Modifier",
+            bonus: {
+                label: "TOW.BonusDice",
                 type: 1,
-                path: "fields.modifier",
+                path: "fields.bonus",
                 hideLabel: true
             },
-            slBonus: {
-                label: "DIALOG.SLBonus",
+            penalty: {
+                label: "TOW.DicePenalty",
                 type: 1,
-                path: "fields.slBonus"
+                path: "fields.penalty"
             },
-            successBonus: {
-                label: "DIALOG.SuccessBonus",
+            glorious: {
+                label: "TOW.Glorious",
                 type: 1,
-                path: "fields.successBonus"
+                path: "data.glorious"
             },
-            difficulty: {
-                label: "Difficulty",
-                type: 0,
-                path: "fields.difficulty"
+            grim: {
+                label: "TOW.Grim",
+                type: 1,
+                path: "data.grim"
             }
         }
     }
@@ -189,8 +189,8 @@ export default class TestDialog extends WarhammerRollDialogV2
 
         dialogData.data.glorious = context.glorious || 0;
         dialogData.data.grim = context.grim || 0;
-        dialogData.data.dice = actor.system.characteristics[dialogData.data.characteristic].base;
-        dialogData.fields.target = actor.system.skills[skill].base;
+        dialogData.data.dice = actor.system.characteristics[dialogData.data.characteristic].value;
+        dialogData.fields.target = actor.system.skills[skill].value;
 
 
 

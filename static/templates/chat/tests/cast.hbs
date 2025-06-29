@@ -1,0 +1,27 @@
+<div class="spell-details">
+<div>
+
+{{#if result.miscasts}}
+    <p>{{result.miscasts}} Miscast Dice Added</p>
+{{/if}}
+{{#if result.miscasted}}
+    <button data-action="rollMiscast">Miscast!</button>
+{{/if}}
+</div>
+
+<div>
+
+{{#if result.ready}}
+    <p>{{spell.name}} ready to cast!<br>({{result.potency}} Potency)</p>
+    <button data-action="castSpell">Cast {{spell.name}}</button>
+
+{{else}}
+    <p>{{result.successes}} Successes Added</p>
+    <div class="progress-bar">
+        <div class="fill {{spell.system.lore}}" style="width:{{pct this.pct}}%">
+        </div>
+    </div>
+{{/if}}
+</div>
+
+</div>
