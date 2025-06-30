@@ -1,12 +1,14 @@
 export class OldWorldTestMessageModel extends WarhammerTestMessageModel 
 {
 
-    static actions = {
+    static get actions() {
+        return foundry.utils.mergeObject(super.actions, {
         toggleDie : this._onToggleDie,
         expandItem : this._onExpandItem,
         rollMiscast : this._onRollMiscast,
         castSpell : this._onCastSpell
-    }
+       })
+}
 
     /**
      * When a Test is created
@@ -19,31 +21,36 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
     async _onCreate(data, options, user)
     {
         let test = this.test;
-        if (game.user.id == user)
-        {
-            test.handleOpposed(this.parent);
-        }
 
-        // Find attacking test, if exists and is owner, register this test as response
-        let defendingAgainst = game.messages.get(test.context.defending);
-        if (warhammer.utility.getActiveDocumentOwner(defendingAgainst)?.id == game.user.id)
+        if (!test.context.preventOpposed)
         {
-            defendingAgainst.system.test.registerOpposedResponse(test);
-        }
 
-        // Clear opposed on defender
-        if (defendingAgainst && game.user.id == user) // User who created test is the same as the defending actor
-        {
-            test.actor.system.clearOpposed();
-        }
-
-        // Add opposed message IDs to targets (if this user is the owner of the target)
-        for(let actor of test.targets)
-        {
-            let owner = warhammer.utility.getActiveDocumentOwner(actor);
-            if (owner?.id == game.user.id)
+            if (game.user.id == user)
             {
-                actor.system.registerOpposed(test);
+                test.handleOpposed(this.parent);
+            }
+
+            // Find attacking test, if exists and is owner, register this test as response
+            let defendingAgainst = game.messages.get(test.context.defending);
+            if (warhammer.utility.getActiveDocumentOwner(defendingAgainst)?.id == game.user.id)
+            {
+                defendingAgainst.system.test.registerOpposedResponse(test);
+            }
+
+            // Clear opposed on defender
+            if (defendingAgainst && game.user.id == user) // User who created test is the same as the defending actor
+            {
+                test.actor.system.clearOpposed();
+            }
+
+            // Add opposed message IDs to targets (if this user is the owner of the target)
+            for(let actor of test.targets)
+            {
+                let owner = warhammer.utility.getActiveDocumentOwner(actor);
+                if (owner?.id == game.user.id)
+                {
+                    actor.system.registerOpposed(test);
+                }
             }
         }
     }
@@ -115,7 +122,7 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
 
 
 
-      if (test.result.rerolls.length)
+      if (test.result.rerolls?.length)
       {
         let dice = html.querySelector(".dice");
         dice.addEventListener("mouseenter", async ev => {
@@ -188,6 +195,6 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
     static _onCastSpell(ev, target)
     {
         let test = this.test;
-        test.actor.system.castSpell(test.spell, test.result.potency);
+        test.actor.system.castSpell(test.spell, test.result.potency, test);
     }
 }

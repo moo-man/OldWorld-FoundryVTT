@@ -42,6 +42,9 @@
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
                         <div class="small">{{this.system.cv}}</div>
+                        <div>{{#if this.system.target.custom}}{{this.system.target.custom}}{{/if}} {{#if this.system.target.value}} {{configLookup "target" this.system.target.value}} {{/if}}</div>
+                        <div>{{#if this.system.range.custom}}{{this.system.range.custom}}{{/if}} {{#if this.system.range.value}} {{configLookup "range" this.system.range.value}} {{/if}}</div>
+                        <div>{{#if this.system.duration.custom}}{{this.system.duration.custom}}{{/if}} {{#if this.system.duration.value}} {{configLookup "duration" this.system.duration.value}} {{/if}}</div>
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>

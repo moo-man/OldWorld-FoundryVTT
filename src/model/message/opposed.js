@@ -2,9 +2,11 @@ import { OldWorldTest } from "../../system/tests/test";
 
 export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel 
 {
-    static actions = {
-        opposedResponse : this._onOpposedResponse,
-        applyDamage : this._onApplyDamage
+    static get actions() {
+        return foundry.utils.mergeObject(super.actions, {
+            opposedResponse : this._onOpposedResponse,
+            applyDamage : this._onApplyDamage
+       })
     }
 
     get defenderToken()

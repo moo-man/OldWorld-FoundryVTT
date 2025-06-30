@@ -62,9 +62,14 @@
         flex-direction: column;
         align-items: center;
         gap: 0.5rem;
+
+        > * {
+            width: 100%;
+        }
         .title {
             font-size: var(--font-size-18);
             font-weight: bold;
+            text-align: center;
             @include gradient-border;
         }
         .target {
@@ -161,6 +166,10 @@
             }
         }
 
+        button {
+            width: 100%;
+        }
+
         .defending,
         .targets {
             width: 100%;
@@ -212,10 +221,12 @@
         }
 
         .spell-details {
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;   
             > * {
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;

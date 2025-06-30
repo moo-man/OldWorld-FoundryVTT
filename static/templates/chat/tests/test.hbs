@@ -38,6 +38,12 @@
 
     {{{subTemplate}}}
 
+    {{> effectButtons}}
+
+    {{#if showChatTest}}
+        <button data-action="chatTest" data-uuid="{{item.uuid}}">{{item.system.test.label}}</button>
+    {{/if}}
+
     {{#if targetTokens.length}}
         <div class="targets">
             <p class="header">Targets <i class="fa-solid fa-crosshairs"></i></p>

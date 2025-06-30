@@ -132,8 +132,8 @@
             {{#each items.toolKit}}
                 <div class="list-row" data-uuid="{{this.uuid}}">
                     <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
                         <div class="list-controls">
@@ -161,8 +161,8 @@
             {{#each items.trapping}}
                 <div class="list-row" data-uuid="{{this.uuid}}">
                     <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
                         <div class="list-controls">
@@ -190,8 +190,8 @@
             {{#each items.asset}}
                 <div class="list-row" data-uuid="{{this.uuid}}">
                     <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
                         <div class="list-controls">

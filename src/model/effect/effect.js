@@ -3,8 +3,8 @@ let fields = foundry.data.fields;
 export class OldWorldAvoidTestModel extends AvoidTestModel {
     static defineSchema() {
         let schema = super.defineSchema();
-        schema.difficulty = new fields.StringField({});
-        schema.skill = new fields.StringField({});
+        schema.dice = new fields.NumberField();
+        schema.skill = new fields.StringField();
 
         return schema;
     }

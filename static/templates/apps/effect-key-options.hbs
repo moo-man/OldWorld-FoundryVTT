@@ -1,14 +1,37 @@
 <select name="{{name}}">
     {{#select value}}
     <optgroup label="{{localize 'Characteristics'}}">
-       
+        <option value="system.characteristics.ws.modifier">{{localize "TOW.CharName.WeaponSkill"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.characteristics.bs.modifier">{{localize "TOW.CharName.BallisticSkill"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.characteristics.s.modifier">{{localize "TOW.CharName.Strength"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.characteristics.t.modifier">{{localize "TOW.CharName.Toughness"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.characteristics.i.modifier">{{localize "TOW.CharName.Initiative"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.characteristics.ag.modifier">{{localize "TOW.CharName.Agility"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.characteristics.re.modifier">{{localize "TOW.CharName.Reason"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.characteristics.fel.modifier">{{localize "TOW.CharName.Fellowship"}} ({{localize "TOW.Modifier"}})</option>
     </optgroup>
     <optgroup label="{{localize 'Skills'}}">
-      
+        <option value="system.skills.melee.modifier">{{localize "TOW.SkillName.Melee"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.defence.modifier">{{localize "TOW.SkillName.Defence"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.shooting.modifier">{{localize "TOW.SkillName.Shooting"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.maintenance.modifier">{{localize "TOW.SkillName.Maintenance"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.brawn.modifier">{{localize "TOW.SkillName.Brawn"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.toil.modifier">{{localize "TOW.SkillName.Toil"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.survival.modifier">{{localize "TOW.SkillName.Survival"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.endurance.modifier">{{localize "TOW.SkillName.Endurance"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.awareness.modifier">{{localize "TOW.SkillName.Awareness"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.dexterity.modifier">{{localize "TOW.SkillName.Dexterity"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.athletics.modifier">{{localize "TOW.SkillName.Athletics"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.stealth.modifier">{{localize "TOW.SkillName.Stealth"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.willpower.modifier">{{localize "TOW.SkillName.Willpower"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.recall.modifier">{{localize "TOW.SkillName.Recall"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.leadership.modifier">{{localize "TOW.SkillName.Leadership"}} ({{localize "TOW.Modifier"}})</option>
+        <option value="system.skills.charm.modifier">{{localize "TOW.SkillName.Charm"}} ({{localize "TOW.Modifier"}})</option>
     </optgroup>
    
     <optgroup label="Other">
-      
+        <option value="system.resilience.value">{{localize "TOW.Sheet.Resilience"}}</option>    
+        <option value="system.magic.level">{{localize "TOW.MagicLevel"}}</option>    
     </optgroup>
     {{/select}}
 </select>

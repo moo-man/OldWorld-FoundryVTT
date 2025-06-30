@@ -24,4 +24,26 @@ export class OldWorldEffect extends WarhammerActiveEffect
             return false;
         }
     }
+
+        
+    get testDisplay() 
+    {
+        let avoidTest = this.system.transferData.avoidTest;
+
+        if (avoidTest.value == "custom")
+        {
+            if (avoidTest.skill)
+            {
+                return game.oldworld.config.skills[avoidTest.skill] + (avoidTest.dice ? ` (${(avoidTest.dice > 0 ? "+" : "")}${avoidTest.dice})` : "")  + " Test"
+            }
+            else 
+            {
+                return ""
+            }
+        }
+        else if (avoidTest.value == "item")
+        {
+            return this.item.system.test.label;
+        }
+    }
 }

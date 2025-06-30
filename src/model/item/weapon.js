@@ -1,6 +1,7 @@
 import { DamageModel } from "./components/damage";
 import { EquippableItem } from "./components/equippable";
 import { PhysicalItem } from "./components/physical";
+import { TestModel } from "./components/test";
 let fields = foundry.data.fields;
 
 export class WeaponModel extends EquippableItem 
@@ -15,6 +16,7 @@ export class WeaponModel extends EquippableItem
             max : new fields.NumberField({choices : game.oldworld.config.range, initial : 0}),
             melee : new fields.NumberField({choices : game.oldworld.config.range, initial : 0}),
         })
+        schema.test = new fields.EmbeddedDataField(TestModel);
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.grip = new fields.StringField({choices : {"1H" : "1H", "2H" : "2H"}, initial : "1H"}),
         schema.traits = new fields.StringField({});

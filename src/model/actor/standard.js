@@ -1,4 +1,5 @@
 import OldWorldTables from "../../system/tables";
+import { ItemUse } from "../../system/tests/item-use";
 import { BaseActorModel } from "./base";
 import { CharacteristicsModel } from "./components/characteristics";
 import { MagicDataModel } from "./components/magic";
@@ -51,9 +52,9 @@ export class StandardActorModel extends BaseActorModel
     computeDerived()
     {
         super.computeDerived();
-        this.resilience.value = this.characteristics.t.value
+        this.resilience.value += this.characteristics.t.value
         try {
-            this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => this.resilience.value +=  (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0))
+            this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => this.resilience.value +=  Number((Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent))) || 0))
         }
         catch(e)
         {
@@ -186,12 +187,13 @@ export class StandardActorModel extends BaseActorModel
         this.parent.update({"system.magic.miscasts" : 0})
     }
 
-    async castSpell(spell, potency)
+    async castSpell(spell, potency, fromTest)
     {
         if(this.magic.casting.spell.id == spell.id)
         {
             await this.parent.update({"system.magic.casting" : {spell : {uuid : "", id : "", name : ""}, progress : 0}});
         }
+        this.parent.useItem(spell, {potency, targets: fromTest ? fromTest.context.targetSpeakers : null})
     }
 }
 

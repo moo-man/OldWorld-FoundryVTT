@@ -1,4 +1,5 @@
 import { BaseItemModel } from "./components/base";
+import { TestModel } from "./components/test";
 let fields = foundry.data.fields;
 
 export class TalentModel extends BaseItemModel 
@@ -12,6 +13,7 @@ export class TalentModel extends BaseItemModel
             text : new fields.StringField({}),
             script : new fields.JavaScriptField({})
         })
+        schema.test = new fields.EmbeddedDataField(TestModel);
         return schema;
     }
 }

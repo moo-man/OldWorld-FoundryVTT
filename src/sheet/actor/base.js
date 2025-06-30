@@ -13,7 +13,9 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
       ]
     },
     actions: {
-      removeOpposed : this._onRemoveOpposed
+      removeOpposed : this._onRemoveOpposed,
+      useItem : this._onUseItem,
+      toggleSummary : this._onToggleSummary
     },
     defaultTab: "main"
   }
@@ -124,6 +126,18 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
   static _onRemoveOpposed(ev, target)
   {
     this.actor.system.clearOpposed();
+  }
+
+  static _onUseItem(ev, target)
+  {
+    this.actor.useItem(this._getUUID(ev));
+  }
+
+  static async _onToggleSummary(ev, target)
+  {
+    let document = this._getDocument(ev);
+    let summaryData = await document.system.summaryData();
+    this._toggleDropdown(ev, summaryData.description);
   }
 
 }

@@ -91,6 +91,10 @@
 
         "Advancement" : "Advancement",
 
+        "Modifier" : "Modifier",
+
+        "MagicLevel" : "Magic Level",
+
         "AssetCategory" : {
             "AnimalVehicle" : "Animal / Vehicle",
             "BuildingEstablishment" : "Building / Establishment",
@@ -206,7 +210,10 @@
             "MiscastPool" : "Miscast Pool",
 
             "Dispose" : "Dispose",
-            "Miscast" : "Miscast"
+            "Miscast" : "Miscast",
+
+            "Self" : "Self",
+            "Dice" : "Dice"
         },
 
 

@@ -7,7 +7,7 @@ export class CastingTest extends OldWorldTest
 
     static _separateDialogData(data)
     {
-        return foundry.utils.mergeObject(super._separateDialogData(data), {context : {rollClass : "CastingTest"}});
+        return foundry.utils.mergeObject(super._separateDialogData(data), {context : {preventOpposed : true, rollClass : "CastingTest"}});
     }
 
     computeResult()
@@ -80,6 +80,23 @@ export class CastingTest extends OldWorldTest
     {
         return this.item;
     }
+
+    get targetEffects()
+    {
+        return [];
+    }
+
+    get damageEffects()
+    {
+        return [];
+    }
+
+    get zoneEffects()
+    {
+        return [];
+    }
+
+
 
     /**
      * 

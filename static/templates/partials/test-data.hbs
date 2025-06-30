@@ -1,0 +1,17 @@
+<h2 class="sheet-divider">Test</h2>
+<div class="form-group">
+    {{#unless hideSelf}}
+    <label>{{localize "TOW.Sheet.Self"}}</label>
+    <div class="form-fields" style="flex: 1">
+        {{formInput fields.self value=value.self}}
+    </div>
+    {{/unless}}
+    <label>{{localize "TOW.Sheet.Skill"}}</label>
+    <div class="form-fields">
+        {{formInput fields.skill value=value.skill choices=(config "skills")}}
+    </div>
+    <label>{{localize "TOW.Sheet.Dice"}}</label>
+    <div class="form-fields" style="flex: 1">
+        {{formInput fields.dice value=value.dice}}
+    </div>
+</div>

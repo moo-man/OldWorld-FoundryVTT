@@ -4,6 +4,7 @@ export class OldWorldTest extends WarhammerTestBase
 {
     // Subclasses can define their own template to add onto the main one
     static subTemplate = "";
+    static testTemplate = "systems/whtow/templates/chat/tests/test.hbs";
 
 
     constructor(data={})
@@ -132,7 +133,7 @@ export class OldWorldTest extends WarhammerTestBase
         {
             this.itemSummary = await this.formatItemSummary()
         }
-        let content = await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/tests/test.hbs", this);
+        let content = await foundry.applications.handlebars.renderTemplate(this.constructor.testTemplate, this);
         
         if (!this.message || newMessage)
         {
@@ -380,5 +381,10 @@ export class OldWorldTest extends WarhammerTestBase
     get item()
     {
         return fromUuidSync(this.context.itemUuid);
+    }
+
+    get showChatTest()
+    {
+        return (this.item && !this.item.system.test?.self && this.item.system.test.skill) && !this.item.effects.contents.some(e => e.system.transferData.avoidTest.value == "item");
     }
 }

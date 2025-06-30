@@ -1,3 +1,12 @@
 <div class="form-group">
-
+    <label>{{localize "TOW.Sheet.Skill"}}</label>
+    <div class="form-fields">
+        <select name="system.transferData.avoidTest.skill">
+            {{selectOptions (config "skills") selected=system.transferData.avoidTest.skill blank=""}}
+        </select>
+    </div>
+    <label>{{localize "TOW.Sheet.Dice"}}</label>
+    <div class="form-fields" style="flex: 1">
+        <input type="number" name="system.transferData.avoidTest.dice" value="{{system.transferData.avoidTest.dice}}">
+    </div>
 </div>

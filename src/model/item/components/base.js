@@ -16,6 +16,13 @@ export class BaseItemModel extends BaseWarhammerItemModel
      */
     async summaryData()
     {
+        let summary = {description : this.description.public};
 
+        if (game.user.isGM)
+        {
+            summary.description += this.description.gm;
+        }
+
+        return summary;
     }
 }
