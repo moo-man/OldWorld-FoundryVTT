@@ -1,22 +1,77 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
-        <h3 class="divider">{{localize "TOW.Sheet.Favour"}}</h3>
+    <h3 class="divider">{{localize "TOW.Sheet.Favour"}}</h3>
     <div class="editor-section">
-        {{{enriched.system.favour}}}
-        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.favour"><i class="fa-solid fa-pen-to-square"></i></button>
-
+        {{{enriched.system.favour.description}}}
+        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.favour.description"><i class="fa-solid fa-pen-to-square"></i></button>
+        {{!-- <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Effects"}}</div>
+            </div>
+            <div class="list-content" data-path="system.favour.effects">
+                {{#each system.favour.effects.documents}}
+                    <div class="list-row" data-index="{{@key}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                                <a class="list-control" data-action="listDelete" data-document="this">
+                                    <i class="fas fa-xmark"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div> 
+        </div>--}}
+            <select data-action="assignBlessingEffect" data-type="favour">
+                {{selectOptions this.item.effects.contents selected=system.favour.effect.id valueAttr="id" labelAttr="name" selected=this.id blank="Assign Effect" }}
+            </select>
     </div>
-        <h3 class="divider">{{localize "TOW.Sheet.Prayers"}}</h3>
-        {{#each system.prayers.list}}
-        <div class="editor-section" >
-        <div class="header" data-index="{{@key}}" ><input type="text" value="{{this.name}}" data-action="editList" data-path="system.prayers" data-ipath="name"  placeholder="Name"><a data-action="editRichText" data-index="{{@key}}" data-path="system.prayers.list" data-ipath="description"><i class="fas fa-edit"></i></a><a data-action="listDelete" data-path="system.prayers"><i class="fas fa-xmark"></i></a></div>
-        {{{lookup ../enriched.system.prayers @key}}}
+    <h3 class="divider">{{localize "TOW.Sheet.Prayers"}}</h3>
+    {{#each system.prayers.list}}
+        <div class="editor-section">
+            <div class="header" data-index="{{@key}}"><input type="text" value="{{this.name}}" data-action="editList" data-path="system.prayers" data-ipath="name" placeholder="Name"><a data-action="editRichText" data-index="{{@key}}" data-path="system.prayers.list" data-ipath="description"><i
+                        class="fas fa-edit"></i></a><a data-action="listDelete" data-path="system.prayers"><i class="fas fa-xmark"></i></a></div>
+            {{{lookup ../enriched.system.prayers @key}}}
         </div>
-        {{/each}}
-        <button type="button" style="margin:auto" data-action="listCreate" data-path="system.prayers"><i class="fa-solid fa-plus"></i></button>
-        {{!-- {{formInput fields.favour value=source.system.favour enriched=enriched.system.favour toggled=true}} --}}
-                <h3 class="divider">{{localize "TOW.Sheet.Miracles"}}</h3>
+        {{!-- <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Effects"}}</div>
+            </div>
+            <div class="list-content" data-path="system.miracles.effects">
+                {{#each this.effects.documents}}
+                    <div class="list-row" data-index="{{@key}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                                <a class="list-control" data-action="listDelete" data-document="this">
+                                    <i class="fas fa-xmark"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div> --}}
+        
+        <select data-action="assignBlessingEffect" data-type="prayers" data-index="{{@key}}">
+                {{selectOptions ../document.effects.contents selected=this.effect.id valueAttr="id" labelAttr="name" selected=this.id blank="Assign Effect" }}
+        </select>
+    {{/each}}
+    <button type="button" style="margin:auto" data-action="listCreate" data-path="system.prayers"><i class="fa-solid fa-plus"></i></button>
+    {{!-- {{formInput fields.favour value=source.system.favour enriched=enriched.system.favour toggled=true}} --}}
+    
+    
+    
+    <h3 class="divider">{{localize "TOW.Sheet.Miracles"}}</h3>
     <div class="editor-section">
-        {{{enriched.system.miracles}}}
-        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.miracles"><i class="fa-solid fa-pen-to-square"></i></button>
+        {{{enriched.system.miracles.description}}}
+        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.miracles.description"><i class="fa-solid fa-pen-to-square"></i></button>
     </div>
+
 </section>

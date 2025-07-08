@@ -7,7 +7,8 @@ export class CharacterModel extends StandardActorModel
 {
     static singletonItemPaths = {
         "origin" : "origin",
-        "career" : "career"  
+        "career" : "career",
+        "blessing" : "blessed"
     };
 
     static defineSchema() 
@@ -74,7 +75,8 @@ export class CharacterModel extends StandardActorModel
 
     computeXP()
     {
-        let spent = 0;
+        let offsets = this.xp.offsets.list.reduce((amt, offset) => amt + offset.amount, 0);
+        let spent = offsets;
 
         // Talent Costs
         spent += this.parent.itemTypes.talent.reduce((xp, talent) => xp + talent.system.cost, 0)
@@ -85,6 +87,7 @@ export class CharacterModel extends StandardActorModel
             spent += Array.fromRange(c.value + 1).slice(c.base + 1).reduce((sum, num) => sum + num, 0);
         }
 
+
         this.xp.spent = spent;
         this.xp.available = this.xp.total - spent;
     }
@@ -94,6 +97,11 @@ export class CharacterModel extends StandardActorModel
         let wounds = this.parent.itemTypes.wound;
         let formula = `${wounds.length + 1}d10`;
         game.oldworld.tables.rollTable("wounds",  formula);
+    }
+
+    addXPOffset(amount, description)
+    {
+        return this.parent.update(this.xp.offsets.add({amount, description}));
     }
 }
 

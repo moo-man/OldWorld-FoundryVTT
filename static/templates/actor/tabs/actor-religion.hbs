@@ -1,3 +1,45 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="form-group blessed">
+        <label>{{localize "TOW.Sheet.BlessedBy"}}</label>
+        <div class="form-fields">
+
+            <div class="like-input" data-uuid="{{system.blessed.document.uuid}}">
+                <span class="control"></span>
+                <a type="text" data-action="editEmbedded" name="actor.system.blessed.name">{{system.blessed.document.name}}</a>
+                {{#if system.blessed.document}}
+                    <a class="control" data-path="system.blessed" data-action="unset"><i class="fas fa-xmark"></i></a>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    {{#if (gt system.blessed.level 0)}}
+        <h2 class="divider"><a data-action="useBlessing" data-type="favour">{{localize "TOW.Sheet.Favour"}}</a></h2>
+        {{{system.blessed.document.system.favour.description}}}
+    {{/if}}
+
+    {{#if (gt system.blessed.level 1)}}
+        <h2 class="divider">{{localize "TOW.Sheet.Prayers"}}</h2>
+        {{#each system.blessed.document.system.prayers.list}}
+            <div class="editor-section">
+                <div class="header"><a data-action="useBlessing" data-type="prayer" data-index="{{@key}}">{{this.name}}</a></div>
+            </div>
+            {{{this.description}}}
+        {{/each}}
+    {{/if}}
+
+    {{#if (gt system.blessed.level 2)}}
+        <div {{#if system.blessed.document.system.miracles.used}}class="disabled inactive"{{/if}}>
+
+            <h2 class="divider">{{localize "TOW.Sheet.Miracles"}}</h2>
+            {{{system.blessed.document.system.miracles.description}}}
+        </div>
+        {{#if system.blessed.document.system.miracles.used}}
+            <button data-action="regainMiracle">{{localize "TOW.Sheet.RegainMiracle"}}</button>
+        {{else}}
+            <button data-action="useBlessing" data-type="miracle">{{localize "TOW.Sheet.PerformMiracle"}}</button>
+        {{/if}}
+    {{/if}}
+    </div>
 
 </section>

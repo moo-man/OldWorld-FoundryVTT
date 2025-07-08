@@ -3,9 +3,9 @@
         {{#unless noImage}}
             <img src="{{item.img}}">
         {{/unless}}
-        <p>{{item.name}}</p>
+        <p>{{fallback name item.name}}</p>
     </div>
-    <div class="description">
+    <div class="description {{#if expanded}}expanded{{/if}}">
         <div class="description-expander">
             <div class="public">
                 {{{enriched.public}}}

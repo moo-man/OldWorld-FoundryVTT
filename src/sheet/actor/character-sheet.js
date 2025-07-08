@@ -17,7 +17,8 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
         },
         actions : {
           rollTest : this._onRollTest,
-          advancement : this._onAdvancement
+          advancement : this._onAdvancement,
+          regainMiracle : this._onRegainMiracle
         },
         defaultTab : "main"
     }
@@ -92,5 +93,20 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
       static _onAdvancement(ev, target)
       {
         new AdvancementForm(this.actor).render({force : true})
+      }
+
+      static async _onRegainMiracle(ev, target)
+      {
+
+        let confirm = await foundry.applications.api.Dialog.confirm({
+          window : {title : "TOW.Dialog.RegainMiracleTitle"},
+          content : game.i18n.localize("TOW.Dialog.RegainMiracle"),
+        })
+
+        if (confirm)
+        {
+          await this.actor.system.blessed.document?.update({"system.miracles.used" : false})
+          this.actor.system.addXPOffset(4, game.i18n.localize("TOW.Sheet.PurchaseMiracleUse"))
+        }
       }
 }

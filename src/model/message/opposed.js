@@ -19,6 +19,16 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
         return this.attackerMessage.system.test.token
     }
 
+    get defenderTest()
+    {
+        return this.defenderMessage.system.test;
+    }
+
+    get attackerTest()
+    {
+        return this.attackerMessage.system.test;
+    }
+
 
     static defineSchema() 
     {
@@ -198,6 +208,6 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
     static async  _onApplyDamage(ev, target)
     {
         let actor = ChatMessage.getSpeakerActor(this.defender);
-        actor.system.applyDamage(this.result.damage.value, {opposed : this})
+        actor.system.applyDamage(this.result.damage.value, {opposed : this, item : this.attackerTest.item})
     }
 }

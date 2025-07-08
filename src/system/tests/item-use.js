@@ -27,6 +27,7 @@ export class ItemUse extends OldWorldTest
         preventOpposed : true
        }, context)}); 
 
+       await use.roll();
        use.sendToChat();
     }
 
@@ -34,7 +35,7 @@ export class ItemUse extends OldWorldTest
     async roll()
     {
         await this.preRollOperations();
-
+        this.computeResult();
         await this.postRollOperations();
     }
 
@@ -54,7 +55,19 @@ export class ItemUse extends OldWorldTest
 
     computeResult()
     {
-
+        this.result = {};
+        let damage = 0;
+        if (this.item.system?.damage?.formula)
+        {
+            damage = Roll.safeEval(Roll.replaceFormulaData(this.item.system.damage.formula, this.actor))
+        }
+        if (this.item.system.damage.potency)
+        {
+            damage += (this.context.potency || 0);
+        }
+        this.result.damage = {
+            value : damage
+        }
     }
 
 

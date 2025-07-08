@@ -4,6 +4,11 @@
         {{{itemSummary}}}
     {{/if}}
 
+    {{#if result.damage.value}}
+    <p style="text-align: center"><strong>{{localize "TOW.Chat.Damage"}}</strong>: {{result.damage.value}}</p>
+    <button data-action="applyDamage"><i class="fa-solid fa-crosshairs"></i> {{localize "TOW.Chat.ApplyDamage"}}</button>
+    {{/if}}
+
     {{> effectButtons}}
 
     {{#if showChatTest}}

@@ -1,6 +1,7 @@
 import OldWorldTables from "../../system/tables";
 import { ItemUse } from "../../system/tests/item-use";
 import { BaseActorModel } from "./base";
+import { BlessedDataModel } from "./components/blessed";
 import { CharacteristicsModel } from "./components/characteristics";
 import { MagicDataModel } from "./components/magic";
 import { NPCCharacteristicsModel } from "./components/npc-characteristics";
@@ -14,6 +15,10 @@ let fields = foundry.data.fields;
  */
 export class StandardActorModel extends BaseActorModel 
 {
+    static singletonItemPaths = {
+        "blessing" : "blessed"
+    };
+    
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -27,6 +32,7 @@ export class StandardActorModel extends BaseActorModel
             value : new fields.NumberField(),
         }),
         schema.magic = new fields.EmbeddedDataField(MagicDataModel)
+        schema.blessed = new fields.EmbeddedDataField(BlessedDataModel)
         return schema;
     }
 
@@ -72,7 +78,7 @@ export class StandardActorModel extends BaseActorModel
         }
     }
 
-    applyDamage(damage, {opposed})
+    applyDamage(damage, {opposed, item})
     {
         let resilience = this.resilience.value;
         let message = ""

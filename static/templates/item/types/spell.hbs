@@ -26,7 +26,15 @@
             {{formInput system.schema.fields.duration.fields.value value=source.system.duration.value choices=(config "duration")}}
         </div>
     </div>
-    {{formGroup system.schema.fields.damage.fields.formula value=source.system.damage.formula}}
+
+    <div class="form-group">
+        <label>{{localize "TOW.Sheet.Damage"}}</label>
+        <div class="form-fields">
+            {{formInput system.schema.fields.damage.fields.formula value=source.system.damage.formula}}
+            {{formInput system.schema.fields.damage.fields.potency value=source.system.damage.potency}}
+            +{{localize "TOW.Sheet.Potency"}}
+        </div>
+    </div>
 
     {{> itemTest fields=fields.test.fields value=source.system.test hideSelf=true}}
 

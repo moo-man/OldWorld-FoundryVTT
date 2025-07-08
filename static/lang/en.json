@@ -211,9 +211,15 @@
 
             "Dispose" : "Dispose",
             "Miscast" : "Miscast",
+            "Potency" : "Potency",
 
             "Self" : "Self",
-            "Dice" : "Dice"
+            "Dice" : "Dice",
+
+            "BlessedBy" : "Blessed By",
+            "PerformMiracle" : "Perform Miracle",
+            "RegainMiracle" : "Regain Miracle",
+            "PurchaseMiracleUse" : "Purchased Miracle Use"
         },
 
 
@@ -272,7 +278,8 @@
             "MarginalSuccesss" : "Marginal Successs",
             "Success" : "Success",
             "TotalSuccess" : "Total Success!",
-            "ApplyDamage" : "Apply {damage} Damage",
+            "ApplyDamage" : "Apply Damage",
+            "ApplyNumDamage" : "Apply {damage} Damage",
 
             "TakesWound" : "<p><strong>{name}</strong> takes a Wound!</p>",
             "GainsStaggered" : "<p><strong>{name}</strong> gets Staggered!</p>",
@@ -280,7 +287,12 @@
 
             "DisposingMiscasts" : "Disposing Miscasts",
             "DisposingMiscastsCombat" : "Used Recover to dispose of a Miscast die",
-            "DisposingMiscastsNonCombat" : "Cleared {miscasts} Miscast dice"
+            "DisposingMiscastsNonCombat" : "Cleared {miscasts} Miscast dice",
+
+            "Damage" : "Damage",
+
+            "FavouredBy" : "Favoured by {name}",
+            "MiracleOf" : "Miracle of {name}"
         },
         
         "WoundHealing" : {
@@ -319,7 +331,10 @@
             "Mixing" : "Mixing the Winds",
 
             "Staggered" : "Staggered!",
-            "StaggeredPrompt" : "You've been Staggered again! Choose from the following options."
+            "StaggeredPrompt" : "You've been Staggered again! Choose from the following options.",
+
+            "RegainMiracleTitle" : "Regain Miracle",
+            "RegainMiracle" : "Spend 4 XP to regain ability to perform a Miracle?"
         },
 
         "Error" : {

@@ -8,7 +8,9 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
     actions : {
       toggleCondition: this._onToggleCondition,
       disposeMiscast : this._onDisposeMiscast,
-      rollMiscast : this._onRollMiscast
+      rollMiscast : this._onRollMiscast,
+      useBlessing : this._onUseBlessing,
+      regainMiracle : this._onRegainMiracle
     },
   }
 
@@ -108,6 +110,19 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
   {
     OldWorldTables.rollTable("miscast", `${this.actor.system.magic.miscasts}d10`)
     this.actor.update({"system.magic.miscasts" : 0})
+  }
+
+  static _onUseBlessing(ev, target)
+  {
+    let type = target.dataset.type;
+    let index = target.dataset.index;
+
+    this.actor.useBlessing(type, {index})
+  }
+
+  static _onRegainMiracle(ev, target)
+  {
+    this.actor.system.blessed.document?.update({"system.miracles.used" : false})
   }
 
 }

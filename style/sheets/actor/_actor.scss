@@ -145,4 +145,12 @@
             }
         }
     }
+
+    .tab[data-tab=religion] 
+    {
+        h2.divider {
+            margin-top: 1rem;
+            margin-bottom: 0px;
+        }
+    }
 }

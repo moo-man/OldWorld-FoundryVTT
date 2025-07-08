@@ -1,6 +1,7 @@
 import CastingDialog from "../apps/test-dialog/spell-dialog";
 import TestDialog from "../apps/test-dialog/test-dialog";
 import WeaponDialog from "../apps/test-dialog/weapon-dialog";
+import { BlessingUse } from "../system/tests/blessing-use";
 import { CastingTest } from "../system/tests/cast";
 import { ItemUse } from "../system/tests/item-use";
 import { OldWorldTest } from "../system/tests/test";
@@ -50,6 +51,22 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             use.roll();
             use.sendToChat();
         }
+    }
+
+    async useBlessing(type, context={}, options)
+    {
+        
+        let blessing = this.system.blessed.document;
+        if (!type || !document)
+        {
+            return;
+        }
+
+        context.itemUuid = blessing.uuid;
+        
+        let use = await BlessingUse.fromItem(blessing, type, this, context);
+        use.roll();
+        use.sendToChat();
     }
 
     async addCondition(condition)

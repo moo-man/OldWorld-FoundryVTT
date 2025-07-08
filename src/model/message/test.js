@@ -6,7 +6,9 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
         toggleDie : this._onToggleDie,
         expandItem : this._onExpandItem,
         rollMiscast : this._onRollMiscast,
-        castSpell : this._onCastSpell
+        castSpell : this._onCastSpell,
+        applyDamage : this._onApplyDamage
+
        })
 }
 
@@ -196,5 +198,21 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
     {
         let test = this.test;
         test.actor.system.castSpell(test.spell, test.result.potency, test);
+    }
+
+    static async  _onApplyDamage(ev, target)
+    {
+        let actors;
+        if (game.user.targets.size)
+        {
+            actors = Array.from(game.user.targets).map(i => i.actor).filter(i => i);
+        }
+        else 
+        {
+            actors = this.test.targetTokens.map(i => i.actor);
+        }
+        actors.forEach(a => {
+            a.system.applyDamage(this.result.damage.value, {item : this.item})
+        })
     }
 }
