@@ -1,0 +1,31 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <h3 class="divider">{{localize "TOW.Sheet.Vulnerable"}}</h3>
+    <div class="editor-section">
+        {{{enriched.system.vulnerable}}}
+        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.vulnerable"><i class="fa-solid fa-pen-to-square"></i></button>
+    </div>
+    <h3 class="divider">{{localize "TOW.Sheet.Tarnished"}}</h3>
+    <div class="editor-section">
+        {{{enriched.system.tarnished.description}}}
+        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.tarnished.description"><i class="fa-solid fa-pen-to-square"></i></button>
+            <select data-action="assignCorruptionEffect" data-type="tarnished">
+                {{selectOptions this.item.effects.contents selected=system.tarnished.effect.id valueAttr="id" labelAttr="name" selected=this.id blank="Assign Effect" }}
+            </select>
+    </div>
+    <h3 class="divider">{{localize "TOW.Sheet.Tainted"}}</h3>
+    <div class="editor-section">
+        {{{enriched.system.tainted.description}}}
+        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.tainted.description"><i class="fa-solid fa-pen-to-square"></i></button>
+            <select data-action="assignCorruptionEffect" data-type="tainted">
+                {{selectOptions this.item.effects.contents selected=system.tainted.effect.id valueAttr="id" labelAttr="name" selected=this.id blank="Assign Effect" }}
+            </select>
+    </div>
+    <h3 class="divider">{{localize "TOW.Sheet.Damned"}}</h3>
+    <div class="editor-section">
+        {{{enriched.system.damned.description}}}
+        <button type="button" class="icon toggle" data-action="editRichText" data-path="system.damned.description"><i class="fa-solid fa-pen-to-square"></i></button>
+            <select data-action="assignCorruptionEffect" data-type="damned">
+                {{selectOptions this.item.effects.contents selected=system.damned.effect.id valueAttr="id" labelAttr="name" selected=this.id blank="Assign Effect" }}
+            </select>
+    </div>
+</section>

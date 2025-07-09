@@ -3,6 +3,7 @@ import { ItemUse } from "../../system/tests/item-use";
 import { BaseActorModel } from "./base";
 import { BlessedDataModel } from "./components/blessed";
 import { CharacteristicsModel } from "./components/characteristics";
+import { CorruptionDataModel } from "./components/corruption";
 import { MagicDataModel } from "./components/magic";
 import { NPCCharacteristicsModel } from "./components/npc-characteristics";
 import { NPCSkillsModel } from "./components/npc-skills";
@@ -16,7 +17,8 @@ let fields = foundry.data.fields;
 export class StandardActorModel extends BaseActorModel 
 {
     static singletonItemPaths = {
-        "blessing" : "blessed"
+        "blessing" : "blessed",
+        "corruption" : "corruption"
     };
     
     static defineSchema() 
@@ -33,6 +35,7 @@ export class StandardActorModel extends BaseActorModel
         }),
         schema.magic = new fields.EmbeddedDataField(MagicDataModel)
         schema.blessed = new fields.EmbeddedDataField(BlessedDataModel)
+        schema.corruption = new fields.EmbeddedDataField(CorruptionDataModel)
         return schema;
     }
 

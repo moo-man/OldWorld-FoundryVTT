@@ -12,17 +12,17 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
 {
     async setupSkillTest(skill, context, options)
     {
-        await this._setupTest(TestDialog, OldWorldTest, skill, context, options)
+        return await this._setupTest(TestDialog, OldWorldTest, skill, context, options)
     }
 
     async setupWeaponTest(weapon, context, options)
     {
-        await this._setupTest(WeaponDialog, WeaponTest, weapon,  context, options)
+        return await this._setupTest(WeaponDialog, WeaponTest, weapon,  context, options)
     }
 
     async setupCastingTest(spell, context, options)
     {
-        await this._setupTest(CastingDialog, CastingTest, spell, context, options)
+        return await this._setupTest(CastingDialog, CastingTest, spell, context, options)
     }
 
     async useItem(item, context={}, options)

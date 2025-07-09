@@ -1,0 +1,84 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="form-group corruption">
+        <label>{{localize "TOW.Sheet.Corruption"}}</label>
+        <div class="form-fields">
+            <div class="like-input" data-uuid="{{system.corruption.document.uuid}}">
+                <span class="control"></span>
+                <a type="text" data-action="editEmbedded" name="actor.system.corruption.name">{{fallback system.corruption.document.name "None"}}</a>
+                {{#if system.corruption.document}}
+                    <a class="control" data-path="system.corruption" data-action="unset"><i class="fas fa-xmark"></i></a>
+                {{/if}}
+            </div>
+            {{#unless (eq system.corruption.state "none")}}
+{{!-- 
+                {{#if system.corruption.document}}
+                    <select style="flex: 0 0 7rem" data-action="editProperty" data-uuid="{{system.corruption.document.uuid}}" data-path="system.level">
+                        {{selectOptions system.corruption.document.system.schema.fields.level.options.choices selected=system.corruption.document.system.level localize=true}}
+                    </select>
+                {{/if}} --}}
+            {{/unless}}
+        </div>
+    </div>
+    <button data-action="corruptionTest">{{localize "TOW.Sheet.PromptCorruptionTest"}}</button>
+
+    {{#unless system.corruption.document}}
+        {{#if (eq system.corruption.state "vulnerable")}}
+            <p class="centered">Corruption Test Failed! Add a <strong>Corruption Path</strong> Item to begin the road to damnation.</p>
+        {{/if}}
+    {{else}}
+        {{#if (eq system.corruption.state "vulnerable")}}
+            <p class="centered">Corruption Test Failed! Offer a Temptation to proceed in becoming <strong>Tarnished</strong></p>
+        {{/if}}
+    {{/unless}}
+
+
+    {{#if (eq system.corruption.state "refused")}}
+        <div class="centered">
+            {{{system.corruption.temptation}}}
+            <p><strong>Your temptation was refused.</strong></p>
+        </div>
+    {{/if}}
+
+    {{#if (eq system.corruption.state "accepted")}}
+        <div class="centered">
+            {{{system.corruption.temptation}}}
+            <p><strong>Your temptation was accepted.</strong></p>
+        </div>
+    {{/if}}
+
+
+
+
+
+    {{#unless (or (eq system.corruption.state "none") (eq system.corruption.state "refused"))}}
+
+        {{#if system.corruption.document}}
+
+            {{#if (eq system.corruption.level 0)}}
+                <h2 class="divider"><a data-action="useCorruption" data-type="favour">{{localize "TOW.Sheet.Vulnerable"}}</a></h2>
+                {{{system.corruption.document.system.vulnerable}}}
+                <button data-action="offerTemptation">{{localize "TOW.Sheet.OfferTemptation"}}</button>
+            {{/if}}
+
+            {{#if (eq system.corruption.level 1)}}
+                <h2 class="divider"><a data-action="useCorruption" data-type="tarnished">{{localize "TOW.Sheet.Tarnished"}}</a></h2>
+                {{{system.corruption.document.system.tarnished.description}}}
+                <button data-action="offerTemptation">{{localize "TOW.Sheet.OfferTemptation"}}</button>
+            {{/if}}
+
+            {{#if (eq system.corruption.level 2)}}
+                <h2 class="divider"><a data-action="useCorruption" data-type="tainted">{{localize "TOW.Sheet.Tainted"}}</a></h2>
+                {{{system.corruption.document.system.tainted.description}}}
+                <button data-action="offerTemptation">{{localize "TOW.Sheet.OfferTemptation"}}</button>
+            {{/if}}
+
+            {{#if (eq system.corruption.level 3)}}
+                <h2 class="divider"><a data-action="useCorruption" data-type="damned">{{localize "TOW.Sheet.Damned"}}</a></h2>
+                {{{system.corruption.document.system.damned.description}}}
+            {{/if}}
+
+        {{/if}}
+    {{/unless}}
+
+
+</section>

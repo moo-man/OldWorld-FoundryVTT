@@ -75,7 +75,8 @@
       "career" : {},
       "wound" : {},
       "trapping" : {},
-      "asset" : {}
+      "asset" : {},
+      "corruption" : {}
     },
     "ChatMessage": {
       "test" : {},

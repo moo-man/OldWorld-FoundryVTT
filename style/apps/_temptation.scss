@@ -1,0 +1,23 @@
+.whtow.warhammer.temptation {
+    .standard-form {
+        height: 100%;
+
+    }
+    .dialog-content {
+        height: 100%;
+    }
+    .flexrow {
+        gap : 0.5rem;
+        height: calc(100%);
+        flex-wrap: nowrap;
+    }   
+
+    .flexcol {
+        height: 100%;
+    }
+
+    textarea {
+        resize:none;
+        height: calc(100% - 3rem);;
+    }
+}

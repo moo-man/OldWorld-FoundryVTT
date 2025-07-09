@@ -146,7 +146,7 @@ export class OldWorldTest extends WarhammerTestBase
                 content,
                 speaker : this.context.speaker
             }
-            ChatMessage.create(chatData, {keepId: true});
+            ChatMessage.create(ChatMessage.applyRollMode(chatData, this.context.rollMode), {keepId: true});
         }
         else 
         {

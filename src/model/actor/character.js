@@ -8,7 +8,8 @@ export class CharacterModel extends StandardActorModel
     static singletonItemPaths = {
         "origin" : "origin",
         "career" : "career",
-        "blessing" : "blessed"
+        "blessing" : "blessed",
+        "corruption" : "corruption"
     };
 
     static defineSchema() 

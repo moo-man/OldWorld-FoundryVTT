@@ -42,6 +42,8 @@ import { NPCModel } from "./model/actor/npc";
 import OldWorldTables from "./system/tables";
 import { CastingTest } from "./system/tests/cast";
 import { ItemUse } from "./system/tests/item-use";
+import CorruptionSheet from "./sheet/item/types/corruption-sheet";
+import { CorruptionModel } from "./model/item/corruption";
 
 Hooks.once("init", () => 
 {
@@ -73,6 +75,7 @@ Hooks.once("init", () =>
     Items.registerSheet("whtow", ToolKitSheet, {types : ["toolKit"], makeDefault: true });
     Items.registerSheet("whtow", TrappingSheet, {types : ["trapping"], makeDefault: true });
     Items.registerSheet("whtow", WoundSheet, {types : ["wound"], makeDefault: true });
+    Items.registerSheet("whtow", CorruptionSheet, {types : ["corruption"], makeDefault: true });
     // Items.registerSheet("whtow", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
 
     DocumentSheetConfig.registerSheet(ActiveEffect, "whtow", OldWorldActiveEffectConfig, {makeDefault : true});
@@ -93,6 +96,7 @@ Hooks.once("init", () =>
     CONFIG.Item.dataModels["career"] = CareerModel;
     CONFIG.Item.dataModels["armour"] = ArmourModel;
     CONFIG.Item.dataModels["asset"] = AssetModel;
+    CONFIG.Item.dataModels["corruption"] = CorruptionModel;
 
     CONFIG.ActiveEffect.dataModels["base"] = OldWorldActiveEffectModel
     CONFIG.ChatMessage.dataModels["test"] = OldWorldTestMessageModel;
@@ -137,6 +141,10 @@ Hooks.once("init", () =>
         {
             message.system.updateAppliedDamage(data.message)
         }
+    }
+
+    CONFIG.queries.offerTemptation = async (data) => {
+        fromUuid(data.uuid).then(actor => actor.system.corruption.receiveTemptation(data));
     }
 
     registerSettings();

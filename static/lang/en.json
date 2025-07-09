@@ -13,6 +13,7 @@
     "TYPES.Item.blessing" : "Blessing",
     "TYPES.Item.toolKit" : "Tool / Kit",
     "TYPES.Item.tool" : "Tool",
+    "TYPES.Item.corruption" : "Corruption Path",
     "TYPES.Item.spell" : "Spell",
     "TYPES.Item.wound" : "Wound",
     "TYPES.Item.trapping" : "Trapping",
@@ -105,7 +106,15 @@
             "Tab" : {
                 "Description" : "Description",
                 "Details" : "Details",
-                "Effects" : "Effects"
+                "Effects" : "Effects",
+
+                "Main" : "Main",
+                "Combat" : "Combat",
+                "Magic" : "Magic",
+                "Religion" : "Religion",
+                "Corruption" : "Corruption",
+                "Trappings" : "Trappings",
+                "Notes" : "Notes"
             },
 
             "MeleeWeapons" : "Melee Weapons",
@@ -219,7 +228,16 @@
             "BlessedBy" : "Blessed By",
             "PerformMiracle" : "Perform Miracle",
             "RegainMiracle" : "Regain Miracle",
-            "PurchaseMiracleUse" : "Purchased Miracle Use"
+            "PurchaseMiracleUse" : "Purchased Miracle Use",
+
+            "Corruption" : "Corruption",
+            "Vulnerable" : "Vulnerable",
+            "Tarnished" : "Tarnished",
+            "Tainted" : "Tainted",
+            "Damned" : "Damned",
+
+            "PromptCorruptionTest" : "Prompt Corruption Test",
+            "OfferTemptation" : "Offer Temptation"
         },
 
 
@@ -334,7 +352,12 @@
             "StaggeredPrompt" : "You've been Staggered again! Choose from the following options.",
 
             "RegainMiracleTitle" : "Regain Miracle",
-            "RegainMiracle" : "Spend 4 XP to regain ability to perform a Miracle?"
+            "RegainMiracle" : "Spend 4 XP to regain ability to perform a Miracle?",
+            "Temptation" : "Offer Temptation",
+            "Accept" : "Accept",
+            "Refuse" : "Refuse",
+            "Offer" : "Offer",
+            "AnOffering" : "An Offering..."
         },
 
         "Error" : {

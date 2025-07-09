@@ -18,7 +18,9 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
         actions : {
           rollTest : this._onRollTest,
           advancement : this._onAdvancement,
-          regainMiracle : this._onRegainMiracle
+          regainMiracle : this._onRegainMiracle,
+          corruptionTest : this._onCorruptionTest,
+          offerTemptation : this._onOfferTemptation
         },
         defaultTab : "main"
     }
@@ -30,10 +32,76 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
         combat: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-combat.hbs' },
         magic: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-magic.hbs' },
         religion: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-religion.hbs' },
+        corruption: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-corruption.hbs' },
         effects: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-effects.hbs' },
         trappings: { scrollable: [""], template: 'systems/whtow/templates/actor/tabs/actor-trappings.hbs' },
         notes: { scrollable: [""], template: 'systems/whtow/templates/actor/character/character-notes.hbs' },
       }
+
+      static TABS = {
+        main: {
+          id: "main",
+          group: "primary",
+          label: "TOW.Sheet.Tab.Main",
+        },
+        combat: {
+          id: "combat",
+          group: "primary",
+          label: "TOW.Sheet.Tab.Combat",
+        },
+        magic: {
+          id: "magic",
+          group: "primary",
+          label: "TOW.Sheet.Tab.Magic",
+        },
+        religion: {
+          id: "religion",
+          group: "primary",
+          label: "TOW.Sheet.Tab.Religion",
+        },
+        corruption: {
+          id: "corruption",
+          group: "primary",
+          label: "TOW.Sheet.Tab.Corruption",
+        },
+        effects: {
+          id: "effects",
+          group: "primary",
+          label: "TOW.Sheet.Tab.Effects",
+        },
+        trappings: {
+          id: "trappings",
+          group: "primary",
+          label: "TOW.Sheet.Tab.Trappings",
+        },
+        notes: {
+          id: "notes",
+          group: "primary",
+          label: "TOW.Sheet.Tab.Notes",
+        }
+      }
+
+      
+    _configureRenderParts(options) 
+    {
+        let parts = super._configureRenderParts(options);
+        if (!game.user.isGM)
+        {
+            delete parts.corruption;
+        }
+        return parts;
+    }
+
+    _prepareTabs(options) {
+      let tabs = super._prepareTabs(options);
+  
+      if (!game.user.isGM)
+      {
+          delete tabs.corruption;
+      }
+  
+      return tabs;
+    }
       
       async _prepareContext(options)
       { 
@@ -108,5 +176,15 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
           await this.actor.system.blessed.document?.update({"system.miracles.used" : false})
           this.actor.system.addXPOffset(4, game.i18n.localize("TOW.Sheet.PurchaseMiracleUse"))
         }
+      }
+
+      static async _onCorruptionTest(ev, target)
+      {
+        this.actor.system.corruption.promptCorruptionTest();
+      }
+
+      static async _onOfferTemptation(ev, target)
+      {
+        this.actor.system.corruption.offerTemptation();
       }
 }
