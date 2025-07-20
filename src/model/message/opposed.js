@@ -171,13 +171,14 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
         let owner = warhammer.utility.getActiveDocumentOwner(this.parent)
         if (owner.id != game.user.id)
         {
-            return owner.query("updateUnopposed", {id : this.parent.id})
+            return owner.query("updateUnopposed", {id : this.parent.id, actor: this.defenderToken.actor.uuid})
         }
 
         let responseData = {
             result : this.attackerMessage.system.test.computeOpposedResult(),
             unopposed : true
         }
+        await this.defenderToken.actor?.system.clearOpposed();
         await this.parent.update({system : responseData})
         this.renderResult();
     }

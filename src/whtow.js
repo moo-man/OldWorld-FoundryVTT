@@ -44,6 +44,10 @@ import { CastingTest } from "./system/tests/cast";
 import { ItemUse } from "./system/tests/item-use";
 import CorruptionSheet from "./sheet/item/types/corruption-sheet";
 import { CorruptionModel } from "./model/item/corruption";
+import ActorSheetOldWorldNPC from "./sheet/actor/npc-sheet";
+import { AbilityModel } from "./model/item/ability";
+import AbilitySheet from "./sheet/item/types/ability-sheet";
+import { XPMessageModel } from "./model/message/xp";
 
 Hooks.once("init", () => 
 {
@@ -59,9 +63,8 @@ Hooks.once("init", () =>
     CONFIG.ChatMessage.documentClass = OldWorldChatMessage;
 
     Actors.registerSheet("whtow", ActorSheetOldWorldCharacter, { types: ["character"], makeDefault: true });
-    // Actors.registerSheet("whtow", OldWorldPatronSheet, { types: ["patron"], makeDefault: true });
-    // Actors.registerSheet("whtow", OldWorldNPCSheet, { types: ["npc"], makeDefault: true });
-    // Actors.registerSheet("whtow", OldWorldVehicleSheet, { types: ["vehicle"], makeDefault: true });
+    Actors.registerSheet("whtow", ActorSheetOldWorldNPC, { types: ["npc"], makeDefault: true });
+    // Actors.registerSheet("whtow", ActorSheetOldWorldVehicle, { types: ["vehicle"], makeDefault: true });
 
     Items.registerSheet("whtow", WeaponSheet, {types : ["weapon"], makeDefault: true });
     Items.registerSheet("whtow", TalentSheet, {types : ["talent"], makeDefault: true });
@@ -76,6 +79,7 @@ Hooks.once("init", () =>
     Items.registerSheet("whtow", TrappingSheet, {types : ["trapping"], makeDefault: true });
     Items.registerSheet("whtow", WoundSheet, {types : ["wound"], makeDefault: true });
     Items.registerSheet("whtow", CorruptionSheet, {types : ["corruption"], makeDefault: true });
+    Items.registerSheet("whtow", AbilitySheet, {types : ["ability"], makeDefault: true });
     // Items.registerSheet("whtow", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
 
     DocumentSheetConfig.registerSheet(ActiveEffect, "whtow", OldWorldActiveEffectConfig, {makeDefault : true});
@@ -97,10 +101,12 @@ Hooks.once("init", () =>
     CONFIG.Item.dataModels["armour"] = ArmourModel;
     CONFIG.Item.dataModels["asset"] = AssetModel;
     CONFIG.Item.dataModels["corruption"] = CorruptionModel;
+    CONFIG.Item.dataModels["ability"] = AbilityModel;
 
     CONFIG.ActiveEffect.dataModels["base"] = OldWorldActiveEffectModel
     CONFIG.ChatMessage.dataModels["test"] = OldWorldTestMessageModel;
     CONFIG.ChatMessage.dataModels["opposed"] = OldWorldOpposedMessageModel;
+    CONFIG.ChatMessage.dataModels["xp"] = XPMessageModel;
 
     game.oldworld = {
         config : OLDWORLD,
@@ -133,6 +139,10 @@ Hooks.once("init", () =>
         {
             message.system.setUnopposed()
         }
+
+        let actor = await fromUuid(data.uuid);
+
+        actor.system.clearOpposed();
     }
 
     CONFIG.queries.updateAppliedDamage = async (data) => {

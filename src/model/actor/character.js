@@ -31,8 +31,9 @@ export class CharacterModel extends StandardActorModel
                 amount : new fields.NumberField()
             })),
             log : ListModel.createListModel(new fields.SchemaField({
-                description : new fields.StringField(),
-                amount : new fields.NumberField()
+                reason : new fields.StringField(),
+                amount : new fields.NumberField(),
+                total : new fields.NumberField()
             }))
         })
         schema.fate = new fields.SchemaField({
@@ -59,6 +60,31 @@ export class CharacterModel extends StandardActorModel
                 "prototypeToken.actorLink" : true,
                 "prototypeToken.disposition" : CONST.TOKEN_DISPOSITIONS.FRIENDLY
             });
+        }
+    }
+
+    async _preUpdate(data, options, user)
+    {
+        let newXPTotal = foundry.utils.getProperty(options.changed, "system.xp.total")
+        let xpChanged = newXPTotal - this.xp.total;
+        if (!options.skipXPCheck && newXPTotal)
+        {
+            let reason = (await ValueDialog.create({title : "XP", text : "Reason for XP Change?"})) || "Unspecified Reason";
+
+            if (reason)
+            {
+                foundry.utils.mergeObject(data, this.xp.log.add({reason, amount : xpChanged, total : newXPTotal}))
+            }
+        }
+    }
+
+    async _onUpdate(data, options, user) {
+        await super._onUpdate(data, options, user);
+
+        // If XP received from message award, add
+        if (options.fromMessage && game.users.activeGM.id == game.user.id)
+        {
+          game.messages.get(options.fromMessage)?.updateReceived(this.parent);
         }
     }
 
@@ -103,6 +129,12 @@ export class CharacterModel extends StandardActorModel
     addXPOffset(amount, description)
     {
         return this.parent.update(this.xp.offsets.add({amount, description}));
+    }
+
+    awardXP(amount, reason, message)
+    {
+        let newTotal = this.xp.total + amount;
+        return this.parent.update(foundry.utils.mergeObject({system : {xp : {total : newTotal}}}, this.xp.log.add({amount, reason, total : newTotal})), {skipXPCheck : true, fromMessage : message})
     }
 }
 

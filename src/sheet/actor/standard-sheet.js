@@ -6,6 +6,7 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
 
   static DEFAULT_OPTIONS = {
     actions : {
+          rollTest : this._onRollTest,
       toggleCondition: this._onToggleCondition,
       disposeMiscast : this._onDisposeMiscast,
       rollMiscast : this._onRollMiscast,
@@ -32,7 +33,6 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
   async _prepareContext(options)
   { 
     let context = await super._prepareContext(options);    
-    context.characteristics = this._formatCharacteristics()
 
     context.miscasts = new Array(this.actor.system.magic.level).fill(null).map((_, index) => { return {active : this.actor.system.magic.miscasts > index}});
     if (this.actor.system.magic.miscasts > this.actor.system.magic.level)
@@ -41,6 +41,22 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
     }
     // context.miscasts = context.miscasts.concat(new Array(this.actor.system.magic.miscasts));
     return context;
+  }
+  
+  static async  _onRollTest(ev, target)
+  {
+    if (target.dataset.type == "skill")
+    {
+      this.actor.setupSkillTest(ev.target.dataset.skill);
+    }
+    else if (target.dataset.type == "weapon")
+    {
+      this.actor.setupWeaponTest(this._getUUID(ev));
+    }
+    else if (target.dataset.type == "spell")
+    {
+      this.actor.setupCastingTest(this._getUUID(ev));
+    }
   }
 
   static _onToggleCondition(ev, target)

@@ -25,6 +25,17 @@ export class OldWorldEffect extends WarhammerActiveEffect
         }
     }
 
+
+    prepareBaseData()
+    {
+        if (this.parent?.documentName == "Actor" && this.parent.system.hasThresholds)
+        {
+            if (!this.parent.system.effectIsActive(this))
+            {
+                this.disabled = true;
+            }
+        }
+    }
         
     get testDisplay() 
     {

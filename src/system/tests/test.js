@@ -34,6 +34,7 @@ export class OldWorldTest extends WarhammerTestBase
             characteristic : data.characteristic,
             rollMode : data.rollMode,
             skill: data.skill,
+            endeavour : data.endeavour || false,
             speaker : data.speaker,
             itemUuid : data.itemUuid,
             messageId : null,
@@ -101,6 +102,7 @@ export class OldWorldTest extends WarhammerTestBase
     {
         let dice = this._getActiveDice();
         this.result.successes = dice.filter(i => i.success).length
+        this.result.failures = dice.filter(i => !i.success).length;
         this.result.succeeded = this.result.successes >= 1;
         this.result.dice = dice;
     }
@@ -109,7 +111,7 @@ export class OldWorldTest extends WarhammerTestBase
     // Perform any updates based on test result
     async postRollOperations()
     {
-
+        await this.actor.update({[`system.skills.${this.skill}`] : {improvement : this.actor.system.skills[this.skill].improvement + this.result.failures}});
     }
 
     // Perform any updates before the roll is performed
@@ -350,6 +352,11 @@ export class OldWorldTest extends WarhammerTestBase
     get actor()
     {
         return ChatMessage.getSpeakerActor(this.context.speaker);
+    }
+
+    get skill() 
+    {
+        return this.context.skill;
     }
 
     get token()

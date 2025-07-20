@@ -21,7 +21,10 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
             stepValue: this._onStepValue,
             togglePip : this._onTogglePip,
             advanceSkill : this._onAdvanceSkill,
-            editSkill : this._onEditSkill
+            editSkill : this._onEditSkill,
+            rollTest : this._onRollTest,
+            deleteLog: this.deleteLog,
+            deleteOffset : this.deleteOffset
         }
     };
 
@@ -67,13 +70,17 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
         context.actor = this.actorCopy;
         context.document = this.document;
         context.talents = this.actorCopy.itemTypes.talent;
-        context.skills = context.actor.system.skills.toJSON();
+        context.skills = context.actor.system.skills.toObject();
 
-        for(let s of Object.values(context.skills))
-        {
-            s.value = s.base + s.advances
-            s.pips = Array(7).fill(undefined).map((_, index) => {
-                return {active : s.improvement > index, unavailable : index >  s.value}
+        // Weird but check prepared skills improvement (preparation ensures the value doesn't go above what's allowed)
+        let prepSkills = context.actor.system.skills.toObject(false);
+        
+        for(let s of Object.keys(context.skills))
+        {   
+            let skill = context.skills[s];
+            skill.value = skill.base + skill.advances
+            skill.pips = Array(7).fill(undefined).map((_, index) => {
+                return {active : prepSkills[s].improvement > index, unavailable : index >  skill.value}
             })
         }
 
@@ -83,7 +90,7 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
 
     static submit(ev, form, formData) 
     {
-        this.document.update(this.actorCopy.toObject());
+        this.document.update(this.actorCopy.toObject(), {skipXPCheck : true});
     }
 
     static _onStepValue(ev, target) 
@@ -134,6 +141,7 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
             skillData.improvement = 0;
         }
         this.actorCopy.updateSource({[`system.skills.${skill}`] : skillData});
+        this.document.update({[`system.skills.${skill}`] : skillData});
         this.render({force : true})
     }
 
@@ -142,11 +150,61 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
 
     }
 
+    static updateLog(ev, target)
+    {
+        let index = Number(target.closest("[data-index]").dataset.index);
+        this.actorCopy.updateSource(this.actorCopy.system.xp.log.edit(index, {reason: target.value}));
+        this.render({force : true})
+    }
+    static deleteLog(ev, target)
+    {
+        let index = Number(target.closest("[data-index]").dataset.index);
+        let data = this.actorCopy.system.xp.log.list[index];
+        let newTotal = this.actorCopy.system.xp.total - (data.amount || 0);
+        this.actorCopy.updateSource(this.actorCopy.system.xp.log.remove(index));
+        this.actorCopy.updateSource({"system.xp.total" : newTotal});
+        this.render({force : true})
+    }
+
+    static updateOffset(ev, target)
+    {
+        let index = Number(target.closest("[data-index]")?.dataset.index);
+        let path = target.dataset.path;
+
+        if (isNaN(index))
+        {
+            this.actorCopy.updateSource(this.actorCopy.system.xp.offsets.add({[`${path}`]: target.value}));
+        }
+        else 
+        {
+            this.actorCopy.updateSource(this.actorCopy.system.xp.offsets.edit(index, {[`${path}`]: target.value}));
+        }
+        this.render({force : true})
+    }
+
+    static deleteOffset(ev, target)
+    {
+        let index = Number(target.closest("[data-index]").dataset.index);
+        this.actorCopy.updateSource(this.actorCopy.system.xp.offsets.remove(index));
+        this.render({force : true})
+    }
+
     async _onRender(options)
     {
         await super._onRender(options);
 
         this.element.querySelectorAll("[data-action='editBase']").forEach(e => e.addEventListener("change", (ev) => (this.constructor._onEditBase.bind(this))(ev, e)));
+        this.element.querySelectorAll("[data-action='updateLog']").forEach(e => e.addEventListener("change", (ev) => (this.constructor.updateLog.bind(this))(ev, e)));
+        this.element.querySelectorAll("[data-action='updateOffset']").forEach(e => e.addEventListener("change", (ev) => (this.constructor.updateOffset.bind(this))(ev, e)));
+    }
+
+    static async _onRollTest(ev, target)
+    {
+        let skill = target.closest("[data-skill]").dataset.skill;
+        await this.document.setupSkillTest(skill, {endeavour : true})
+
+        this.actorCopy.updateSource({[`system.skills.${skill}.improvement`] : this.document.system.skills[skill].improvement});
+        this.render({force : true})
     }
 
 }

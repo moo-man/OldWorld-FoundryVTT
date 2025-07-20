@@ -45,7 +45,7 @@ export class NPCCharacteristicsModel extends foundry.abstract.DataModel
     {
         for(let characteristic of Object.values(this))
         {
-            characteristic.value = characteristic.base + characteristic.advances;
+            characteristic.value = characteristic.base + characteristic.modifier;
         }
     }
 }

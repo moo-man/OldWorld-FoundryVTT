@@ -4,6 +4,7 @@ import StandardOldWorldActorSheet from "./standard-sheet";
 
 export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSheet
 {
+
     static DEFAULT_OPTIONS = {
         classes: ["character"],
         actions: {
@@ -16,7 +17,6 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
           height: 900
         },
         actions : {
-          rollTest : this._onRollTest,
           advancement : this._onAdvancement,
           regainMiracle : this._onRegainMiracle,
           corruptionTest : this._onCorruptionTest,
@@ -81,6 +81,7 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
         }
       }
 
+
       
     _configureRenderParts(options) 
     {
@@ -139,23 +140,6 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
         let skill = foundry.utils.deepClone(this.actor.system.skills[key]);
         skill.pips = Array(8).fill(null).map((pip, index) => index < skill.value);
         return skill;
-      }
-
-      static async  _onRollTest(ev, target)
-      {
-        if (target.dataset.type == "skill")
-        {
-          this.actor.setupSkillTest(ev.target.dataset.skill);
-        }
-        else if (target.dataset.type == "weapon")
-        {
-          this.actor.setupWeaponTest(this._getUUID(ev));
-        }
-        else if (target.dataset.type == "spell")
-        {
-          this.actor.setupCastingTest(this._getUUID(ev));
-        }
-
       }
 
       static _onAdvancement(ev, target)

@@ -61,7 +61,7 @@ export class ItemUse extends OldWorldTest
         {
             damage = Roll.safeEval(Roll.replaceFormulaData(this.item.system.damage.formula, this.actor))
         }
-        if (this.item.system.damage.potency)
+        if (this.item.system.damage?.potency)
         {
             damage += (this.context.potency || 0);
         }

@@ -118,6 +118,7 @@ export class SkillsModel extends foundry.abstract.DataModel
         for(let skill of Object.values(this))
         {
             skill.value = skill.base + skill.advances;
+            skill.improvement = Math.clamp(skill.improvement, 0, skill.value + 1)
         }
     }
 }

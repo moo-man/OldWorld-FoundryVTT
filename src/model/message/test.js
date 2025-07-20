@@ -7,7 +7,8 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
         expandItem : this._onExpandItem,
         rollMiscast : this._onRollMiscast,
         castSpell : this._onCastSpell,
-        applyDamage : this._onApplyDamage
+        applyDamage : this._onApplyDamage,
+        chatTest : this._onChatTest
 
        })
 }
@@ -213,6 +214,13 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
         }
         actors.forEach(a => {
             a.system.applyDamage(this.result.damage.value, {item : this.item})
+        })
+    }
+
+    static async _onChatTest(ev, target)
+    {
+        selectedWithFallback().forEach(a => {
+            a.setupTestFromItem(this.test.item);
         })
     }
 }

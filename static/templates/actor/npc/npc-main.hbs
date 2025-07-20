@@ -1,0 +1,231 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <table class="characteristics">
+        <tbody>
+            <tr>
+                {{#each system.characteristics}}
+                    <th>
+                        <label>{{configLookup "characteristicAbbrev" @key}}</label>
+                    </th>
+                {{/each}}
+            </tr>
+            <tr>
+                {{#each system.characteristics}}
+                    <td>
+                        {{#if @root.editing}}
+                            <input type="number" value="{{this.base}}" name="system.characteristics.{{@key}}.base">
+                        {{else}}
+                            <input type="number" value="{{this.value}}" name="system.characteristics.{{@key}}.base" disabled>
+                        {{/if}}
+                    </td>
+                {{/each}}
+            </tr>
+        </tbody>
+    </table>
+    <div class="skills">
+        {{#each alphaSkills}}
+            <div class="skill">
+                {{#if @root.editing}}
+                    <input type="number" name="system.skills.{{this}}.base" value={{lookup (lookup @root.system.skills this) "base" }}> <a>{{configLookup "skills" this}}</a>
+                {{else}}
+                    <input type="number" value={{lookup (lookup @root.system.skills this) "value" }} disabled> <a data-action="rollTest" data-skill="{{this}}" data-type="skill">{{configLookup "skills" this}}</a>
+                {{/if}}
+            </div>
+        {{/each}}
+    </div>
+    <div class="flexrow">
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12">{{localize "TOW.Sheet.Speed"}}</div>
+            <div class="field" style="grid-column: 1 / span 12">
+            {{#if editing}}
+                {{formInput fields.speed.fields.value value=source.system.speed.value choices=(config "speed")}}
+            {{else}}
+                <input type="text" value="{{localize (configLookup "speed" system.speed.value)}}" disabled>
+            {{/if}}
+            </div>
+        </div>
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12">{{localize "TOW.Sheet.Resilience"}}</div>
+            <div class="field" style="grid-column: 1 / span 12">{{system.resilience.value}}</div>
+        </div>
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12">{{localize "TOW.Sheet.NPCType"}}</div>
+            <div class="field" style="grid-column: 1 / span 12">{{formInput fields.type value=system.type choices=(config "npcType")}}</div>
+        </div>
+    </div>
+
+    {{#if woundBreakdown}}
+        <div class="flexrow wound-breakdown">
+            <div class="attribute-box">
+                <div class="label {{#if woundBreakdown.unwounded.active}}active{{/if}}" style="grid-column: 1 / span 12">{{woundBreakdown.unwounded.range}}</div>
+
+                {{#if @root.editing}}
+                    <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{source.system.wounds.unwounded.description}}" name="system.wounds.unwounded.description"> </div>
+                    <div class="field" style="grid-column: 1 / span 12"> <select name="system.wounds.unwounded.effect.id">{{selectOptions document.effects.contents labelAttr="name" valueAttr="id" selected=source.system.wounds.unwounded.effect.id blank="Assign Effect"}}</select> </div>
+                {{else}}
+                    <div class="field" style="grid-column: 1 / span 12" data-tooltip="{{woundBreakdown.unwounded.description}}">{{woundBreakdown.unwounded.description}}</div>
+                {{/if}}
+            </div>
+            <div class="attribute-box">
+                {{#if @root.editing}}
+                    <div class="label" style="grid-column: 1 / span 12">Threshold: <input type="number" value="{{source.system.wounds.wounded.threshold}}" name="system.wounds.wounded.threshold"> </div>
+                    <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{source.system.wounds.wounded.description}}" name="system.wounds.wounded.description"> </div>
+                    <div class="field" style="grid-column: 1 / span 12"> <select name="system.wounds.wounded.effect.id">{{selectOptions document.effects.contents labelAttr="name" valueAttr="id" selected=source.system.wounds.wounded.effect.id blank="Assign Effect"}}</select> </div>
+                {{else}}
+                    <div class="label {{#if woundBreakdown.wounded.active}}active{{/if}}" style="grid-column: 1 / span 12">{{woundBreakdown.wounded.range}}</div>
+                    <div class="field" style="grid-column: 1 / span 12" data-tooltip="{{woundBreakdown.wounded.description}}">{{woundBreakdown.wounded.description}}</div>
+                {{/if}}
+            </div>
+            <div class="attribute-box">
+
+                {{#if @root.editing}}
+                    <div class="label" style="grid-column: 1 / span 12">Threshold: <input type="number" value="{{source.system.wounds.defeated.threshold}}" name="system.wounds.defeated.threshold"> </div>
+                    <div class="field" style="grid-column: 1 / span 12"><input type="text" value="Defeated" disabled name="system.wounds.defeated.description"> </div>
+                    <div class="field" style="grid-column: 1 / span 12"> <select name="system.wounds.defeated.effect.id">{{selectOptions document.effects.contents labelAttr="name" valueAttr="id" selected=source.system.wounds.defeated.effect.id blank="Assign Effect"}}</select> </div>
+                {{else}}
+                    <div class="label {{#if woundBreakdown.defeated.active}}active{{/if}}" style="grid-column: 1 / span 12">{{woundBreakdown.defeated.range}}</div>
+                    <div class="field" style="grid-column: 1 / span 12">{{woundBreakdown.defeated.description}}</div>
+                {{/if}}
+            </div>
+        </div>
+    {{else if items.wound.length}}
+        <div class="sheet-list wounds">
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "TOW.Sheet.Wounds"}}</div>
+                </div>
+                <div class="list-content">
+                    {{#each items.wound}}
+                        <div class="list-row combat" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name">
+                                    <img src="{{this.img}}">
+                                    <a class="label" data-action="itemSummary">{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                                </div>
+                            </div>
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    {{/if}}
+    <div class="sheet-list attacks">
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Attacks"}}</div>
+                <div>{{localize "TOW.Sheet.Damage"}}</div>
+                <div class="large">{{localize "TOW.Sheet.Range"}}</div>
+
+            </div>
+            <div class="list-content">
+                {{#each items.weapon}}
+                    <div class="list-row combat" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            </div>
+                            <div>{{this.system.damage.value}}</div>
+                            {{#if this.system.isMelee}}
+                                <div class="large">{{configLookup "range" this.system.range.melee}}</div>
+                            {{else if this.system.isRanged}}
+                                <div class="large">{{configLookup "range" this.system.range.max}} - {{configLookup "range" this.system.range.max}}</div>
+                            {{else}}
+
+                            {{/if}}
+                        </div>
+                        <div class="row-content weapon-properties">
+                            <div class="tiny grip">
+                                {{this.system.grip}}
+                            </div>
+                            <div class="fit traits">
+                                {{this.system.traits}}
+                            </div>
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="sheet-list abilities">
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Abilities"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="ability">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each abilities}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name rollable">
+                                <img src="{{this.img}}" data-action="useItem">
+                                <a class="label" data-action="useItem">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                                <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                            </div>
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="description">
+                            {{{lookup ../enriched.abilities this.id}}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="sheet-list trappings">
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Trappings"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="trapping">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each trappings}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name rollable">
+                                <img src="{{this.img}}" data-action="useItem">
+                                <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                            </div>
+                            {{#if this.system.isEquippable}}
+                                <div>
+                                    {{#if this.system.isEquipped}}
+                                        <a data-action="toggleProperty" data-path="system.equipped.value"><i class="fa-regular fa-circle-check"></i></a>
+                                    {{else}}
+                                        <a data-action="toggleProperty" data-path="system.equipped.value"><i class="fa-regular fa-circle"></i></a>
+                                    {{/if}}
+                                </div>
+                            {{/if}}
+                            <div class="list-controls">
+                                <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                            </div>
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</section>

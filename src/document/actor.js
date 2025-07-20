@@ -10,22 +10,56 @@ import OldWorldDocumentMixin from "./mixin";
 
 export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
 {
-    async setupSkillTest(skill, context, options)
-    {
+    async setupSkillTest(skill, context, options) {
         return await this._setupTest(TestDialog, OldWorldTest, skill, context, options)
     }
 
-    async setupWeaponTest(weapon, context, options)
-    {
-        return await this._setupTest(WeaponDialog, WeaponTest, weapon,  context, options)
+    async setupWeaponTest(weapon, context, options) {
+        return await this._setupTest(WeaponDialog, WeaponTest, weapon, context, options)
     }
 
-    async setupCastingTest(spell, context, options)
-    {
+    async setupCastingTest(spell, context, options) {
         return await this._setupTest(CastingDialog, CastingTest, spell, context, options)
     }
 
-    async useItem(item, context={}, options)
+    async useItem(item, context = {}, options) {
+        if (typeof item == "string") {
+            if (item.includes(".")) {
+                item = await fromUuid(item);
+            }
+            else {
+                item = actor.items.get(item);
+            }
+        }
+
+        context.itemUuid = item.uuid;
+
+        if (item.system.test.self && item.system.test.skill) {
+            this.setupSkillTest(item.system.test.skill, context, options)
+        }
+        else {
+            let use = await ItemUse.fromItem(item, this, context);
+            use.roll();
+            use.sendToChat();
+        }
+    }
+
+    async useBlessing(type, context = {}, options) {
+
+        let blessing = this.system.blessed.document;
+        if (!type || !document) {
+            return;
+        }
+
+        context.itemUuid = blessing.uuid;
+
+        let use = await BlessingUse.fromItem(blessing, type, this, context);
+        use.roll();
+        use.sendToChat();
+    }
+
+    
+    async setupTestFromItem(item, context={}, options)
     {
         if (typeof item == "string")
         {
@@ -33,65 +67,87 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             {
                 item = await fromUuid(item);
             }
-            else 
+            else
             {
-                item = actor.items.get(item);
+                item = this.items.get(item); // Maybe uuid is actually simple id
             }
         }
+        if (!item)
+        {
+            return ui.notifications.error("No Item found!");
+        }
 
-        context.itemUuid = item.uuid;
-        
-        if (item.system.test.self && item.system.test.skill)
-        {
-            this.setupSkillTest(item.system.test.skill, context, options)
-        }
-        else
-        {
-            let use = await ItemUse.fromItem(item, this, context);
-            use.roll();
-            use.sendToChat();
-        }
+        let itemTestData = item.system.test;
+
+        context.appendTitle = ` - ${item.name}`;
+
+        return this.setupTestFromData(itemTestData, context, options);
     }
 
-    async useBlessing(type, context={}, options)
+    
+    async setupTestFromData(data, context={}, options)
     {
-        
-        let blessing = this.system.blessed.document;
-        if (!type || !document)
+        let skill = data.skill;
+        let dice = data.dice || 0;
+
+        if (!context.fields)
         {
-            return;
+            context.fields = {}
         }
 
-        context.itemUuid = blessing.uuid;
-        
-        let use = await BlessingUse.fromItem(blessing, type, this, context);
-        use.roll();
-        use.sendToChat();
+        if (dice > 0)
+        {
+            context.fields.bonus = dice; 
+        }
+        else if (dice < 0)
+        {
+            context.fields.penalty = dice;
+        }
+
+        return this.setupSkillTest(skill, context, options);
     }
 
-    async addCondition(condition)
-    {
+    async addCondition(condition) {
         let owner = warhammer.utility.getActiveDocumentOwner(this);
 
-        if (game.user.id != owner.id)
-        {
-            await owner.query("addCondition", {uuid: this.uuid, condition})
+        if (game.user.id != owner.id) {
+            await owner.query("addCondition", { uuid: this.uuid, condition })
             return this.hasCondition(condition);
         }
 
-        if (!this.hasCondition(condition))
-        {
-            this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], {condition: true})
+        if (!this.hasCondition(condition)) {
+            this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
         }
-        else if (this.hasCondition(condition) && condition == "staggered")
-        {
-           await this.system.promptStaggeredChoice({excludeOptions : this.system.excludeStaggeredOptions});
+        else if (this.hasCondition(condition) && condition == "staggered") {
+            await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions });
         }
     }
 
-    async removeCondition(condition)
-    {
+    async removeCondition(condition) {
         let existing = this.hasCondition(condition)
         existing?.delete();
     }
+
+    // /** Override to exclude effects if NPC and wound threshold hasn't been met
+    //  * 
+    //  * @override
+    //  * @param {boolean} includeItemEffects Include Effects that are intended to be applied to Items, see getScriptsApplyingToItem, this does NOT mean effects that come from items
+    //  * @yields {WarhammerActiveEffect} applicable active effect
+    //  */
+    // *allApplicableEffects(includeItemEffects = false) 
+    // {
+    //     let effect = super.allApplicableEffects(includeItemEffects);
+
+    //     if (this.actor.type == "npc" && ["brute", "monstrosity"].includes(this.actor.system.type))
+    //     {
+    //         if (this.actor.system.effectIsActive(effect))
+    //         {
+    //             yield effect;
+    //         }
+    //     }
+    //     else 
+    //     {
+    //         yield effect;
+    //     }
+    // }
 }

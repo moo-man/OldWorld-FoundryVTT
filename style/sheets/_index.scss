@@ -1,6 +1,7 @@
 @use "./sheet";
-@use "./actor/_character.scss";
-@use "./actor/_actor.scss";
+@use "./actor/character";
+@use "./actor/actor";
+@use "./actor/npc";
 @use "./item/item";
 @use "./item/blessing";
 @use "./item/career";

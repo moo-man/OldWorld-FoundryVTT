@@ -99,6 +99,13 @@ const OLDWORLD = {
         "fast" : "TOW.Speeds.Fast",
     },
 
+    npcType : {
+        minion : "TOW.NPC.Minion",
+        brute : "TOW.NPC.Brute",
+        champion : "TOW.NPC.Champion",
+        monstrosity : "TOW.NPC.Monstrosity",
+    },
+
     effectScripts : {},
 
     transferTypes : {

@@ -1,0 +1,33 @@
+
+.chat-log {
+    .message {
+
+        .message-header {
+            align-items: center;
+            
+            .message-token {
+                margin-right: 0.5rem;
+                display: flex;
+                flex: 0 0 50px;
+                img {
+                    height: 50px;
+                    width: 50px;
+                }
+            }
+        }
+
+
+        .xp-amount {
+            font-size: var(--font-size-20);
+            text-align: center;
+            margin: 1rem;
+        }
+
+        .corruption-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+    }
+}

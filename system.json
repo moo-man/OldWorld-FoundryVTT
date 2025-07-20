@@ -1,8 +1,8 @@
 {
   "id": "whtow",
-  "title": "Warhammer: The Old World Roleplaying Game (Alpha)",
-  "description": "CAUTION: NOT SUITABLE FOR PLAY YET",
-  "version": "0.3.0",
+  "title": "Warhammer: The Old World Roleplaying Game (Beta)",
+  "description": "",
+  "version": "0.4.0",
   "compatibility" : {
     "minimum" : 13,
     "verified" : 13,
@@ -76,11 +76,13 @@
       "wound" : {},
       "trapping" : {},
       "asset" : {},
-      "corruption" : {}
+      "corruption" : {},
+      "ability" : {}
     },
     "ChatMessage": {
       "test" : {},
-      "opposed" : {}
+      "opposed" : {},
+      "xp" : {}
     }
   },
   "primaryTokenAttribute": null,
@@ -88,7 +90,7 @@
   "url": "https://github.com/moo-man/OldWorld-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/0.3.0/whtow.zip",
+  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/0.4.0/whtow.zip",
   "license": "LICENSE.txt"
 }
 

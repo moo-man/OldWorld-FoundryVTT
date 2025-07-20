@@ -1,10 +1,12 @@
 
 import chat from "./hooks/chat";
+import commands from "./hooks/commands";
 
 
 export default function() 
 {
     chat();
+    commands();
 
 
     Hooks.on("hotbarDrop", (hotbar, data, pos) => 

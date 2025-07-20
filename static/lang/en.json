@@ -20,6 +20,7 @@
     "TYPES.Item.career" : "Career",
     "TYPES.Item.armour" : "Armour",
     "TYPES.Item.asset" : "Asset",
+    "TYPES.Item.ability" : "Ability",
 
     "TOW" : {
 
@@ -102,6 +103,13 @@
             "Other" : "Other"
         },
 
+        "NPC" : {
+            "Minion" : "Minion",
+            "Brute" : "Brute",
+            "Champion" : "Champion",
+            "Monstrosity" : "Monstrosity"
+        },
+
         "Sheet" : {
             "Tab" : {
                 "Description" : "Description",
@@ -165,6 +173,9 @@
             "Source" : "Source",
             "Careers" : "Careers",
             "Origins" : "Origins",
+            "Attacks" : "Attacks",
+            "Abilities" : "Abilities",
+            "TypicalTrappings" : "Typical Trappings",
             
             "Value" : "Value",
 
@@ -237,7 +248,13 @@
             "Damned" : "Damned",
 
             "PromptCorruptionTest" : "Prompt Corruption Test",
-            "OfferTemptation" : "Offer Temptation"
+            "OfferTemptation" : "Offer Temptation",
+
+            "NPCType" : "Type",
+            "Defeated" : "Defeated",
+
+            "XWounds" : "{wounds} Wounds",
+            "XYWounds" : "{x}-{y} Wounds"
         },
 
 
@@ -310,7 +327,9 @@
             "Damage" : "Damage",
 
             "FavouredBy" : "Favoured by {name}",
-            "MiracleOf" : "Miracle of {name}"
+            "MiracleOf" : "Miracle of {name}",
+            "Experience" : "Experience",
+            "Receive" : "Receive"
         },
         
         "WoundHealing" : {
@@ -361,7 +380,10 @@
         },
 
         "Error" : {
-            "MiscastReroll" : "Cannot reroll Miscasts"
+            "MiscastReroll" : "Cannot reroll Miscasts",
+            "Experience" : "Experience values must be numeric",
+            "ActorsXP" : "Target tokens to give experience to",
+            "CharAssigned" : "No character assigned. See the player configuration menu to assign a character."
         }
     },
 

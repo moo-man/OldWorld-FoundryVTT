@@ -27,8 +27,10 @@ export class StandardActorModel extends BaseActorModel
         schema.characteristics = new fields.EmbeddedDataField(NPCCharacteristicsModel);
         schema.skills = new fields.EmbeddedDataField(NPCSkillsModel);
         schema.speed = new fields.SchemaField({
-            land : new  fields.StringField({initial : "normal"}),
-            fly : new  fields.StringField({initial : "none"})
+            value : new fields.StringField({initial : "normal"}),
+            modifier : new fields.NumberField({initial : 0, min: 0})
+            // land : new  fields.StringField({initial : "normal"}),
+            // fly : new  fields.StringField({initial : "none"})
         })
         schema.resilience = new fields.SchemaField({
             value : new fields.NumberField(),
@@ -75,10 +77,7 @@ export class StandardActorModel extends BaseActorModel
     _addModelProperties()
     {
         super._addModelProperties();
-        for(let cast of Object.values(this.magic.casting))
-        {
-            cast.spell.relative = this.parent.items;
-        }
+        this.magic.casting.spell.relative = this.parent.items;
     }
 
     applyDamage(damage, {opposed, item})
@@ -123,13 +122,9 @@ export class StandardActorModel extends BaseActorModel
 
     addWound()
     {
-        ChatMessage.implementation.create({
-            content : "<strong>Takes a Wound!</strong>",
-            speaker : {
-                alias : (this.parent.getActiveTokens[0] || this.prototypeToken)?.name
-            },
-            flavor : game.i18n.localize("TOW.Dialog.Staggered")
-        })
+        let wounds = this.parent.itemTypes.wound;
+        let formula = `${wounds.length + 1}d10`;
+        return game.oldworld.tables.rollTable("wounds",  formula);
     }
 
     giveGround()
