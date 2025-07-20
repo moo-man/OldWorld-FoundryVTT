@@ -111,9 +111,15 @@ export class CharacterModel extends StandardActorModel
         // Characteristic Costs
         for(let c of Object.values(this.characteristics))
         {
-            spent += Array.fromRange(c.value + 1).slice(c.base + 1).reduce((sum, num) => sum + num, 0);
+            if (c.favoured)
+            {
+                spent += Array.fromRange(c.value).slice(c.base).reduce((sum, num) => sum + num, 0);
+            }
+            else 
+            {
+                spent += Array.fromRange(c.value + 1).slice(c.base + 1).reduce((sum, num) => sum + num, 0);
+            }
         }
-
 
         this.xp.spent = spent;
         this.xp.available = this.xp.total - spent;

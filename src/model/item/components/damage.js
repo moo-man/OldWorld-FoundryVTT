@@ -13,7 +13,7 @@ export class DamageModel extends foundry.abstract.DataModel
 
     compute(actor)
     {
-        this.value = Roll.safeEval(Roll.replaceFormulaData(this.formula, actor.getRollData()));
+        this.value = this.formula ? (Roll.safeEval(Roll.replaceFormulaData(this.formula, actor.getRollData()))) : 0;
         if (this.characteristic)
         {
             this.value += actor.system.characteristics[this.characteristic].value;

@@ -13,6 +13,9 @@
                         <div class="list-name">
                             <div class="label">
                                 {{configLookup "characteristics" @key}}
+                                {{#if this.favoured}}
+                                *
+                                {{/if}}
                             </div>
                         </div>
                         <div class="small">

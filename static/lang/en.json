@@ -254,7 +254,10 @@
             "Defeated" : "Defeated",
 
             "XWounds" : "{wounds} Wounds",
-            "XYWounds" : "{x}-{y} Wounds"
+            "XYWounds" : "{x}-{y} Wounds",
+
+            "ToggleEditing" : "Toggle Edit Mode"
+
         },
 
 
@@ -376,7 +379,11 @@
             "Accept" : "Accept",
             "Refuse" : "Refuse",
             "Offer" : "Offer",
-            "AnOffering" : "An Offering..."
+            "AnOffering" : "An Offering...",
+            "ChooseSkills" : "Choose Skills",
+            "ChooseSkillsContent" : "Choose {number} Skills to receive +1",
+            "ApplyCareer" : "Apply Career to this Actor?"
+
         },
 
         "Error" : {
@@ -480,7 +487,11 @@
                 }
             },
             "career"  : {
-                "FIELDS" : {}
+                "FIELDS" : {
+                    "status" : {
+                        "label" : "Status"
+                    }
+                }
             },
             "trapping"  : {
                 "FIELDS" : {}

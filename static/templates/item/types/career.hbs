@@ -46,6 +46,8 @@
         </div>
     </div>
 
+    {{formGroup fields.status value=system.status}}
+
     <div class="flexrow" style="gap: 0.5rem;">
         {{> choiceDisplay system.lore display=item.system.lore.textDisplay path="lore" label="TOW.Sheet.Lores"}}
         {{> choiceDisplay system.trappings display=item.system.trappings.textDisplay path="trappings" label="TOW.Sheet.Trappings"}}
