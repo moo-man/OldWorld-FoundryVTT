@@ -26,7 +26,7 @@ export class CareerModel extends BaseItemModel {
                 melee: new fields.BooleanField(),
                 defence: new fields.BooleanField(),
                 shooting: new fields.BooleanField(),
-                maintenance: new fields.BooleanField(),
+                throwing: new fields.BooleanField(),
                 brawn: new fields.BooleanField(),
                 toil: new fields.BooleanField(),
                 survival: new fields.BooleanField(),

@@ -50,7 +50,7 @@
             "Melee" : "Melee",
             "Defence" : "Defence",
             "Shooting" : "Shooting",
-            "Maintenance" : "Maintenance",
+            "Throwing" : "Throwing",
             "Brawn" : "Brawn",
             "Toil" : "Toil",
             "Survival" : "Survival",
@@ -80,8 +80,9 @@
         },
 
         "Melee" : "Melee",
-        "Ranged" : "Ranged",
         "Brawn" : "Brawn",
+        "Shooting" : "Shooting",
+        "Throwing" : "Throwing",
 
         "Duration" : "Duration",
         "Target" : "Target",

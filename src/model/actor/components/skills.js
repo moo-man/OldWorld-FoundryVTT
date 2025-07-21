@@ -24,7 +24,7 @@ export class SkillsModel extends foundry.abstract.DataModel
             improvement : new fields.NumberField({initial : 0}),
             characteristic : new fields.StringField({initial : "bs"})
         });
-        schema.maintenance = new fields.SchemaField({
+        schema.throwing = new fields.SchemaField({
             base: new fields.NumberField({initial : 2}),
             advances: new fields.NumberField({initial : 0}),
             improvement : new fields.NumberField({initial : 0}),

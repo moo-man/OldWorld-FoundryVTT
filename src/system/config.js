@@ -25,7 +25,7 @@ const OLDWORLD = {
         melee : "TOW.SkillName.Melee",
         defence : "TOW.SkillName.Defence",
         shooting : "TOW.SkillName.Shooting",
-        maintenance : "TOW.SkillName.Maintenance",
+        throwing : "TOW.SkillName.Throwing",
         brawn : "TOW.SkillName.Brawn",
         toil : "TOW.SkillName.Toil",
         survival : "TOW.SkillName.Survival",

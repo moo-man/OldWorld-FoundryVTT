@@ -21,7 +21,7 @@ export class NPCSkillsModel extends foundry.abstract.DataModel
             modifier: new fields.NumberField({initial : 0}),
             characteristic : new fields.StringField({initial : "bs"})
         });
-        schema.maintenance = new fields.SchemaField({
+        schema.throwing = new fields.SchemaField({
             base: new fields.NumberField({initial : 3}),
             modifier: new fields.NumberField({initial : 0}),
             characteristic : new fields.StringField({initial : "bs"})
