@@ -97,24 +97,30 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
     {
         let value = target.dataset.type == "increase" ? 1 : -1;
         let characteristic = target.dataset.characteristic;
+        let skill = target.dataset.skill;
 
         if (characteristic) 
         {
             this.actorCopy.updateSource({ [`system.characteristics.${characteristic}.advances`]: this.actorCopy.system.characteristics[characteristic].advances + value });
         }
+        else if (skill)
+        {
+            this.actorCopy.updateSource({ [`system.characteristics.${skill}.advances`]: this.actorCopy.system.skills[skills].advances + value });
+        }
 
         this.render({force : true})
     }
 
-    static _onEditBase(ev, target)
+    static _onEditProperty(ev, target)
     {
+        let property = target.dataset.property
         if (target.dataset.type == "skill")
         {
-            this.actorCopy.updateSource({ [`system.skills.${target.dataset.skill}.base`]: target.value });
+            this.actorCopy.updateSource({ [`system.skills.${target.dataset.skill}.${property}`]: target.value });
         }
         else if (target.dataset.characteristic)
         {
-            this.actorCopy.updateSource({ [`system.characteristics.${target.dataset.characteristic}.base`]: target.value});
+            this.actorCopy.updateSource({ [`system.characteristics.${target.dataset.characteristic}.${property}`]: target.value});
         }
         this.render({force : true})
     }
@@ -193,7 +199,7 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
     {
         await super._onRender(options);
 
-        this.element.querySelectorAll("[data-action='editBase']").forEach(e => e.addEventListener("change", (ev) => (this.constructor._onEditBase.bind(this))(ev, e)));
+        this.element.querySelectorAll("[data-action='editProperty']").forEach(e => e.addEventListener("change", (ev) => (this.constructor._onEditProperty.bind(this))(ev, e)));
         this.element.querySelectorAll("[data-action='updateLog']").forEach(e => e.addEventListener("change", (ev) => (this.constructor.updateLog.bind(this))(ev, e)));
         this.element.querySelectorAll("[data-action='updateOffset']").forEach(e => e.addEventListener("change", (ev) => (this.constructor.updateOffset.bind(this))(ev, e)));
     }

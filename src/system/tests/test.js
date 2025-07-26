@@ -111,7 +111,10 @@ export class OldWorldTest extends WarhammerTestBase
     // Perform any updates based on test result
     async postRollOperations()
     {
-        await this.actor.update({[`system.skills.${this.skill}`] : {improvement : this.actor.system.skills[this.skill].improvement + this.result.failures}});
+        if (this.context.endeavour)
+        {
+            await this.actor.update({[`system.skills.${this.skill}`] : {improvement : this.actor.system.skills[this.skill].improvement + this.result.failures}});
+        }
     }
 
     // Perform any updates before the roll is performed
@@ -315,7 +318,7 @@ export class OldWorldTest extends WarhammerTestBase
             {
                 return index
             }
-        }).filter(i => i);
+        }).filter(i => !isNaN(i));
         if (indices.length)
         {
             await this.reroll(game.i18n.localize("TOW.Glorious"), indices, compute);
@@ -329,7 +332,7 @@ export class OldWorldTest extends WarhammerTestBase
             {
                 return index
             }
-        }).filter(i => i);
+        }).filter(i => !isNaN(i));
 
         if (indices.length)
         {
