@@ -320,6 +320,7 @@
             "TotalSuccess" : "Total Success!",
             "ApplyDamage" : "Apply Damage",
             "ApplyNumDamage" : "Apply {damage} Damage",
+            "Potency" : "Potency",
 
             "TakesWound" : "<p><strong>{name}</strong> takes a Wound!</p>",
             "GainsStaggered" : "<p><strong>{name}</strong> gets Staggered!</p>",
@@ -392,7 +393,8 @@
             "MiscastReroll" : "Cannot reroll Miscasts",
             "Experience" : "Experience values must be numeric",
             "ActorsXP" : "Target tokens to give experience to",
-            "CharAssigned" : "No character assigned. See the player configuration menu to assign a character."
+            "CharAssigned" : "No character assigned. See the player configuration menu to assign a character.",
+            "NoSpellsToCast" : "No Spells available to Cast"
         }
     },
 

@@ -1,4 +1,4 @@
-import CastingDialog from "../apps/test-dialog/spell-dialog";
+import CastingDialog from "../apps/test-dialog/cast-dialog";
 import TestDialog from "../apps/test-dialog/test-dialog";
 import WeaponDialog from "../apps/test-dialog/weapon-dialog";
 import { BlessingUse } from "../system/tests/blessing-use";
@@ -18,8 +18,8 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         return await this._setupTest(WeaponDialog, WeaponTest, weapon, context, options)
     }
 
-    async setupCastingTest(spell, context, options) {
-        return await this._setupTest(CastingDialog, CastingTest, spell, context, options)
+    async setupCastingTest(data, context, options) {
+        return await this._setupTest(CastingDialog, CastingTest, data, context, options)
     }
 
     async useItem(item, context = {}, options) {

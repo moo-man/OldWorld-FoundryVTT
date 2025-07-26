@@ -11,7 +11,8 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
       disposeMiscast : this._onDisposeMiscast,
       rollMiscast : this._onRollMiscast,
       useBlessing : this._onUseBlessing,
-      regainMiracle : this._onRegainMiracle
+      regainMiracle : this._onRegainMiracle,
+      clearLore : this._onClearLore
     },
   }
   
@@ -53,9 +54,11 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
     {
       this.actor.setupWeaponTest(this._getUUID(ev));
     }
-    else if (target.dataset.type == "spell")
+    else if (target.dataset.type == "cast")
     {
-      this.actor.setupCastingTest(this._getUUID(ev));
+      let spell = this._getUUID(ev);
+      let lore = target.dataset.lore;
+      this.actor.setupCastingTest({lore, spell});
     }
   }
 
@@ -101,6 +104,11 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
   static _onRegainMiracle(ev, target)
   {
     this.actor.system.blessed.document?.update({"system.miracles.used" : false})
+  }
+
+  static _onClearLore(ev, target)
+  {
+    this.actor.update({"system.magic.casting" : {lore : "", progress: 0}})
   }
 
 }

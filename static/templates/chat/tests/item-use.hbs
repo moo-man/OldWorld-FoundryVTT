@@ -4,8 +4,12 @@
         {{{itemSummary}}}
     {{/if}}
 
+    {{#if context.potency}}
+    <div style="text-align: center"><strong>{{localize "TOW.Chat.Potency"}}</strong>: {{context.potency}}</div>
+    {{/if}}
+
     {{#if result.damage.value}}
-    <p style="text-align: center"><strong>{{localize "TOW.Chat.Damage"}}</strong>: {{result.damage.value}}</p>
+    <div style="text-align: center"><strong>{{localize "TOW.Chat.Damage"}}</strong>: {{result.damage.value}}</div>
     <button data-action="applyDamage"><i class="fa-solid fa-crosshairs"></i> {{localize "TOW.Chat.ApplyDamage"}}</button>
     {{/if}}
 

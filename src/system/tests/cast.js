@@ -15,15 +15,9 @@ export class CastingTest extends OldWorldTest
         super.computeResult(); 
         this.result.miscasts = this.result.dice.filter(i => i.miscast).length;
         
-        if (this.result.successes + (this.actor.system.magic.casting.progress || 0) >= this.spell.system.cv)
-        {
-            this.result.potency = this.result.successes
-            this.result.ready = true;
-        }
-        else 
-        {
-            this.result.pct = (this.result.successes + (this.actor.system.magic.casting.progress || 0)) / this.spell.system.cv
-        }
+        this.result.potency = this.result.successes
+
+        this.result.progress = (this.result.successes + (this.actor.system.magic.casting.progress || 0));
 
         if ((this.result.miscasts + this.actor.system.magic.miscasts) > this.actor.system.magic.level)
         {
@@ -34,9 +28,9 @@ export class CastingTest extends OldWorldTest
     // Track casting value on actor based on spell id
     async preRollOperations()
     {
-        if (this.actor.system.magic.casting.spell?.id != this.spell.id)
+        if (this.actor.system.magic.casting.lore != this.context.lore)
         {
-            await this.actor.update({[`system.magic.casting`] : {progress: 0, spell : {id : this.spell.id, name : this.spell.name}}})
+            await this.actor.update({[`system.magic.casting`] : {progress: 0, lore : this.context.lore}})
         }
     }
 
@@ -58,7 +52,7 @@ export class CastingTest extends OldWorldTest
         }   
 
         // Add miscasts to casting value on actor, if already added previously, modify by differential
-        if (this.result.successesAdded && this.actor.system.magic.casting.spell.id == this.spell.id)
+        if (this.result.successesAdded && this.actor.system.magic.casting.lore == this.context.lore)
         {
             let diff = - this.result.successes - this.result.successesAdded;
             this.actor.update({[`system.magic.casting.progress`] : (this.actor.system.magic.casting.progress || 0) + diff})
@@ -94,6 +88,11 @@ export class CastingTest extends OldWorldTest
     get zoneEffects()
     {
         return [];
+    }
+
+    get showChatTest() 
+    {
+        return false;
     }
 
 

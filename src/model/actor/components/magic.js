@@ -9,7 +9,7 @@ export class MagicDataModel extends foundry.abstract.DataModel
         schema.miscasts = new fields.NumberField({min: 0})
         schema.casting = new fields.SchemaField({
             progress : new fields.NumberField({initial : 0, min: 0}),
-            spell : new fields.EmbeddedDataField(DocumentReferenceModel)
+            lore : new fields.StringField({})
         })
         return schema;
     }

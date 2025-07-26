@@ -144,6 +144,18 @@
                 --color:  var(--color-warm-2);
             }
         }
+
+        .list-header {
+            &.lore {
+                border-bottom: 0px;
+                .list-name,
+                .progress {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+            }
+        }
     }
 
     .tab[data-tab=religion] 

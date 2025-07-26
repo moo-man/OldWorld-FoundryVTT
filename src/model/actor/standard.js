@@ -59,6 +59,7 @@ export class StandardActorModel extends BaseActorModel
         this.characteristics.compute();
         this.skills.compute();
         this.resilience.value = 0;
+        this.magic.lores = this._handleLores();
     }
     computeDerived()
     {
@@ -77,7 +78,6 @@ export class StandardActorModel extends BaseActorModel
     _addModelProperties()
     {
         super._addModelProperties();
-        this.magic.casting.spell.relative = this.parent.items;
     }
 
     applyDamage(damage, {opposed, item})
@@ -193,11 +193,54 @@ export class StandardActorModel extends BaseActorModel
 
     async castSpell(spell, potency, fromTest)
     {
-        if(this.magic.casting.spell.id == spell.id)
+        if (fromTest)
         {
-            await this.parent.update({"system.magic.casting" : {spell : {uuid : "", id : "", name : ""}, progress : 0}});
+            await this.clearCasting()
         }
         this.parent.useItem(spell, {potency, targets: fromTest ? fromTest.context.targetSpeakers : null})
+    }
+
+    clearCasting()
+    {
+        this.parent.update({"system.magic.casting" : {progress : 0, lore  : ""}});
+    }
+
+    _handleLores()
+    {
+        let spells = this.parent.itemTypes.spell;
+        let lores = {
+            none : {
+                label : "No Lore Specified",
+                spells : []
+            }
+        };
+        for(let spell of spells)
+        {
+            let lore = spell.system.lore
+            if (!lore)
+            {
+                lores.none.spells.push(spell);
+            }
+            else if (!lores[lore])
+            {
+                lores[lore] = {
+                    spells : [spell],
+                    label : game.oldworld.config.magicLore[spell.system.lore],
+                    progress: 0
+                }
+            }
+            else 
+            {
+                lores[lore].spells.push(spell);
+            }
+        }
+
+        if (this.magic.casting.lore && lores[this.magic.casting.lore])
+        {
+            lores[this.magic.casting.lore].progress = this.magic.casting.progress;
+        }
+
+        return lores;
     }
 }
 

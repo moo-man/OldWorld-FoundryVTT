@@ -10,14 +10,15 @@
 </div>
 
 <div>
-
-{{#if result.ready}}
-    <p>{{spell.name}} ready to cast!<br>({{result.potency}} Potency)</p>
-    <button data-action="castSpell">Cast {{spell.name}}</button>
-
-{{else}}
+{{#if (gt result.successes 0)}}
     <p>{{result.successes}} Successes Added</p>
 {{/if}}
 </div>
+
+
+{{#if (gt result.progress 0)}}
+    <button data-action="castSpell">Cast Spell</button>
+{{/if}}
+
 
 </div>

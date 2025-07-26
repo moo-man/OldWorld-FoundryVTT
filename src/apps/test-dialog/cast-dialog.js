@@ -18,7 +18,7 @@ export default class CastingDialog extends TestDialog
             fields: true
         },
         spell : {
-            template : "systems/whtow/templates/apps/test-dialog/spell-dialog.hbs",
+            template : "systems/whtow/templates/apps/test-dialog/cast-dialog.hbs",
             fields: true
         },
         modifiers : {
@@ -63,9 +63,8 @@ export default class CastingDialog extends TestDialog
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
      */
-    static async setupData(spell, actor, context={}, options={})
+    static async setupData({spell, lore}, actor, context={}, options={})
     {
-
 
         if (typeof spell == "string")
         {
@@ -81,11 +80,22 @@ export default class CastingDialog extends TestDialog
 
         let skill = "willpower"
 
-        context.itemUuid = spell.uuid;
+        if (!lore && spell)
+        {
+            lore = spell.system.lore;
+        }
+
+        if (!lore || lore == "none")
+        {
+            return ui.notifications.error("Must provide a lore to roll a Casting Test")
+        }
+
+        context.lore = lore;
+        // context.itemUuid = spell?.uuid;
+
+        context.appendTitle = context.appendTitle || ` - ${game.oldworld.config.magicLore[lore]}`;
 
         let dialogData = super.setupData(skill, actor, context, options);
-
-        dialogData.data.spell = spell;
 
         return dialogData;
     }

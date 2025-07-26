@@ -195,10 +195,20 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
         let test = this.test;
         test.actor.system.rollMiscast();
     }
-    static _onCastSpell(ev, target)
+    static async _onCastSpell(ev, target)
     {
         let test = this.test;
-        test.actor.system.castSpell(test.spell, test.result.potency, test);
+
+        let availableSpells = test.actor.itemTypes.spell.filter(i => i.system.lore == this.context.lore && i.system.cv <= test.actor.system.magic.casting.progress);
+
+        if (availableSpells.length == 0)
+        {
+            return ui.notifications.error("TOW.Error.NoSpellsToCast", {localize: true})
+        }
+
+        let spell = (await ItemDialog.create(availableSpells, 1, {title : "Select Spell", text : "Select a Spell to Cast"}))[0]
+
+        test.actor.system.castSpell(spell, test.result.potency, test);
     }
 
     static async  _onApplyDamage(ev, target)
