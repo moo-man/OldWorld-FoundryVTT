@@ -14,7 +14,7 @@
             </thead>
             <tbody>
 
-                <tr>
+                {{!-- <tr>
                     <td>
                         {{localize "TOW.Sheet.Starting"}}
                     </td>
@@ -23,7 +23,7 @@
                             <input type="number" name="system.characteristics.{{@key}}" value="{{this}}">
                         </td>
                     {{/each}}
-                </tr>
+                </tr> --}}
                 <tr>
                     <td>
                         {{localize "TOW.Sheet.Maximum"}}
@@ -82,7 +82,7 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "TOW.Sheet.Lores"}}</div>
-            <div class="small">{{localize "TOW.Sheet.Choices"}}</div>
+            <div>{{localize "TOW.Sheet.Category"}}</div>
             <div class="small">{{localize "TOW.Sheet.Group"}}</div>
             <div class="list-controls">
                 <a class="list-control" data-action="listCreate" data-path="system.lores">
@@ -97,7 +97,7 @@
                         <div class="list-name">
                             <input type="text" data-action="editList" data-ipath="name" value="{{this.name}}">
                         </div>
-                        <div class="small"><input type="number" data-action="editList" data-ipath="choices" value="{{this.choices}}"></div>
+                        <div><input type="text" data-action="editList" data-ipath="category" value="{{this.category}}"></div>
                         <div class="small"><input type="number" data-action="editList" data-ipath="group" value="{{this.group}}"></div>
                         <div class="list-controls">
                             <a class="list-control" data-action="listDelete">
@@ -131,7 +131,15 @@
             {{/each}}
         </div>
     </div>
-        <div class="name-list droppable replacement">
+    </div>
+
+
+    {{> documentReference document=system.talents.table path="system.talents.table" label="TOW.Sheet.Table" classes="talents"}}
+
+    {{formGroup fields.talents.fields.rolls value=source.system.talents.rolls}}
+    {{formGroup fields.talents.fields.keep value=source.system.talents.keep}}
+
+            <div class="name-list droppable replacement">
         <label>{{localize "TOW.Sheet.Replacements"}}</label>
         <div class="list-content">
             {{#each system.talents.replacements.list}}
@@ -143,13 +151,6 @@
             {{/each}}
         </div>
     </div>
-    </div>
-
-
-    {{> documentReference document=system.talents.table path="system.talents.table" label="TOW.Sheet.Table" classes="talents"}}
-
-    {{formGroup fields.talents.fields.rolls value=source.system.talents.rolls}}
-    {{formGroup fields.talents.fields.keep value=source.system.talents.keep}}
 
 
     {{!-- </fieldset> --}}

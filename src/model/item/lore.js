@@ -10,4 +10,15 @@ export class LoreModel extends BaseItemModel
         schema.category  = new fields.StringField();
         return schema;
     }
+
+
+    static async findCategories(category)
+    {
+        let lores = (await warhammer.utility.findAllItems("lore", undefined, true, ["system.category"])).filter(i => i.system.category == category);
+        
+        let items = await Promise.all(lores.map(i => foundry.utils.fromUuid(i.uuid)));
+
+        return items;
+    }
+
 }

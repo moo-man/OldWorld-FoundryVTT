@@ -217,6 +217,8 @@
             "Description" : "Description",
             "XP" : "XP",
             "Adv." : "Adv.",
+            "Type" : "Type",
+            "Category" : "Category",
 
             "Characteristics" : "Characteristics",
             "Skills" : "Skills",
@@ -385,7 +387,8 @@
             "AnOffering" : "An Offering...",
             "ChooseSkills" : "Choose Skills",
             "ChooseSkillsContent" : "Choose {number} Skills to receive +1",
-            "ApplyCareer" : "Apply Career to this Actor?"
+            "ApplyCareer" : "Apply Career to this Actor?",
+            "ApplyOrigin" : "Apply Origin to this Actor?"
 
         },
 
