@@ -6,7 +6,7 @@ export class MagicDataModel extends foundry.abstract.DataModel
     {
         let schema = {};
         schema.level = new fields.NumberField({initial: 0, min: 0})
-        schema.miscasts = new fields.NumberField({min: 0})
+        schema.miscasts = new fields.NumberField({min: 0, initial: 0})
         schema.casting = new fields.SchemaField({
             progress : new fields.NumberField({initial : 0, min: 0}),
             lore : new fields.StringField({})
