@@ -116,6 +116,11 @@ const OLDWORLD = {
         other : "WH.TransferType.Other"
     },
 
+    placeholderItemData : {
+        type : "trapping",
+        img : "modules/warhammer-lib/assets/blank.png"
+    },
+
     conditions : {
         ablaze : {
             img: "systems/whtow/assets/icons/conditions/ablaze.svg",

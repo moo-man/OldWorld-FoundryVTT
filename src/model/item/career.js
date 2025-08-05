@@ -91,7 +91,7 @@ export class CareerModel extends BaseItemModel {
 
         }
 
-        await actor.createEmbeddedDocuments("Item", items);
+        await actor.createEmbeddedDocuments("Item", items.filter(i => i));
         let actorSkills = actor.system.skills.toObject();
         for (let s of skillChoices) {
             actorSkills[s.id].base++;

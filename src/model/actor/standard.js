@@ -161,7 +161,6 @@ export class StandardActorModel extends BaseActorModel
                 buttons : buttons
             })
 
-            this.parent.removeCondition("staggered");
             switch (choice)
             {
                 case "give" :
@@ -169,6 +168,7 @@ export class StandardActorModel extends BaseActorModel
                     break;
                 case "wound" :
                     this.addWound();
+                    this.parent.removeCondition("staggered");
                     break;
                 case "prone" :
                     this.parent.addCondition("prone");
