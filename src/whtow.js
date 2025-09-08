@@ -61,6 +61,8 @@ Hooks.once("init", () =>
     CONFIG.Item.documentClass = OldWorldItem;
     CONFIG.ActiveEffect.documentClass = OldWorldEffect;
     CONFIG.ChatMessage.documentClass = OldWorldChatMessage;
+    CONFIG.RollTable.documentClass = WarhammerRollTable;
+
 
     Actors.registerSheet("whtow", ActorSheetOldWorldCharacter, { types: ["character"], makeDefault: true });
     Actors.registerSheet("whtow", ActorSheetOldWorldNPC, { types: ["npc"], makeDefault: true });

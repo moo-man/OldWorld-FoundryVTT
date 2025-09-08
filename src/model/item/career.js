@@ -45,7 +45,7 @@ export class CareerModel extends BaseItemModel {
         schema.status = new fields.StringField({ choices: game.oldworld.config.status })
 
         schema.lore = new fields.EmbeddedDataField(ChoiceModel, { restrictType: ["lore"] })
-        schema.trappings = new fields.EmbeddedDataField(ChoiceModel, { restrictType: ["trapping"] })
+        schema.trappings = new fields.EmbeddedDataField(ChoiceModel, { restrictType: ["trapping", "weapon", "armour", "toolKit"] })
         schema.assets = new fields.EmbeddedDataField(ChoiceModel, { restrictType: ["asset"] })
         schema.contacts = new fields.EmbeddedDataField(DocumentReferenceListModel)
 

@@ -127,7 +127,7 @@ export class CharacterModel extends StandardActorModel
 
     addWound()
     {
-        let wounds = this.parent.itemTypes.wound;
+        let wounds = this.parent.itemTypes.wound.filter(i => !i.system.treated);
         let formula = `${wounds.length + 1}d10`;
         game.oldworld.tables.rollTable("wounds",  formula);
     }

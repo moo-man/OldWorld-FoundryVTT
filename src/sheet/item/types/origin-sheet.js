@@ -47,6 +47,10 @@ export default class OriginSheet extends BaseOldWorldItemSheet {
 
           }
         }
+        else if (item.type == "lore")
+        {
+          this.document.update(this.document.system.lores.add({name : item.name}));
+        }
       }
   }
   
