@@ -1,0 +1,566 @@
+%!Adobe-FontList 1.24
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ACaslonPro-Bold
+FamilyName:Adobe Caslon Pro
+StyleName:Bold
+MenuName:Adobe Caslon Pro Bold
+StyleBits:0
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Adobe Caslon Pro Bold
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/ACaslonPro-Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:143368
+FileModTime:492486866
+DesignSize:120
+NameArray:0,Mac,4,Adobe Caslon Pro Bold
+NameArray:0,Win,1,Adobe Caslon Pro Bold
+NameArray:0,Win,16,Adobe Caslon Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ACaslonPro-BoldItalic
+FamilyName:Adobe Caslon Pro
+StyleName:Bold Italic
+MenuName:Adobe Caslon Pro Bold
+StyleBits:1
+WeightClass:700
+WidthClass:5
+AngleClass:1
+FullName:Adobe Caslon Pro Bold Italic
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/ACaslonPro-BoldItalic.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:170288
+FileModTime:492486866
+DesignSize:120
+NameArray:0,Mac,4,Adobe Caslon Pro Bold Italic
+NameArray:0,Win,1,Adobe Caslon Pro Bold
+NameArray:0,Win,16,Adobe Caslon Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ACaslonPro-Italic
+FamilyName:Adobe Caslon Pro
+StyleName:Italic
+MenuName:Adobe Caslon Pro
+StyleBits:1
+WeightClass:400
+WidthClass:5
+AngleClass:1
+FullName:Adobe Caslon Pro Italic
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/ACaslonPro-Italic.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:169976
+FileModTime:492486866
+DesignSize:120
+NameArray:0,Mac,4,Adobe Caslon Pro Italic
+NameArray:0,Win,1,Adobe Caslon Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ACaslonPro-Regular
+FamilyName:Adobe Caslon Pro
+StyleName:Regular
+MenuName:Adobe Caslon Pro
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Adobe Caslon Pro
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/ACaslonPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:167536
+FileModTime:492486866
+DesignSize:120
+NameArray:0,Mac,4,Adobe Caslon Pro
+NameArray:0,Win,1,Adobe Caslon Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/AdobeFnt24.lst
+FileLength:15512
+FileModTime:775733539
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:CaslonAntique
+FamilyName:Caslon Antique
+StyleName:Regular
+MenuName:Caslon Antique
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Caslon Antique
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/CaslonAntique.ttf
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:86308
+FileModTime:-662774400
+NameArray:0,Mac,4,Caslon Antique
+NameArray:0,Win,1,Caslon Antique
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:CaxtonStd-Bold
+FamilyName:Caxton Std
+StyleName:Bold
+MenuName:Caxton Std Book
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Caxton Std Bold
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/CaxtonStd-Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:37144
+FileModTime:-662774400
+DesignSize:120
+NameArray:0,Mac,4,Caxton Std Bold
+NameArray:0,Win,1,Caxton Std Book
+NameArray:0,Win,16,Caxton Std
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Century725BT-RomanCondensed
+FamilyName:Century725 Cn BT
+StyleName:Regular
+MenuName:Century725 Cn BT
+StyleBits:0
+WeightClass:400
+WidthClass:3
+AngleClass:0
+FullName:Century725 Cn BT
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Century725 Cn BT.ttf
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:51940
+FileModTime:572603262
+NameArray:0,Mac,4,Century725 Cn BT
+NameArray:0,Win,1,Century725 Cn BT
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Dominican
+FamilyName:Dominican
+StyleName:Regular
+MenuName:Dominican
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Dominican
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/DOMINICA.TTF
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:161568
+FileModTime:256925238
+NameArray:0,Mac,4,Dominican
+NameArray:0,Win,1,Dominican
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:DwarvenAxeBBW00-Regular
+FamilyName:DwarvenAxeBBW00-Regular
+StyleName:Regular
+MenuName:DwarvenAxeBBW00-Regular
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:DwarvenAxe BB W00 Regular
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/DwarvenAxe BB.ttf
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:107716
+FileModTime:645963838
+NameArray:0,Mac,4,DwarvenAxe BB W00 Regular
+NameArray:0,Win,1,DwarvenAxeBBW00-Regular
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MinionPro-Bold
+FamilyName:Minion Pro
+StyleName:Bold
+MenuName:Minion Pro
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Minion Pro Bold
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/MinionPro-Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:217028
+FileModTime:492486866
+DesignSize:110
+NameArray:0,Mac,4,Minion Pro Bold
+NameArray:0,Win,1,Minion Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MinionPro-Regular
+FamilyName:Minion Pro
+StyleName:Regular
+MenuName:Minion Pro
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Minion Pro
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/MinionPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:218640
+FileModTime:763550053
+DesignSize:110
+NameArray:0,Mac,4,Minion Pro
+NameArray:0,Win,1,Minion Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:OldClaudeLP
+FamilyName:Old Claude LP
+StyleName:Regular
+MenuName:Old Claude LP
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Old Claude LP
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Old Claude LP Regular.ttf
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:272124
+FileModTime:612310114
+NameArray:0,Mac,4,Old Claude LP
+NameArray:0,Win,1,Old Claude LP
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:TOW
+FamilyName:TOW
+StyleName:Regular
+MenuName:TOW
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:TOW
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/TOW.ttf
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:95456
+FileModTime:750915818
+NameArray:0,Mac,4,TOW
+NameArray:0,Win,1,TOW
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Test_font
+FamilyName:Test_font
+StyleName:Regular
+MenuName:Test_font
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Test_font
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Test_font Mac.ttf
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:5224
+FileModTime:766660372
+NameArray:0,Mac,4,Test_font
+NameArray:0,Win,1,Test_font
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:TimesNewRomanPSMT
+FamilyName:Times New Roman
+StyleName:Regular
+MenuName:Times New Roman
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Times New Roman
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Times New Roman.ttf
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:824920
+FileModTime:760342032
+NameArray:0,Mac,4,Times New Roman
+NameArray:0,Win,1,Times New Roman
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Baskerville
+FamilyName:Baskerville
+StyleName:Regular
+MenuName:Baskerville
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Baskerville
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Baskerville.ttc
+TTCOffset:48
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:1373016
+FileModTime:760342032
+NameArray:0,Mac,4,Baskerville
+NameArray:0,Win,1,Baskerville
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Baskerville-Bold
+FamilyName:Baskerville
+StyleName:Bold
+MenuName:Baskerville
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Baskerville Bold
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Baskerville.ttc
+TTCOffset:284
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:1373016
+FileModTime:760342032
+NameArray:0,Mac,4,Baskerville Bold
+NameArray:0,Win,1,Baskerville
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Baskerville-BoldItalic
+FamilyName:Baskerville
+StyleName:Bold Italic
+MenuName:Baskerville
+StyleBits:3
+WeightClass:700
+WidthClass:5
+AngleClass:1
+FullName:Baskerville Bold Italic
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Baskerville.ttc
+TTCOffset:772
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:1373016
+FileModTime:760342032
+NameArray:0,Mac,4,Baskerville Bold Italic
+NameArray:0,Win,1,Baskerville
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Baskerville-Italic
+FamilyName:Baskerville
+StyleName:Italic
+MenuName:Baskerville
+StyleBits:1
+WeightClass:400
+WidthClass:5
+AngleClass:1
+FullName:Baskerville Italic
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Baskerville.ttc
+TTCOffset:520
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:1373016
+FileModTime:760342032
+NameArray:0,Mac,4,Baskerville Italic
+NameArray:0,Win,1,Baskerville
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Baskerville-SemiBold
+FamilyName:Baskerville
+StyleName:SemiBold
+MenuName:Baskerville
+StyleBits:0
+WeightClass:600
+WidthClass:5
+AngleClass:0
+FullName:Baskerville SemiBold
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Baskerville.ttc
+TTCOffset:1024
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:1373016
+FileModTime:760342032
+NameArray:0,Mac,4,Baskerville SemiBold
+NameArray:0,Win,1,Baskerville
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Baskerville-SemiBoldItalic
+FamilyName:Baskerville
+StyleName:SemiBold Italic
+MenuName:Baskerville
+StyleBits:1
+WeightClass:600
+WidthClass:5
+AngleClass:1
+FullName:Baskerville SemiBold Italic
+WritingScript:Roman
+OutlineFileName:/Users/claudiocanellasdias/Library/CloudStorage/GoogleDrive-claudioc@cubicle7games.com/Shared drives/Cubicle 7/Job Bags [New Structure]/The Old World/CB72900_Player's Guide/04.LAYOUT/TOW_Players_Guide/Document fonts/Baskerville.ttc
+TTCOffset:1260
+DataFormat:sfntData
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:1373016
+FileModTime:760342032
+NameArray:0,Mac,4,Baskerville SemiBold Italic
+NameArray:0,Win,1,Baskerville
+%EndFont
+

@@ -1,0 +1,40 @@
+:root {
+
+
+    @font-face {
+        font-family: "Dominican";
+        src: url('./assets/fonts/dominica.ttf');
+        font-weight: bold;
+    }
+
+    
+    @font-face {
+        font-family: "CaslonPro";
+        src: url('./assets/fonts/ACaslonPro-Regular.otf');
+    }
+    
+    @font-face {
+        font-family: "CaslonPro";
+        src: url('./assets/fonts/ACaslonPro-Bold.otf');
+        font-weight: bold;
+    }
+
+    @font-face {
+        font-family: "CaslonPro";
+        src: url('./assets/fonts/ACaslonPro-Italic.otf');
+        font-style: italic;
+    }
+
+    @font-face {
+        font-family: "TOW";
+        src: url('./assets/fonts/TOW.ttf');
+    }
+    
+    --tow-blue: rgba(0, 69, 94);
+    --tow-gold: gold;
+    --tow-cream: #e8e0d6;
+    --font-header: "Dominican";
+    --font-text: "CaslonPro";
+
+    
+}

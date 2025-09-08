@@ -1,0 +1,14 @@
+@use "./mixins" as *;
+.journal-sheet {
+    
+    .journal-entry-content {
+        @include editor-text();
+        background: url("./assets/ui/parchment-bg.png");
+    }
+
+    .journal-sidebar {
+        background: url("./assets/ui/blue-bg.png");
+        background-size:contain;
+        font-family: var(--font-text);
+    }
+}
