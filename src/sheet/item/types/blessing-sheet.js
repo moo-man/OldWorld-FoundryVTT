@@ -35,10 +35,10 @@ export default class BlessingSheet extends BaseOldWorldItemSheet {
 
   async _handleEnrichment() {
     let enrichment = {}
-    enrichment["system.favour.description"] = await TextEditor.enrichHTML(this.document.system.favour.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
-    enrichment["system.miracles.description"] = await TextEditor.enrichHTML(this.document.system.miracles.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
+    enrichment["system.favour.description"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.favour.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
+    enrichment["system.miracles.description"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.miracles.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
     enrichment["system.prayers"] = await Promise.all(this.document.system.prayers.list.map(i => TextEditor.enrichHTML(i.description)))
-    return expandObject(enrichment)
+    return foundry.utils.expandObject(enrichment)
   }
 
   async _onRender(options) {

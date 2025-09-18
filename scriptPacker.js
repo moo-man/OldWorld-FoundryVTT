@@ -15,7 +15,7 @@ let scriptLoader = `export default function()
 {
     Hooks.on("init", () => 
     {
-        mergeObject(game.oldworld.config.effectScripts, ${JSON.stringify(scriptObj)});
+      foundry.utils.mergeObject(game.oldworld.config.effectScripts, ${JSON.stringify(scriptObj)});
     });
 
 }`

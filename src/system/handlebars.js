@@ -7,7 +7,7 @@ export default function registerHandlebars()
     // });
 
 
-    loadTemplates({
+    foundry.applications.handlebars.loadTemplates({
         itemDamage : "systems/whtow/templates/partials/item-damage.hbs",
         listEffect : "systems/whtow/templates/partials/list-effect.hbs",
         itemTest : "systems/whtow/templates/partials/test-data.hbs",

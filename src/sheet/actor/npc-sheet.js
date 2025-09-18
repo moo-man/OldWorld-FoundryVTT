@@ -119,15 +119,15 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
 
       for(let ability of this.document.itemTypes.ability.concat(this.document.itemTypes.talent))
       {
-        let html = await TextEditor.enrichHTML(ability.system.description.public, { async: true, secrets: ability.isOwner, relativeTo: ability })
+        let html = await foundry.applications.ux.TextEditor.enrichHTML(ability.system.description.public, { async: true, secrets: ability.isOwner, relativeTo: ability })
         if (game.user.isGM)
         {
-          html += await TextEditor.enrichHTML(ability.system.description.gm, { async: true, secrets: ability.isOwner, relativeTo: ability })
+          html += await foundry.applications.ux.TextEditor.enrichHTML(ability.system.description.gm, { async: true, secrets: ability.isOwner, relativeTo: ability })
         }
         enrichment.abilities[ability.id] = html;
       }
 
-      return expandObject(enrichment)
+      return foundry.utils.expandObject(enrichment)
     }
 
     static async  _onToggleEdit()

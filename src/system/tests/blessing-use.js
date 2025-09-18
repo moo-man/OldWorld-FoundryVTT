@@ -63,7 +63,7 @@ export class BlessingUse extends ItemUse
             name = game.i18n.format("TOW.Chat.MiracleOf", {name : item.name});
         }
 
-        return await renderTemplate("systems/whtow/templates/chat/item-summary.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item, name, expanded : true});
+        return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item, name, expanded : true});
     }
 
 

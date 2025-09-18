@@ -46,10 +46,10 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
 
   async _handleEnrichment() {
     let enrichment = {}
-    enrichment["system.description.gm"] = await TextEditor.enrichHTML(this.actor.system.description.gm, { async: true, secrets: this.actor.isOwner, relativeTo: this.actor })
-    enrichment["system.description.public"] = await TextEditor.enrichHTML(this.actor.system.description.public, { async: true, secrets: this.actor.isOwner, relativeTo: this.actor })
+    enrichment["system.description.gm"] = await foundry.applications.ux.TextEditor.enrichHTML(this.actor.system.description.gm, { async: true, secrets: this.actor.isOwner, relativeTo: this.actor })
+    enrichment["system.description.public"] = await foundry.applications.ux.TextEditor.enrichHTML(this.actor.system.description.public, { async: true, secrets: this.actor.isOwner, relativeTo: this.actor })
 
-    return expandObject(enrichment)
+    return foundry.utils.expandObject(enrichment)
   }
 
   _getContextMenuOptions()

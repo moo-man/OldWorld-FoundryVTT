@@ -23,8 +23,8 @@ export class NPCModel extends StandardActorModel {
         })
 
         schema.type = new fields.StringField({ initial: "minion" });
-        schema.resilience.fields.useItems = new fields.BooleanField({}, { parent: schema.resilience });
-        schema.resilience.fields.descriptor = new fields.StringField({}, { parent: schema.resilience });
+        schema.resilience.fields.useItems = new fields.BooleanField({}, { name : "useItems", parent: schema.resilience });
+        schema.resilience.fields.descriptor = new fields.StringField({}, { name : "descriptor", parent: schema.resilience });
         return schema;
     }
 
