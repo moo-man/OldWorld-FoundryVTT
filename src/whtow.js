@@ -162,7 +162,7 @@ Hooks.once("init", () =>
     registerSettings();
     registerHandlebars();
     
-    mergeObject(CONFIG, TOW_CONFIG);
+    foundry.utils.mergeObject(CONFIG, TOW_CONFIG);
 
 });
 

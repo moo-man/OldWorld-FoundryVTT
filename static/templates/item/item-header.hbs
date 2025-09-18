@@ -14,7 +14,7 @@
                 <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Cost"}}</label></div>
                 <div class="field" style="grid-column: 9 / span 4">
                     <select name="system.cost">
-                        {{selectOptions (config "status") selected=source.system.cost}}
+                        {{selectOptions (config "status") selected=source.system.cost blank=""}}
                     </select>
                 </div>
             </div>

@@ -190,7 +190,7 @@ const OLDWORLD = {
         }
     },
     
-    // mergeObject(scriptTriggers, {
+    // foundry.utils.mergeObject(scriptTriggers, {
     
     //     equipToggle : "WH.Trigger.EquipToggle",
     

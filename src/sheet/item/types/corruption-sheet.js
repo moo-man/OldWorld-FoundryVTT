@@ -22,11 +22,11 @@ export default class CorruptionSheet extends BaseOldWorldItemSheet {
 
   async _handleEnrichment() {
     let enrichment = await super._handleEnrichment();
-    enrichment["system.vulnerable"] = await TextEditor.enrichHTML(this.document.system.vulnerable, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
-    enrichment["system.tarnished.description"] = await TextEditor.enrichHTML(this.document.system.tarnished.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
-    enrichment["system.tainted.description"] = await TextEditor.enrichHTML(this.document.system.tainted.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
-    enrichment["system.damned.description"] = await TextEditor.enrichHTML(this.document.system.damned.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
-    return expandObject(enrichment)
+    enrichment["system.vulnerable"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.vulnerable, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
+    enrichment["system.tarnished.description"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.tarnished.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
+    enrichment["system.tainted.description"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.tainted.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
+    enrichment["system.damned.description"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.damned.description, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
+    return foundry.utils.expandObject(enrichment)
   }
 
   async _onRender(options) {

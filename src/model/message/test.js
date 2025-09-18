@@ -129,7 +129,7 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
       {
         let dice = html.querySelector(".dice");
         dice.addEventListener("mouseenter", async ev => {
-            let breakdown = await renderTemplate("systems/whtow/templates/chat/tests/dice-breakdown.hbs", test)
+            let breakdown = await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/tests/dice-breakdown.hbs", test)
             game.tooltip.activate(ev.target, {html: breakdown, direction:"LEFT"})
         })
         

@@ -166,7 +166,7 @@ export class OldWorldTest extends WarhammerTestBase
             public : await foundry.applications.ux.TextEditor.enrichHTML(item.system.description.public, {async: true, relativeTo: item, secrets : false}),
             gm : await foundry.applications.ux.TextEditor.enrichHTML(item.system.description.gm, {async: true, relativeTo: item, secrets : false})
         }
-        return await renderTemplate("systems/whtow/templates/chat/item-summary.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item });
+        return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item });
     }
 
 

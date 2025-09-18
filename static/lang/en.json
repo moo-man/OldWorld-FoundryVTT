@@ -150,6 +150,8 @@
 
             "Status" : "Status",
             "Resilience" : "Resilience",
+            "ResilienceModifier" : "Resilience Modifier",
+            "Modifier" : "Modifier",
             "Speed" : "Speed",
             "Fate" : "Fate",
 
@@ -437,8 +439,7 @@
             "armour"  : {
                 "FIELDS" : {
                     "resilience" : {
-                        "label" : "Resilience",
-                        "hint" : "e.g. @system.characteristics.t.value + 1" 
+                        "label" : "Resilience"
                     },
                     "traits" : {
                         "label" : "Traits"

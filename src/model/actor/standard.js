@@ -29,11 +29,10 @@ export class StandardActorModel extends BaseActorModel
         schema.speed = new fields.SchemaField({
             value : new fields.StringField({initial : "normal"}),
             modifier : new fields.NumberField({initial : 0, min: 0})
-            // land : new  fields.StringField({initial : "normal"}),
-            // fly : new  fields.StringField({initial : "none"})
         })
         schema.resilience = new fields.SchemaField({
             value : new fields.NumberField(),
+            modifier : new fields.NumberField({initial: 0}),
         }),
         schema.magic = new fields.EmbeddedDataField(MagicDataModel)
         schema.blessed = new fields.EmbeddedDataField(BlessedDataModel)
@@ -64,9 +63,9 @@ export class StandardActorModel extends BaseActorModel
     computeDerived()
     {
         super.computeDerived();
-        this.resilience.value += this.characteristics.t.value
+        this.resilience.value += this.characteristics.t.value + this.resilience.modifier;   
         try {
-            this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => this.resilience.value +=  Number((Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent))) || 0))
+            this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => this.resilience.value +=  Number(i.system.resilience ? (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0) : 0))
         }
         catch(e)
         {

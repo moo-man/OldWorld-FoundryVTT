@@ -43,10 +43,18 @@
             {{/if}}
             </div>
         </div>
+        {{#if @root.editing}}
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12">{{localize "TOW.Sheet.ResilienceModifier"}}</div>
+            <div class="field" style="grid-column: 1 / span 6">{{formInput fields.resilience.fields.modifier value=system.resilience.modifier placeholder=(localize "TOW.Sheet.Modifier")}}</div>
+            <div class="field" style="grid-column: 7 / span 6">{{formInput fields.resilience.fields.descriptor value=system.resilience.descriptor placeholder=(localize "TOW.Sheet.Description")}}</div>
+        </div>
+        {{else}}
         <div class="attribute-box">
             <div class="label" style="grid-column: 1 / span 12">{{localize "TOW.Sheet.Resilience"}}</div>
-            <div class="field" style="grid-column: 1 / span 12">{{system.resilience.value}}</div>
+            <div class="field" style="grid-column: 1 / span 12">{{system.resilience.value}} {{#if system.resilience.descriptor}}({{system.resilience.descriptor}}){{/if}}</div>
         </div>
+        {{/if}}
         <div class="attribute-box">
             <div class="label" style="grid-column: 1 / span 12">{{localize "TOW.Sheet.NPCType"}}</div>
             <div class="field" style="grid-column: 1 / span 12">{{formInput fields.type value=system.type choices=(config "npcType")}}</div>
@@ -132,10 +140,11 @@
                                 <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
                             </div>
                             <div>{{this.system.damage.value}}</div>
+                            {{log this.system.range.melee}}
                             {{#if this.system.isMelee}}
                                 <div class="large">{{configLookup "range" this.system.range.melee}}</div>
                             {{else if this.system.isRanged}}
-                                <div class="large">{{configLookup "range" this.system.range.max}} - {{configLookup "range" this.system.range.max}}</div>
+                                <div class="large">{{configLookup "range" this.system.range.min}} - {{configLookup "range" this.system.range.max}}</div>
                             {{else}}
 
                             {{/if}}

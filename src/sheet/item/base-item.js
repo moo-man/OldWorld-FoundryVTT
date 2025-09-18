@@ -44,10 +44,10 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
   
     async _handleEnrichment() {
       let enrichment = {}
-      enrichment["system.description.public"] = await TextEditor.enrichHTML(this.document.system.description.public, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
-      enrichment["system.description.gm"] = await TextEditor.enrichHTML(this.document.system.description.gm, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
+      enrichment["system.description.public"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.description.public, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
+      enrichment["system.description.gm"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.description.gm, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
   
-      return expandObject(enrichment)
+      return foundry.utils.expandObject(enrichment)
     }
   }
   
