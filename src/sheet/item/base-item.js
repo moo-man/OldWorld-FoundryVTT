@@ -1,3 +1,4 @@
+import ModifierConfig from "../../apps/modifier-config";
 
 export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
 
@@ -6,8 +7,7 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
       window: {
       },
       actions: {
-        toggleSummary: this._toggleSummary,
-        createItem: this._onCreateItem,
+        configureModifiers : this._onConfigureModifiers
       },
       defaultTab: "description"
     }
@@ -48,6 +48,11 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
       enrichment["system.description.gm"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.description.gm, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
   
       return foundry.utils.expandObject(enrichment)
+    }
+
+    static _onConfigureModifiers(ev, target)
+    {
+      new ModifierConfig(this.document).render({force: true}); 
     }
   }
   

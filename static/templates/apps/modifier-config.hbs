@@ -1,0 +1,65 @@
+<div>
+    <h3 class="centered">Attacking</h3>
+    <div class="modifier-section">
+        <div class="value">
+            <input type="number" name="system.modifiers.attacking.value" value={{system.modifiers.attacking.value}}>
+            Dice
+        </div>
+        <div class="subject">
+            <select name="system.modifiers.attacking.subject">
+                {{selectOptions subjects selected=system.modifiers.attacking.subject blank=""}}
+            </select>
+        </div>
+        <div class="not">
+            <input type="checkbox" name="system.modifiers.attacking.not" {{checked system.modifiers.attacking.not}}>
+            Not
+        </div>
+        <div class="condition">
+            <select name="system.modifiers.attacking.condition">
+                {{selectOptions conditions selected=system.modifiers.attacking.condition blank=""}}
+            </select>
+        </div>
+    </div>
+    <h3 class="centered">Defending</h3>
+    <div class="modifier-section">
+        <div class="value">
+            <input type="number" name="system.modifiers.defending.value" value={{system.modifiers.defending.value}}>
+            Dice
+        </div>
+        <div class="subject">
+            <select name="system.modifiers.defending.subject">
+                {{selectOptions subjects selected=system.modifiers.defending.subject blank=""}}
+            </select>
+        </div>
+        <div class="not">
+            <input type="checkbox" name="system.modifiers.defending.not" {{checked system.modifiers.defending.not}}>
+            Not
+        </div>
+        <div class="condition">
+            <select name="system.modifiers.defending.condition">
+                {{selectOptions conditions selected=system.modifiers.defending.condition blank=""}}
+            </select>
+        </div>
+    </div>
+    <h3 class="centered">Damage</h3>
+    <div class="modifier-section">
+        <div class="value">
+            <input type="number" name="system.modifiers.damage.value" value={{system.modifiers.damage.value}}>
+            Damage
+        </div>
+        <div class="subject">
+            <select name="system.modifiers.damage.subject">
+                {{selectOptions subjects selected=system.modifiers.damage.subject blank=""}}
+            </select>
+        </div>
+        <div class="not">
+            <input type="checkbox" name="system.modifiers.damage.not" {{checked system.modifiers.damage.not}}>
+            Not
+        </div>
+        <div class="condition">
+            <select name="system.modifiers.damage.condition">
+                {{selectOptions conditions selected=system.modifiers.damage.condition blank=""}}
+            </select>
+        </div>
+    </div>
+</div>

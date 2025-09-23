@@ -5,7 +5,10 @@ export class WeaponTest extends OldWorldTest
 
     static _separateDialogData(data)
     {
-        return foundry.utils.mergeObject(super._separateDialogData(data), {context : {rollClass : "WeaponTest"}});
+        let separated = super._separateDialogData(data);
+        separated.testData.damage = data.damage;
+
+        return foundry.utils.mergeObject(separated, {context : {rollClass : "WeaponTest"}});
     }
 
     computeResult()
@@ -33,7 +36,7 @@ export class WeaponTest extends OldWorldTest
         if (result.success && result.computed)
         {
             result.damage = {
-                value : this.weapon.system.damage.value + result.successes,
+                value : this.testData.damage + result.successes,
                 ignoreArmour : this.weapon.system.damage.ignoreArmour
             }
         }

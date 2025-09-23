@@ -1,15 +1,15 @@
 <div class="dice-fields">
     <div class="dice-modifiers">
-        <div>
-            Penalty
+        <div data-tooltip="{{tooltips.penalty}}" data-tooltip-direction="UP">
+            {{localize "TOW.Dialog.Penalty"}}
             <div class="field-control">
                 <a data-action="dec" data-target="penalty"><i class="fa-solid fa-minus"></i></a>
                 <input type="number" name="penalty" value="{{fields.penalty}}" readonly>
                 <a data-action="inc" data-target="penalty"><i class="fa-solid fa-plus"></i></a>
             </div>
         </div>
-        <div>
-            Bonus
+        <div data-tooltip="{{tooltips.bonus}}" data-tooltip-direction="UP">
+            {{localize "TOW.Dialog.Bonus"}}
             <div class="field-control">
                 <a data-action="dec" data-target="bonus"><i class="fa-solid fa-minus"></i></a>
                 <input type="number" name="bonus" value="{{fields.bonus}}" readonly>
@@ -18,7 +18,6 @@
         </div>
     </div>
     <div class="dice">
-        {{log dice}}
         {{#each dice}}
             <div class="die {{this.type}}">
                 <i class="fa-solid fa-dice-d10"></i>
@@ -35,16 +34,16 @@
     </div>
 
     <div class="state-field">
-        <div>
-            <label>Grim</label>
+        <div data-tooltip="{{tooltips.grim}}" data-tooltip-direction="UP">
+            <label>{{localize "TOW.Dialog.Grim"}}</label>
             <input type="radio" id="grim" name="state" {{checked (eq fields.state "grim")}}>
         </div>
         <div>
-            <label>Normal</label>
+            <label>{{localize "TOW.Dialog.Normal"}}</label>
             <input type="radio" id="normal" name="state" {{checked (eq fields.state "normal")}}>
         </div>
-        <div>
-            <label>Glorious</label>
+        <div data-tooltip="{{tooltips.glorious}}" data-tooltip-direction="UP">
+            <label>{{localize "TOW.Dialog.Glorious"}}</label>
             <input type="radio" id="glorious" name="state" {{checked (eq fields.state "glorious")}}>
         </div>
     </div>

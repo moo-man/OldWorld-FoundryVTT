@@ -65,7 +65,11 @@ export class StandardActorModel extends BaseActorModel
         super.computeDerived();
         this.resilience.value += this.characteristics.t.value + this.resilience.modifier;   
         try {
-            this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => this.resilience.value +=  Number(i.system.resilience ? (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0) : 0))
+            this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => 
+            {
+                this.resilience.value +=  Number(i.system.resilience ? (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0) : 0)
+                this.resilience.armoured = true;
+            })
         }
         catch(e)
         {
@@ -240,6 +244,19 @@ export class StandardActorModel extends BaseActorModel
         }
 
         return lores;
+    }
+
+    get isArmoured() 
+    {
+        return this.resilience.armoured;
+    }
+    get isStaggered() 
+    {
+        return this.parent.statuses.includes("staggered");
+    }
+    get isMounted() 
+    {
+
     }
 }
 

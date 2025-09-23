@@ -1,8 +1,15 @@
 <div class="weapon-dialog">
     <div class="form-group">
-        <label>Charging</label>
+        <label>{{localize "TOW.Dialog.Charging"}}</label>
         <div class="form-fields">
             <input type="checkbox" name="charging" {{checked fields.charging}}>
+        </div>
+    </div>
+
+    <div class="form-group" data-tooltip="{{tooltips.damage}}" data-tooltip-direction="LEFT">
+        <label>{{localize "TOW.Dialog.Damage"}}</label>
+        <div class="form-fields">
+            <input type="number" name="damage" value="{{fields.damage}}">
         </div>
     </div>
 </div>

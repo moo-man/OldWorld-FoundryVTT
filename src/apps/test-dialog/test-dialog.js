@@ -22,23 +22,23 @@ export default class TestDialog extends WarhammerRollDialogV2
     {
         return {
             bonus: {
-                label: "TOW.BonusDice",
+                label: "TOW.Dialog.BonusDice",
                 type: 1,
                 path: "fields.bonus",
                 hideLabel: true
             },
             penalty: {
-                label: "TOW.DicePenalty",
+                label: "TOW.Dialog.DicePenalty",
                 type: 1,
                 path: "fields.penalty"
             },
             glorious: {
-                label: "TOW.Glorious",
+                label: "TOW.Dialog.Glorious",
                 type: 1,
                 path: "data.glorious"
             },
             grim: {
-                label: "TOW.Grim",
+                label: "TOW.Dialog.Grim",
                 type: 1,
                 path: "data.grim"
             }
@@ -165,6 +165,13 @@ export default class TestDialog extends WarhammerRollDialogV2
         }
         else return super._onFieldChange(ev);
     }
+
+    createBreakdown()
+    {
+        let breakdown = {modifiers : this.tooltips.getCollectedTooltips()};
+        return breakdown;
+    }
+
    
     /**
      * 

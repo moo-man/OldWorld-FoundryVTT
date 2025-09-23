@@ -96,6 +96,7 @@ export default class CastingDialog extends TestDialog
         context.appendTitle = context.appendTitle || ` - ${game.oldworld.config.magicLore[lore]}`;
 
         let dialogData = super.setupData(skill, actor, context, options);
+        dialogData.data.scripts = dialogData.data.scripts.concat(spell?.getScripts("dialog").filter(s => !s.options.defending) || [])
 
         return dialogData;
     }
