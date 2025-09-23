@@ -7,8 +7,28 @@
     }
 
     .journal-sidebar {
+        --color-scrollbar: var(--tow-gold);
         background: url("./assets/ui/blue-bg.png");
         background-size:contain;
         font-family: var(--font-text);
+        .page-index {
+            color: var(--tow-gold);
+        }
+        .toc li.page.active + :not(.active),
+        .toc li.page:not(.active) + .active {
+            border-top-color: var(--tow-gold);
+        }
+    }
+
+
+    .journal-header {
+        .title {
+            background: none;
+            color: var(--tow-blue);
+            border-bottom: 1px solid var(--tow-blue);
+            border-radius: 0px;
+            outline: none;
+            font-family: var(--font-header);
+        }
     }
 }

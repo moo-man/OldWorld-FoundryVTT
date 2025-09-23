@@ -1,0 +1,49 @@
+.application {
+
+    --color-shadow-primary: var(--tow-gold);
+
+    --color-fieldset-border: var(--color-dark-5);
+
+    --color-form-hint: var(--color-dark-4);
+    --color-form-hint-hover: var(--color-dark-4);
+    --color-form-label: var(--color-dark-3);
+    --color-form-label-hover: var(--color-dark-3);
+    --color-select-option-bg: transparent;
+
+    select,
+    input {
+        --input-background-color: rgba(0, 0, 0, 0.1);
+        --input-border-color: transparent;
+        --input-text-color: var(--color-dark-2);
+        --input-focus-outline-color: var(--tow-blue);
+    }
+
+    background: url("./assets/ui/parchment-bg.png");
+
+}
+
+
+.application.item.warhammer,
+.application.warhammer {
+
+    --color-text-primary: var(color-dark-3);
+
+    --attribute-input: rgba(0, 0, 0, 0.1);
+    --attribute-input-border: rgba(0, 0, 0, 0.1);
+    --attribute-border: rgba(0, 0, 0, 0.1);
+    --attribute-title: var(--tow-lightblue)
+    --attribute-title-color: black;
+    --fieldset-border: var(--color-dark-5);
+    --attribute-locked-input: transparent;
+    --attribute-locked-border: transparent;
+    --attribute-label: transparent;
+    --attribute-field: transparent;
+    --form-label: transparent;
+    --form-input: rgba(0, 0, 0, 0.1);
+    --form-input-border: transparent;
+    --form-group-border: rgba(0, 0, 0, 0.1);
+    --editor-header: var(--color-cool-3);
+    --editor-header-border: transparent;
+    --hover-bg: transparent;
+    --form-label : var(--tow-lightblue)
+}
