@@ -23,8 +23,9 @@ export class WeaponModel extends EquippableItem
         schema.grip = new fields.StringField({choices : {"1H" : "1H", "2H" : "2H"}, initial : "1H"}),
         schema.traits = new fields.StringField({});
         schema.reload = new fields.SchemaField({
-            current : new fields.NumberField({min: 0}),
-            value : new fields.NumberField({min: 0})
+            current : new fields.NumberField({min: 0, initial: 0}),
+            value : new fields.NumberField({min: 0}),
+            optional : new fields.BooleanField()
         })
         return schema;
     }
@@ -37,6 +38,21 @@ export class WeaponModel extends EquippableItem
     get isRanged()
     {
         return ["shooting", "throwing"].includes(this.skill);
+    }
+
+    get isLoaded()
+    {
+        return !this.requiresLoading || this.reload.current == this.reload.value;
+    }
+
+    rollReloadTest(actor)  
+    {
+        return actor.setupSkillTest("dexterity", {reload: this.parent, appendTitle: ` - Reloading ${this.parent.name}`});
+    }
+
+    get requiresLoading()
+    {
+        return this.reload.value > 0;
     }
 
     computeOwned(actor) 

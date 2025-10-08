@@ -139,4 +139,11 @@
             margin-bottom: 0px;
         }
     }
+
+    .tab[data-tab=combat]
+    {
+        .weapon-properties {
+            gap: 0.5rem;
+        }
+    }
 }

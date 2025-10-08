@@ -96,6 +96,11 @@ export default class WeaponDialog extends TestDialog
             }
         }
 
+        if (!weapon.system.isLoaded)
+        {
+            return weapon.system.rollReloadTest(actor);
+        }
+
         let skill = weapon.system.skill;
 
         if (actor.system.opposed)

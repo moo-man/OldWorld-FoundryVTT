@@ -20,6 +20,16 @@ export class WeaponTest extends OldWorldTest
         // this.result.dice = dice;
     }
 
+    async postRollOperations()
+    {
+        await super.postRollOperations();
+        if (this.weapon.system.requiresLoading && !this.weapon.system.reload.optional)
+        {
+            await this.weapon.update({"system.reload.current" : 0});
+        }
+    }
+    
+
     get weapon()
     {
         return this.item;
