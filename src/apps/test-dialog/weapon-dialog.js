@@ -46,9 +46,13 @@ export default class WeaponDialog extends TestDialog
 
     async computeInitialFields()
     {
+        await super.computeInitialFields();
         this.fields.damage = this.weapon.system.damage.value;
         this.tooltips.set("damage", this.weapon.system.damage.formula, this.weapon.name);
-        this.tooltips.add("damage", this.actor.system.characteristics[this.weapon.system.damage.characteristic].value, game.oldworld.config.characteristics[this.weapon.system.damage.characteristic]);
+        if (this.weapon.system.damage.characteristic)
+        {
+            this.tooltips.add("damage", this.actor.system.characteristics[this.weapon.system.damage.characteristic].value, game.oldworld.config.characteristics[this.weapon.system.damage.characteristic]);
+        }
     }
 
     static PARTS = {

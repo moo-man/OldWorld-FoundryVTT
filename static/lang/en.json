@@ -154,6 +154,7 @@
             "ResilienceModifier" : "Resilience Modifier",
             "Modifier" : "Modifier",
             "Speed" : "Speed",
+            "SpeedModifier" : "Speed (Modifier)",
             "Fate" : "Fate",
 
             "DescriptionPublic" : "Description (Public)",
@@ -163,6 +164,7 @@
             "Cost" : "Cost",
 
             "Damage" : "Damage",
+            "IgnoreArmour" : "Ignore Armour",
             "Range" : "Range",
             "OptimumRange" : "Optimum Range",
 
@@ -298,6 +300,7 @@
 
         "DurationType" : {
             "Immediate" : "Immediate",
+            "Instant" : "Instant",
             "Battle" : "Battle",
             "Permanent" : "Permanent",
             "Varies" : "Varies",

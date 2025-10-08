@@ -66,7 +66,8 @@ export class ItemUse extends OldWorldTest
             damage += (this.context.potency || 0);
         }
         this.result.damage = {
-            value : damage
+            value : damage,
+            ignoreArmour : this.item.system.damage.ignoreArmour
         }
     }
 

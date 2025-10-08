@@ -116,10 +116,10 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         }
 
         if (!this.hasCondition(condition)) {
-            this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
+            return this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
         }
         else if (this.hasCondition(condition) && condition == "staggered") {
-            await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions });
+            return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions });
         }
     }
 

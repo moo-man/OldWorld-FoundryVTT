@@ -18,7 +18,7 @@ export default class TestDialog extends WarhammerRollDialogV2
     };
 
 
-    get tooltipConfig() 
+    get tooltipConfig()
     {
         return {
             bonus: {
@@ -35,16 +35,16 @@ export default class TestDialog extends WarhammerRollDialogV2
             glorious: {
                 label: "TOW.Dialog.Glorious",
                 type: 1,
-                path: "data.glorious"
+                path: "fields.glorious"
             },
             grim: {
                 label: "TOW.Dialog.Grim",
                 type: 1,
-                path: "data.grim"
+                path: "fields.grim"
             }
         }
     }
-    
+
     static PARTS = {
         fields : {
             template : "systems/whtow/templates/apps/test-dialog/test-dialog.hbs",
@@ -67,16 +67,28 @@ export default class TestDialog extends WarhammerRollDialogV2
         return this.context.title;
     }
 
-    _defaultFields() 
+    get skill()
+    {
+        return this.data.skill;
+    }
+
+    get characteristic()
+    {
+        return this.data.characteristic;
+    }
+
+    _defaultFields()
     {
         return foundry.utils.mergeObject(super._defaultFields(), {
             bonus : 0,
             penalty : 0,
+            glorious: 0,
+            grim: 0,
             state : "normal"
         });
     }
 
-    async _prepareContext(options) 
+    async _prepareContext(options)
     {
         let context = await super._prepareContext(options);
 
@@ -95,25 +107,30 @@ export default class TestDialog extends WarhammerRollDialogV2
 
         return context;
     }
-    
 
-    async computeFields() 
+
+    async computeFields()
     {
         this.computeState()
+    }
+
+    async computeInitialFields()
+    {
+        this.data.dice = this.actor.system.characteristics[this.data.characteristic].value;
     }
 
     computeState()
     {
 
-        if (this.data.grim > 0 && this.data.glorious > 0)
+        if (this.fields.grim > 0 && this.fields.glorious > 0)
         {
             this.fields.state = "normal";
         }
-        else if (this.data.grim > 0 && this.data.glorious <= 0) 
+        else if (this.fields.grim > 0 && this.fields.glorious <= 0)
         {
             this.fields.state = "grim";
         }
-        else if (this.data.glorious > 0 && this.data.grim <= 0)
+        else if (this.fields.glorious > 0 && this.fields.grim <= 0)
         {
             this.fields.state = "glorious";
         }
@@ -124,14 +141,14 @@ export default class TestDialog extends WarhammerRollDialogV2
         }
     }
 
-    static _onInc(ev, target) 
+    static _onInc(ev, target)
     {
         let value;
         if (!(target.dataset.target in this.userEntry))
         {
             value = this.fields[target.dataset.target] + 1;
         }
-        else 
+        else
         {
             value = this.userEntry[target.dataset.target] + 1;
         }
@@ -139,14 +156,14 @@ export default class TestDialog extends WarhammerRollDialogV2
         foundry.utils.setProperty(this.userEntry, target.dataset.target, value)
         this.render(true);
     }
-    static _onDec(ev, target) 
+    static _onDec(ev, target)
     {
         let value;
         if (!(target.dataset.target in this.userEntry))
         {
             value = Math.max(0, this.fields[target.dataset.target] - 1);
         }
-        else 
+        else
         {
             value = Math.max(0, this.userEntry[target.dataset.target] - 1);
         }
@@ -155,7 +172,7 @@ export default class TestDialog extends WarhammerRollDialogV2
         this.render(true);
     }
 
-    _onFieldChange(ev) 
+    _onFieldChange(ev)
     {
         // If the user clicks advantage or disadvantage, force that state to be true despite calculations
         if (ev.target.name == "state")
@@ -172,9 +189,9 @@ export default class TestDialog extends WarhammerRollDialogV2
         return breakdown;
     }
 
-   
+
     /**
-     * 
+     *
      * @param {object} actor Actor performing the test
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
@@ -194,9 +211,6 @@ export default class TestDialog extends WarhammerRollDialogV2
 
         foundry.utils.mergeObject(dialogData.fields, context.fields);
 
-        dialogData.data.glorious = context.glorious || 0;
-        dialogData.data.grim = context.grim || 0;
-        dialogData.data.dice = actor.system.characteristics[dialogData.data.characteristic].value;
         dialogData.fields.target = actor.system.skills[skill].value;
 
 

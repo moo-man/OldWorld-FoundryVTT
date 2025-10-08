@@ -10,18 +10,21 @@ export class ModifiersModel extends foundry.abstract.DataModel
             subject : new fields.StringField(),
             not : new fields.BooleanField(),
             condition : new fields.StringField(),
+            label : new fields.StringField()
         })
         schema.defending = new fields.SchemaField({
             value : new fields.NumberField(),
             subject : new fields.StringField(),
             not : new fields.BooleanField(),
             condition : new fields.StringField(),
+            label : new fields.StringField()
         })
         schema.damage = new fields.SchemaField({
             value : new fields.NumberField(),
             subject : new fields.StringField(),
             not : new fields.BooleanField(),
             condition : new fields.StringField(),
+            label : new fields.StringField()
         })
         return schema;
     }
@@ -82,7 +85,10 @@ export class ModifiersModel extends foundry.abstract.DataModel
             else {
                 attackingScript.options.activateScript = `return args.target`
             }
-
+            if (this.attacking.label)
+            {
+                attackingScript.label = this.attacking.label;
+            }
             scripts.push(attackingScript)
         }
 
@@ -123,7 +129,10 @@ export class ModifiersModel extends foundry.abstract.DataModel
                 defendingScript.options.activateScript = `return args.actor.system.opposed && args.data.skill == "defence"`
             }
             
-
+            if (this.defending.label)
+            {
+                defendingScript.label = this.defending.label;
+            }
             scripts.push(defendingScript)
         }
 
@@ -165,7 +174,10 @@ export class ModifiersModel extends foundry.abstract.DataModel
                 damageScript.options.activateScript = `return args.target`
             }
             
-
+            if (this.damage.label)
+            {
+                damageScript.label = this.damage.label;
+            }
             scripts.push(damageScript)
         }
 

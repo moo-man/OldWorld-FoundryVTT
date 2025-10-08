@@ -64,12 +64,16 @@ export class StandardActorModel extends BaseActorModel
     {
         super.computeDerived();
         this.resilience.value += this.characteristics.t.value + this.resilience.modifier;   
+        this.resilience.armour = 0;
+        this.resilience.base = this.resilience.value
         try {
             this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => 
             {
-                this.resilience.value +=  Number(i.system.resilience ? (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0) : 0)
+                this.resilience.armour += Number(i.system.resilience ? (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0) : 0)
                 this.resilience.armoured = true;
             })
+
+            this.resilience.value += this.resilience.armour;
         }
         catch(e)
         {
@@ -83,10 +87,16 @@ export class StandardActorModel extends BaseActorModel
         super._addModelProperties();
     }
 
-    applyDamage(damage, {opposed, item})
+    applyDamage(damage, {ignoreArmour, opposed, item, test})
     {
         let resilience = this.resilience.value;
+        if (ignoreArmour)
+        {
+            resilience = this.resilience.base;
+        }
         let message = ""
+
+        this.parent.applyEffect({effects: test?.damageEffects || []});
 
         if (damage > resilience)
         {
@@ -112,13 +122,13 @@ export class StandardActorModel extends BaseActorModel
         }
         else 
         {
-            let name = (this.getActiveTokens()[0] ?? this.prototypeToken).name
-            ChatMessag.implementation.create({
+            let name = (this.parent.getActiveTokens()[0] ?? this.prototypeToken).name
+            ChatMessage.implementation.create({
                 content: game.i18n.format(message, {name}),
                 speaker : {
                     alias: name
                 },
-                flavor : game.i18n.localize("TOW.Chat.AppliedDamage")
+                flavor : game.i18n.localize("TOW.Chat.AppliedDamage") + ` (${damage})`
             })
         }
     }
@@ -130,15 +140,28 @@ export class StandardActorModel extends BaseActorModel
         return game.oldworld.tables.rollTable("wounds",  formula);
     }
 
-    giveGround()
+    giveGround({flavor=""}={})
     {
         ChatMessage.implementation.create({
             content : "<strong>Give Ground!</strong>: Must retreat to an adjacent Zone.",
             speaker : {
                 alias : (this.parent.getActiveTokens[0] || this.prototypeToken)?.name
             },
-            flavor : game.i18n.localize("TOW.Dialog.Staggered")
+            flavor : flavor || game.i18n.localize("TOW.Dialog.Staggered")
         })
+    }
+
+    async fallProne({flavor=""}={})
+    {
+        ChatMessage.implementation.create({
+            content : "<strong>Falls Prone!</strong>",
+            speaker : {
+                alias : (this.parent.getActiveTokens[0] || this.prototypeToken)?.name
+            },
+            flavor : flavor || game.i18n.localize("TOW.Dialog.Staggered")
+        })
+        await this.parent.addCondition("prone");
+
     }
 
     async promptStaggeredChoice({excludeOptions=[], user}={})
@@ -159,7 +182,7 @@ export class StandardActorModel extends BaseActorModel
             ].filter(i => i.action == "wound" || !excludeOptions.includes(i.acton))
 
             let choice = await foundry.applications.api.Dialog.wait({
-                window : {title : "TOW.Dialog.Staggered"},
+                window : {title : `${this.parent.name} - ${game.i18n.localize("TOW.Dialog.Staggered")}`},
                 content : `<p>${game.i18n.localize("TOW.Dialog.StaggeredPrompt")}</p>`,
                 buttons : buttons
             })
@@ -167,21 +190,14 @@ export class StandardActorModel extends BaseActorModel
             switch (choice)
             {
                 case "give" :
-                    this.giveGround();
+                    await this.giveGround();
                     break;
                 case "wound" :
-                    this.addWound();
+                    await this.addWound();
                     this.parent.removeCondition("staggered");
                     break;
                 case "prone" :
-                    this.parent.addCondition("prone");
-                    ChatMessage.implementation.create({
-                        content : "<strong>Falls Prone!</strong>",
-                        speaker : {
-                            alias : (this.parent.getActiveTokens[0] || this.prototypeToken)?.name
-                        },
-                        flavor : game.i18n.localize("TOW.Dialog.Staggered")
-                    })
+                    await this.fallProne()
                     break;
             }
 

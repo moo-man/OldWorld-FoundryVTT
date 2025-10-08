@@ -18,7 +18,7 @@ export class BaseActorModel extends BaseWarhammerActorModel
 
     get opposedTest()
     {
-        return this.opposed?.test;
+        return this.opposed?.system.test;
     }
 
     registerOpposed(test)
