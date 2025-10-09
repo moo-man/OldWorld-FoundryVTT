@@ -50,6 +50,10 @@ export default class TestDialog extends WarhammerRollDialogV2
             template : "systems/whtow/templates/apps/test-dialog/test-dialog.hbs",
             fields: true
         },
+        lores : {
+            template : "systems/whtow/templates/apps/test-dialog/dialog-lores.hbs",
+            fields: true
+        },
         modifiers : {
             template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
             modifiers: true
@@ -75,6 +79,11 @@ export default class TestDialog extends WarhammerRollDialogV2
     get characteristic()
     {
         return this.data.characteristic;
+    }
+
+    get item()
+    {
+        return this.context.item;
     }
 
     _defaultFields()
@@ -112,6 +121,11 @@ export default class TestDialog extends WarhammerRollDialogV2
     async computeFields()
     {
         this.computeState()
+        if(this.fields.lore)
+        {
+            this.fields.bonus++;
+            this.tooltips.add("bonus", 1, "Lore Bonus")
+        }
     }
 
     async computeInitialFields()
@@ -211,6 +225,11 @@ export default class TestDialog extends WarhammerRollDialogV2
 
         foundry.utils.mergeObject(dialogData.fields, context.fields);
 
+        dialogData.data.item = context.item;
+        if (context.item)
+        {
+            dialogData.context.itemUuid = context.item.uuid;
+        }
         dialogData.fields.target = actor.system.skills[skill].value;
 
 

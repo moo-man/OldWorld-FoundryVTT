@@ -43,7 +43,8 @@ export class OldWorldTest extends WarhammerTestBase
             rollClass : "OldWorldTest",
             reload : data.context.reload?.uuid,
             flags: data.context.flags,
-            title : data.context.title
+            title : data.context.title,
+            breakdown : data.context.breakdown
         })
 
         return {testData, context}
