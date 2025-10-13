@@ -2,26 +2,59 @@ export class OldWorldEffect extends WarhammerActiveEffect
 {
 
     static CONFIGURATION = {
-        zones : true,
-        exclude : {}
+        zone : true,
+        exclude : {},
+        bracket : ["(", ")"]
     };
 
     async resistEffect()
     {
-        let actor = this.actor;
-
-        // If no owning actor, no test can be done
-        if (!actor)
+        let result = await super.resistEffect();
+        if (result === false || result === true)
         {
-            return false;
+            return result;
         }
 
         let transferData = this.system.transferData;
 
-        // If no test, cannot be avoided
-        if (transferData.avoidTest.value == "none")
+        let test;
+        let options = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest, fields: {}};
+        if (this.sourceTest && this.sourceTest.result?.test)
         {
-            return false;
+            // transferData.avoidTest.dn = this.sourceTest.result.test.dn;
+        }
+        if (transferData.avoidTest.value == "item")
+        {
+            test = await this.actor.setupTestFromItem(this.item, options);
+        }
+        else if (transferData.avoidTest.value == "custom")
+        {
+            test = await this.actor.setupTestFromData(transferData.avoidTest, options);
+        }
+
+        if (!transferData.avoidTest.reversed)
+        {
+            // If the avoid test is marked as opposed, it has to win, not just succeed
+            if (transferData.avoidTest.opposed && this.sourceTest)
+            {
+                return test.result.successes > this.sourceTest.result.successes;
+            }
+            else 
+            {
+                return test.succeeded;
+            }
+        }
+        else  // Reversed - Failure removes the effect
+        {
+            // If the avoid test is marked as opposed, it has to win, not just succeed
+            if (transferData.avoidTest.opposed && this.sourceTest)
+            {
+                return test.result.successes < this.sourceTest.result.successes;
+            }
+            else 
+            {
+                return test.result.failed;
+            }
         }
     }
 

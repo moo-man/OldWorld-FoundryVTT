@@ -51,6 +51,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
             computed : new fields.BooleanField({initial : false}),
             damage : new fields.SchemaField({
                 value : new fields.NumberField({nullable : true, initial: null}),
+                ignoreArmour : new fields.BooleanField(),
                 applied : new fields.BooleanField(),
                 message : new fields.StringField()
             }, {nullable : true})

@@ -47,7 +47,7 @@ export default class CastingDialog extends TestDialog
         if (this.actor.itemTypes.armour.some(a => a.system.isEquipped))
         {
             this.tooltips.add("grim", 1, "TOW.Tooltips.WearingArmour")
-            this.data.grim++;
+            this.fields.grim++;
         }
 
         this.tooltips.start(this)
@@ -96,6 +96,7 @@ export default class CastingDialog extends TestDialog
         context.appendTitle = context.appendTitle || ` - ${game.oldworld.config.magicLore[lore]}`;
 
         let dialogData = super.setupData(skill, actor, context, options);
+        dialogData.data.scripts = dialogData.data.scripts.concat(spell?.getScripts("dialog").filter(s => !s.options.defending) || [])
 
         return dialogData;
     }

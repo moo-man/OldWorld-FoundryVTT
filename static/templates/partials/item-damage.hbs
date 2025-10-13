@@ -1,10 +1,14 @@
 <div class="form-group">
     <label>{{localize "TOW.Sheet.Damage"}}</label>
     <div class="form-fields">
-        <input type="text" name="system.damage.formula" value="{{source.system.damage.formula}}">
+        <input type="text" name="system.damage.formula" value="{{source.system.damage.formula}}" style="flex: 0 0 2rem" >
         +
         <select name="system.damage.characteristic">
             {{selectOptions system.schema.fields.damage.fields.characteristic.choices selected=source.system.damage.characteristic localize=true}}
         </select>
+        <input type="checkbox" name="system.damage.ignoreArmour" {{checked source.system.damage.ignoreArmour}}>
+        <span style="font-size: var(--font-size-12)">
+        Ignore Armour
+        </span>
     </div>
 </div>

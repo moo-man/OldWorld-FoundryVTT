@@ -1,0 +1,12 @@
+<div class="dialog-lores">
+    {{#unless (eq data.item.type "lore")}}
+        <div class="form-group">
+            <label>Lore Bonus</label>
+            <div class="form-fields">
+                <select name="lore">
+                    {{selectOptions data.actor.itemTypes.lore selected=fields.lore valueAttr="id" labelAttr="name" blank=""}}
+                </select>
+            </div>
+        </div>
+    {{/unless}}
+</div>

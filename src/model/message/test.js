@@ -213,6 +213,7 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
 
     static async  _onApplyDamage(ev, target)
     {
+        let test = this.test;
         let actors;
         if (game.user.targets.size)
         {
@@ -220,10 +221,10 @@ export class OldWorldTestMessageModel extends WarhammerTestMessageModel
         }
         else 
         {
-            actors = this.test.targetTokens.map(i => i.actor);
+            actors = test.targetTokens.map(i => i.actor);
         }
         actors.forEach(a => {
-            a.system.applyDamage(this.result.damage.value, {item : this.item})
+            a.system.applyDamage(test.result.damage.value, {ignoreArmour : test.result.damage.ignoreArmour, item : test.item, test})
         })
     }
 

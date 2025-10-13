@@ -1,82 +1,90 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="conditions">
+        {{#each conditions}}
+            <div class="condition {{#if this.existing}}active{{/if}}">
+                <img src="{{img}}">
+                <a data-condition="{{@key}}" data-action="toggleCondition">{{this.name}}</a>
+            </div>
+        {{/each}}
+    </div>
     <div class="effect-lists">
-    {{#if effects.temporary.length}}
-    <div class="sheet-list">
-        <div class="list-header row-content">
-            <div class="list-name">{{localize "TOW.Sheet.TemporaryEffects"}}</div>
-        </div>
-        <div class="list-content">
-            {{#each effects.temporary}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
-                    <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
-                            <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
-                        </div>
+        {{#if effects.temporary.length}}
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "TOW.Sheet.TemporaryEffects"}}</div>
+                </div>
+                <div class="list-content">
+                    {{#each effects.temporary}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name">
+                                    <img src="{{this.img}}">
+                                    <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
+                                </div>
 
-                        <div class="list-controls">
-                            <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="far fa-check-circle"></i></a>
-                            <a class="list-control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="far fa-check-circle"></i></a>
+                                    <a class="list-control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        {{/if}}
+
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Effects"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createEffect">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each effects.active}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
+                            </div>
+
+                            <div class="list-controls">
+                                <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="far fa-check-circle"></i></a>
+                                <a class="list-control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {{/each}}
-        </div>
-    </div>
-    {{/if}}
-
-    <div class="sheet-list">
-        <div class="list-header row-content">
-            <div class="list-name">{{localize "TOW.Sheet.Effects"}}</div>
-            <div class="list-controls">
-                <a class="list-control" data-action="createEffect">
-                    <i class="fas fa-plus"></i>
-                </a>
+                {{/each}}
             </div>
         </div>
-        <div class="list-content">
-            {{#each effects.active}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
-                    <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
-                            <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
-                        </div>
 
-                        <div class="list-controls">
-                            <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="far fa-check-circle"></i></a>
-                            <a class="list-control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
-                        </div>
-                    </div>
+        {{#if effects.disabled.length}}
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "TOW.Sheet.DisabledEffects"}}</div>
                 </div>
-            {{/each}}
-        </div>
-    </div>
+                <div class="list-content inactive">
+                    {{#each effects.disabled}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name">
+                                    <img src="{{this.img}}">
+                                    <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
+                                </div>
 
-    {{#if effects.disabled.length}}
-    <div class="sheet-list">
-        <div class="list-header row-content">
-            <div class="list-name">{{localize "TOW.Sheet.DisabledEffects"}}</div>
-        </div>
-        <div class="list-content inactive">
-            {{#each effects.disabled}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
-                    <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
-                            <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="far fa-circle"></i></a>
+                                    <a class="list-control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="list-controls">
-                            <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="far fa-circle"></i></a>
-                            <a class="list-control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
-                        </div>
-                    </div>
+                    {{/each}}
                 </div>
-            {{/each}}
-        </div>
-    </div>
-    {{/if}}
+            </div>
+        {{/if}}
     </div>
 
 

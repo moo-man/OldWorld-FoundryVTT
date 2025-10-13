@@ -1,5 +1,6 @@
 import { DamageModel } from "./components/damage";
 import { EquippableItem } from "./components/equippable";
+import { ModifiersModel } from "./components/modifier";
 import { PhysicalItem } from "./components/physical";
 import { TestModel } from "./components/test";
 let fields = foundry.data.fields;
@@ -16,10 +17,16 @@ export class WeaponModel extends EquippableItem
             max : new fields.NumberField({choices : game.oldworld.config.range, initial : 0}),
             melee : new fields.NumberField({choices : game.oldworld.config.range, initial : 0}),
         })
+        schema.modifiers = new fields.EmbeddedDataField(ModifiersModel)
         schema.test = new fields.EmbeddedDataField(TestModel);
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.grip = new fields.StringField({choices : {"1H" : "1H", "2H" : "2H"}, initial : "1H"}),
         schema.traits = new fields.StringField({});
+        schema.reload = new fields.SchemaField({
+            current : new fields.NumberField({min: 0, initial: 0}),
+            value : new fields.NumberField({min: 0}),
+            optional : new fields.BooleanField()
+        })
         return schema;
     }
 
@@ -33,9 +40,42 @@ export class WeaponModel extends EquippableItem
         return ["shooting", "throwing"].includes(this.skill);
     }
 
+    get isLoaded()
+    {
+        return !this.requiresLoading || this.reload.current == this.reload.value;
+    }
+
+    rollReloadTest(actor)  
+    {
+        return actor.setupSkillTest("dexterity", {reload: this.parent, appendTitle: ` - Reloading ${this.parent.name}`});
+    }
+
+    get requiresLoading()
+    {
+        return this.reload.value > 0;
+    }
+
     computeOwned(actor) 
     {
         this.damage.compute(actor);
+    }
+
+    getOtherEffects()
+    {
+        let scripts = this.modifiers.createScripts();
+
+        if (scripts.length)
+        {
+            return [new ActiveEffect.implementation({
+                name : this.parent.name,
+                img : this.parent.img,
+                system : {
+                    scriptData : scripts
+                }
+            }, {parent : this.parent})]
+        }
+        else return [];
+
     }
 
     async toEmbed(config, options)

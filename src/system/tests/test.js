@@ -34,14 +34,18 @@ export class OldWorldTest extends WarhammerTestBase
             characteristic : data.characteristic,
             rollMode : data.rollMode,
             skill: data.skill,
-            endeavour : data.endeavour || false,
+            endeavour : data.context.endeavour || false,
             speaker : data.speaker,
-            itemUuid : data.itemUuid,
+            itemUuid : data.context.itemUuid,
             messageId : null,
             targetSpeakers : data.targets,
             opposedIds : {}, // map of token IDs to opposed message IDs
-            rollClass : "OldWorldTest"
-        }, data.context)
+            rollClass : "OldWorldTest",
+            reload : data.context.reload?.uuid,
+            flags: data.context.flags,
+            title : data.context.title,
+            breakdown : data.context.breakdown
+        })
 
         return {testData, context}
     }
@@ -114,6 +118,12 @@ export class OldWorldTest extends WarhammerTestBase
         if (this.context.endeavour)
         {
             await this.actor.update({[`system.skills.${this.skill}`] : {improvement : this.actor.system.skills[this.skill].improvement + this.result.failures}});
+        }
+
+        if (this.context.reload)
+        {
+            let weapon = await fromUuid(this.context.reload)
+            await weapon.update({"system.reload.current" : weapon.system.reload.current + this.result.successes})
         }
     }
 
@@ -395,6 +405,6 @@ export class OldWorldTest extends WarhammerTestBase
 
     get showChatTest()
     {
-        return (this.item && !this.item.system.test?.self && this.item.system.test.skill) && !this.item.effects.contents.some(e => e.system.transferData.avoidTest.value == "item");
+        return (this.item?.system.test && !this.item.system.test.self && this.item.system.test.skill) && !this.item.effects.contents.some(e => e.system.transferData.avoidTest.value == "item");
     }
 }

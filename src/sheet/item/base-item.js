@@ -1,3 +1,4 @@
+import ModifierConfig from "../../apps/modifier-config";
 
 export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
 
@@ -6,8 +7,9 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
       window: {
       },
       actions: {
-        toggleSummary: this._toggleSummary,
-        createItem: this._onCreateItem,
+        configureModifiers : this._onConfigureModifiers,
+        toggleCondition: this._onToggleCondition
+
       },
       defaultTab: "description"
     }
@@ -35,6 +37,24 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
       return context;
     }
   
+    async _prepareContext(options) 
+    {
+        let context = await super._prepareContext(options);
+        context.conditions = this.formatConditions();
+        return context;
+    }
+
+    
+    formatConditions()
+    {
+        let conditions = foundry.utils.deepClone(game.oldworld.config.conditions);
+        for(let key in conditions)
+        {
+          conditions[key].existing = this.document.hasCondition(key)
+        }
+        return conditions;
+    }
+  
   
     _addEventListeners() {
       super._addEventListeners();
@@ -48,6 +68,20 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
       enrichment["system.description.gm"] = await foundry.applications.ux.TextEditor.enrichHTML(this.document.system.description.gm, { async: true, secrets: this.document.isOwner, relativeTo: this.document })
   
       return foundry.utils.expandObject(enrichment)
+    }
+
+    static _onConfigureModifiers(ev, target)
+    {
+      new ModifierConfig(this.document).render({force: true}); 
+    }
+
+    static _onToggleCondition(ev, target)
+    {
+        let key = target.dataset.condition;
+        if (this.document.hasCondition(key))
+            this.document.removeCondition(key)
+        else
+            this.document.addCondition(key)
     }
   }
   

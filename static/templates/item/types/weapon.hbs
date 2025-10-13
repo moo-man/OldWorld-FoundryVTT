@@ -18,8 +18,18 @@
             </select>
         </div>
     </div>
+    <div class="form-group">
+        <label>Successes to Reload</label>
+        <div class="form-fields">
+            {{formInput system.schema.fields.reload.fields.value value=source.system.reload.value}}
+            Optional
+            {{formInput system.schema.fields.reload.fields.optional value=source.system.reload.optional}}
+        </div>
+    
+    </div>
     {{/if}}
     {{formGroup system.schema.fields.traits value=source.system.traits}}
+    <button type="submit" data-action="configureModifiers">Configure Modifiers <i class="fa-solid fa-gear"></i></button>
     {{> itemTest fields=fields.test.fields value=source.system.test hideSelf=true}}
 
 </section>
