@@ -133,6 +133,19 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         existing?.delete();
     }
 
+    async maintainCondition(condition, effect)
+    {
+        let existing = this.hasCondition(condition)
+        if (!existing)
+        {
+            if (effect)
+            {
+                ui.notifications.info(`<strong>${effect.name}</strong>: Added  ${game.oldworld.config.conditions[condition].name}`);
+            }
+            return await this.addCondition(condition);
+        }
+    }
+
     // /** Override to exclude effects if NPC and wound threshold hasn't been met
     //  * 
     //  * @override

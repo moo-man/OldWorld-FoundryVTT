@@ -3,12 +3,12 @@
     
     .journal-entry-content {
         @include editor-text();
-        background: url("./assets/ui/parchment-bg.png");
+        background: url("./assets/ui/parchment-bg.webp");
     }
 
     .journal-sidebar {
         --color-scrollbar: var(--tow-gold);
-        background: url("./assets/ui/blue-bg.png");
+        background: url("./assets/ui/blue-bg.webp");
         background-size:contain;
         font-family: var(--font-text);
         .page-index {

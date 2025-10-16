@@ -2,16 +2,16 @@
     border: 10px solid transparent;
     margin: 1rem 0px;
     padding: 0px 10px;
-    border-image: url(./assets/ui/boxout-frame.png);
+    border-image: url(./assets/ui/boxout-frame.webp);
     border-image-slice: 1600 1460 1780 940;
     border-image-width: 100px 100px 100px 100px;
-    background: url(./assets/ui/box-bg.png);
+    background: url(./assets/ui/box-bg.webp);
     background-position: 50% 50%;
     border-image-outset: 3px;
 
 
     &.basic {
-        border-image-source: url(./assets/ui/frame.png);
+        border-image-source: url(./assets/ui/frame.webp);
         border-image-slice: 30 30 30 30;
         border-image-width: 10px 10px 10px 10px;
     }
@@ -26,7 +26,7 @@
     &.quote {
         background: none;
         border: 10px solid transparent;
-        border-image: url(./assets/ui/parchment-quote.png);
+        border-image: url(./assets/ui/parchment-quote.webp);
         border-image-slice: 10 10 10 10 fill;
         position: relative;
         // padding: 2rem 1rem 0px 2rem;
@@ -34,7 +34,7 @@
         padding-left: 2rem;
 
         .author {
-            background: url(./assets/ui/author-frame.png);
+            background: url(./assets/ui/author-frame.webp);
             /* width: 12rem; */
             /* height: 12rem; */
             /* height: 12rem; */
@@ -70,7 +70,7 @@
 
     &.blue {
         color: white;
-        background: url(./assets/ui/blue-bg.png);
+        background: url(./assets/ui/blue-bg.webp);
         background-size: cover;
 
         ul {
@@ -356,4 +356,19 @@
             }
         }
     }
+}
+
+
+@mixin tow-button {
+    background: linear-gradient(0deg, #c6b869 0%, #a58b24 100%);
+
+    // border: 3px solid #B21A22;
+    // border: 3px solid #771C18;
+
+    border-image: linear-gradient(0deg, #c6b869 0%, #a58b24 100%); // This seems to create a cool bevel effect so I'll just keep it
+    border-radius: 0px;
+    border-width: 3px;
+    border-style: solid;
+    color: var(--color-dark-3);
+    font-family: var(--font-text);
 }

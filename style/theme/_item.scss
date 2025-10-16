@@ -1,0 +1,78 @@
+@use "./mixins" as *;
+.application.warhammer.item {
+
+    background: url("./assets/ui/item-bg.webp");    
+    background-position-x: 15%;
+    backdrop-filter: none;
+    border: 20px solid transparent;
+    border-image: url(./assets/ui/app-frame.webp);
+    border-image-slice: 22 22 22 22;
+    border-image-repeat: repeat;
+    overflow: visible;
+
+    .window-resize-handle {
+        width: 17px;
+        height: 17px;
+        bottom: -20px;
+        right: -20px;
+    }
+    
+    &::before {
+        content: "";
+        position: absolute;
+        background: url(./assets/ui/item-header.webp);
+        background-size: cover;
+        height: 90px;
+        width: 360px;
+        z-index: 0;
+        right: 50%;
+        top: -61px;
+        margin-right: -180px;
+        filter: drop-shadow(0 0 0.2rem black);
+    }
+    
+    .window-content {
+        padding: 0px; // border width of app acts as padding
+
+        button {
+            @include tow-button;
+        }
+    }
+
+    .window-header {
+        background: none;
+        border: none;
+        top: -32px;
+        padding-left: 4.5rem;
+        padding-right: 0px;
+
+        .window-title {
+            text-align: center;
+            position: relative;
+            font-size: var(--font-size-24);
+            font-variant: small-caps;
+            font-family: var(--font-header);
+            color: var(--tow-blue) ;
+        }
+
+        button {
+
+            background: url(./assets/ui/button-square.webp);
+            background-size: contain;
+            color: black;
+        }
+
+    }
+
+    .controls-dropdown {
+        top: 0rem;
+    }
+
+    .sheet-header {
+
+        .name {
+            height: 4rem;
+        }
+    }
+
+}

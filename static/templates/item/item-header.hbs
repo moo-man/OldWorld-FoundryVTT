@@ -1,7 +1,7 @@
-<div class="sheet-header">
+<div class="sheet-header {{#if item.system.isPhysical}}physical{{/if}}">
     <img data-action="editImage" data-edit="img" src="{{item.img}}" {{#if (eq item.img "modules/warhammer-lib.assets/blank.png")}}class="img-border"{{/if}}>
     <div class="header-details">
-        <div class="header-row">
+        <div class="header-row name">
             <input type="text" name="name" value="{{source.name}}">
         </div>
         {{#if item.system.isPhysical}}

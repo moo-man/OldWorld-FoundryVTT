@@ -1,4 +1,7 @@
-.application {
+@use "./mixins" as *;
+@use "../mixins/border" as border;
+
+.application.warhammer {
 
     --color-shadow-primary: var(--tow-gold);
 
@@ -18,32 +21,78 @@
         --input-focus-outline-color: var(--tow-blue);
     }
 
-    background: url("./assets/ui/parchment-bg.png");
-
+    .window-content {
+        backdrop-filter: none;
+    }
 }
 
 
 .application.item.warhammer,
 .application.warhammer {
-
-    --color-text-primary: var(color-dark-3);
+    --color-text-primary: var(--color-dark-3);
+    --color-text-secondary: var(--color-dark-4);
+    font-family: var(--font-text);
 
     --attribute-input: rgba(0, 0, 0, 0.1);
     --attribute-input-border: rgba(0, 0, 0, 0.1);
     --attribute-border: rgba(0, 0, 0, 0.1);
-    --attribute-title: var(--tow-lightblue)
+    --attribute-title: var(--tow-bluegrey)
     --attribute-title-color: black;
     --fieldset-border: var(--color-dark-5);
     --attribute-locked-input: transparent;
     --attribute-locked-border: transparent;
-    --attribute-label: transparent;
+    --attribute-label: var(--tow-bluegrey-half);
     --attribute-field: transparent;
-    --form-label: transparent;
+    --form-label: var(--tow-bluegrey-half);
     --form-input: rgba(0, 0, 0, 0.1);
     --form-input-border: transparent;
     --form-group-border: rgba(0, 0, 0, 0.1);
-    --editor-header: var(--color-cool-3);
+    --editor-header: var(--tow-bluegrey-half);
     --editor-header-border: transparent;
     --hover-bg: transparent;
-    --form-label : var(--tow-lightblue)
+    --tab-color: var(--tow-blue-half);
+
+    --list-header: var(--tow-bluegrey-half);
+    --list-header-border: var(--tow-blue);
+    --list-row-alternate: #8b979566;
+
+    select:focus,
+    input:focus
+    {
+        --input-focus-outline-color: var(--tow-lightblue);
+        &::selection {
+            background-color: var(--tow-bluegrey);
+        }
+    }
+
+    section[data-tab] {
+        --color-scrollbar: var(--tow-blue);
+    }
+
+    .form-group label {
+        font-family: var(--font-header);
+        font-weight: bold;
+        font-size: var(--font-size-16);
+    }
+    .attribute-box .label {
+        color: var(color-dark-3);
+        font-weight: bold;
+    }
+
+    nav.tabs [data-tab]:hover {
+        color: var(--tow-gold)
+    }
+
+    
+    .conditions {
+        .condition {
+            --border: var(--tow-bluegrey);
+            --condition-active: var(--tow-bluegrey-half);
+        }
+    }
+
+    h2.sheet-divider {
+        color: var(--tow-grey);
+        @include border.gradient-border(var(--tow-blue));
+    }
 }
