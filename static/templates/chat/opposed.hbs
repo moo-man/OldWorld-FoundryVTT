@@ -2,7 +2,6 @@
     class="opposed {{#if (eq result.outcome 'success')}}success{{else if (eq result.outcome 'failure')}}failure{{/if}}">
     <h4>{{localize "TOW.Chat.OpposedTitle" attacker=attacker.name defender=defender.name}}</h4>
     <div class="tokens">
-        {{log this}}
         <img src="{{attacker.texture.src}}" {{#if (eq result.outcome "success" )}}class="winner" {{else if (eq
             result.outcome "failure" )}}class="loser" {{/if}}>
         <div class="successes">

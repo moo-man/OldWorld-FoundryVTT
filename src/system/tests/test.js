@@ -44,6 +44,7 @@ export class OldWorldTest extends WarhammerTestBase
             reload : data.context.reload?.uuid,
             flags: data.context.flags,
             title : data.context.title,
+            defending: data.context.defending,
             breakdown : data.context.breakdown
         })
 
@@ -254,8 +255,20 @@ export class OldWorldTest extends WarhammerTestBase
         {
             if (this.result.successes == 0)
             {
-                opposed.outcome = "tie"
-                opposed.description = "TOW.Chat.Tie"
+                // if unopposed and 0 successes, it's a failure not a tie
+                if (opposed.unopposed)
+                {
+                    opposed.outcome = "failure"
+                    opposed.description = "TOW.Chat.Failure"
+                    opposed.success = false;
+
+                }
+                else 
+                {
+                    opposed.outcome = "tie"
+                    opposed.description = "TOW.Chat.Tie"
+                    opposed.success = false;
+                }
             }
             else 
             {
