@@ -51,6 +51,11 @@ export class WeaponTest extends OldWorldTest
             }
         }
 
+        if (this.weapon.system.isMelee && !result.success && !this.actor.hasCondition("staggered"))
+        {
+            this.actor.addCondition("staggered");
+        }
+
         return result;
     }
 }
