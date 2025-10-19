@@ -20,6 +20,11 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
     defaultTab: "main"
   }
 
+  get title()
+  {
+    return this.actor.name;
+  }
+
   async _prepareContext(options) {
     let context = await super._prepareContext(options);
     context.conditions = this.formatConditions();

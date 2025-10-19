@@ -77,6 +77,7 @@ const OLDWORLD = {
 
     duration : {
         immediate : "TOW.DurationType.Immediate",
+        instant : "TOW.DurationType.Immediate",
         battle : "TOW.DurationType.Battle",
         permanent : "TOW.DurationType.Permanent",
         varies : "TOW.DurationType.Varies",
@@ -317,4 +318,22 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
 ]);
 
 foundry.utils.mergeObject(OLDWORLD, defaultWarhammerConfig)
+OLDWORLD.scriptTriggers = {
+    manual : "WH.Trigger.Manual",
+    immediate : "WH.Trigger.Immediate",
+    dialog : "WH.Trigger.Dialog",
+
+    onCreate : "WH.Trigger.OnCreate",
+
+    updateDocument : "WH.Trigger.UpdateDocument",
+
+    startCombat  : "WH.Trigger.StartCombat",
+    startRound : "WH.Trigger.StartRound",
+    startTurn : "Start Turn",
+    updateCombat  : "WH.Trigger.UpdateCombat",
+    endTurn : "End Turn",
+    endRound : "End Round",
+    endCombat : "End Combat",
+
+};
 export {OLDWORLD, TOW_CONFIG};

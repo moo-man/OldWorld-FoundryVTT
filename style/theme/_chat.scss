@@ -1,0 +1,81 @@
+@use "./mixins" as *;
+body:not(.no-theme) {
+    .chat-message {
+        background:none;
+        border-image: url(./assets/ui/chat.webp);
+
+        &:has(.test) {
+            border-image-source: url(./assets/ui/chat-img.webp);
+        }
+
+        border-image-slice: 120 50 60 50 fill;
+        border-image-width: 50px 20px 20px 20px;
+        border-image-outset: 0px 0px 0px 0px;
+        border-image-repeat: stretch stretch;
+        filter: drop-shadow(0 0 0.2rem black);
+        padding-bottom: 20px;
+        padding-left: 16px;
+        padding-right: 16px;
+
+        font-family: var(--font-text);
+
+
+        .message-header {
+            margin-top: 1rem;
+            h4 {
+                font-family: var(--font-text);
+            }
+            .message-token {
+                margin-left: -19px;
+                margin-top: -29px;
+                border-radius: 50%;
+                border: 1px solid transparent;
+                transform: scale(0.9);
+                overflow: hidden;
+                img {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+        .test {
+            padding: 0.5rem;
+            
+            h4 {
+                font-family: var(--font-header);
+            }
+
+            .target {
+                padding-top: 4px;
+            }
+            .die-result {
+                padding-top: 2px;
+            }
+
+            button {
+                @include tow-button;
+                font-family: var(--font-text);
+            }
+        }
+
+        .opposed {
+
+            h3,
+            h4 {
+            font-family: var(--font-text);
+            }
+
+            .result h4 {
+                font-family: var(--font-header);
+            }
+        }
+    }
+
+    .item-summary {
+        background: var(--tow-bluegrey-half);
+        .item-header {
+            font-family: var(--font-header);
+            justify-content: center;
+        }
+    }
+}

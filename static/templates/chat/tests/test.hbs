@@ -4,7 +4,7 @@
         {{{itemSummary}}}
     {{/if}}
 
-    <div class="title">
+    <div class="title" data-tooltip="{{context.breakdown.modifiers}}" data-tooltip-direction="LEFT">
         {{context.title}}
     </div>
 
@@ -41,7 +41,7 @@
     {{> effectButtons}}
 
     {{#if showChatTest}}
-        <button data-action="chatTest" data-uuid="{{item.uuid}}">{{item.system.test.label}}</button>
+        <button type="button" data-action="chatTest" data-uuid="{{item.uuid}}">{{item.system.test.label}}</button>
     {{/if}}
 
     {{#if targetTokens.length}}

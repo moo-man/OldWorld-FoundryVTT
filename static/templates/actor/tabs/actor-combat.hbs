@@ -3,18 +3,16 @@
     {{#if system.opposed}}
         {{> defendingAgainst test=system.opposed.system.test}}
     {{/if}}
-    
+
     <div class="attribute-row flexrow">
         <div class="attribute-box single">
             <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Resilience"}}</label></div>
-            <div class="field" style="grid-column: 9 / span 4"><input type="number" data-tooltip=""
-                    value="{{system.resilience.value}}" disabled></div>
+            <div class="field" style="grid-column: 9 / span 4"><input type="number" data-tooltip="" value="{{system.resilience.value}}" disabled></div>
         </div>
 
         <div class="attribute-box single">
             <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Speed"}}</label></div>
-            <div class="field" style="grid-column: 9 / span 4"><input type="text" data-tooltip=""
-                    value="{{localize (configLookup "speed" system.speed.value)}}" disabled></div>
+            <div class="field" style="grid-column: 9 / span 4"><input type="text" data-tooltip="" value="{{localize (configLookup " speed" system.speed.value)}}" disabled></div>
         </div>
     </div>
 
@@ -76,6 +74,13 @@
                             <div class="tiny grip">
                                 {{this.system.grip}}
                             </div>
+                            {{#if this.system.requiresLoading}}
+                            <div class="fit">
+                                {{#unless this.system.isLoaded}}
+                                    <a data-action="stepProperty" data-path="system.reload.current" class="prevent-context">Not Loaded ({{this.system.reload.current}} / {{this.system.reload.value}})</a>
+                                {{/unless}}
+                            </div>
+                            {{/if}}
                             <div class="fit traits">
                                 {{this.system.traits}}
                             </div>
@@ -106,9 +111,9 @@
                             <div>{{this.system.resilience}}</div>
                         </div>
                         {{#if this.system.traits}}
-                        <div class="fit traits">
-                            {{this.system.traits}}
-                        </div>
+                            <div class="fit traits">
+                                {{this.system.traits}}
+                            </div>
                         {{/if}}
                         {{> sheetButtons document=this}}
                         <div class="dropdown-content collapsed">
@@ -132,30 +137,29 @@
         </div>
         <div class="list-content">
             {{#each items.wound}}
-                    <div class="list-row" data-uuid="{{this.uuid}}">
-                        <div class="row-content">
-                            <div class="list-name">
-                                <img src="{{this.img}}">
-                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
-                            </div>
-                            <div class="large">{{configLookup "woundHealing" this.system.healing}}</div>
-                            <div>
-                                {{#if this.system.treated}}
-                                    <a data-action="toggleProperty" data-path="system.treated"><i class="fa-regular fa-circle-check"></i></a>
-                                {{else}}
-                                    <a data-action="toggleProperty" data-path="system.treated"><i class="fa-regular fa-circle"></i></a>
-                                {{/if}}
-                            </div>
-                            <div class="list-controls">
-                                <a class="list-control context-menu combat"><i
-                                        class="fa-regular fa-ellipsis-vertical"></i></a>
-                            </div>
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
                         </div>
-                        {{> sheetButtons document=this}}
-                        <div class="dropdown-content collapsed">
-
+                        <div class="large">{{configLookup "woundHealing" this.system.healing}}</div>
+                        <div>
+                            {{#if this.system.treated}}
+                                <a data-action="toggleProperty" data-path="system.treated"><i class="fa-regular fa-circle-check"></i></a>
+                            {{else}}
+                                <a data-action="toggleProperty" data-path="system.treated"><i class="fa-regular fa-circle"></i></a>
+                            {{/if}}
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu combat"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
             {{/each}}
         </div>
     </div>

@@ -25,7 +25,8 @@ export class SpellModel extends BaseItemModel
         });
         schema.damage = new fields.SchemaField({
             formula: new fields.StringField(),
-            potency : new fields.BooleanField()
+            potency : new fields.BooleanField(),
+            ignoreArmour : new fields.BooleanField()
         })
         schema.test = new fields.EmbeddedDataField(TestModel);
         return schema;

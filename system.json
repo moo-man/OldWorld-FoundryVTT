@@ -2,7 +2,7 @@
   "id": "whtow",
   "title": "Warhammer: The Old World Roleplaying Game (Beta)",
   "description": "",
-  "version": "0.5.1",
+  "version": "0.7.1",
   "compatibility" : {
     "minimum" : 13,
     "verified" : 13,
@@ -42,10 +42,10 @@
     "requires": [{
       "id": "warhammer-lib",
       "type": "module",
-      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.5.0/module.json",
+      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.6.0/module.json",
       "compatibility": {
-        "minimum" : "2.5.0",
-        "verified": "2.5.0"
+        "minimum" : "2.6.0",
+        "verified": "2.6.0"
       }
     }]
   },
@@ -89,7 +89,7 @@
   "url": "https://github.com/moo-man/OldWorld-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/0.5.1/whtow.zip",
+  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/0.7.1/whtow.zip",
   "license": "LICENSE.txt"
 }
 

@@ -2,16 +2,16 @@
     border: 10px solid transparent;
     margin: 1rem 0px;
     padding: 0px 10px;
-    border-image: url(./assets/ui/boxout-frame.png);
+    border-image: url(./assets/ui/boxout-frame.webp);
     border-image-slice: 1600 1460 1780 940;
     border-image-width: 100px 100px 100px 100px;
-    background: url(./assets/ui/box-bg.png);
+    background: url(./assets/ui/box-bg.webp);
     background-position: 50% 50%;
     border-image-outset: 3px;
 
 
     &.basic {
-        border-image-source: url(./assets/ui/frame.png);
+        border-image-source: url(./assets/ui/frame.webp);
         border-image-slice: 30 30 30 30;
         border-image-width: 10px 10px 10px 10px;
     }
@@ -26,7 +26,7 @@
     &.quote {
         background: none;
         border: 10px solid transparent;
-        border-image: url(./assets/ui/parchment-quote.png);
+        border-image: url(./assets/ui/parchment-quote.webp);
         border-image-slice: 10 10 10 10 fill;
         position: relative;
         // padding: 2rem 1rem 0px 2rem;
@@ -34,7 +34,7 @@
         padding-left: 2rem;
 
         .author {
-            background: url(./assets/ui/author-frame.png);
+            background: url(./assets/ui/author-frame.webp);
             /* width: 12rem; */
             /* height: 12rem; */
             /* height: 12rem; */
@@ -70,7 +70,7 @@
 
     &.blue {
         color: white;
-        background: url(./assets/ui/blue-bg.png);
+        background: url(./assets/ui/blue-bg-seamless.webp);
         background-size: cover;
 
         ul {
@@ -87,6 +87,17 @@
             i {
                 color: var(--tow-gold);
             }
+
+            &.broken {
+                color: var(--tow-red);
+                border-radius: 5px;
+                padding: 1px 3px;
+                border: 1px dotted var(--tow-red);
+                i {
+                    color: var(--tow-red)
+                }
+            }
+    
         }
     }
 }
@@ -140,10 +151,23 @@
         border: none;
         color: var(--tow-blue);
         font-weight: bold;
+        padding-right: 0px;
 
         i {
             color: var(--tow-blue);
         }
+
+        &.broken {
+            color: var(--tow-red);
+            border-radius: 5px;
+            padding: 1px 3px;
+            border: 1px dotted var(--tow-darkred);
+            i {
+                color: var(--tow-red)
+            }
+        }
+
+
     }
 
     blockquote {
@@ -355,5 +379,37 @@
                 flex: 3;
             }
         }
+    }
+}
+
+
+@mixin tow-button($font: var(--font-text)) {
+    // background: linear-gradient(0deg, #c6b869 0%, #a58b24 100%);
+
+    // border-image: linear-gradient(0deg, #c6b869 0%, #a58b24 100%); // This seems to create a cool bevel effect so I'll just keep it
+
+    background: linear-gradient(0deg,#a58b24 0%, #c6b869 10%, #a58b24 90%, #c6b869 100%);
+    border: none;
+    outline: none;
+    border-radius:  3px;
+    color: var(--color-dark-3);
+    box-shadow: 0 0 5px #00000088;
+
+    &:not(.icon)
+    {
+        font-family: $font;
+        font-variant: small-caps;
+    }
+}
+
+@mixin tow-control {
+    background: url("./assets/ui/blue-bg-seamless.webp");
+    background-size: contain;
+    border-color: var(--tow-gold);
+    color: var(--tow-cream);
+    &.active,
+    &[aria-pressed=true] {
+        background: linear-gradient(0deg,#a58b24 0%, #c6b869 100%);
+        color: var(--tow-blue);
     }
 }

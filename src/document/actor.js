@@ -32,7 +32,12 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             }
         }
 
-        context.itemUuid = item.uuid;
+        context.item = item;
+
+        if (item.type == "lore")
+        {
+            return this.setupSkillTest("recall", context, options);
+        }
 
         if (item.system.test.self && item.system.test.skill) {
             this.setupSkillTest(item.system.test.skill, context, options)
@@ -116,16 +121,29 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         }
 
         if (!this.hasCondition(condition)) {
-            this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
+            return this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
         }
         else if (this.hasCondition(condition) && condition == "staggered") {
-            await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions });
+            return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions });
         }
     }
 
     async removeCondition(condition) {
         let existing = this.hasCondition(condition)
         existing?.delete();
+    }
+
+    async maintainCondition(condition, effect)
+    {
+        let existing = this.hasCondition(condition)
+        if (!existing)
+        {
+            if (effect)
+            {
+                ui.notifications.info(`<strong>${effect.name}</strong>: Added  ${game.oldworld.config.conditions[condition].name}`);
+            }
+            return await this.addCondition(condition);
+        }
     }
 
     // /** Override to exclude effects if NPC and wound threshold hasn't been met

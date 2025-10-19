@@ -10,13 +10,13 @@
 
     {{#if result.damage.value}}
     <div style="text-align: center"><strong>{{localize "TOW.Chat.Damage"}}</strong>: {{result.damage.value}}</div>
-    <button data-action="applyDamage"><i class="fa-solid fa-crosshairs"></i> {{localize "TOW.Chat.ApplyDamage"}}</button>
+    <button type="button" data-action="applyDamage"><i class="fa-solid fa-crosshairs"></i> {{localize "TOW.Chat.ApplyDamage"}}</button>
     {{/if}}
 
     {{> effectButtons}}
 
     {{#if showChatTest}}
-        <button data-action="chatTest" data-uuid="{{item.uuid}}">{{item.system.test.label}}</button>
+        <button type="button" data-action="chatTest" data-uuid="{{item.uuid}}">{{item.system.test.label}}</button>
     {{/if}}
 
     {{#if targetTokens.length}}

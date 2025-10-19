@@ -5,7 +5,10 @@ export class WeaponTest extends OldWorldTest
 
     static _separateDialogData(data)
     {
-        return foundry.utils.mergeObject(super._separateDialogData(data), {context : {rollClass : "WeaponTest"}});
+        let separated = super._separateDialogData(data);
+        separated.testData.damage = data.damage;
+
+        return foundry.utils.mergeObject(separated, {context : {rollClass : "WeaponTest"}});
     }
 
     computeResult()
@@ -16,6 +19,16 @@ export class WeaponTest extends OldWorldTest
         // this.result.succeeded = this.result.successes >= this.testData.target;
         // this.result.dice = dice;
     }
+
+    async postRollOperations()
+    {
+        await super.postRollOperations();
+        if (this.weapon.system.requiresLoading && !this.weapon.system.reload.optional)
+        {
+            await this.weapon.update({"system.reload.current" : 0});
+        }
+    }
+    
 
     get weapon()
     {
@@ -33,9 +46,14 @@ export class WeaponTest extends OldWorldTest
         if (result.success && result.computed)
         {
             result.damage = {
-                value : this.weapon.system.damage.value + result.successes,
+                value : this.testData.damage + result.successes,
                 ignoreArmour : this.weapon.system.damage.ignoreArmour
             }
+        }
+
+        if (this.weapon.system.isMelee && !result.success && !this.actor.hasCondition("staggered"))
+        {
+            this.actor.addCondition("staggered");
         }
 
         return result;

@@ -26,16 +26,37 @@
     }
 
     @font-face {
+        font-family: "CaslonAntique";
+        src: url('./assets/fonts/CaslonAntique.ttf');
+    }
+
+    @font-face {
+        font-family: "CaslonAntique";
+        src: url('./assets/fonts/CaslonAntique-Bold.ttf');
+        font-weight: bold;
+    }
+
+    @font-face {
         font-family: "TOW";
         src: url('./assets/fonts/TOW.ttf');
     }
     
     --tow-blue: rgba(0, 69, 94);
+    --tow-blue-half: rgba(0, 69, 94, 0.5);
+    --tow-grey: #6a6b6b;
     --tow-lightblue: #a6bed8;
+    --tow-bluegrey: #8b9795;
+    --tow-bluegrey-half: #8b979588;
     --tow-gold: goldenrod;
+    --tow-yellow: #c6b869;
+    --tow-darkyellow: #a58b24;
+    --tow-red: #b21a22;
+    --tow-darkred: #771c18;
     --tow-cream: #e8e0d6;
+    --tow-cream-half: #e8e0d688;
     --font-header: "Dominican";
     --font-text: "CaslonPro";
+    --font-header-alt: "CaslonAntique";
 
 
 }

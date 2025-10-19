@@ -1,5 +1,81 @@
-.application {
+@use "./mixins" as *;
+@use "../mixins/border" as border;
 
+
+.application {
+    // background: url("./assets/ui/blue-bg.webp");
+    --background: rgba(0, 69, 94, 0.9);
+
+    background-size:contain;
+
+    --tab-color: var(--tow-bluegrey-half);
+
+    .window-content {
+        --color-scrollbar: var(--tow-gold);
+        --color-fieldset-border: var(--tow-yellow);
+        select,
+        input {
+
+            --input-background-color: var(--tow-bluegrey-half);
+            --input-focus-outline-color: var(--tow-gold);
+            --input-text-color: var(--tow-cream);
+            --input-placeholder-color: var(--tow-cream-half);
+            --checkbox-checked-color: var(--tow-gold);
+            option {
+                color: var(--tow-cream);
+                background: var(--tow-blue);
+            }
+        }
+    }
+
+    .window-header {
+        background: linear-gradient(0deg,#a58b24 0%, #c6b869 100%);
+        // background: var(--tow-blue-half);
+        // background: url(./assets/ui/box-bg.webp);
+        background-size: cover;
+        border: none;
+        background-size: 200%;
+        background-position: 50% 50%;
+        color: black;
+        box-shadow: 0 0 5px black inset;
+        .window-title {
+            color: black;
+        }
+        button {
+            --button-hover-background-color: var(--tow-blue);
+            --button-hover-text-color: var(--tow-cream);
+            --button-text-color: black;
+        }
+    }
+
+    .window-content {
+        button {
+            @include tow-button;
+        }
+
+        nav.sheet-tabs {
+            gap: 0px;
+            border-color: var(--tab-color);
+            a[data-tab]
+            {
+                flex: 1;
+            }   
+            .active {
+                background: var(--tab-color);
+                color: var(--tow-cream);
+            }
+        }
+    }
+}
+
+
+.application.actor.warhammer,
+.application.item.warhammer {
+    --color-text-primary: var(--color-dark-3);
+    --color-text-secondary: var(--color-dark-4);
+    font-family: var(--font-text);
+
+    
     --color-shadow-primary: var(--tow-gold);
 
     --color-fieldset-border: var(--color-dark-5);
@@ -10,40 +86,101 @@
     --color-form-label-hover: var(--color-dark-3);
     --color-select-option-bg: transparent;
 
+    --attribute-input: rgba(0, 0, 0, 0.1);
+    --attribute-input-border: rgba(0, 0, 0, 0.1);
+    --attribute-border: rgba(0, 0, 0, 0.1);
+    --attribute-title: var(--tow-bluegrey)
+    --attribute-title-color: black;
+    --fieldset-border: var(--color-dark-5);
+    --attribute-locked-input: transparent;
+    --attribute-locked-border: transparent;
+    --attribute-label: var(--tow-bluegrey-half);
+    --attribute-field: transparent;
+    --form-label: var(--tow-bluegrey-half);
+    --form-input: rgba(0, 0, 0, 0.1);
+    --form-input-border: transparent;
+    --form-group-border: rgba(0, 0, 0, 0.1);
+    --editor-header: var(--tow-bluegrey-half);
+    --editor-header-border: transparent;
+    --hover-bg: transparent;
+    --tab-color: var(--tow-blue-half);
+
+    --list-header: var(--tow-bluegrey-half);
+    --list-header-border: var(--tow-blue);
+    --list-row-alternate: #8b979566;
+
+
     select,
     input {
         --input-background-color: rgba(0, 0, 0, 0.1);
         --input-border-color: transparent;
         --input-text-color: var(--color-dark-2);
         --input-focus-outline-color: var(--tow-blue);
+        --checkbox-checked-color: var(--tow-gold);
+
     }
 
-    background: url("./assets/ui/parchment-bg.png");
+    select:focus,
+    input:focus
+    {
+        --input-focus-outline-color: var(--tow-lightblue);
+        &::selection {
+            background-color: var(--tow-bluegrey);
+        }
+    }
 
-}
+    section[data-tab] {
+        --color-scrollbar: var(--tow-blue);
+    }
 
+    .form-group label {
+        font-family: var(--font-header);
+        font-weight: bold;
+        font-size: var(--font-size-16);
+    }
+    .attribute-box .label {
+        color: var(color-dark-3);
+        font-weight: bold;
+    }
 
-.application.item.warhammer,
-.application.warhammer {
+    nav.tabs [data-tab] {
+        font-family: var(--font-header);
+        font-variant: small-caps;
+        &:hover {
+            color: var(--tow-gold);
+        }
+    }
 
-    --color-text-primary: var(color-dark-3);
+    .window-content {
+        backdrop-filter: none;
+        background: none;
 
-    --attribute-input: rgba(0, 0, 0, 0.1);
-    --attribute-input-border: rgba(0, 0, 0, 0.1);
-    --attribute-border: rgba(0, 0, 0, 0.1);
-    --attribute-title: var(--tow-lightblue)
-    --attribute-title-color: black;
-    --fieldset-border: var(--color-dark-5);
-    --attribute-locked-input: transparent;
-    --attribute-locked-border: transparent;
-    --attribute-label: transparent;
-    --attribute-field: transparent;
-    --form-label: transparent;
-    --form-input: rgba(0, 0, 0, 0.1);
-    --form-input-border: transparent;
-    --form-group-border: rgba(0, 0, 0, 0.1);
-    --editor-header: var(--color-cool-3);
-    --editor-header-border: transparent;
-    --hover-bg: transparent;
-    --form-label : var(--tow-lightblue)
+        prose-mirror {
+            button.icon {
+                @include tow-control;
+            }
+        }
+    }
+
+    
+    .conditions {
+        .condition {
+            --border: var(--tow-bluegrey);
+            --condition-active: var(--tow-bluegrey-half);
+        }
+    }
+
+    h2.sheet-divider {
+        color: var(--tow-grey);
+        @include border.gradient-border(var(--tow-blue));
+    }
+    
+    h3.divider {
+        color: var(--tow-grey);
+        &::before,
+        &::after {
+            border-color: var(--tow-lightblue);
+        }
+
+    };
 }

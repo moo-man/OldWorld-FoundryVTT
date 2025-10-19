@@ -87,7 +87,7 @@
         "Duration" : "Duration",
         "Target" : "Target",
         "Range" : "Range",
-        "Damage" : "Range",
+        "Damage" : "Damage",
 
         "Glorious" : "Glorious",
         "Grim" : "Grim",
@@ -95,6 +95,7 @@
         "Advancement" : "Advancement",
 
         "Modifier" : "Modifier",
+        "ModifierConfig" : "Modifier Config",
 
         "MagicLevel" : "Magic Level",
 
@@ -153,6 +154,7 @@
             "ResilienceModifier" : "Resilience Modifier",
             "Modifier" : "Modifier",
             "Speed" : "Speed",
+            "SpeedModifier" : "Speed (Modifier)",
             "Fate" : "Fate",
 
             "DescriptionPublic" : "Description (Public)",
@@ -162,6 +164,7 @@
             "Cost" : "Cost",
 
             "Damage" : "Damage",
+            "IgnoreArmour" : "Ignore Armour",
             "Range" : "Range",
             "OptimumRange" : "Optimum Range",
 
@@ -297,6 +300,7 @@
 
         "DurationType" : {
             "Immediate" : "Immediate",
+            "Instant" : "Instant",
             "Battle" : "Battle",
             "Permanent" : "Permanent",
             "Varies" : "Varies",
@@ -375,7 +379,15 @@
 
             "BonusDice" : "Bonus Dice",
             "DicePenalty" : "Dice Penalty",
+            "Bonus" : "Bonus",
+            "Penalty" : "Penalty",
+            "Charging" : "Charging",
+            "Damage" : "Damage",
             "Mixing" : "Mixing the Winds",
+
+            "Grim" : "Grim",
+            "Normal" : "Normal",
+            "Glorious" : "Glorious",
 
             "Staggered" : "Staggered!",
             "StaggeredPrompt" : "You've been Staggered again! Choose from the following options.",
@@ -415,6 +427,9 @@
                     },
                     "traits" : {
                         "label" : "Traits"
+                    },
+                    "reload.value" : {
+                        "label" : "Successes to Reload" 
                     }
                 }
             },
