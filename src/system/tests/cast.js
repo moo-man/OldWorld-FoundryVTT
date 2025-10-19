@@ -7,7 +7,7 @@ export class CastingTest extends OldWorldTest
 
     static _separateDialogData(data)
     {
-        return foundry.utils.mergeObject(super._separateDialogData(data), {context : {preventOpposed : true, rollClass : "CastingTest"}});
+        return foundry.utils.mergeObject(super._separateDialogData(data), {context : {lore: data.context.lore, preventOpposed : true, rollClass : "CastingTest"}});
     }
 
     computeResult()

@@ -26,7 +26,7 @@ export class BlessingModel extends BaseItemModel {
     }
 
     _addModelProperties() {
-        for(let prayer of this.prayers)
+        for(let prayer of this.prayers.list)
         {
             prayer.effect.relative = this.parent.effects;
         }

@@ -42,7 +42,7 @@ export class WeaponModel extends EquippableItem
 
     get isLoaded()
     {
-        return !this.requiresLoading || this.reload.current == this.reload.value;
+        return !this.requiresLoading || this.reload.current >= this.reload.value;
     }
 
     rollReloadTest(actor)  
