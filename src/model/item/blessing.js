@@ -25,6 +25,12 @@ export class BlessingModel extends BaseItemModel {
         return schema;
     }
 
+    _addModelProperties() {
+        for(let prayer of this.prayers.list)
+        {
+            prayer.effect.relative = this.parent.effects;
+        }
+    }
 
     effectIsActive(effect) {
 
