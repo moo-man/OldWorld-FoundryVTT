@@ -50,7 +50,7 @@ export class OriginModel extends BaseItemModel {
             group: new fields.NumberField({ nullable: true, required: false, blank: true })
         }))
         schema.careers = new fields.EmbeddedDataField(DocumentReferenceModel),
-            schema.fate = new fields.NumberField({ min: 0 });
+        schema.fate = new fields.NumberField({ min: 0 });
         return schema;
     }
 
@@ -231,5 +231,131 @@ export class OriginModel extends BaseItemModel {
         }
 
         await actor.update({ "system.skills": actorSkills, "system.fate.max": this.fate });
+    }
+
+    async toEmbed(config, options)
+    {
+        let  table  =   await  this.talents.table.document;
+
+        let tableHTML = `
+        <table>
+            <tr>
+                <th>d10</th>
+                <th>Random Talent</th>
+                <th>d10</th>
+                <th>Random Talent</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1:result</td>
+                <td>6</td>
+                <td>6:result</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2:result</td>
+                <td>7</td>
+                <td>7:result</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3:result</td>
+                <td>8</td>
+                <td>8:result</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>4:result</td>
+                <td>9</td>
+                <td>9:result</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>5:result</td>
+                <td>10</td>
+                <td>10:result</td>
+            </tr>
+        </table>
+        `
+
+        let tableInstructions = `Roll ${this.talents.rolls} ${this.talents.rolls == 1 ? "time" : "times, rerolling duplicates"}.`
+
+        if (this.talents.keep != this.talents.rolls)
+        {
+            tableInstructions += `You must swap ${this.talents.rolls - this.talents.keep} of these Talents for ${this.talents.replacements.list.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(" and ")}.`
+        }
+
+        if (this.talents.gain.list.length)
+        {
+            tableInstructions += `You also gain ${this.talents.gain.list.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(" and ")}.`
+        }
+
+        for(let result of table.results.contents)
+        {
+            tableHTML = tableHTML.replace(`${result.range[0]}:result`, `@UUID[${result.documentUuid}]{${result.name}}`)
+        }
+
+
+        let start = this.skills.list.find(i => !i.skill)?.value || 2;
+        let choices = this.skills.list.filter(i => i.skill == "*");
+        let skills = this.skills.list.filter(i => i.skill && i.skill != "*");
+
+        let skillText = `Your skills begin at ${start}. `
+        if (choices.length)
+        {
+            if (skills.length)
+            {
+                skillText += `Raise ${skills.map(c => game.oldworld.config.skills[c.skill]).join(", ")} and ${choices.length} other skills of your choice to ${skills[0].value}`
+            }
+            else 
+            {
+                skillText += `Raise any ${choices.length} skills of your choice to ${choices[0].value}`
+            }
+        }
+        else 
+        {
+            skillText += `Raise ${skills.map(c => game.oldworld.config.skills[c.skill]).join(", ")} to ${skills[0].value}`
+        }
+
+
+        let loreText = `${this.lores.list.filter(i => !i.group).map(i => i.name)}. `;
+        let groups = []
+        this.lores.list.forEach(i => {
+            if (i.group)
+            {
+                if (!groups.includes(i.group))
+                {
+                    groups.push(i.group);
+                }
+            }
+        })
+
+        for(let group of groups)
+        {
+            loreText += `${this.lores.list.filter(i => i.group == group).map(i => i.name).join(" or ")}.`
+        }
+
+
+        let html = `
+        <div class="header">
+            <label class="title"><a data-link data-uuid="${this.parent.uuid}">${config.label || this.parent.name}</a></label>
+        </div>
+        <div class="origin-data">
+            <div  class="table">
+                ${tableHTML}
+                <p class="instructions">${tableInstructions}</p>
+            </div>
+            <div class="details">
+                <p><strong>Skill Ratings:</strong> ${skillText}</p>
+                <p><strong>Lores:</strong> ${loreText}</p>
+                <p><strong>Fate:</strong> ${this.fate}</p>
+                <p><strong>Suggested Names:</strong> </p>
+            </div>
+        </div>`
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
     }
 }

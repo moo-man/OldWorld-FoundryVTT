@@ -52,9 +52,41 @@
         top: 0rem;
     }
 
+    .sheet-header {
+
+        input[name=name] {
+            @include form-border;
+            background: var(--tow-brown-half);
+            font-family: var(--font-header-alt);
+            font-weight: bold;
+            height: 2.5rem;
+            font-size: 1.5rem;
+        }
+    }
+
+    .miscast-pool {
+            @include form-border;
+            background: var(--tow-brown-half);
+            font-family: var(--font-header);
+            padding: 0.5rem;
+    }
+
+
 }
 
 .application.warhammer.actor.character {
+
+
+    --input-background-color: var(--tow-brown-half);
+    --attribute-title: var(--tow-brown)
+    --attribute-label: var(--tow-brown-half);
+    --editor-header: var(--tow-brown-half);
+    --list-header: var(--tow-brown-half);
+    --list-header-border: var(--tow-brown);
+    --border: var(--tow-brown);
+    --condition-active: var(--tow-brown-half);
+    --list-row-alternate: var(--tow-brown-half);
+
 
     .window-header {
         .window-title {
@@ -66,13 +98,18 @@
 
     .characteristics {
         position: relative;
-        border-image: url(./assets/ui/inner-frame.webp);
-        border-image-slice: 13 14 14 14;
-        border-image-width: 5px 5px 5px 5px;
-        border-image-outset: 0px 0px 0px 0px;
-        border-image-repeat: repeat repeat;
-
+        @include form-border;
         padding: 5px;
+
+        input {
+            border: 1px solid var(--tow-brown);
+        }
+
+        .ch-data {
+            input {
+                font-weight: bold;
+            }
+        }
 
         label {
             font-family: var(--font-header-alt);
@@ -101,8 +138,6 @@
 .application.warhammer.actor.npc {
 
 
-
-    
     &::before {
         content: "";
         position: absolute;
@@ -139,13 +174,21 @@
 
 
         }
-
     }
 
-    .sheet-header {
+    .skills,
+    .characteristics {
+        input {
+            border: 1px solid var(--tow-brown);
+        }
+    }
 
-        .name {
-            height: 4rem;
+    .characteristics {
+        th {
+            font-family: var(--font-header-alt);
+            font-weight: bold;
+            font-size: var(--font-size-20);
+            padding-bottom: 0px;
         }
     }
 
