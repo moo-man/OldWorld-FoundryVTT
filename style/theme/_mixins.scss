@@ -17,6 +17,8 @@
     }
 
     .box-header {
+        line-height: 1.5;
+        margin: 0.5rem 0px;
         font-variant: small-caps;
         font-family: var(--font-header);
         font-size: var(--font-size-24);
@@ -76,6 +78,9 @@
         background: url(./assets/ui/blue-bg-seamless.webp);
         background-size: cover;
 
+        .box-header {
+            color: white;
+        }
         ul {
             li::marker {
                 color: white;
@@ -149,6 +154,7 @@
 
     }
 
+    .inline-roll,
     .content-link {
         background: none;
         border: none;
@@ -275,6 +281,7 @@
         @include box-text();
         --table-row-color-even: rgba(0, 0, 0, 0.1);
         padding: 0px;
+        overflow: hidden;
 
         >*:not(table) {
             margin-left: 1rem;

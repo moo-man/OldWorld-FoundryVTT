@@ -5,12 +5,13 @@
         margin-bottom: 0.5rem;
         th {
             text-align: center;
+            padding: 0.2rem 0.5rem;
         }
         td  {
             &:first-of-type{
                 text-align: left;
             }
-            padding: 0.5rem;
+            padding: 0.2rem 0.5rem;
         }
         input {
             padding: 0px;

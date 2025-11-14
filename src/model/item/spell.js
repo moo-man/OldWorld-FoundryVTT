@@ -40,4 +40,19 @@ export class SpellModel extends BaseItemModel
         }
         else return 0
     }
+
+    async toEmbed(config, options)
+    {
+        let html = `
+        <h5>@UUID[${this.parent.uuid}]{${this.parent.name}}</h5>
+        <p><strong>CV</strong>: ${this.cv}\t<strong>Target</strong>: ${this.target.value ? game.oldworld.config.target[this.target.value] : this.target.custom}</p>
+        <p><strong>Range</strong>: ${this.range.value ? game.oldworld.config.range[this.range.value] : this.range.custom}\t<strong>Duration</strong>: ${this.duration.value ? game.oldworld.config.duration[this.duration.value] : this.duration.custom}</p>
+        <p><strong>Effect</strong>: ${this.description.public.replace("<p>", "")}
+        `;
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
 }

@@ -11,4 +11,16 @@ export class TrappingModel extends PhysicalItem
     }
 
 
+    async toEmbed(config, options)
+    {
+        let html = `
+            <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+            ${this.description.public}
+        `;
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
 }

@@ -113,7 +113,51 @@ export class WeaponModel extends EquippableItem
         }
         else 
         {
-            return "";
+
+            let html = `
+            <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+            ${this.description.public}
+            <section class="tow-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>
+                            <p style="text-align: center">${this.isRanged ? "Optimum Range" : "Max Range"}</p>
+                        </th>
+                        <th>
+                            <p style="text-align: center">Damage</p>
+                        </th>
+                        <th>
+                            <p style="text-align: center">1H/2H</p>
+                        </th>
+                        <th>
+                            <p>Traits</p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p style="text-align: center">${this.isRanged ? `${game.oldworld.config.range[this.range.min]} - ${game.oldworld.config.range[this.range.max]}` : game.oldworld.config.range[this.range.melee]}</p>
+                        </td>
+                        <td>
+                            <p style="text-align: center">${this.damage.formula} ${this.damage.characteristic ? "+" + this.damage.characteristic : ""}</p>
+                        </td>
+                        <td>
+                            <p style="text-align: center">${this.grip}</p>
+                        </td>
+                        <td>
+                            <p>${this.traits}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        `;
+
+            let div = document.createElement("div");
+            div.style = config.style;
+            div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
+            return div;
+
         }
 
     }

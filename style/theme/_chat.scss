@@ -1,5 +1,21 @@
 @use "./mixins" as *;
 body:not(.no-theme) {
+
+    #chat-message {
+        background: url("./assets/ui/parchment-quote.webp");    
+        background-position-x: 15%;
+        background-position-y: 15%;
+        backdrop-filter: none;
+        border: 15px solid transparent;
+        border-image: url(./assets/ui/frame.webp);
+        border-image-slice: 22 22 22 22;
+        border-image-repeat: repeat;
+        border-image-outset: 3px;
+        overflow: visible;
+        color: black;
+        outline-color: var(--tow-bluegrey);
+    }
+
     .chat-message {
         background:none;
         border-image: url(./assets/ui/chat.webp);

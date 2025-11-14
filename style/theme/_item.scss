@@ -34,8 +34,18 @@
     .window-content {
         padding: 0px; // border width of app acts as padding
 
+        --form-border : var(--tow-bluegrey-half);
+        --form-bg : var(--tow-bluegrey-half);   
+        --char-border: var(--tow-bluegrey);
+        --selected: var(--tow-blue-half);
+        --selected-text: white;
+
         button[data-action] {
             @include tow-button;
+        }
+
+        prose-mirror {
+            @include editor-text();
         }
     }
 
@@ -82,6 +92,14 @@
         .name {
             height: 4rem;
         }
+    }
+
+    .name-list .list-content {
+        --name-border: var(--tow-bluegrey);
+    }
+
+    .choice-group .choice-text {
+        --attribute-border: var(--tow-bluegrey);
     }
 
 }

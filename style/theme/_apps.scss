@@ -16,7 +16,7 @@
         select,
         input {
 
-            --input-background-color: var(--tow-bluegrey-half);
+            // --input-background-color: var(--tow-bluegrey-half);
             --input-focus-outline-color: var(--tow-gold);
             --input-text-color: var(--tow-cream);
             --input-placeholder-color: var(--tow-cream-half);
@@ -100,6 +100,9 @@
     --form-input: rgba(0, 0, 0, 0.1);
     --form-input-border: transparent;
     --form-group-border: rgba(0, 0, 0, 0.1);
+    --name-label: var(--tow-bluegrey-half);
+    --name-border: var(--tow-bluegrey);
+    --name-bg: var(--tow-blue-half);
     --editor-header: var(--tow-bluegrey-half);
     --editor-header-border: transparent;
     --hover-bg: transparent;
@@ -108,6 +111,9 @@
     --list-header: var(--tow-bluegrey-half);
     --list-header-border: var(--tow-blue);
     --list-row-alternate: #8b979566;
+
+    --table-header-bg-color: var(--tow-bluegrey-half);
+    --table-header-border-color: var(--tow-bluegrey);
 
 
     select,
@@ -177,10 +183,28 @@
     
     h3.divider {
         color: var(--tow-grey);
+        font-family: var(--font-header);
         &::before,
         &::after {
             border-color: var(--tow-lightblue);
         }
 
     };
+
+    .name-list {
+        .list-element {
+            a {
+                color: var(--tow-cream);
+            }
+            .floating {
+                background: var(--tow-blue);
+            }
+        }
+    }
+
+    .characteristics {
+        table {
+            background: none;
+        }
+    }
 }
