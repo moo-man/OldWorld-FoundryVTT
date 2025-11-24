@@ -41,10 +41,13 @@ export default class OriginSheet extends BaseOldWorldItemSheet {
           {
             this.document.update(this.document.system.talents.replacements.add(item));
           }
+          else if (ev.target.closest(".optional"))
+          {
+            this.document.update(this.document.system.talents.optional.add(item));
+          }
           else 
           {
             this.document.update(this.document.system.talents.gain.add(item));
-
           }
         }
         else if (item.type == "lore")

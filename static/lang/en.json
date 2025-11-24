@@ -265,7 +265,13 @@
             "XWounds" : "{wounds} Wounds",
             "XYWounds" : "{x}-{y} Wounds",
 
-            "ToggleEditing" : "Toggle Edit Mode"
+            "ToggleEditing" : "Toggle Edit Mode",
+
+            "ChooseSkill" : "Choose Skill",
+            "SkillOptions" : "Skill Options",
+            
+            "RequiredSwaps" : "Required Swaps",
+            "OptionalSwaps" : "Optional Swaps"
 
         },
 
