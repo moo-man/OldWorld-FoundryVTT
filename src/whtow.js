@@ -48,6 +48,7 @@ import ActorSheetOldWorldNPC from "./sheet/actor/npc-sheet";
 import { AbilityModel } from "./model/item/ability";
 import AbilitySheet from "./sheet/item/types/ability-sheet";
 import { XPMessageModel } from "./model/message/xp";
+import EndeavourJournalSheet from "./sheet/journal/endeavour";
 
 Hooks.once("init", () => 
 {
@@ -85,6 +86,7 @@ Hooks.once("init", () =>
     // Items.registerSheet("whtow", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
 
     DocumentSheetConfig.registerSheet(ActiveEffect, "whtow", OldWorldActiveEffectConfig, {makeDefault : true});
+    DocumentSheetConfig.registerSheet(CONFIG.JournalEntryPage.documentClass, "whtow", EndeavourJournalSheet, {label : "Endeavour Journal Page"}) 
 
     CONFIG.Actor.dataModels["character"] = CharacterModel;
     CONFIG.Actor.dataModels["npc"] = NPCModel;
