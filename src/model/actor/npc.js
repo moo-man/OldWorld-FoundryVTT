@@ -122,5 +122,97 @@ export class NPCModel extends StandardActorModel {
         this.wounds.wounded.effect.relative = this.parent.effects;
     }
 
+    async toEmbed(config, options)
+    {
+
+        if (config.table)
+        {
+            let html = `
+            <div class="npc-table">
+                
+                <div class="header">
+                    <label class="title"><a data-link data-uuid="${this.parent.uuid}">${config.label || this.parent.name}</a></label>
+                </div>
+
+                <div class="details">
+                    <div class="property-header" style="padding-top: 20px; grid-column: 1 / span 1">WS</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 2 / span 1">BS</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 3 / span 1">S</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 4 / span 1">T</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 5 / span 1">I</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 6 / span 1">Ag</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 7 / span 1">Re</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 8 / span 1">Fel</div>
+
+                    <div class="property" style="grid-column: 1 / span 1">${this.characteristics.ws.value}</div>
+                    <div class="property" style="grid-column: 2 / span 1">${this.characteristics.bs.value}</div>
+                    <div class="property" style="grid-column: 3 / span 1">${this.characteristics.s.value}</div>
+                    <div class="property" style="grid-column: 4 / span 1">${this.characteristics.t.value}</div>
+                    <div class="property" style="grid-column: 5 / span 1">${this.characteristics.i.value}</div>
+                    <div class="property" style="grid-column: 6 / span 1">${this.characteristics.ag.value}</div>
+                    <div class="property" style="grid-column: 7 / span 1">${this.characteristics.re.value}</div>
+                    <div class="property" style="grid-column: 8 / span 1">${this.characteristics.fel.value}</div>
+
+                    <div class="property-header" style="grid-column: 1 / span 3">Speed</div>
+                    <div class="property-header" style="grid-column: 4 / span 3">Resilience</div>
+                    <div class="property-header" style="grid-column: 7 / span 2">Type</div>
+
+                    <div class="property" style="grid-column: 1 / span 3">${game.oldworld.config.speed[this.speed.value]}</div>
+                    <div class="property" style="grid-column: 4 / span 3">${this.resilience.value} ${this.resilience.armoured ? "(armoured)" : ""}</div>
+                    <div class="property" style="grid-column: 7 / span 2">${game.oldworld.config.npcType[this.type]}</div>
+
+                    ${
+                        ["brute", "monstrosity"].includes(this.type) ?
+                        `<div class="property-header" style="grid-column: 1 / span 3">${this.wounds.unwounded.range[0]} ${this.wounds.unwounded.range[0] != this.wounds.unwounded.range[0] ? "-" + this.wounds.unwounded.range[1] : ""} Wounds</div>
+                        <div class="property-header" style="grid-column: 4 / span 3">${this.wounds.wounded.range[0]} ${this.wounds.wounded.range[0] != this.wounds.wounded.range[0] ? "-" + this.wounds.wounded.range[1] : ""} Wounds</div>
+                        <div class="property-header" style="grid-column: 7 / span 2">${this.wounds.defeated.range[0]} ${this.wounds.defeated.range[0] != this.wounds.defeated.range[0] ? "-" + this.wounds.defeated.range[1] : ""} Wounds</div>
+            
+                        <div class="property" style="grid-column: 1 / span 3">${this.wounds.unwounded.description || "–"}</div>
+                        <div class="property" style="grid-column: 4 / span 3">${this.wounds.wounded.description || "–"}</div>
+                        <div class="property" style="grid-column: 7 / span 2">Defeated</div>`
+                        :
+                        ""
+                    }
+
+
+
+                    <div class="text alt-row" style="grid-column: 1 / span 8">
+                        <p><strong>Skills</strong>: ${Object.keys(this.skills).map(i => {
+                            return `${game.oldworld.config.skills[i]} ${this.skills[i].value}`
+                        }).join(", ")}</p>
+
+                        <p><strong>Attacks</strong>: ${this.parent.itemTypes.weapon.map(weapon => {
+                            return `@UUID[${weapon.uuid}]{${weapon.name}}`
+                        }).join(", ")}</p>
+                    </div>
+
+                    <div class="traits" style="grid-column: 1 / span 8">
+                    ${this.parent.itemTypes.ability.map(ability => {
+                        return `<p>@UUID[${ability.uuid}]{${ability.name}}:  ${ability.system.description.public.replace("<p>", "")}`
+                    }).join("")}
+                    </div>
+
+                    <div class="trappings alt-row   " style="grid-column: 1 / span 8">
+                        <p><strong>Typical Trappings</strong>: ${this.parent.itemTypes.weapon.concat(this.parent.itemTypes.trapping).concat(this.parent.itemTypes.armour).map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ")}
+                    </div>
+
+                </div>
+            </div>
+
+            `
+
+            if (config.image)
+            {
+                html = `<div class="npc-image"><img src="${this.parent.img}"></div>` + html;
+            }
+
+            let div = document.createElement("div");
+            div.style = config.style;
+            div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`${html}`, {relativeTo : this, async: true, secrets : options.secrets})
+            return div;
+        }
+
+    }
+
 }
 

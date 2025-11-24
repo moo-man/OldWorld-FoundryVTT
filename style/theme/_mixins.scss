@@ -175,8 +175,10 @@
                 color: var(--tow-red)
             }
         }
+    }
 
-
+    button {
+        margin-left: 0.5rem; // Shadow cuts off otherwise
     }
 
     blockquote {
@@ -309,6 +311,97 @@
 
     .whtow-embed {
 
+        &.npc {
+            display: flex;
+            align-items: center;
+            .npc-image {
+                padding: 4px;
+                flex: 0 0 250px;
+            }
+            .npc-table {
+            position: relative;
+            margin-bottom: 1rem;
+
+            .header {
+                text-align: center;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                label {
+                        margin-top: 15px;
+                        font-size: var(--font-size-24);
+                        font-family: var(--font-header);
+                        color: var(--tow-blue);
+                }
+                .status 
+                {
+                    font-family: var(--font-header);
+                    font-size: var(--font-size-18);
+
+                }
+            }
+            
+            &::before {
+                content: "";
+                position: absolute;
+                background: url(./assets/ui/statblock-header-short.webp);
+                background-size: cover;
+                background-repeat: no-repeat;
+                height: 57px;
+                width: 300px;
+                left: 50%;
+                margin-left: -150px;
+                filter: drop-shadow(0 0 0.2rem black);
+                
+            }
+
+
+            .details {
+                margin-top: -13px;
+
+                border-image: url(./assets/ui/frame.webp);
+                border-image-slice: 22 22 22 22;
+                border-image-width: 12px;
+                padding: 5px;
+                background: url(./assets/ui/box-bg.webp);
+                background-position: 50% 50%;
+
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                grid-template-rows: auto auto auto auto auto auto;
+                column-gap: 0.2rem;
+                row-gap: 0.2rem;
+
+                > * {
+                    min-height: 1.5rem;
+                    background: #a39d8b44;
+
+                    padding: 4px 8px;
+
+                        &.property-header {
+                            background: var(--tow-brown-half);
+                            font-weight: bold;
+                            line-height: 1.5rem;
+                            text-align: center;
+                            text-align: center;
+                        }
+
+                        &.alt-row {
+                            background: var(--tow-brown-half);
+                        }
+
+                        &.property {
+                            text-align: center;
+                        }
+
+
+                    }
+            }
+        }
+
+        }
+
         &.lore,
         &.talent {
             margin-bottom: 1rem;
@@ -407,7 +500,7 @@
                     border-image: url(./assets/ui/frame.webp);
                     border-image-slice: 30 30 30 30;
                     border-image-width: 0px 0px 0px 10px;
-                    padding-left: 1rem;
+                    padding: 0px 1rem;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
@@ -587,11 +680,11 @@
     // border-image: linear-gradient(0deg, #c6b869 0%, #a58b24 100%); // This seems to create a cool bevel effect so I'll just keep it
 
     background: linear-gradient(0deg,#a58b24 0%, #c6b869 10%, #a58b24 90%, #c6b869 100%);
-    border: none;
+    border-color: transparent;
     outline: none;
     border-radius:  3px;
     color: var(--color-dark-3);
-    box-shadow: 0 0 5px #00000088;
+    box-shadow: 0 0 7px #00000088;
 
     &:not(.icon)
     {
@@ -618,4 +711,66 @@
     border-image-width: 5px 5px 5px 5px;
     border-image-outset: 0px 0px 0px 0px;
     border-image-repeat: repeat repeat;
+}
+
+@mixin window-header {
+    .window-header {
+
+        --header-height: 1.5rem;
+        background: linear-gradient(0deg,#a58b24 0%, #c6b869 100%);
+        // background: var(--tow-blue-half);
+        // background: url(./assets/ui/box-bg.webp);
+        background-size: cover;
+        border: none;
+        background-size: 200%;
+        background-position: 50% 50%;
+        color: black;
+        box-shadow: 0 0 5px black inset;
+        .window-title {
+            font-family: var(--font-header);
+            color: black;
+        }
+        button {
+            --button-hover-background-color: var(--tow-blue);
+            --button-hover-text-color: var(--tow-cream);
+            --button-text-color: black;
+               --button-size: 1rem;
+               font-size: var(--font-size-12);
+
+        }
+    }
+
+    .window-header {
+    //     @include form-border;
+    //     background-position: 50% 50%;
+    //     box-shadow: 0 0 15px black inset;
+    //     .window-title {
+    //         color: var(--tow-blue);
+    //         font-family: var(--font-header);
+    //         font-size: var(--font-size-16);
+    //     }
+
+    //    button {
+    //      --button-hover-background-color: transparent;
+    //      --button-hover-text-color: var(--tow-gold);
+    //      --button-text-color: black;
+    //     }
+
+    // background: none;
+
+    // border-image-source: url(./assets/ui/window-header.webp);
+    // border-image-slice: 25 25 25 25 fill;
+    // border-image-width: 20px 20px 20px 20px;
+    // border-image-repeat: repeat stretch;
+
+    }
+}
+
+@mixin window-frame($width:20px) {
+    border-image: url(./assets/ui/app-frame.webp);
+    border-image-slice: 22 22 22 22;
+    border-image-repeat: repeat;
+    border-image-width: $width;
+    box-shadow: 0px 0px 30px black inset;
+
 }

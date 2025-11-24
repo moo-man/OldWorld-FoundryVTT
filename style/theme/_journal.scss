@@ -1,10 +1,16 @@
 @use "./mixins" as *;
 .journal-sheet {
     
+    @include window-header;
+
     .journal-entry-content {
         @include editor-text();
         background: url("./assets/ui/parchment-bg.webp");
         --color-scrollbar: var(--tow-blue);
+
+        button {
+            @include tow-button;
+        }
     }
 
     .journal-sidebar {

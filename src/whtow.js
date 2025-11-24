@@ -159,6 +159,24 @@ Hooks.once("init", () =>
         fromUuid(data.uuid).then(actor => actor.system.corruption.receiveTemptation(data));
     }
 
+
+    CONFIG.fontDefinitions.CaslonPro = {editor : true, fonts : []}
+
+    CONFIG.canvasTextStyle = new PIXI.TextStyle({
+      fontFamily: "CaslonPro",
+      fontSize: 36,
+      fill: "#FFFFFF",
+      stroke: '#111111',
+      strokeThickness: 1,
+      dropShadow: true,
+      dropShadowColor: "#000000",
+      dropShadowBlur: 4,
+      dropShadowAngle: 0,
+      dropShadowDistance: 0,
+      align: "center",
+      wordWrap: false
+    })
+
     registerSettings();
     registerHandlebars();
     

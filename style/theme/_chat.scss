@@ -6,14 +6,28 @@ body:not(.no-theme) {
         background-position-x: 15%;
         background-position-y: 15%;
         backdrop-filter: none;
-        border: 15px solid transparent;
-        border-image: url(./assets/ui/frame.webp);
-        border-image-slice: 22 22 22 22;
-        border-image-repeat: repeat;
+        @include window-frame(15px);
         border-image-outset: 3px;
+        box-shadow: 0 0 15px black inset;
+
+        // background:none;
+        // border-image: url(./assets/ui/chat.webp);
+
+        // &:has(.test) {
+        //     border-image-source: url(./assets/ui/chat-img.webp);
+        // }
+
+        // border-image-slice: 120 50 60 50 fill;
+        // border-image-width: 50px 20px 20px 20px;
+        // border-image-outset: 0px 0px 0px 0px;
+        // border-image-repeat: stretch stretch;
+
         overflow: visible;
-        color: black;
-        outline-color: var(--tow-bluegrey);
+        color: var(--tow-blackred);
+        outline: none;
+        padding: 1rem;
+
+
     }
 
     .chat-message {
@@ -83,6 +97,11 @@ body:not(.no-theme) {
 
             .result h4 {
                 font-family: var(--font-header);
+            }
+
+            button {
+                @include tow-button;
+                font-family: var(--font-text);
             }
         }
     }

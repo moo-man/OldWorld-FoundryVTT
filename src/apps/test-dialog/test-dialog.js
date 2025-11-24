@@ -1,20 +1,22 @@
-export default class TestDialog extends WarhammerRollDialogV2
-{
+export default class TestDialog extends WarhammerRollDialogV2 {
     static DEFAULT_OPTIONS = {
         classes: ["test-dialog", "whtow"],
-        tag : "form",
-        form : {
+        tag: "form",
+        form: {
             handler: this.submit,
             closeOnSubmit: true
         },
         actions: {
-            inc : this._onInc,
-            dec : this._onDec
+            inc: this._onInc,
+            dec: this._onDec
 
         },
-        window : {
-            resizable : true
-          },
+        window: {
+            resizable: true
+        },
+        position: {
+            width: 550
+        }
     };
 
 

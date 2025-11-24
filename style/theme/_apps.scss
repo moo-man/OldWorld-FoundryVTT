@@ -2,7 +2,8 @@
 @use "../mixins/border" as border;
 
 
-.application {
+#region-legend,
+.application.warhammer {
     // background: url("./assets/ui/blue-bg.webp");
     --background: rgba(0, 69, 94, 0.9);
 
@@ -28,25 +29,7 @@
         }
     }
 
-    .window-header {
-        background: linear-gradient(0deg,#a58b24 0%, #c6b869 100%);
-        // background: var(--tow-blue-half);
-        // background: url(./assets/ui/box-bg.webp);
-        background-size: cover;
-        border: none;
-        background-size: 200%;
-        background-position: 50% 50%;
-        color: black;
-        box-shadow: 0 0 5px black inset;
-        .window-title {
-            color: black;
-        }
-        button {
-            --button-hover-background-color: var(--tow-blue);
-            --button-hover-text-color: var(--tow-cream);
-            --button-text-color: black;
-        }
-    }
+    @include window-header;
 
     .window-content {
         button {
@@ -86,14 +69,14 @@
     --color-form-label-hover: var(--color-dark-3);
     --color-select-option-bg: transparent;
 
-    --attribute-input: rgba(0, 0, 0, 0.1);
+    --attribute-input: transparent;
     --attribute-input-border: rgba(0, 0, 0, 0.1);
     --attribute-border: rgba(0, 0, 0, 0.1);
     --attribute-title: var(--tow-bluegrey)
     --attribute-title-color: black;
     --fieldset-border: var(--color-dark-5);
-    --attribute-locked-input: transparent;
-    --attribute-locked-border: transparent;
+    --attribute-locked-input: rgba(0, 0, 0, 0.1);
+    --attribute-locked-border: rgba(0, 0, 0, 0.1);
     --attribute-label: var(--tow-bluegrey-half);
     --attribute-field: transparent;
     --form-label: var(--tow-bluegrey-half);
@@ -118,6 +101,17 @@
 
     select,
     input {
+        --input-background-color: rgba(0, 0, 0, 0.05);
+        --input-border-color: transparent;
+        --input-text-color: var(--color-dark-2);
+        --input-focus-outline-color: var(--tow-blue);
+        --checkbox-checked-color: var(--tow-gold);
+
+    }
+
+    
+    select:disabled,
+    input:disabled {
         --input-background-color: rgba(0, 0, 0, 0.1);
         --input-border-color: transparent;
         --input-text-color: var(--color-dark-2);
@@ -162,6 +156,7 @@
         background: none;
 
         prose-mirror {
+            @include editor-text();
             button.icon {
                 @include tow-control;
             }
@@ -206,5 +201,97 @@
         table {
             background: none;
         }
+    }
+}
+
+
+.image-popout {
+    background: url("./assets/ui/npc-bg.webp");    
+    @include window-header;
+
+    .window-content {
+        padding: 0px;
+        box-shadow: 0 0 30px black inset;
+
+        figure {
+            padding: 0px;
+        }
+    }
+}
+
+.whtow.application.test-dialog {
+    background: url("./assets/ui/npc-bg.webp");    
+    --color-text-primary: black;
+    font-family: var(--font-text);
+    
+    .window-content {
+        @include window-frame;
+        padding: 30px;
+        backdrop-filter: none;
+    }
+
+    .window-header {
+        background: url("./assets/ui/blue-bg-seamless.webp");
+        --header-height: 2rem;
+
+        
+        .window-title {
+            color: white;
+            text-align: center;
+            font-size: var(--font-size-18);
+            font-weight: bold;
+        }
+
+        .header-control {
+            --button-hover-background-color: var(--tow-gold);
+            --button-text-color: var(--color-light-2);
+            --button-hover-text-color: var(--tow-blue);
+
+            --button-size: 1.5rem;
+            font-size: var(--font-size-14);
+        }
+
+    }
+
+    input[type="number"], 
+    input[type="text"], 
+    select {
+        background: var(--tow-bluegrey-half);
+        border: var(--tow-bluegrey);
+        color: black;
+    }
+
+    .dialog-modifiers {
+        @include form-border;
+        border-image-outset: 5px;
+    }
+
+    a {
+        color: var(--tow-blue);
+    }
+
+
+    .form-group {
+        label {
+            color: black;
+        }
+    }
+
+    .target {
+        div {
+            background: var(--tow-bluegrey-half);
+            border: var(--tow-bluegrey);
+        }
+    }
+
+    .dialog-modifiers {
+        label {
+            padding-top: 2px;
+            background: var(--tow-bluegrey-half)
+        }
+    }
+
+    button {
+        font-size: var(--font-size-18);
     }
 }

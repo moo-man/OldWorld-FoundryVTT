@@ -4,24 +4,16 @@
 .application.warhammer.actor 
 {
     overflow: visible;
+    padding: 20px;
+    @include window-frame;
 
     background: url("./assets/ui/npc-bg.webp");    
     background-position-x: 15%;
     backdrop-filter: none;
-    border: 20px solid transparent;
-    border-image: url(./assets/ui/app-frame.webp);
-    border-image-slice: 22 22 22 22;
-    border-image-repeat: repeat;
 
-    
-    .window-resize-handle {
-        width: 17px;
-        height: 17px;
-        bottom: -20px;
-        right: -20px;
-    }
 
     .window-header {
+    --header-height: 36px;
         background: none;
         border: none;
         top: -32px;
@@ -30,13 +22,16 @@
         box-shadow: none;
         margin-bottom: -25px;
 
-        button {
+        button.header-control {
 
             outline: none;
 
             background: url(./assets/ui/button-square.webp);
             background-size: contain;
             color: black;
+            --button-size: 1.5rem;
+            font-size: var(--font-size-14);
+
         }
     }
 
@@ -148,7 +143,7 @@
         width: 500px;
         z-index: 0;
         right: 50%;
-        top: -40px;
+        top: -20px;
         margin-right: -280px;
         filter: drop-shadow(0 0 0.2rem black);
     }
@@ -190,6 +185,11 @@
             font-size: var(--font-size-20);
             padding-bottom: 0px;
         }
+    }
+
+    .wound-breakdown .label.active {
+        background: var(--tow-bluegrey-half);
+        box-shadow: 0 0 10px var(--tow-darkred) inset;
     }
 
 }

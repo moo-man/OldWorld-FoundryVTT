@@ -39,4 +39,48 @@ body:not(.no-theme) {
         @include tow-control;
     }
 
+    #players-inactive,
+    #players-active {
+        --player-name-self-color: var(--tow-gold);
+
+        background: url("./assets/ui/blue-bg-seamless.webp");
+        font-family: var(--font-text);
+        background-size: contain;
+        border: 2px solid var(--tow-darkyellow);
+
+    }
+
+    #hotbar {
+        .slot {
+            --key-bg-color-full: var(--tow-bluegrey-half);
+            --key-bg-color-empty: var(--tow-bluegrey-half);
+            background: url("./assets/ui/blue-bg-seamless.webp");
+            font-family: var(--font-text);
+            background-size: contain;
+            border: 2px solid var(--tow-darkyellow);
+            &:hover {
+                border-color: var(--tow-lightblue);
+
+            }
+        }
+    }
+
+    #menu {
+        background: url("./assets/ui/box-bg.webp");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+
+        @include window-frame;
+
+        border-radius: 0px;
+        box-shadow: 0 0 35px black inset;
+        filter: drop-shadow(0 0 0.5rem black);
+
+        h2,
+        li {
+            color: var(--tow-blue)
+        }
+    }
+
 }

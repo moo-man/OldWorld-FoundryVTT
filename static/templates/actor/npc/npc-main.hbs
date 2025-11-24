@@ -52,7 +52,7 @@
         {{else}}
         <div class="attribute-box">
             <div class="label" style="grid-column: 1 / span 12">{{localize "TOW.Sheet.Resilience"}}</div>
-            <div class="field" style="grid-column: 1 / span 12">{{system.resilience.value}} {{#if system.resilience.descriptor}}({{system.resilience.descriptor}}){{/if}}</div>
+            <div class="field" style="grid-column: 1 / span 12"><input disabled type="text" value="{{system.resilience.value}} {{#if system.resilience.descriptor}}({{system.resilience.descriptor}}){{/if}}"></div>
         </div>
         {{/if}}
         <div class="attribute-box">
@@ -70,7 +70,7 @@
                     <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{source.system.wounds.unwounded.description}}" name="system.wounds.unwounded.description"> </div>
                     <div class="field" style="grid-column: 1 / span 12"> <select name="system.wounds.unwounded.effect.id">{{selectOptions document.effects.contents labelAttr="name" valueAttr="id" selected=source.system.wounds.unwounded.effect.id blank="Assign Effect"}}</select> </div>
                 {{else}}
-                    <div class="field" style="grid-column: 1 / span 12" data-tooltip="{{woundBreakdown.unwounded.description}}">{{woundBreakdown.unwounded.description}}</div>
+                    <div class="field" style="grid-column: 1 / span 12" data-tooltip="{{woundBreakdown.unwounded.description}}"><input disabled type="text" value="{{fallback woundBreakdown.unwounded.description '-'}}"></div>
                 {{/if}}
             </div>
             <div class="attribute-box">
@@ -80,7 +80,7 @@
                     <div class="field" style="grid-column: 1 / span 12"> <select name="system.wounds.wounded.effect.id">{{selectOptions document.effects.contents labelAttr="name" valueAttr="id" selected=source.system.wounds.wounded.effect.id blank="Assign Effect"}}</select> </div>
                 {{else}}
                     <div class="label {{#if woundBreakdown.wounded.active}}active{{/if}}" style="grid-column: 1 / span 12">{{woundBreakdown.wounded.range}}</div>
-                    <div class="field" style="grid-column: 1 / span 12" data-tooltip="{{woundBreakdown.wounded.description}}">{{woundBreakdown.wounded.description}}</div>
+                    <div class="field" style="grid-column: 1 / span 12" data-tooltip="{{woundBreakdown.wounded.description}}"><input disabled type="text" value="{{woundBreakdown.wounded.description}}"></div>
                 {{/if}}
             </div>
             <div class="attribute-box">
@@ -91,7 +91,7 @@
                     <div class="field" style="grid-column: 1 / span 12"> <select name="system.wounds.defeated.effect.id">{{selectOptions document.effects.contents labelAttr="name" valueAttr="id" selected=source.system.wounds.defeated.effect.id blank="Assign Effect"}}</select> </div>
                 {{else}}
                     <div class="label {{#if woundBreakdown.defeated.active}}active{{/if}}" style="grid-column: 1 / span 12">{{woundBreakdown.defeated.range}}</div>
-                    <div class="field" style="grid-column: 1 / span 12">{{woundBreakdown.defeated.description}}</div>
+                    <div class="field" style="grid-column: 1 / span 12"><input disabled type="text" value="{{woundBreakdown.defeated.description}}"></div>
                 {{/if}}
             </div>
         </div>

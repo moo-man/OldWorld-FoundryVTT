@@ -64,7 +64,7 @@ export class BlessingModel extends BaseItemModel {
 
     async toEmbed(config, options)
     {
-        let html = `<h4>${this.parent.name}'s Favour</h4>
+        let html = `<h4>@UUID[${this.parent.uuid}]{${config.label || this.parent.name + 's Favour'}}</h4>
         <p>${this.favour.description}</p>
         <h4>Prayers of ${this.parent.name}</h4>
         ${this.prayers.list.map(i => {
