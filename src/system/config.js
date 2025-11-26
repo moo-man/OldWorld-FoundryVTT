@@ -130,12 +130,16 @@ const OLDWORLD = {
             name: "TOW.ConditionName.Ablaze",
             system: {
                 transferData : {
-
                     avoidTest: {
                         prevention: false,
                         skill: "athletics"
                     }
-                }
+                },
+                scriptData: [{
+                    label: "Hazard",
+                    trigger: "endTurn",
+                    script: "this.actor.system.rollHazard('endurance', 2, {appendTitle : ` - ${this.effect.name}`})"
+                }]
             }
         },
         blinded : {
@@ -150,7 +154,15 @@ const OLDWORLD = {
                         prevention: false,
                         skill: "awareness"
                     }
-                }
+                },
+                scriptData: [{
+                    label: "Any Tests with a visual component",
+                    trigger: "dialog",
+                    script: "args.fields.grim++",
+                    options : {
+                        activateScript: "return ['melee', 'defence', 'shooting', 'throwing'].includes(args.skill)"
+                    }
+                }]
             }
         },
         broken : {
@@ -175,7 +187,7 @@ const OLDWORLD = {
             name: "TOW.ConditionName.Burdened",
             system: {
                 transferData : {
-
+                    // TODO prevent manoeuvre action
                     avoidTest: {
                         prevention: false,
                         skill: "brawn"
@@ -195,7 +207,26 @@ const OLDWORLD = {
                         prevention: false,
                         skill: "recall"
                     }
-                }
+                },
+                scriptData: [{
+                    label: "Defenceless",
+                    trigger: "endTurn",
+                    script: `
+                    let test = await this.actor.setupSkillTest('endurance', {appendTitle: \` - \${this.effect.name}\`}); 
+                    
+                    if (test.failed) 
+                    {
+                        if (this.actor.hasCondition("defenceless"))
+                        {
+                            this.actor.addCondition("dead");
+                        }
+                        else 
+                        {
+                            this.actor.addCondition("defenceless");
+                        }
+                    }
+                        `
+                }]
             }
         },
         deafened : {
@@ -205,7 +236,7 @@ const OLDWORLD = {
             name: "TOW.ConditionName.Deafened",
             system: {
                 transferData : {
-
+                    // TODO prevent help action
                     avoidTest: {
                         prevention: false,
                         skill: "awareness"
@@ -231,7 +262,16 @@ const OLDWORLD = {
                         prevention: false,
                         skill: "willpower"
                     }
-                }
+                },
+                scriptData: [{
+                    label: "Any Tests while Distracted",
+                    trigger: "dialog",
+                    script: "args.fields.penalty++",
+                    // TODO no penalty on distraction target
+                    options : {
+                        activateScript: "return true;"
+                    }
+                }]
             }
         },
         drained : {
@@ -246,7 +286,15 @@ const OLDWORLD = {
                         prevention: false,
                         skill: "endurance"
                     }
-                }
+                },
+                scriptData: [{
+                    label: "No Bonuses on any Test",
+                    trigger: "dialog",
+                    script: "args.fields.bonus = 0; args.fields.grim = 0;",
+                    options : {
+                        activateScript: "return true;"
+                    }
+                }]
             }
         },
         prone : {
@@ -255,27 +303,23 @@ const OLDWORLD = {
             statuses : ["prone"],
             name: "TOW.ConditionName.Prone",
             system: {
-                transferData : {
-
-                    avoidTest: {
-                        prevention: false
+                scriptData: [{
+                    label: "Target is Prone",
+                    trigger: "dialog",
+                    script: "if (args.weapon.isMelee) args.fields.bonus++; if (args.weapon.isRanged) args.fields.penalty++;",
+                    options : {
+                        hideScript: "return !args.weapon",
+                        activateScript: "return true;",
+                        targeter: true
                     }
-                }
+                }]
             }
         },
         staggered : {
             img: "systems/whtow/assets/icons/conditions/staggered.svg",
             description : "You are battered, bruised, or otherwise reeling from an enemy attack.",
             statuses : ["staggered"],
-            name: "TOW.ConditionName.Staggered",
-            system: {
-                transferData : {
-
-                    avoidTest: {
-                        prevention: false
-                    }
-                }
-            }
+            name: "TOW.ConditionName.Staggered"
         }
     },
 
@@ -359,10 +403,15 @@ const OLDWORLD = {
                         foundry.utils.setProperty(effect, "flags.whtow.help", {successes : test.result.successes})
                         effect.origin = actor.uuid
                         effect.system.scriptData[0].label = effect.system.scriptData[0].label.replace("@SOURCE", actor.name)
+                        actor.runScripts("doAction", {action: "help", target, effect, test})
                         if (target)
                         {
                             target.applyEffect({effectData : [effect]});
                         }
+                    }
+                    else 
+                    {
+                        actor.runScripts("doAction", {action: "help", target, effect, test})
                     }
 
                 }
@@ -743,6 +792,11 @@ OLDWORLD.scriptTriggers = {
 
     updateDocument : "WH.Trigger.UpdateDocument",
 
+    doAction: "Do Action",
+
+    preRollTest : "Pre-Roll Test",
+    rollTest : "Roll Test",
+
     startCombat  : "WH.Trigger.StartCombat",
     startRound : "WH.Trigger.StartRound",
     startTurn : "Start Turn",
@@ -750,6 +804,20 @@ OLDWORLD.scriptTriggers = {
     endTurn : "End Turn",
     endRound : "End Round",
     endCombat : "End Combat",
+
+    inflictWound: "Inflict Wound",
+    inflictStaggered: "Inflict Staggered",
+    inflictProne: "Inflict Prone",
+    inflictGiveGround: "Inflict Give Ground",
+
+    receiveWound: "Receive Wound",
+    receiveStaggered: "Receive Staggered",
+    receiveProne: "Receive Prone",
+    receiveGiveGround: "Receive Give Ground",
+
+    // IN LIBRARY
+    preUpdateDocument : "WH.Trigger.PreUpdateDocument",
+
 
 };
 export {OLDWORLD, TOW_CONFIG};

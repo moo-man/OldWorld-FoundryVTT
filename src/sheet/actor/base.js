@@ -30,11 +30,6 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
     context.conditions = this.formatConditions();
     return context;
   }
-
-
-  _addEventListeners() {
-    super._addEventListeners();
-  }
   
 
   formatConditions()
@@ -47,7 +42,28 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
       return conditions;
   }
 
+  _addEventListeners()
+  {
+      super._addEventListeners();
 
+      this.element.querySelectorAll(".rollable").forEach(element => {
+          element.addEventListener("mouseenter", ev => {
+          let img = ev.target.matches("img") ? ev.target : ev.target.querySelector("img") ;
+          if (img)
+          {
+              this._icon = img.src;
+              img.src = "systems/whtow/assets/dice/d10.svg";
+          }
+          })
+          element.addEventListener("mouseleave", ev => {
+          let img = ev.target.matches("img") ? ev.target : ev.target.querySelector("img") ;
+          if (img)
+          {
+              img.src = this._icon;
+          }
+          })
+      });
+  }
 
   async _handleEnrichment() {
     let enrichment = {}

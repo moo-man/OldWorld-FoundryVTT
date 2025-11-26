@@ -256,6 +256,16 @@ export class StandardActorModel extends BaseActorModel
         OldWorldTables.rollTable("miscast", `${this.magic.miscasts}d10`)
         this.parent.update({"system.magic.miscasts" : 0})
     }
+    async rollHazard(skill, rating=1, options={})
+    {
+        let test = await this.parent.setupSkillTest(skill, options);
+        let diff = test.result.successes - rating;
+
+        if (diff < 0)
+        {
+            this.rollWound(this.parent.itemTypes.wound.filter(i => !i.system.treated).length + Math.abs(diff))
+        }
+    }
 
     modifyMiscasts(value, messageData)
     {

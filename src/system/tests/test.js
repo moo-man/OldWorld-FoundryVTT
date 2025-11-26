@@ -57,6 +57,7 @@ export class OldWorldTest extends WarhammerTestBase
     async roll()
     {
         await this.preRollOperations();
+        await this.runPreEffects();
         this.result = {
             rerolls : []
         };
@@ -78,8 +79,25 @@ export class OldWorldTest extends WarhammerTestBase
             await this.grimReroll(false);
         }
         this.computeResult();
+        await this.runPostEffects();
         await this.postRollOperations();
     }
+
+    async runPreEffects() {
+          await Promise.all(this.actor.runScripts("preRollTest", { test: this }))
+          if (this.item instanceof Item)
+          {
+            await Promise.all(this.item.runScripts("preRollTest", { test: this }))
+          }
+      }
+    
+      async runPostEffects() {
+          await Promise.all(this.actor.runScripts("rollTest", { test: this }))
+          if (this.item instanceof Item)
+          {
+            await Promise.all(this.item.runScripts("rollTest", { test: this }))
+          }
+      }
 
 
     

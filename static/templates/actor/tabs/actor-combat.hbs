@@ -34,9 +34,9 @@
                 {{#if (and this.system.isMelee this.system.isEquipped)}}
                     <div class="list-row combat" data-uuid="{{this.uuid}}">
                         <div class="row-content">
-                            <div class="list-name">
+                            <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                                 <img src="{{this.img}}">
-                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                                <a class="label">{{this.name}}</a>
                             </div>
                             <div>{{this.system.damage.value}}</div>
                             <div class="large">{{configLookup "range" this.system.range.melee}}</div>
@@ -69,9 +69,9 @@
                 {{#if (and this.system.isRanged this.system.isEquipped)}}
                     <div class="list-row combat" data-uuid="{{this.uuid}}">
                         <div class="row-content">
-                            <div class="list-name">
+                            <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                                 <img src="{{this.img}}">
-                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                                <a class="label">{{this.name}}</a>
                             </div>
                             <div>{{this.system.damage.value}}</div>
                             <div class="large">{{configLookup "range" this.system.range.min}} - {{configLookup "range" this.system.range.max}}</div>
