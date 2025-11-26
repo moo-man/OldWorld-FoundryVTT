@@ -4,6 +4,12 @@
         {{> defendingAgainst test=system.opposed.system.test}}
     {{/if}}
 
+    <div class="actions">
+        {{#each (config "actions")}}
+            <button data-action="doAction" data-key="{{@key}}">{{this.label}}</button>
+        {{/each}}
+    </div>
+
     <div class="attribute-row flexrow">
         <div class="attribute-box single">
             <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Resilience"}}</label></div>

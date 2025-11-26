@@ -50,6 +50,7 @@ import AbilitySheet from "./sheet/item/types/ability-sheet";
 import { XPMessageModel } from "./model/message/xp";
 import EndeavourJournalSheet from "./sheet/journal/endeavour";
 import OldWorldUtility from "./system/utility";
+import { ActionUse } from "./system/tests/action-use";
 
 Hooks.once("init", () => 
 {
@@ -127,7 +128,8 @@ Hooks.once("init", () =>
         "OldWorldTest" : OldWorldTest,
         "WeaponTest" : WeaponTest,
         "CastingTest" : CastingTest,
-        "ItemUse" : ItemUse
+        "ItemUse" : ItemUse,
+        "ActionUse" : ActionUse
     }
 
     CONFIG.queries.addCondition = async (data) => {

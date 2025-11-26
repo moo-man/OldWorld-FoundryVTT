@@ -204,10 +204,69 @@ export class StandardActorModel extends BaseActorModel
             return choice;
     }
 
+    async doAction(action, subAction)
+    {
+        let actionData = foundry.utils.deepClone(game.oldworld.config.actions[action]);
+        let subActionData = actionData.subActions?.[subAction];
+
+        // Always prioritize subaction, if specified.
+        let actionDataToUse = subActionData || actionData;
+
+        if (actionDataToUse)
+        {
+            // If a script, ignore everything else and execute
+            if (actionDataToUse.script)
+            {
+                actionDataToUse.script(this.parent);
+            }
+            // If test defined, perform test, add effect to actor if test is succeeded
+            else if (!foundry.utils.isEmpty(actionDataToUse.test))
+            {
+                let skill = actionDataToUse.test.skill;
+                if (actionDataToUse.test.chooseSkill)
+                {
+                    skill = await game.oldworld.utility.skillDialog({title : actionDataToUse.label, defaultValue: skill})
+                }
+                let test = await this.parent.setupSkillTest(skill, {action, subAction})
+                if (actionDataToUse.effect && test.succeeded)
+                {
+                    this.parent.applyEffect({effectData : actionDataToUse.effect})
+                }
+            }
+            // No test or script defined, just add effect to actor
+            else if (actionDataToUse.effect)
+            {
+                this.parent.applyEffect({effectData : actionDataToUse.effect})
+            }
+
+            else if (!subAction && actionData.subActions)
+            {
+                let subActions = Object.keys(actionData.subActions).map(i => {return {id : i, name : actionData.subActions[i].label}});
+                let chosenSubAction = (await ItemDialog.create(subActions, 1, {title : actionData.label, text : "Choose Action"}))[0].id;
+                return this.doAction(action, chosenSubAction)
+            }
+            else {
+                ActionUse.fromAction(action, this.parent, {subAction});
+            }
+        }
+    }
+
     rollMiscast()
     {
         OldWorldTables.rollTable("miscast", `${this.magic.miscasts}d10`)
         this.parent.update({"system.magic.miscasts" : 0})
+    }
+
+    modifyMiscasts(value, messageData)
+    {
+        if (value == 0 || this.magic.miscasts == 0)
+        {
+            return;
+        }
+        this.parent.update({"system.magic.miscasts" : this.magic.miscasts + value});
+
+        let content = (value > 0 ? "Added " : "Removed ") + Math.abs(value) + " Miscast " + (Math.abs(value) > 1 ? " Dice" : " Die");
+        ChatMessage.create(foundry.utils.mergeObject({content, speaker: {alias: this.parent.name}}, messageData))
     }
 
     async castSpell(spell, potency, fromTest)
@@ -268,7 +327,11 @@ export class StandardActorModel extends BaseActorModel
     }
     get isStaggered() 
     {
-        return this.parent.statuses.includes("staggered");
+        return this.parent.statuses.has("staggered");
+    }
+    get isProne() 
+    {
+        return this.parent.statuses.has("prone");
     }
     get isMounted() 
     {

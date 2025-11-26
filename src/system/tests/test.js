@@ -35,6 +35,8 @@ export class OldWorldTest extends WarhammerTestBase
             rollMode : data.rollMode,
             skill: data.skill,
             endeavour : data.context.endeavour || false,
+            action : data.context.action,
+            subAction : data.context.subAction,
             speaker : data.speaker,
             itemUuid : data.context.itemUuid,
             messageId : null,
@@ -149,6 +151,10 @@ export class OldWorldTest extends WarhammerTestBase
         {
             this.itemSummary = await this.formatItemSummary()
         }
+        else if (this.context.action)
+        {
+            this.itemSummary = await this.formatActionSummary()       
+        }
         let content = await foundry.applications.handlebars.renderTemplate(this.constructor.testTemplate, this);
         
         if (!this.message || newMessage)
@@ -180,6 +186,13 @@ export class OldWorldTest extends WarhammerTestBase
         return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item });
     }
 
+    async formatActionSummary()
+    {
+        let actionData = game.oldworld.config.actions[this.context.action]
+        let subActionData = actionData.subActions?.[this.context.subAction]
+
+        return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/action-summary.hbs", {name : actionData.label + (subActionData ? ` - ${subActionData.label}` : ""), description : subActionData?.description || actionData.description });
+    }
 
     /**
      * Checks targets and creates opposed messages for any targets that don't have them

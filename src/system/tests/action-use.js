@@ -1,29 +1,23 @@
 import { OldWorldTest } from "./test";
 
-export class ItemUse extends OldWorldTest 
+export class ActionUse extends OldWorldTest 
 {
-    // Subclasses can define their own template to add onto the main one
     static subTemplate = "";
-    static testTemplate = "systems/whtow/templates/chat/tests/item-use.hbs";
+    static testTemplate = "systems/whtow/templates/chat/tests/action-use.hbs";
 
 
-    
-    // Create a new test from dialog data
-    static async fromItem(item, actor, context)
+    static async fromAction(action, actor, context={})
     {
-        if (!actor)
-        {
-            actor = item.actor;
-        }
        let use = await new this({testData : {}, context : foundry.utils.mergeObject({
         actor : actor.uuid,
         rollMode: game.settings.get("core", "rollMode"),
         speaker : CONFIG.ChatMessage.documentClass.getSpeaker({actor}),
-        itemUuid : item.uuid,
+        action,
+        subAction : context.subAction,
         messageId : null,
         opposedIds : {},
         targetSpeakers : game.user.targets.size ? Array.from(game.user.targets).map(t => t.actor.speakerData(t.document)) : (context.targets || []),
-        rollClass : "ItemUse",
+        rollClass : "ActionUse",
         preventOpposed : true
        }, context)}); 
 
@@ -39,8 +33,6 @@ export class ItemUse extends OldWorldTest
         await this.postRollOperations();
     }
 
-
-    
     /**
      * 
      * @param {Number} dice Number of dice rolled
@@ -56,22 +48,6 @@ export class ItemUse extends OldWorldTest
     computeResult()
     {
         this.result = {};
-        if (this.item.system?.damage)
-        {
-            let damage = 0;
-            if (this.item.system?.damage?.formula)
-            {
-                damage = Roll.safeEval(Roll.replaceFormulaData(this.item.system.damage.formula, this.actor))
-            }
-            if (this.item.system.damage?.potency)
-            {
-                damage += (this.context.potency || 0);
-            }
-            this.result.damage = {
-                value : damage,
-                ignoreArmour : this.item.system.damage.ignoreArmour
-            }
-        }
     }
 
 

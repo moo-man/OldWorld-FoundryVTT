@@ -127,37 +127,91 @@ const OLDWORLD = {
             img: "systems/whtow/assets/icons/conditions/ablaze.svg",
             description : "You are on fire, scorched by flames that burn your clothes and sear your flesh.",
             statuses : ["ablaze"],
-            name: "TOW.ConditionName.Ablaze"
+            name: "TOW.ConditionName.Ablaze",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false,
+                        skill: "athletics"
+                    }
+                }
+            }
         },
         blinded : {
             img: "systems/whtow/assets/icons/conditions/blinded.svg",
             description : "You cannot see — you’re stumbling around in the dark, trying to orient yourself.",
             statuses : ["blinded", "blind"],
-            name: "TOW.ConditionName.Blinded"
+            name: "TOW.ConditionName.Blinded",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false,
+                        skill: "awareness"
+                    }
+                }
+            }
         },
         broken : {
             img: "systems/whtow/assets/icons/conditions/broken.svg",
             description : "Your courage has failed, and all you can think of is retreating to a place of safety.",
             statuses : ["broken"],
-            name: "TOW.ConditionName.Broken"
+            name: "TOW.ConditionName.Broken",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false,
+                        skill: "willpower"
+                    }
+                }
+            }
         },
         burdened : {
             img: "systems/whtow/assets/icons/conditions/burdened.svg",
             description : "You are encumbered by heavy equipment, binding restraints, or an incapacitating injury.",
             statuses : ["burdened"],
-            name: "TOW.ConditionName.Burdened"
+            name: "TOW.ConditionName.Burdened",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false,
+                        skill: "brawn"
+                    }
+                }
+            }
         },
         critical : {
             img: "systems/whtow/assets/icons/conditions/critical.svg",
             description : "Your wounds are so severe you might expire from blood loss, shock, or suffocation.",
             statuses : ["critical"],
-            name: "TOW.ConditionName.CriticallyInjured"
+            name: "TOW.ConditionName.CriticallyInjured",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false,
+                        skill: "recall"
+                    }
+                }
+            }
         },
         deafened : {
             img: "systems/whtow/assets/icons/conditions/deafened.svg",
             description : "You can’t hear anything, or are subjected to a loud noise that drowns out other sounds.",
             statuses : ["deafened"],
-            name: "TOW.ConditionName.Deafened"
+            name: "TOW.ConditionName.Deafened",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false,
+                        skill: "awareness"
+                    }
+                }
+            }
         },
         defenceless : {
             img: "systems/whtow/assets/icons/conditions/defenceless.svg",
@@ -169,26 +223,388 @@ const OLDWORLD = {
             img: "systems/whtow/assets/icons/conditions/distracted.svg",
             description : "Your attention wanders to feelings of doubt, rage, shame, or desire, instead of focussing on the task at hand. ",
             statuses : ["distracted"],
-            name: "TOW.ConditionName.Distracted"
+            name: "TOW.ConditionName.Distracted",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false,
+                        skill: "willpower"
+                    }
+                }
+            }
         },
         drained : {
             img: "systems/whtow/assets/icons/conditions/drained.svg",
             description : "Your concentration and fighting strength is compromised by sickness or exhaustion.",
             statuses : ["drained"],
-            name: "TOW.ConditionName.Drained"
+            name: "TOW.ConditionName.Drained",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false,
+                        skill: "endurance"
+                    }
+                }
+            }
         },
         prone : {
             img: "systems/whtow/assets/icons/conditions/prone.svg",
             description : "You are knocked flat, lying down, or kneeling on the floor.",
             statuses : ["prone"],
-            name: "TOW.ConditionName.Prone"
+            name: "TOW.ConditionName.Prone",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false
+                    }
+                }
+            }
         },
         staggered : {
             img: "systems/whtow/assets/icons/conditions/staggered.svg",
             description : "You are battered, bruised, or otherwise reeling from an enemy attack.",
             statuses : ["staggered"],
-            name: "TOW.ConditionName.Staggered"
+            name: "TOW.ConditionName.Staggered",
+            system: {
+                transferData : {
+
+                    avoidTest: {
+                        prevention: false
+                    }
+                }
+            }
         }
+    },
+
+    actions: {
+            aim : {
+                label : "TOW.Action.Aim",
+                effect :         
+                {
+                    name: "TOW.Action.Aim",
+                    statuses : ["aim"],
+                    img: "icons/svg/aura.svg",
+                    system : {
+                            scriptData: [{
+                                label : "Aimed at Target",
+                                trigger: "dialog",
+                                script : "args.fields.bonus += this.effect.getFlag('whtow', 'aim')?.successes || 0",
+                                options :{ 
+                                    hideScript : "return !args.weapon || args.weapon.system.isMelee || args.target?.uuid != this.effect.getFlag('whtow', 'aim')?.uuid",
+                                    activateScript : "return args.target?.uuid == this.effect.getFlag('whtow', 'aim')?.uuid",
+                                    submissionScript: "this.effect.delete();"
+                                }
+                            }]
+                        }
+                    
+                },
+                test : {},
+                script : async function(actor)
+                {
+                    let target = Array.from(game.user.targets)[0]?.actor;
+                    if (!target)
+                    {
+                        ui.notifications.warn("No Target!")
+                    }
+                    let effect = foundry.utils.deepClone(this.effect);
+                    let test = await actor.setupSkillTest("awareness", {action: "aim", skipTargets : true, action: "aim"})
+                    if (test.succeeded)
+                    {
+                        foundry.utils.setProperty(effect, "flags.whtow.aim", {uuid: target?.uuid, successes : test.result.successes})
+                        if (target)
+                        {
+                            effect.name += ` (${target.name})`
+                        }
+                        actor.applyEffect({effectData : [effect]});
+                    }
+
+                }
+            },
+            help : {
+                label : "TOW.Action.Help",
+                effect :  {
+                    name: "TOW.Action.Help",
+                    statuses : ["help"],
+                    img: "icons/svg/aura.svg",
+                    system : {
+                        scriptData: [{
+                            label : "Helped by @SOURCE",
+                            trigger: "dialog",
+                            script : "args.fields.bonus += this.effect.getFlag('whtow', 'help')?.successes || 0",
+                            options :{ 
+                                hideScript: "",
+                                activateScript: "return true;",
+                                submissionScript: "this.effect.delete();"
+                            }
+                        }]
+                    }
+                },
+                test : {},
+                script : async function(actor)
+                {
+                    let target = Array.from(game.user.targets)[0]?.actor;
+                    if (!target)
+                    {
+                        ui.notifications.warn("No Target!")
+                    }
+                    let effect = foundry.utils.deepClone(this.effect);
+                    let skill = await game.oldworld.utility.skillDialog({title : "Help"})
+                    let test = await actor.setupSkillTest(skill, {action: "help", skipTargets : true})
+
+                    if (test.succeeded)
+                    {
+                        foundry.utils.setProperty(effect, "flags.whtow.help", {successes : test.result.successes})
+                        effect.origin = actor.uuid
+                        effect.system.scriptData[0].label = effect.system.scriptData[0].label.replace("@SOURCE", actor.name)
+                        if (target)
+                        {
+                            target.applyEffect({effectData : [effect]});
+                        }
+                    }
+
+                }
+            },
+            improvise : {
+                label : "TOW.Action.Improvise",
+                effect : {
+                    label: "TOW.Action.Improvise",
+                    img: "icons/svg/aura.svg",
+                    statuses : ["improvise"],
+                    system : {
+                            scriptData: []
+                        },
+                    
+                },
+                test : {
+                    chooseSkill : true
+                }
+            },
+            manoeuvre : {
+                label : "TOW.Action.Manoeuvre",
+                subActions : {
+                    run : {
+                        label : "Run",
+                        description : "run description",
+                        script : async function(actor) 
+                        {   
+                            if (await foundry.applications.api.Dialog.confirm({
+                                window: {title: "Run"},
+                                content : "<p>Test <strong>Athletics</strong> to run an extra Zone?</p>",
+                            }))
+                            {
+                                let test = await actor.setupSkillTest("athletics", {action: "manoeuvre", subAction:"run", skipTargets : true})
+                                if (test.failed && !actor.system.isStaggered)
+                                {
+                                    actor.addCondition("staggered");
+                                }
+                            }
+                            else 
+                            {
+                                game.oldworld.config.rollClasses.ActionUse.fromAction("manoeuvre", actor, {subAction: "run"})
+                            }
+                        }
+                    },
+                    charge : {
+                        label : "Charge",
+                        description : "",
+                        effect : {
+                            name : "Charging",
+                            statuses : ["charging"],
+                            system : {
+                                scriptData: [{
+                                    label : "Charging",
+                                    trigger: "dialog",
+                                    script : "args.fields.bonus += 1",
+                                    options :{ 
+                                        hideScript: "return !args.weapon || args.weapon.system.isRanged",
+                                        activateScript: "return true;",
+                                        submissionScript: "this.effect.delete();"
+                                    }
+                                }]
+                            }
+                        },
+                        script : async function(actor) 
+                        {   
+                            if (await foundry.applications.api.Dialog.confirm({
+                                window: {title: "Run"},
+                                content : "<p>Test <strong>Athletics</strong> to charge at Long Range?</p>",
+                            }))
+                            {
+                                let test = await actor.setupSkillTest("athletics", {action: "manoeuvre", subAction:"charge", skipTargets : true})
+                                if (test.failed && !actor.system.isStaggered)
+                                {
+                                    actor.addCondition("staggered");
+                                }
+                                else 
+                                {
+                                    let effect = foundry.utils.deepClone(this.effect);
+                                    actor.applyEffect({effectData : [effect]});
+                                }
+                            }
+                            else 
+                            {
+                                game.oldworld.config.rollClasses.ActionUse.fromAction("manoeuvre", actor, {subAction: "charge"})
+                                let effect = foundry.utils.deepClone(this.effect);
+                                actor.applyEffect({effectData : [effect]});
+                            }
+                        }
+                    },
+                    moveQuietly : {
+                        label : "Move Quietly",
+                        description : "",
+                        test : {
+                            skill : "stealth"
+                        }
+                    },
+                    moveCarefully : {
+                        label : "Move Carefully",
+                        description : "test description",
+                        test : {
+                            skill : "awareness"
+                        } 
+                    }
+                }
+            },
+            recover : {
+                label : "TOW.Action.Recover",
+                effect : {
+                    label: "TOW.Action.Recover",
+                    img: "icons/svg/aura.svg",
+                    statuses : ["recover"],
+                    system : {
+                            scriptData: []
+                        },
+                    
+                },
+                removeStaggered : {
+                    name : "Remove Staggered",
+                    statuses : ["recover"],
+                    system : {
+                        scriptData: [{
+                            label : "Remove Staggered",
+                            trigger: "immediate",
+                            script : "this.actor.removeCondition('staggered')",
+                            options : {
+                                deleteEffect: true
+                            }
+                        }]
+                    }
+                },
+                removeProne: {
+                    name : "Remove Prone",
+                    statuses : ["recover"],
+                    system : {
+                        scriptData: [{
+                            label : "Remove Prone",
+                            trigger: "immediate",
+                            script : "this.actor.removeCondition('prone')",
+                            options : {
+                                deleteEffect: true
+                            }
+                        }]
+                    }
+                },
+                script : async function(actor)
+                {
+                    game.oldworld.config.rollClasses.ActionUse.fromAction("recover", actor)
+
+                    let choice = await foundry.applications.api.Dialog.wait({
+                        window : {title : "Recover"},
+                        buttons : [
+                            {
+                                action : "recover",
+                                label : "Recover"
+                            },
+                            {
+                                action : "treat",
+                                label : "Treat Wound"
+                            },
+                            {
+                                action : "condition",
+                                label : "Remove Condition"
+                            },
+                        ]
+                    })
+
+                    if (choice == "recover")
+                    {
+                        let target = Array.from(game.user.targets)[0]?.actor;
+
+                        if (actor.system.isStaggered)
+                        {
+                            actor.applyEffect({effectData: [this.removeStaggered]})
+                            ChatMessage.create({content : "Removed Staggered", speaker : {alias: actor.name}, flavor: "Recover"});
+                        }
+                        else if (target?.system.isStaggered)
+                        {
+                            target.applyEffect({effectData: [this.removeStaggered]})
+                            ChatMessage.create({content : `Removed Staggered on ${target.name}`, speaker : {alias: actor.name}, flavor: "Recover"});
+                        }
+
+                        if (actor.system.isProne)
+                        {
+                            actor.applyEffect({effectData: [this.removeProne]})
+                            ChatMessage.create({content : "Removed Prone", speaker : {alias: actor.name}, flavor: "Recover"});
+                        }
+                        else if (target?.system.isProne)
+                        {
+                            target.applyEffect({effectData: [this.removeProne]})
+                            ChatMessage.create({content : `Removed Prone on ${target.name}`, speaker : {alias: actor.name}, flavor: "Recover"});
+                        }
+
+                        actor.system.modifyMiscasts(-1, {flavor: this.label})
+                    }
+                    else if (choice == "treat")
+                    {
+                        let target = Array.from(game.user.targets)[0]?.actor || actor;
+
+                        let wounds = target.itemTypes.wound.filter(i => !i.system.treated);
+
+                        if (wounds.length == 0)
+                        {
+                            ui.notifications.error("No untreated Wounds on " + target.name);
+                        }
+                        else 
+                        {
+                            let choice = await ItemDialog.create(wounds, 1, {title: "Treat Wound", text: "Select Wound to Treat"});
+
+                            if (choice[0])
+                            {
+                                if (!actor.itemTypes.lore.find(i => i.name.toLowerCase() == "anatomy"))
+                                {
+                                    let test = await actor.setupSkillTest("recall", {appendTitle : "Treat Wound"})
+                                    if (test.failed)
+                                    {
+                                        return
+                                    }
+                                }
+
+                                let content = `Treated ${choice[0].name}` (actor.uuid != target.uuid) ? ` on ${target.name}` : "";
+                                ChatMessage.create({content, speaker : {alias: actor.name}, flavor: "Treat Wound"});
+                                choice[0].update({"system.treated" : true});
+                            }
+                        }
+
+                    }
+                    else if (choice == "condition")
+                    {
+                        let target = Array.from(game.user.targets)[0]?.actor || actor;
+                        let conditions = target.effects.filter(e => e.isCondition);
+                        let choice = await ItemDialog.create(conditions, 1, {title: "Remove Condition", text: "Select Condition to Test against"});
+                        if (choice[0])
+                        {
+                            if (await choice.avoidTest())
+                            {
+                                let content = `Removed ${choice[0].name}` (actor.uuid != target.uuid) ? ` on ${target.name}` : "";
+                                ChatMessage.create({content, speaker : {alias: actor.name}, flavor: "Remove Condition"});
+                            }
+                        }
+                    }
+                }
+            },
     },
     
     // foundry.utils.mergeObject(scriptTriggers, {

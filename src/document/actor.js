@@ -39,7 +39,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             return this.setupSkillTest("recall", context, options);
         }
 
-        if (item.system.test.self && item.system.test.skill) {
+        if (item.system.test?.self && item.system.test?.skill) {
             this.setupSkillTest(item.system.test.skill, context, options)
         }
         else {

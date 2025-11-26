@@ -123,6 +123,13 @@
             </div>
         </div>
     {{/if}}
+
+    <div class="actions">
+        {{#each (config "actions")}}
+            <button data-action="doAction" data-key="{{@key}}">{{this.label}}</button>
+        {{/each}}
+    </div>
+
     <div class="sheet-list attacks">
         <div class="sheet-list">
             <div class="list-header row-content">

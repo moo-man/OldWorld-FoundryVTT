@@ -7,12 +7,13 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
   static DEFAULT_OPTIONS = {
     actions : {
           rollTest : this._onRollTest,
-      toggleCondition: this._onToggleCondition,
-      disposeMiscast : this._onDisposeMiscast,
-      rollMiscast : this._onRollMiscast,
-      useBlessing : this._onUseBlessing,
-      regainMiracle : this._onRegainMiracle,
-      clearLore : this._onClearLore
+          toggleCondition: this._onToggleCondition,
+          disposeMiscast : this._onDisposeMiscast,
+          rollMiscast : this._onRollMiscast,
+          useBlessing : this._onUseBlessing,
+          regainMiracle : this._onRegainMiracle,
+          clearLore : this._onClearLore,
+          doAction : this._onDoAction
     },
   }
   
@@ -109,6 +110,12 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
   static _onClearLore(ev, target)
   {
     this.actor.update({"system.magic.casting" : {lore : "", progress: 0}})
+  }
+
+  static _onDoAction(ev, target)
+  {
+    let action = target.dataset.key;
+    this.actor.system.doAction(action);
   }
 
 }
