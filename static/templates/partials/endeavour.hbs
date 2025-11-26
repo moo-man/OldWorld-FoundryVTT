@@ -1,13 +1,17 @@
 <fieldset class="endeavour-fields">
     <legend>Endeavour</legend>
     <div class="test-data">
+        <div style="flex: 0 0 5rem">
+            <label>{{localize "TOW.Sheet.Identifier"}}</label>
+            <input type="text" name="flags.whtow.endeavour.key" value="{{key}}">
+        </div>
         <div>
             <label>{{localize "TOW.Sheet.Skill"}}</label>
             <select name="flags.whtow.endeavour.test.skill">
                 {{selectOptions (config "skills") selected=test.skill blank=""}}
             </select>
         </div>
-        <div>
+        <div style="display: flex; flex-direction: column; align-items:center">
             <label>{{localize "TOW.Sheet.ChooseSkill"}}</label>
             <input type="checkbox" name="flags.whtow.endeavour.chooseSkill" {{checked chooseSkill}}>
         </div>
@@ -17,7 +21,7 @@
             {{{multiSelectHTML}}}
         </div>
         {{/if}}
-        <div>
+        <div style="flex: 0 0 3rem">
             <label>{{localize "TOW.Sheet.Dice"}}</label>
             <input type="text" name="flags.whtow.endeavour.test.dice" value="{{test.dice}}">
         </div>

@@ -271,10 +271,8 @@
             "SkillOptions" : "Skill Options",
             
             "RequiredSwaps" : "Required Swaps",
-            "OptionalSwaps" : "Optional Swaps"
-
-        },
-
+            "OptionalSwaps" : "Optional Swaps",
+            "Identifier" : "Identifier"
 
 
         "TableSetting.wounds" : "Wounds",

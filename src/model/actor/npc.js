@@ -25,6 +25,9 @@ export class NPCModel extends StandardActorModel {
         schema.type = new fields.StringField({ initial: "minion" });
         schema.resilience.fields.useItems = new fields.BooleanField({}, { name : "useItems", parent: schema.resilience });
         schema.resilience.fields.descriptor = new fields.StringField({}, { name : "descriptor", parent: schema.resilience });
+
+        schema.choices = new fields.EmbeddedDataField(ChoiceModel);
+
         return schema;
     }
 
@@ -46,6 +49,11 @@ export class NPCModel extends StandardActorModel {
         {
             super.addWound();
         }
+    }
+
+    get hasChoices()
+    {
+        return !this.parent.prototypeToken.actorLink && this.choices.options.length > 1
     }
 
     get hasThresholds()
@@ -94,6 +102,12 @@ export class NPCModel extends StandardActorModel {
         {
             wounds.defeated.active = true;
         }
+    }
+
+    async makeChoices()
+    {
+        let choices = await this.choices.promptDecision(this.parent, {window: {title : "Token Decision"}});
+        this.parent.deleteEmbeddedDocuments("Item", this.parent.items.filter(i => !choices.find(c => c.id == i.id)).map(i => i.id));
     }
 
     effectIsActive(effect)
@@ -211,7 +225,6 @@ export class NPCModel extends StandardActorModel {
             div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`${html}`, {relativeTo : this, async: true, secrets : options.secrets})
             return div;
         }
-
     }
 
 }

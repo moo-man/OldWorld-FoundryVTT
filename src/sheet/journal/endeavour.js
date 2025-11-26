@@ -141,7 +141,7 @@ export default class EndeavourJournalSheet extends foundry.applications.sheets.j
             let test;
             if (skill)
             {
-                test = await actor.setupSkillTest(skill, {endeavour: true, appendTitle: ` - ${this.document.name}`})
+                test = await actor.setupSkillTest(skill, {endeavour: data.key || true, appendTitle: ` - ${this.document.name}`})
             }
 
             if (test.succeeded && data.effect)

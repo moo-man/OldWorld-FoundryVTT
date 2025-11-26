@@ -49,6 +49,7 @@ import { AbilityModel } from "./model/item/ability";
 import AbilitySheet from "./sheet/item/types/ability-sheet";
 import { XPMessageModel } from "./model/message/xp";
 import EndeavourJournalSheet from "./sheet/journal/endeavour";
+import OldWorldUtility from "./system/utility";
 
 Hooks.once("init", () => 
 {
@@ -114,7 +115,7 @@ Hooks.once("init", () =>
 
     game.oldworld = {
         config : OLDWORLD,
-        // utility : OldWorldUtility,
+        utility : OldWorldUtility,
         tables : OldWorldTables,
         // migration : Migration,
         // testClasses : {

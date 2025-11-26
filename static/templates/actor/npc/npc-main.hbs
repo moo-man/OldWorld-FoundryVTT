@@ -237,4 +237,10 @@
             </div>
         </div>
     </div>
+
+
+    {{#unless (or actor.isToken actor.prototypeToken.actorLink)}}
+    {{> choiceDisplay label="Token Choices" path="choices" display=system.choices.textDisplay}}
+    {{/unless}}
+
 </section>

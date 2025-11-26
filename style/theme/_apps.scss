@@ -223,6 +223,7 @@
     background: url("./assets/ui/npc-bg.webp");    
     --color-text-primary: black;
     font-family: var(--font-text);
+    --modifier-bg : var(--tow-bluegrey-half);
     
     .window-content {
         @include window-frame;
@@ -264,6 +265,14 @@
     .dialog-modifiers {
         @include form-border;
         border-image-outset: 5px;
+
+        .modifier.active {
+            color: black;
+            a {
+                color: black;
+                
+            }
+        }
     }
 
     a {
