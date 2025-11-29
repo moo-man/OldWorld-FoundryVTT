@@ -125,13 +125,6 @@ export class CharacterModel extends StandardActorModel
         this.xp.available = this.xp.total - spent;
     }
 
-    addWound()
-    {
-        let wounds = this.parent.itemTypes.wound.filter(i => !i.system.treated);
-        let formula = `${wounds.length + 1}d10`;
-        game.oldworld.tables.rollTable("wounds",  formula);
-    }
-
     addXPOffset(amount, description)
     {
         return this.parent.update(this.xp.offsets.add({amount, description}));

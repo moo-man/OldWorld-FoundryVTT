@@ -75,17 +75,17 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
           unwounded : {
             range : "",
             active: wounds.unwounded.active,
-            description : wounds.unwounded.description
+            description : wounds.unwounded.effect.document?.name || wounds.unwounded.description
           },
           wounded : {
             range : "",
             active: wounds.wounded.active,
-            description : wounds.wounded.description
+            description : wounds.wounded.effect.document?.name || wounds.wounded.description
           },
           defeated : {
             range : game.i18n.format("TOW.Sheet.XWounds", {wounds: wounds.defeated.threshold}),
             active: wounds.defeated.active,
-            description : game.i18n.localize("TOW.Sheet.Defeated")
+            description : wounds.defeated.effect.document?.name || game.i18n.localize("TOW.Sheet.Defeated")
           }
         }
 

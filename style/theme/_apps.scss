@@ -32,7 +32,7 @@
     @include window-header;
 
     .window-content {
-        button {
+        button.icon {
             @include tow-button;
         }
 

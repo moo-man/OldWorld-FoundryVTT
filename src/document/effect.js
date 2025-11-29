@@ -7,7 +7,7 @@ export class OldWorldEffect extends WarhammerActiveEffect
         bracket : ["(", ")"]
     };
 
-    async resistEffect()
+    async resistEffect(skill)
     {
         let result = await super.resistEffect();
         if (result === false || result === true)
@@ -29,7 +29,7 @@ export class OldWorldEffect extends WarhammerActiveEffect
         }
         else if (transferData.avoidTest.value == "custom")
         {
-            test = await this.actor.setupTestFromData(transferData.avoidTest, options);
+            test = await this.actor.setupTestFromData(foundry.utils.mergeObject(transferData.avoidTest, {skill}), options);
         }
 
         if (!transferData.avoidTest.reversed)

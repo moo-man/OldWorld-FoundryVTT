@@ -12,4 +12,26 @@ export class WoundModel extends BaseItemModel
         return schema;
     }
 
+    async _preCreate(data, options, user)
+    {
+        await super._preCreate(data, options, user);
+        if (this.parent.isOwned && this.parent.actor.system.hasThresholds)
+        {
+            let actor = this.parent.actor;
+
+            if (actor.system.wounds.current == "defeated")
+            {
+                return
+            }
+
+            let currentThreshold = actor.system.wounds.current;
+            let nextThreshold = actor.system.thresholdAtWounds(actor.itemTypes.wound.length + 1)
+
+            if (currentThreshold != "defeated" && nextThreshold != currentThreshold)
+            {
+                actor.system.wounds[nextThreshold].effect?.document?.handleImmediateScripts(data, options, user)
+            }
+        }
+    }
+
 }

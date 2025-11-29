@@ -210,6 +210,6 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
     static async  _onApplyDamage(ev, target)
     {
         let actor = ChatMessage.getSpeakerActor(this.defender);
-        actor.system.applyDamage(this.result.damage.value, {opposed : this, item : this.attackerTest.item})
+        actor.system.applyDamage(this.result.damage.value, {opposed : this, item : this.attackerTest.item, test : this.attackerMessage.system.test})
     }
 }

@@ -27,7 +27,9 @@ export class OldWorldTest extends WarhammerTestBase
             target : data.target,
             dice : data.dice += (data.bonus - data.penalty),
             state : data.state,
-            rerolls : [] // 2D array
+            rerolls : [], // 2D array
+            loseTies: data.loseTies,
+            excludeStaggeredOptions: [],
         };
         let context = foundry.utils.mergeObject({
             actor : data.actor.uuid,
@@ -59,7 +61,9 @@ export class OldWorldTest extends WarhammerTestBase
         await this.preRollOperations();
         await this.runPreEffects();
         this.result = {
-            rerolls : []
+            rerolls : [],
+            loseTies : this.testData.loseTies,
+            excludeStaggeredOptions : this.testData.excludeStaggeredOptions
         };
         this.result.initialDice = (await this._rollDice(this.testData.dice, this.testData.target)).sort((a, b) => {
             let aResult = a.result == 0 ? 10 : a.result;
@@ -275,9 +279,10 @@ export class OldWorldTest extends WarhammerTestBase
         let opposed = {
             outcome : this.result.successes >= successes ? "success" : "failure",
             successes : this.result.successes - successes,
-            success : this.result.successes >= successes,
+            success : this.result.loseTies ? this.result.successes > successes : this.result.successes >= successes,
             description : "",
             unopposed : !test,
+            text: [],
             computed : true
         }
 
@@ -322,6 +327,11 @@ export class OldWorldTest extends WarhammerTestBase
         else 
         {
             opposed.description = "TOW.Chat.Failure"
+            
+            if (this.result.loseTies && this.result.successes == successes)
+            {
+                opposed.text.push("Lose Ties")
+            }
         }
 
         return opposed;

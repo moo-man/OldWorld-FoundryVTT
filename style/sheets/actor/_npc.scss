@@ -3,7 +3,7 @@
     .floating 
     {
         position: absolute;
-        top: 1rem; 
+        top: 7.5rem; 
         right: 1rem;
     }
     .characteristics {
@@ -75,5 +75,11 @@
                 }
             }
         }
+    }
+
+    .edit-toggle {
+        --button-size: 1.5rem;
+        font-size: 0.8rem;
+        width: 1.5rem;
     }
 }

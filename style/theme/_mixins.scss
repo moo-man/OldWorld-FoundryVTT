@@ -686,10 +686,26 @@
     color: var(--color-dark-3);
     box-shadow: 0 0 7px #00000088;
 
+    
+    &:hover {
+        background: linear-gradient(0deg,#a58b24 0%, #c6b869 10%, #a58b24 90%, #c6b869 100%);
+    }
+
     &:not(.icon)
     {
         font-family: $font;
         font-variant: small-caps;
+    }
+}
+
+@mixin tow-button-minimal() {
+
+    background: var(--tow-blue-half);
+    border: var(--tow-blue);
+    color: var(--tow-cream);
+
+    &:hover {
+        background: var(--tow-blue);
     }
 }
 

@@ -39,7 +39,7 @@ export class NPCModel extends StandardActorModel {
         }
     }
 
-    addWound()
+    rollWound(dice)
     {
         if (this.hasThresholds)
         {
@@ -47,9 +47,10 @@ export class NPCModel extends StandardActorModel {
         }
         else 
         {
-            super.addWound();
+            super.rollWound(dice);
         }
     }
+
 
     get hasChoices()
     {
@@ -59,6 +60,22 @@ export class NPCModel extends StandardActorModel {
     get hasThresholds()
     {
         return ["brute", "monstrosity"].includes(this.type)
+    }
+
+    thresholdAtWounds(wounds)
+    {
+        if (this.wounds.unwounded.range[1] >= wounds)
+        {
+            return "unwounded";
+        }
+        if (this.wounds.wounded.range[0] <= wounds && this.wounds.wounded.range[1] >= wounds)
+        {
+            return "wounded";
+        }
+        if (this.wounds.defeated.range[0] <= wounds)
+        {
+            return "defeated";
+        }
     }
 
     computeWoundThresholds()
@@ -91,16 +108,19 @@ export class NPCModel extends StandardActorModel {
         if (numberOfWounds >= wounds.unwounded.range[0]  && numberOfWounds <= wounds.unwounded.range[1])
         {
             wounds.unwounded.active = true;
+            wounds.current = "unwounded";
         }
         
         else if (numberOfWounds >= wounds.wounded.range[0]  && numberOfWounds <= wounds.wounded.range[1])
         {
             wounds.wounded.active = true;
+            wounds.current = "wounded";
         }
 
         else if (numberOfWounds >= wounds.defeated.range[0]  && numberOfWounds <= wounds.defeated.range[1])
         {
             wounds.defeated.active = true;
+            wounds.current = "defeated";
         }
     }
 
@@ -134,6 +154,7 @@ export class NPCModel extends StandardActorModel {
     _addModelProperties() {
         this.wounds.unwounded.effect.relative = this.parent.effects;
         this.wounds.wounded.effect.relative = this.parent.effects;
+        this.wounds.defeated.effect.relative = this.parent.effects;
     }
 
     async toEmbed(config, options)

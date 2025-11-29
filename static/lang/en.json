@@ -164,9 +164,11 @@
             "Cost" : "Cost",
 
             "Damage" : "Damage",
+            "DamageModifiers" : "Damage Modifiers",
             "IgnoreArmour" : "Ignore Armour",
             "Range" : "Range",
             "OptimumRange" : "Optimum Range",
+            "Magical": "Magical",
 
             "Favour" : "Favour",
             "Prayers" : "Prayers",
@@ -265,7 +267,7 @@
             "XWounds" : "{wounds} Wounds",
             "XYWounds" : "{x}-{y} Wounds",
 
-            "ToggleEditing" : "Toggle Edit Mode",
+            "ToggleEditing" : "Toggle Editing",
 
             "ChooseSkill" : "Choose Skill",
             "SkillOptions" : "Skill Options",

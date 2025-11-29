@@ -36,7 +36,8 @@ export class ModifiersModel extends foundry.abstract.DataModel
         const conditionCode = {
             "armoured" : "isArmoured",
             "staggered" : "isStaggered",
-            "mounted" : "isMounted"
+            "mounted" : "isMounted",
+            "prone" : "isProne"
         }
 
         const labelSubject = {
@@ -47,7 +48,8 @@ export class ModifiersModel extends foundry.abstract.DataModel
         const labelCondition = {
             "armoured" : "Armoured",
             "staggered" : "Staggered",
-            "mounted" : "Mounted"
+            "mounted" : "Mounted",
+            "prone" : "Prone"
         }
 
         if (this.attacking.value)

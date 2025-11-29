@@ -12,6 +12,11 @@ export default class CastingDialog extends TestDialog
         return this.data.spell;
     }
 
+    get casting()
+    {
+        return true;
+    }
+
     static PARTS = {
         fields : {
             template : "systems/whtow/templates/apps/test-dialog/test-dialog.hbs",

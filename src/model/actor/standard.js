@@ -1,4 +1,5 @@
 import OldWorldTables from "../../system/tables";
+import { ActionUse } from "../../system/tests/action-use";
 import { ItemUse } from "../../system/tests/item-use";
 import { BaseActorModel } from "./base";
 import { BlessedDataModel } from "./components/blessed";
@@ -87,7 +88,7 @@ export class StandardActorModel extends BaseActorModel
         super._addModelProperties();
     }
 
-    applyDamage(damage, {ignoreArmour, opposed, item, test})
+    async applyDamage(damage, {ignoreArmour, opposed, item, test})
     {
         let resilience = this.resilience.value;
         if (ignoreArmour)
@@ -96,16 +97,16 @@ export class StandardActorModel extends BaseActorModel
         }
         let message = ""
 
-        this.parent.applyEffect({effects: test?.damageEffects || []});
+        await this.parent.applyEffect({effects: test?.damageEffects || []});
 
         if (damage > resilience)
         {
-            this.addWound();
+            await this.addWound({fromTest: test});
             message = `TOW.Chat.TakesWound`
         }
         else 
         {
-            this.parent.addCondition("staggered");
+            await this.inflictStaggered({fromTest: test})
             message = `TOW.Chat.GainsStaggered`
         }
         if (opposed)
@@ -133,14 +134,19 @@ export class StandardActorModel extends BaseActorModel
         }
     }
 
-    addWound()
+    async addWound({fromTest, diceModifier=0}={})
     {
-        let wounds = this.parent.itemTypes.wound;
-        let formula = `${wounds.length + 1}d10`;
+        let args = {test: fromTest, diceModifier, actor : this.parent}
+        await Promise.all(this.parent.runScripts("receiveWound", args) || [])
+        await Promise.all(fromTest?.actor.runScripts("inflictWound", args) || [])
+        await Promise.all(fromTest?.item.runScripts("inflictWound", args) || [])
+
+        let wounds = this.parent.itemTypes.wound.filter(i => !i.system.treated);
+        let formula = `${Math.max(1, wounds.length + 1 + args.diceModifier)}d10`;
         return game.oldworld.tables.rollTable("wounds",  formula);
     }
 
-    giveGround({flavor=""}={})
+    async giveGround({flavor="", fromTest}={})
     {
         ChatMessage.implementation.create({
             content : "<strong>Give Ground!</strong>: Must retreat to an adjacent Zone.",
@@ -149,9 +155,24 @@ export class StandardActorModel extends BaseActorModel
             },
             flavor : flavor || game.i18n.localize("TOW.Dialog.Staggered")
         })
+
+        await Promise.all(this.parent.runScripts("receiveGiveGround", {test: fromTest, actor : this.parent}) || [])
+        await Promise.all(fromTest?.actor.runScripts("inflictGiveGround", {test: fromTest, actor : this.parent}) || [])
+        await Promise.all(fromTest?.item.runScripts("inflictGiveGround", {test: fromTest, actor : this.parent}) || [])
     }
 
-    async fallProne({flavor=""}={})
+    async inflictStaggered({fromTest}={})
+    {
+        await this.parent.addCondition("staggered", {fromTest});
+        if (this.parent.hasCondition("staggered"))
+        {
+            await Promise.all(this.parent.runScripts("receiveStaggered", {test: fromTest, actor : this.parent}) || [])
+            await Promise.all(fromTest?.actor.runScripts("inflictStaggered", {test: fromTest, actor : this.parent}) || [])
+            await Promise.all(fromTest?.item.runScripts("inflictStaggered", {test: fromTest, actor : this.parent}) || [])
+        }
+    }
+
+    async fallProne({flavor="", fromTest}={})
     {
         ChatMessage.implementation.create({
             content : "<strong>Falls Prone!</strong>",
@@ -161,10 +182,16 @@ export class StandardActorModel extends BaseActorModel
             flavor : flavor || game.i18n.localize("TOW.Dialog.Staggered")
         })
         await this.parent.addCondition("prone");
+        if (this.parent.hasCondition("prone"))
+        {
+            await Promise.all(this.parent.runScripts("receiveProne", {test: fromTest, actor : this.parent}) || [])
+            await Promise.all(fromTest?.actor.runScripts("inflictProne", {test: fromTest, actor : this.parent}) || [])
+            await Promise.all(fromTest?.item.runScripts("inflictProne", {test: fromTest, actor : this.parent}) || [])
+        }
 
     }
 
-    async promptStaggeredChoice({excludeOptions=[], user}={})
+    async promptStaggeredChoice({excludeOptions=[], user, fromTest}={})
     {
             let buttons = [
                 {
@@ -179,7 +206,7 @@ export class StandardActorModel extends BaseActorModel
                     action : "give",
                     label : "Give Ground"
                 }                               // Must always have the option to a least take a wound
-            ].filter(i => i.action == "wound" || !excludeOptions.includes(i.acton))
+            ].filter(i => i.action == "wound" || !excludeOptions.includes(i.action))
 
             let choice = await foundry.applications.api.Dialog.wait({
                 window : {title : `${this.parent.name} - ${game.i18n.localize("TOW.Dialog.Staggered")}`},
@@ -190,14 +217,14 @@ export class StandardActorModel extends BaseActorModel
             switch (choice)
             {
                 case "give" :
-                    await this.giveGround();
+                    await this.giveGround({fromTest});
                     break;
                 case "wound" :
-                    await this.addWound();
+                    await this.addWound({fromTest});
                     this.parent.removeCondition("staggered");
                     break;
                 case "prone" :
-                    await this.fallProne()
+                    await this.fallProne({fromTest})
                     break;
             }
 
@@ -256,6 +283,7 @@ export class StandardActorModel extends BaseActorModel
         OldWorldTables.rollTable("miscast", `${this.magic.miscasts}d10`)
         this.parent.update({"system.magic.miscasts" : 0})
     }
+
     async rollHazard(skill, rating=1, options={})
     {
         let test = await this.parent.setupSkillTest(skill, options);
@@ -263,9 +291,10 @@ export class StandardActorModel extends BaseActorModel
 
         if (diff < 0)
         {
-            this.rollWound(this.parent.itemTypes.wound.filter(i => !i.system.treated).length + Math.abs(diff))
+            this.addWound({diceModifier : Math.abs(diff)})
         }
     }
+
 
     modifyMiscasts(value, messageData)
     {
@@ -285,7 +314,7 @@ export class StandardActorModel extends BaseActorModel
         {
             await this.clearCasting()
         }
-        this.parent.useItem(spell, {potency, targets: fromTest ? fromTest.context.targetSpeakers : null})
+        this.parent.useItem(spell, {potency, targets: fromTest ? fromTest?.context.targetSpeakers : null})
     }
 
     clearCasting()

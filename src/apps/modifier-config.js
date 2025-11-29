@@ -34,6 +34,7 @@ export default class ModifierConfig extends WHFormApplication
         context.conditions = {
             staggered : "Staggered",
             armoured : "Armoured",
+            prone : "Prone",
             mounted : "Mounted"
         }
 

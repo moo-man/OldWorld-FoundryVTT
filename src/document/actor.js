@@ -112,7 +112,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         return this.setupSkillTest(skill, context, options);
     }
 
-    async addCondition(condition) {
+    async addCondition(condition, {fromTest}={}) {
         let owner = warhammer.utility.getActiveDocumentOwner(this);
 
         if (game.user.id != owner.id) {
@@ -124,7 +124,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             return this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
         }
         else if (this.hasCondition(condition) && condition == "staggered") {
-            return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions });
+            return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions.concat(fromTest?.result?.excludeStaggeredOptions || []), fromTest });
         }
     }
 

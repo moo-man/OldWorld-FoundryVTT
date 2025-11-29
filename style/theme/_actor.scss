@@ -39,7 +39,16 @@
         padding: 0px; // border width of app acts as padding
 
         button[data-action] {
-            @include tow-button;
+            @include tow-button-minimal;
+        }
+
+        .advancement,
+        .miscast-controls, 
+        [data-tab=corruption] {
+            button 
+            {
+                @include tow-button;
+            }
         }
     }
 
@@ -57,6 +66,20 @@
             height: 2.5rem;
             font-size: 1.5rem;
         }
+
+        .header-row {
+            > * {
+                @include form-border;
+                .label {
+                    padding-top: 0.5rem;
+                    background: var(--tow-brown-half);
+                }
+                .like-input,
+                input {
+                    background: none
+                }
+            }
+        }
     }
 
     .miscast-pool {
@@ -64,6 +87,11 @@
             background: var(--tow-brown-half);
             font-family: var(--font-header);
             padding: 0.5rem;
+    }
+
+    .actions {
+        button {
+        }
     }
 
 

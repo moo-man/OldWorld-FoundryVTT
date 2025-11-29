@@ -362,7 +362,13 @@ const OLDWORLD = {
                         {
                             effect.name += ` (${target.name})`
                         }
+                        actor.runScripts("doAction", {action: "aim", target, effect, test})
+
                         actor.applyEffect({effectData : [effect]});
+                    }
+                    else 
+                    {
+                        actor.runScripts("doAction", {action: "aim", target, effect, test})
                     }
 
                 }
@@ -817,6 +823,7 @@ OLDWORLD.scriptTriggers = {
 
     // IN LIBRARY
     preUpdateDocument : "WH.Trigger.PreUpdateDocument",
+    prepareBaseData : "WH.Trigger.PrepareBaseData",
 
 
 };

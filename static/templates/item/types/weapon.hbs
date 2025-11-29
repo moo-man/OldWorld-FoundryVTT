@@ -2,7 +2,7 @@
 
     {{formGroup system.schema.fields.skill value=source.system.skill localize=true}}
     {{formGroup system.schema.fields.grip value=source.system.grip blank=false}}
-    {{> itemDamage}}
+    {{> itemDamage hidePotency=true}}
     {{#if system.isMelee}}
     {{formGroup system.schema.fields.range.fields.melee value=source.system.range.melee blank=false localize=true label="TOW.Sheet.Range"}}
     {{else if system.isRanged}}
