@@ -1,0 +1,22 @@
+
+
+<div class="form-group stacked">
+    <label>{{localize "TOW.Sheet.ExcludeStaggeredOptions"}}</label>
+    <div class="form-fields">
+        <input type="checkbox" name="system.damage.excludeStaggeredOptions.prone" {{checked source.system.damage.excludeStaggeredOptions.prone}}>
+        <span style="font-size: var(--font-size-12)">
+            {{localize "TOW.Sheet.FallProne"}}
+        </span>
+
+        <input type="checkbox" name="system.damage.excludeStaggeredOptions.give" {{checked source.system.damage.excludeStaggeredOptions.give}}>
+        <span style="font-size: var(--font-size-12)">
+            {{localize "TOW.Sheet.GiveGround"}}
+        </span>
+
+    
+        <input type="checkbox" name="system.damage.excludeStaggeredOptions.wound" {{checked source.system.damage.excludeStaggeredOptions.wound}}>
+        <span style="font-size: var(--font-size-12)">
+            {{localize "TOW.Sheet.TakeWound"}}
+        </span>
+    </div>
+</div>

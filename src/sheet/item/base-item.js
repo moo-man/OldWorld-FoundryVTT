@@ -73,7 +73,7 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
   }
 
   static _onConfigureModifiers(ev, target) {
-    new ModifierConfig(this.document).render({ force: true });
+    new ModifierConfig(this.document).render({ force: true, path : "system.modifiers" });
   }
 
   static _onToggleCondition(ev, target) {

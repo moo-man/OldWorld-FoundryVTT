@@ -45,6 +45,11 @@ export class WeaponModel extends EquippableItem
         return !this.requiresLoading || this.reload.current >= this.reload.value;
     }
 
+    get isMagical()
+    {
+        return this.damage.magical;
+    }
+
     rollReloadTest(actor)  
     {
         return actor.setupSkillTest("dexterity", {reload: this.parent, appendTitle: ` - Reloading ${this.parent.name}`});
@@ -64,7 +69,7 @@ export class WeaponModel extends EquippableItem
     {
         let scripts = this.modifiers.createScripts();
 
-        if (scripts.length)
+        if (scripts.length && this.isEquipped)
         {
             return [new ActiveEffect.implementation({
                 name : this.parent.name,

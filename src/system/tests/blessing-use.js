@@ -89,7 +89,7 @@ export class BlessingUse extends ItemUse
 
 
 
-    computeOpposedResult(test)
+    async computeOpposedResult(test)
     {
        
     }

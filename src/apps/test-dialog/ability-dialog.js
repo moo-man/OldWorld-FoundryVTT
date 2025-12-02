@@ -1,6 +1,6 @@
 import TestDialog from "./test-dialog";
 
-export default class WeaponDialog extends TestDialog
+export default class AbilityAttackDialog extends TestDialog
 {
 
     get tooltipConfig() 
@@ -17,7 +17,7 @@ export default class WeaponDialog extends TestDialog
     
 
     static DEFAULT_OPTIONS = {
-        classes: ["weapon-dialog"]
+        classes: ["ability-dialog"]
     };
 
     _defaultFields() 
@@ -32,15 +32,15 @@ export default class WeaponDialog extends TestDialog
     {
         return true;
     }
-    
+
     get attack()
     {
-        return this.weapon;
+        return this.ability;
     }
 
-    get weapon()
+    get ability()
     {
-        return this.data.weapon;
+        return this.data.ability;
     }
 
     async computeFields() 
@@ -57,11 +57,11 @@ export default class WeaponDialog extends TestDialog
     async computeInitialFields()
     {
         await super.computeInitialFields();
-        this.fields.damage = this.weapon.system.damage.value;
-        this.tooltips.set("damage", this.weapon.system.damage.formula, this.weapon.name);
-        if (this.weapon.system.damage.characteristic)
+        this.fields.damage = this.ability.system.damage.value;
+        this.tooltips.set("damage", this.ability.system.damage.formula, this.ability.name);
+        if (this.ability.system.damage.characteristic)
         {
-            this.tooltips.add("damage", this.actor.system.characteristics[this.weapon.system.damage.characteristic].value, game.oldworld.config.characteristics[this.weapon.system.damage.characteristic]);
+            this.tooltips.add("damage", this.actor.system.characteristics[this.ability.system.damage.characteristic].value, game.oldworld.config.characteristics[this.ability.system.damage.characteristic]);
         }
     }
 
@@ -70,7 +70,7 @@ export default class WeaponDialog extends TestDialog
             template : "systems/whtow/templates/apps/test-dialog/test-dialog.hbs",
             fields: true
         },
-        weapon : {
+        ability : {
             template : "systems/whtow/templates/apps/test-dialog/weapon-dialog.hbs",
             fields: true
         },
@@ -92,26 +92,21 @@ export default class WeaponDialog extends TestDialog
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
      */
-    static async setupData(weapon, actor, context={}, options={})
+    static async setupData(ability, actor, context={}, options={})
     {
-        if (typeof weapon == "string")
+        if (typeof ability == "string")
         {
-            if (weapon.includes("."))
+            if (ability.includes("."))
             {
-                weapon = await fromUuid(weapon);
+                ability = await fromUuid(ability);
             }
             else 
             {
-                weapon = actor.items.get(weapon);
+                ability = actor.items.get(ability);
             }
         }
 
-        if (!weapon.system.isLoaded)
-        {
-            return weapon.system.rollReloadTest(actor);
-        }
-
-        let skill = weapon.system.skill;
+        let skill = ability.system.attack.skill;
 
         if (actor.system.opposed)
         {
@@ -121,12 +116,12 @@ export default class WeaponDialog extends TestDialog
         context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill : game.oldworld.config.skills[skill]});
         context.title += context.appendTitle || "";
 
-        context.itemUuid = weapon.uuid;
+        context.itemUuid = ability.uuid;
         
         let dialogData = super.setupData(skill, actor, context, options);
         
-        dialogData.data.weapon = weapon;
-        dialogData.data.scripts = dialogData.data.scripts.concat(weapon?.getScripts("dialog").filter(s => !s.options.defending) || [])
+        dialogData.data.ability = ability;
+        dialogData.data.scripts = dialogData.data.scripts.concat(ability?.getScripts("dialog").filter(s => !s.options.defending) || [])
 
         return dialogData;
     }

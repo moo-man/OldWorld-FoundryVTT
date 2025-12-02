@@ -6,7 +6,7 @@
 
     <div class="actions">
         {{#each (config "actions")}}
-            <button data-action="doAction" data-key="{{@key}}">{{this.label}}</button>
+            <button type="button" data-action="doAction" data-key="{{@key}}">{{this.label}}</button>
         {{/each}}
     </div>
 

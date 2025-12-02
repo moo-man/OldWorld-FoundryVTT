@@ -91,6 +91,9 @@ export class StandardActorModel extends BaseActorModel
     async applyDamage(damage, {ignoreArmour, opposed, item, test})
     {
         let resilience = this.resilience.value;
+        let args = {actor: this.parent, attacker: test?.actor, resilience, ignoreArmour, opposed, test}
+        await Promise.all(this.parent.runScripts("preTakeDamage", args));
+        await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
         if (ignoreArmour)
         {
             resilience = this.resilience.base;
@@ -98,17 +101,23 @@ export class StandardActorModel extends BaseActorModel
         let message = ""
 
         await this.parent.applyEffect({effects: test?.damageEffects || []});
-
         if (damage > resilience)
         {
-            await this.addWound({fromTest: test});
+            await this.addWound({fromTest: test, opposed});
             message = `TOW.Chat.TakesWound`
+            args.result = "wound";
+            
         }
-        else 
+        else  if (damage > 0)
         {
-            await this.inflictStaggered({fromTest: test})
+            await this.inflictStaggered({fromTest: test, opposed})
             message = `TOW.Chat.GainsStaggered`
+            args.result = "staggered";
         }
+
+        await Promise.all(this.parent.runScripts("takeDamage", args));
+        await Promise.all(test?.actor.runScripts("applyDamage", args) || []);
+
         if (opposed)
         {
             let owner = warhammer.utility.getActiveDocumentOwner(opposed.parent)
@@ -134,9 +143,9 @@ export class StandardActorModel extends BaseActorModel
         }
     }
 
-    async addWound({fromTest, diceModifier=0}={})
+    async addWound({fromTest, opposed, diceModifier=0}={})
     {
-        let args = {test: fromTest, diceModifier, actor : this.parent}
+        let args = {test: fromTest, opposed, diceModifier, actor : this.parent}
         await Promise.all(this.parent.runScripts("receiveWound", args) || [])
         await Promise.all(fromTest?.actor.runScripts("inflictWound", args) || [])
         await Promise.all(fromTest?.item.runScripts("inflictWound", args) || [])
@@ -146,7 +155,7 @@ export class StandardActorModel extends BaseActorModel
         return game.oldworld.tables.rollTable("wounds",  formula);
     }
 
-    async giveGround({flavor="", fromTest}={})
+    async giveGround({flavor="", fromTest, opposed}={})
     {
         ChatMessage.implementation.create({
             content : "<strong>Give Ground!</strong>: Must retreat to an adjacent Zone.",
@@ -156,23 +165,23 @@ export class StandardActorModel extends BaseActorModel
             flavor : flavor || game.i18n.localize("TOW.Dialog.Staggered")
         })
 
-        await Promise.all(this.parent.runScripts("receiveGiveGround", {test: fromTest, actor : this.parent}) || [])
-        await Promise.all(fromTest?.actor.runScripts("inflictGiveGround", {test: fromTest, actor : this.parent}) || [])
-        await Promise.all(fromTest?.item.runScripts("inflictGiveGround", {test: fromTest, actor : this.parent}) || [])
+        await Promise.all(this.parent.runScripts("receiveGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
+        await Promise.all(fromTest?.actor.runScripts("inflictGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
+        await Promise.all(fromTest?.item.runScripts("inflictGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
     }
 
-    async inflictStaggered({fromTest}={})
+    async inflictStaggered({fromTest, opposed}={})
     {
-        await this.parent.addCondition("staggered", {fromTest});
+        await this.parent.addCondition("staggered", {fromTest, opposed});
         if (this.parent.hasCondition("staggered"))
         {
-            await Promise.all(this.parent.runScripts("receiveStaggered", {test: fromTest, actor : this.parent}) || [])
-            await Promise.all(fromTest?.actor.runScripts("inflictStaggered", {test: fromTest, actor : this.parent}) || [])
-            await Promise.all(fromTest?.item.runScripts("inflictStaggered", {test: fromTest, actor : this.parent}) || [])
+            await Promise.all(this.parent.runScripts("receiveStaggered", {test: fromTest, opposed, actor : this.parent}) || [])
+            await Promise.all(fromTest?.actor.runScripts("inflictStaggered", {test: fromTest, opposed, actor : this.parent}) || [])
+            await Promise.all(fromTest?.item.runScripts("inflictStaggered", {test: fromTest, opposed, actor : this.parent}) || [])
         }
     }
 
-    async fallProne({flavor="", fromTest}={})
+    async fallProne({flavor="", fromTest, opposed}={})
     {
         ChatMessage.implementation.create({
             content : "<strong>Falls Prone!</strong>",
@@ -184,14 +193,14 @@ export class StandardActorModel extends BaseActorModel
         await this.parent.addCondition("prone");
         if (this.parent.hasCondition("prone"))
         {
-            await Promise.all(this.parent.runScripts("receiveProne", {test: fromTest, actor : this.parent}) || [])
-            await Promise.all(fromTest?.actor.runScripts("inflictProne", {test: fromTest, actor : this.parent}) || [])
-            await Promise.all(fromTest?.item.runScripts("inflictProne", {test: fromTest, actor : this.parent}) || [])
+            await Promise.all(this.parent.runScripts("receiveProne", {test: fromTest, opposed, actor : this.parent}) || [])
+            await Promise.all(fromTest?.actor.runScripts("inflictProne", {test: fromTest, opposed, actor : this.parent}) || [])
+            await Promise.all(fromTest?.item.runScripts("inflictProne", {test: fromTest, opposed, actor : this.parent}) || [])
         }
 
     }
 
-    async promptStaggeredChoice({excludeOptions=[], user, fromTest}={})
+    async promptStaggeredChoice({excludeOptions=[], user, fromTest, opposed}={})
     {
             let buttons = [
                 {
@@ -217,14 +226,14 @@ export class StandardActorModel extends BaseActorModel
             switch (choice)
             {
                 case "give" :
-                    await this.giveGround({fromTest});
+                    await this.giveGround({fromTest, opposed});
                     break;
                 case "wound" :
-                    await this.addWound({fromTest});
+                    await this.addWound({fromTest, opposed});
                     this.parent.removeCondition("staggered");
                     break;
                 case "prone" :
-                    await this.fallProne({fromTest})
+                    await this.fallProne({fromTest, opposed})
                     break;
             }
 

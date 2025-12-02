@@ -52,6 +52,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
             damage : new fields.SchemaField({
                 value : new fields.NumberField({nullable : true, initial: null}),
                 ignoreArmour : new fields.BooleanField(),
+                excludeStaggeredOptions : new fields.ArrayField(new fields.StringField()),
                 applied : new fields.BooleanField(),
                 message : new fields.StringField()
             }, {nullable : true})
@@ -158,7 +159,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
         let responseData = {
             defenderMessage : test.message, 
             defender: test.context.speaker, 
-            result : this.attackerMessage.system.test.computeOpposedResult(test)
+            result : await this.attackerMessage.system.test.computeOpposedResult(test)
         }
         await this.parent.update({system : responseData})
         this.renderResult();
@@ -176,7 +177,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
         }
 
         let responseData = {
-            result : this.attackerMessage.system.test.computeOpposedResult(),
+            result : await this.attackerMessage.system.test.computeOpposedResult(),
             unopposed : true
         }
         await this.defenderToken.actor?.system.clearOpposed();

@@ -62,8 +62,7 @@ export class OldWorldTest extends WarhammerTestBase
         await this.runPreEffects();
         this.result = {
             rerolls : [],
-            loseTies : this.testData.loseTies,
-            excludeStaggeredOptions : this.testData.excludeStaggeredOptions
+            loseTies : this.testData.loseTies
         };
         this.result.initialDice = (await this._rollDice(this.testData.dice, this.testData.target)).sort((a, b) => {
             let aResult = a.result == 0 ? 10 : a.result;
@@ -263,7 +262,7 @@ export class OldWorldTest extends WarhammerTestBase
      * 
      * @param {OldWorldTest} test Test defending against this test, undefined if unopposed
      */
-    computeOpposedResult(test)
+    async computeOpposedResult(test)
     {
         let successes // Opposing test successes
 
@@ -285,6 +284,21 @@ export class OldWorldTest extends WarhammerTestBase
             text: [],
             computed : true
         }
+
+
+        if (opposed.success && opposed.computed)
+        {
+            opposed.damage = this.computeOpposedDamage(opposed, test)
+        }
+
+
+        let args = {opposed, attackerTest: this, defenderTest: test, attacker: this.actor, defender: this.targets[0]}; // defender is useful if unopposed (no test provided)
+        await Promise.all(this.actor.runScripts("computeOpposedAttacker", args));
+        await Promise.all(this.item?.runScripts("computeOpposedAttacker", args) || []);
+
+        // Note: These scripts may cause permission issues if a player attacks a GM actor
+        await Promise.all(test?.actor?.runScripts("computeOpposedDefender", args) || []);
+        await Promise.all(test?.item?.runScripts("computeOpposedDefender", args) || []); 
 
         // If the result of THIS test is 0 successes, that means both tests had 0, no one wins
         if (opposed.success)
@@ -335,6 +349,11 @@ export class OldWorldTest extends WarhammerTestBase
         }
 
         return opposed;
+    }
+
+    computeOpposedDamage(result, test)
+    {
+        
     }
 
     update(data)

@@ -55,6 +55,14 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
     {
       this.actor.setupWeaponTest(this._getUUID(ev));
     }
+    else if (target.dataset.type == "weapon")
+    {
+      this.actor.setupWeaponTest(this._getUUID(ev));
+    }
+    else if (target.dataset.type == "ability")
+    {
+      this.actor.setupAbilityTest(this._getUUID(ev));
+    }
     else if (target.dataset.type == "cast")
     {
       let spell = this._getUUID(ev);

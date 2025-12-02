@@ -17,6 +17,11 @@ export default class CastingDialog extends TestDialog
         return true;
     }
 
+    get isCasting()
+    {
+        return true;
+    }
+
     static PARTS = {
         fields : {
             template : "systems/whtow/templates/apps/test-dialog/test-dialog.hbs",

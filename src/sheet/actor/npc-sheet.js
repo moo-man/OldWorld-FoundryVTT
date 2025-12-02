@@ -58,7 +58,8 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
       {
         let context = await super._prepareContext(options);
         context.alphaSkills = Object.keys(context.system.skills).sort((a, b) => a > b ? 1 : -1);
-        context.abilities = this.document.itemTypes.ability.concat(this.document.itemTypes.talent);
+        context.abilities = this.document.itemTypes.ability.concat(this.document.itemTypes.talent).filter(i => !i.system.isAttack);
+        context.attacks = this.document.itemTypes.ability.filter(i => i.system.isAttack)
         context.trappings = this.document.items.filter(i => i.system.isPhysical);
         context.editing = this._editing;
         if (["brute", "monstrosity"].includes(this.document.system.type))

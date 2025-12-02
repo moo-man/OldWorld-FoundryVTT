@@ -170,6 +170,12 @@
             width: 100%;
         }
 
+        .test-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
         .defending,
         .targets {
             width: 100%;

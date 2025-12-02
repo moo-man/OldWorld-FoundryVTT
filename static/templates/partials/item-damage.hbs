@@ -32,5 +32,11 @@
         +{{localize "TOW.Sheet.Potency"}}
         </span>
     {{/unless}}
+    {{#unless hideSuccesses}}
+        <input type="checkbox" name="system.damage.successes" {{checked source.system.damage.successes}}>
+        <span style="font-size: var(--font-size-12)">
+        +{{localize "TOW.Sheet.Successes"}}
+        </span>
+    {{/unless}}
     </div>
 </div>

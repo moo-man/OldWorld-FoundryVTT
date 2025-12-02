@@ -94,7 +94,7 @@ export class ItemUse extends OldWorldTest
 
 
 
-    computeOpposedResult(test)
+    async computeOpposedResult(test)
     {
        
     }

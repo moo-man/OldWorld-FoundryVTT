@@ -51,6 +51,7 @@ import { XPMessageModel } from "./model/message/xp";
 import EndeavourJournalSheet from "./sheet/journal/endeavour";
 import OldWorldUtility from "./system/utility";
 import { ActionUse } from "./system/tests/action-use";
+import { AbilityAttackTest } from "./system/tests/ability-attack";
 
 Hooks.once("init", () => 
 {
@@ -128,6 +129,7 @@ Hooks.once("init", () =>
         "OldWorldTest" : OldWorldTest,
         "WeaponTest" : WeaponTest,
         "CastingTest" : CastingTest,
+        "AbilityAttackTest" : AbilityAttackTest,
         "ItemUse" : ItemUse,
         "ActionUse" : ActionUse
     }

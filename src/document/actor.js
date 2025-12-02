@@ -1,6 +1,8 @@
+import AbilityAttackDialog from "../apps/test-dialog/ability-dialog";
 import CastingDialog from "../apps/test-dialog/cast-dialog";
 import TestDialog from "../apps/test-dialog/test-dialog";
 import WeaponDialog from "../apps/test-dialog/weapon-dialog";
+import { AbilityAttackTest } from "../system/tests/ability-attack";
 import { BlessingUse } from "../system/tests/blessing-use";
 import { CastingTest } from "../system/tests/cast";
 import { ItemUse } from "../system/tests/item-use";
@@ -22,6 +24,11 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         return await this._setupTest(CastingDialog, CastingTest, data, context, options)
     }
 
+    async setupAbilityTest(ability, context, options) {
+        return await this._setupTest(AbilityAttackDialog, AbilityAttackTest, ability, context, options)
+    }
+
+
     async useItem(item, context = {}, options) {
         if (typeof item == "string") {
             if (item.includes(".")) {
@@ -39,7 +46,12 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             return this.setupSkillTest("recall", context, options);
         }
 
-        if (item.system.test?.self && item.system.test?.skill) {
+        // else if (item.system.isAttack)
+        // {
+        //     this.setupAbilityTest(item, context, options);
+        // }
+
+        else if (item.system.test?.self && item.system.test?.skill) {
             this.setupSkillTest(item.system.test.skill, context, options)
         }
         else {
@@ -112,7 +124,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         return this.setupSkillTest(skill, context, options);
     }
 
-    async addCondition(condition, {fromTest}={}) {
+    async addCondition(condition, {fromTest, opposed}={}) {
         let owner = warhammer.utility.getActiveDocumentOwner(this);
 
         if (game.user.id != owner.id) {
@@ -124,7 +136,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             return this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
         }
         else if (this.hasCondition(condition) && condition == "staggered") {
-            return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions.concat(fromTest?.result?.excludeStaggeredOptions || []), fromTest });
+            return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions.concat(opposed?.result?.damage?.excludeStaggeredOptions || []), fromTest, opposed });
         }
     }
 

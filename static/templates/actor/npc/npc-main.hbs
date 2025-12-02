@@ -126,7 +126,7 @@
 
     <div class="actions">
         {{#each (config "actions")}}
-            <button data-action="doAction" data-key="{{@key}}">{{this.label}}</button>
+            <button type="button" data-action="doAction" data-key="{{@key}}">{{this.label}}</button>
         {{/each}}
     </div>
 
@@ -139,15 +139,47 @@
 
             </div>
             <div class="list-content">
-                {{#each items.weapon}}
+                {{#each attacks}}
                     <div class="list-row combat" data-uuid="{{this.uuid}}">
                         <div class="row-content">
-                            <div class="list-name">
+                            <div class="list-name rollable" data-action="rollTest" data-type="ability">
                                 <img src="{{this.img}}">
-                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                                <a class="label" >{{this.name}}</a>
+                                {{#if this.system.attack.grip}}
+                                ({{this.system.attack.grip}})
+                                {{/if}}
                             </div>
                             <div>{{this.system.damage.value}}</div>
-                            {{log this.system.range.melee}}
+                            {{#if this.system.isMelee}}
+                                <div class="large">{{configLookup "range" this.system.attack.range.melee}}</div>
+                            {{else if this.system.isRanged}}
+                                <div class="large">{{configLookup "range" this.system.attack.range.min}} - {{configLookup "range" this.system.attack.range.max}}</div>
+                            {{else}}
+
+                            {{/if}}
+                        </div>
+                        {{#if this.system.attack.traits}}
+                        <div class="row-content weapon-properties">
+                            <div class="fit traits">
+                                {{this.system.attack.traits}}
+                            </div>
+                        </div>
+                        {{/if}}
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+                 {{#each items.weapon}}
+                {{#if this.system.isEquipped}}
+                    <div class="list-row combat" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name rollable" data-action="rollTest" data-type="weapon">
+                                <img src="{{this.img}}">
+                                <a class="label" >{{this.name}}</a>
+                            </div>
+                            <div>{{this.system.damage.value}}</div>
                             {{#if this.system.isMelee}}
                                 <div class="large">{{configLookup "range" this.system.range.melee}}</div>
                             {{else if this.system.isRanged}}
@@ -160,6 +192,13 @@
                             <div class="tiny grip">
                                 {{this.system.grip}}
                             </div>
+                            {{#if this.system.requiresLoading}}
+                            <div class="fit">
+                                {{#unless this.system.isLoaded}}
+                                    <a data-action="stepProperty" data-path="system.reload.current" class="prevent-context">Not Loaded ({{this.system.reload.current}} / {{this.system.reload.value}})</a>
+                                {{/unless}}
+                            </div>
+                            {{/if}}
                             <div class="fit traits">
                                 {{this.system.traits}}
                             </div>
@@ -169,6 +208,7 @@
 
                         </div>
                     </div>
+                {{/if}}
                 {{/each}}
             </div>
         </div>

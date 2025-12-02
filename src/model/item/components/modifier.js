@@ -57,9 +57,9 @@ export class ModifiersModel extends foundry.abstract.DataModel
             let attackingScript = {
                 label : `Attacking with ${this.parent.parent.name}`,
                 trigger : "dialog",
-                script : this.attacking.value > 0 ? `args.fields.bonus += ${this.attacking.value}` : `args.fields.penalty += ${this.attacking.value}`,
+                script : this.attacking.value > 0 ? `args.fields.bonus += ${this.attacking.value}` : `args.fields.penalty += ${Math.abs(this.attacking.value)}`,
                 options : {
-                    hideScript : "return args.actor.system.opposed"
+                    hideScript : "return args.actor.system.opposed || args.skill != this.item.system.skill"
                 }
             };
 
@@ -85,7 +85,7 @@ export class ModifiersModel extends foundry.abstract.DataModel
                 }
             }
             else {
-                attackingScript.options.activateScript = `return args.target`
+                attackingScript.options.activateScript = `return true`
             }
             if (this.attacking.label)
             {
@@ -99,7 +99,7 @@ export class ModifiersModel extends foundry.abstract.DataModel
             let defendingScript = {
                 label : `Defending with ${this.parent.parent.name}`,
                 trigger : "dialog",
-                script : this.defending.value > 0 ? `args.fields.bonus += ${this.defending.value}` : `args.fields.penalty += ${this.defending.value}`,
+                script : this.defending.value > 0 ? `args.fields.bonus += ${this.defending.value}` : `args.fields.penalty += ${Math.abs(this.defending.value)}`,
                 options : {
                     hideScript : "return !args.actor.system.opposed"
                 }
@@ -147,7 +147,7 @@ export class ModifiersModel extends foundry.abstract.DataModel
                 trigger : "dialog",
                 script : `args.fields.damage += ${this.damage.value}`,
                 options : {
-                    hideScript : "return args.actor.system.opposed"
+                    hideScript : "return args.actor.system.opposed || args.context.reload"
                 }
             };
 

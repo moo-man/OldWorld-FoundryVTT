@@ -8,7 +8,13 @@ export class DamageModel extends foundry.abstract.DataModel
         schema.characteristic = new fields.StringField({choices : foundry.utils.mergeObject({"" : ""}, game.oldworld.config.characteristics), blank: true, initial : ""})
         schema.ignoreArmour = new fields.BooleanField()
         schema.magical = new fields.BooleanField()
+        schema.successes = new fields.BooleanField({initial : true});
         schema.bonus = new fields.NumberField({})
+        schema.excludeStaggeredOptions = new fields.SchemaField({
+            give : new fields.BooleanField(),
+            prone : new fields.BooleanField(),
+            wounds : new fields.BooleanField()
+        })
         return schema;
     }
 
@@ -20,5 +26,10 @@ export class DamageModel extends foundry.abstract.DataModel
             this.value += actor.system.characteristics[this.characteristic].value;
         }
         this.value += this.bonus || 0;
+    }
+
+    get excludedOptions()
+    {
+        return Object.keys(this.excludeStaggeredOptions).filter(i => this.excludeStaggeredOptions[i]);
     }
 }

@@ -306,9 +306,9 @@ const OLDWORLD = {
                 scriptData: [{
                     label: "Target is Prone",
                     trigger: "dialog",
-                    script: "if (args.weapon.isMelee) args.fields.bonus++; if (args.weapon.isRanged) args.fields.penalty++;",
+                    script: "if (args.attack.system.isMelee) args.fields.bonus++; if (args.attack.system.isRanged) args.fields.penalty++;",
                     options : {
-                        hideScript: "return !args.weapon",
+                        hideScript: "return !args.attack",
                         activateScript: "return true;",
                         targeter: true
                     }
@@ -337,7 +337,7 @@ const OLDWORLD = {
                                 trigger: "dialog",
                                 script : "args.fields.bonus += this.effect.getFlag('whtow', 'aim')?.successes || 0",
                                 options :{ 
-                                    hideScript : "return !args.weapon || args.weapon.system.isMelee || args.target?.uuid != this.effect.getFlag('whtow', 'aim')?.uuid",
+                                    hideScript : "return !args.attack || args.attack.system.isMelee || args.target?.uuid != this.effect.getFlag('whtow', 'aim')?.uuid",
                                     activateScript : "return args.target?.uuid == this.effect.getFlag('whtow', 'aim')?.uuid",
                                     submissionScript: "this.effect.delete();"
                                 }
@@ -474,7 +474,7 @@ const OLDWORLD = {
                                     trigger: "dialog",
                                     script : "args.fields.bonus += 1",
                                     options :{ 
-                                        hideScript: "return !args.weapon || args.weapon.system.isRanged",
+                                        hideScript: "return !args.attack || args.attack.system.isRanged",
                                         activateScript: "return true;",
                                         submissionScript: "this.effect.delete();"
                                     }
@@ -820,6 +820,14 @@ OLDWORLD.scriptTriggers = {
     receiveStaggered: "Receive Staggered",
     receiveProne: "Receive Prone",
     receiveGiveGround: "Receive Give Ground",
+
+    computeOpposedAttacker : "Compute Opposed Test (Attacker)",
+    computeOpposedDefender : "Compute Opposed Test (Defender)",
+
+    preTakeDamage : "Pre-Take Damage",
+    preApplyDamage : "Pre-Apply Damage",
+    takeDamage : "Take Damage",
+    applyDamage : "Apply Damage",
 
     // IN LIBRARY
     preUpdateDocument : "WH.Trigger.PreUpdateDocument",

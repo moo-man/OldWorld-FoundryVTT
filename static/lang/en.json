@@ -169,6 +169,7 @@
             "Range" : "Range",
             "OptimumRange" : "Optimum Range",
             "Magical": "Magical",
+            "Successes" : "Successes",
 
             "Favour" : "Favour",
             "Prayers" : "Prayers",
@@ -274,7 +275,12 @@
             
             "RequiredSwaps" : "Required Swaps",
             "OptionalSwaps" : "Optional Swaps",
-            "Identifier" : "Identifier"
+            "Identifier" : "Identifier",
+
+            "ExcludeStaggeredOptions" : "Exclude Staggered Options",
+            "FallProne" : "Fall Prone",
+            "GiveGround" : "Give Ground",
+            "TakeWound" : "Take Wound"
 
         },
 
@@ -447,6 +453,24 @@
                     "reload.value" : {
                         "label" : "Successes to Reload" 
                     }
+                }
+            },
+            "ability"  : {
+                "FIELDS" : {
+                    "attack" : {
+
+                        "skill" : {
+                            "label" : "Attack Skill"
+                        },
+                        "traits" : {
+                            "label" : "Traits"
+                        },
+                        "grip:" : {
+                            "label" : "Grip"
+                        }
+
+                    }
+
                 }
             },
             "talent"  : {

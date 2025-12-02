@@ -39,6 +39,8 @@ export default class ModifierConfig extends WHFormApplication
         }
 
         context.system = this.document.system;
+        context.path = options.path;
+        context.modifiers = foundry.utils.getProperty(this.document, options.path);
         return context;
     }
 

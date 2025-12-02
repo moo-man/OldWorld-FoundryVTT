@@ -41,6 +41,11 @@ export class SpellModel extends BaseItemModel
         else return 0
     }
 
+    get isMagical()
+    {
+        return true;
+    }
+
     async toEmbed(config, options)
     {
         let html = `

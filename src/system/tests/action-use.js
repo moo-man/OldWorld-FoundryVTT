@@ -70,7 +70,7 @@ export class ActionUse extends OldWorldTest
 
 
 
-    computeOpposedResult(test)
+    async computeOpposedResult(test)
     {
        
     }
