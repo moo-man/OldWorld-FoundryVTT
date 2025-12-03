@@ -114,7 +114,8 @@ const OLDWORLD = {
         damage : "WH.TransferType.Damage",
         target : "WH.TransferType.Target",
         zone : "WH.TransferType.Zone",
-        other : "WH.TransferType.Other"
+        other : "WH.TransferType.Other",
+        rider : "WH.TransferType.Rider"
     },
 
     placeholderItemData : {

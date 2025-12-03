@@ -28,6 +28,11 @@ export class NPCModel extends StandardActorModel {
 
         schema.choices = new fields.EmbeddedDataField(ChoiceModel);
 
+        schema.mountData = new fields.SchemaField({
+            items : new fields.EmbeddedDataField(DocumentReferenceListModel),
+            effects : new fields.EmbeddedDataField(DocumentReferenceListModel)
+        })
+
         return schema;
     }
 
@@ -155,6 +160,9 @@ export class NPCModel extends StandardActorModel {
         this.wounds.unwounded.effect.relative = this.parent.effects;
         this.wounds.wounded.effect.relative = this.parent.effects;
         this.wounds.defeated.effect.relative = this.parent.effects;
+
+        this.mountData.items.relative = this.parent.items;
+        // this.mountData.effects.relative = this.parent.effects;
     }
 
     async toEmbed(config, options)

@@ -96,6 +96,7 @@
 
         "Modifier" : "Modifier",
         "ModifierConfig" : "Modifier Config",
+        "MountConfig" : "Mount Config",
 
         "MagicLevel" : "Magic Level",
 
@@ -280,7 +281,14 @@
             "ExcludeStaggeredOptions" : "Exclude Staggered Options",
             "FallProne" : "Fall Prone",
             "GiveGround" : "Give Ground",
-            "TakeWound" : "Take Wound"
+            "TakeWound" : "Take Wound",
+
+            "AddedItems" : "Added Items",
+            "AddedEffects" : "Added Effects",
+
+            "Mount": "Mount",
+            "Dismount": "Dismount",
+            "RemoveMount" : "Remove Mount"
 
         },
 
@@ -438,6 +446,11 @@
     },
 
     "WH" : {
+
+        "TransferType" : {
+            "Rider" : "Rider"
+        },
+
         "Models" : {
             "weapon"  : {
                 "FIELDS" : {

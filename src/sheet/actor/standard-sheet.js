@@ -44,6 +44,23 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
     // context.miscasts = context.miscasts.concat(new Array(this.actor.system.magic.miscasts));
     return context;
   }
+
+  async _onDropActor(data, ev)
+  {
+    let actor = await Actor.implementation.fromDropData(data);
+    if (actor.type != "npc" || actor.pack)
+    {
+      return ui.notifications.error("Must use an imported NPC as a mount")
+    }
+    if (!actor.testUserPermission(game.user, "OWNER"))
+    {
+      return ui.notifications.error("Must have Owner permission on the Mount")
+    }
+    if (ev.target.closest(".mount-drop"))
+    {
+      this.document.update(this.document.system.mount.set(actor));
+    }
+  }
   
   static async  _onRollTest(ev, target)
   {

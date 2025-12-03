@@ -15,6 +15,7 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
     actions: {
       removeOpposed : this._onRemoveOpposed,
       useItem : this._onUseItem,
+      useMountItem : this._onUseMountItem,
       toggleSummary : this._onToggleSummary
     },
     defaultTab: "main"
@@ -152,6 +153,11 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
   static _onUseItem(ev, target)
   {
     this.actor.useItem(this._getUUID(ev));
+  }
+
+  static _onUseMountItem(ev, target)
+  {
+    this.actor.useMountItem(this._getUUID(ev));
   }
 
   static async _onToggleSummary(ev, target)

@@ -6,6 +6,7 @@ import { BlessedDataModel } from "./components/blessed";
 import { CharacteristicsModel } from "./components/characteristics";
 import { CorruptionDataModel } from "./components/corruption";
 import { MagicDataModel } from "./components/magic";
+import { MountDataModel } from "./components/mount";
 import { NPCCharacteristicsModel } from "./components/npc-characteristics";
 import { NPCSkillsModel } from "./components/npc-skills";
 import { SkillsModel } from "./components/skills";
@@ -38,6 +39,8 @@ export class StandardActorModel extends BaseActorModel
         schema.magic = new fields.EmbeddedDataField(MagicDataModel)
         schema.blessed = new fields.EmbeddedDataField(BlessedDataModel)
         schema.corruption = new fields.EmbeddedDataField(CorruptionDataModel)
+
+        schema.mount = new fields.EmbeddedDataField(MountDataModel)
         return schema;
     }
 

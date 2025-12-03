@@ -114,6 +114,9 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
           silver : new Array(10).fill(null).map((_, index) => { return {filled : this.actor.system.coins.silver > index}}),
           gold : new Array(10).fill(null).map((_, index) => { return {filled : this.actor.system.coins.gold > index}})
         }
+
+        context.attacks = this.document.itemTypes.ability.filter(i => i.system.isAttack)
+
         return context;
       }
 

@@ -28,7 +28,6 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         return await this._setupTest(AbilityAttackDialog, AbilityAttackTest, ability, context, options)
     }
 
-
     async useItem(item, context = {}, options) {
         if (typeof item == "string") {
             if (item.includes(".")) {
@@ -60,6 +59,41 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             use.sendToChat();
         }
     }
+
+    async useMountItem(item, context = {}, options) {
+        if (typeof item == "string") {
+            if (item.includes(".")) {
+                item = await fromUuid(item);
+            }
+            else {
+                item = actor.items.get(item);
+            }
+        }
+
+        context.item = item;
+        context.mount = true;
+
+        if (item.system.isAttack)
+        {
+            if (item.type == "weapon")
+            {
+                this.system.mount.document.setupWeaponTest(item, context, options)
+            }
+            else 
+            {
+                this.system.mount.document.setupAbilityTest(item, context, options);
+            }
+        }
+
+        else if (item.system.test?.self && item.system.test?.skill) {
+            this.setupSkillTest(item.system.test.skill, context, options)
+        }
+        else {
+            let use = await ItemUse.fromItem(item, this, context);
+            use.sendToChat();
+        }
+    }
+
 
     async useBlessing(type, context = {}, options) {
 
@@ -158,26 +192,20 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         }
     }
 
-    // /** Override to exclude effects if NPC and wound threshold hasn't been met
-    //  * 
-    //  * @override
-    //  * @param {boolean} includeItemEffects Include Effects that are intended to be applied to Items, see getScriptsApplyingToItem, this does NOT mean effects that come from items
-    //  * @yields {WarhammerActiveEffect} applicable active effect
-    //  */
-    // *allApplicableEffects(includeItemEffects = false) 
-    // {
-    //     let effect = super.allApplicableEffects(includeItemEffects);
+    *allApplicableEffects(includeItemEffects=false)
+    {
+        for(let effect of Array.from(super.allApplicableEffects(includeItemEffects)))
+        {
+            yield effect
+        }
 
-    //     if (this.actor.type == "npc" && ["brute", "monstrosity"].includes(this.actor.system.type))
-    //     {
-    //         if (this.actor.system.effectIsActive(effect))
-    //         {
-    //             yield effect;
-    //         }
-    //     }
-    //     else 
-    //     {
-    //         yield effect;
-    //     }
-    // }
+        // Add specified mount effects
+        if (this.system.mount.isMounted)
+        {
+            for(let effect of this.system.mount.items.reduce((prev, current) => prev.concat(current.effects.contents.filter(e => e.system.transferData.type == "rider")), []))
+            {
+                yield effect;
+            }
+        }
+    }
 }

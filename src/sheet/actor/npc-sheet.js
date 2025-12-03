@@ -1,3 +1,4 @@
+import MountConfig from "../../apps/mount-config";
 import StandardOldWorldActorSheet from "./standard-sheet";
 
 export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
@@ -6,13 +7,21 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
     static DEFAULT_OPTIONS = {
         classes: ["npc"],
         actions: {
-          toggleEdit : this._onToggleEdit
+          toggleEdit : this._onToggleEdit,
+          configureMount: this._onConfigureMount
         },
         position : {
           height: 700
         },
         window : {
-          resizable : true
+          resizable : true,
+          controls : [
+            {
+              icon : 'fa-solid fa-horse',
+              label : "Configure Mount",
+              action : "configureMount"
+            }
+          ]
         },
       }
 
@@ -136,6 +145,11 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
       this._editing = !this._editing;
       this.element.classList.toggle("editing")
       this.render({force: true});
+    }
+
+    static async _onConfigureMount()
+    {
+      new MountConfig(this.document).render({force: true});
     }
 
 }

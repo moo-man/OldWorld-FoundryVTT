@@ -1,0 +1,49 @@
+<div>
+    <p>Provide the Items to transfer to an Actor mounting this Actor</p>
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.AddedItems"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each mountData.items.documents}}
+                    <div class="list-row" data-index="{{@key}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                            <a class="list-control" data-action="listDelete" data-path="system.mountData.items"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+            
+        {{!-- <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.AddedEffects"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each mountData.effects.list}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label">{{this.name}}</a>
+                            </div>
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+                            <a class="list-control" data-action="listDelete" data-path="mountData.items"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div> --}}
+</div>

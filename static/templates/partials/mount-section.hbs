@@ -1,0 +1,50 @@
+    <div class="mount-section">
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Mount"}}</div>
+            </div>
+            {{#if document.system.mount.hasMount}}
+            {{#with document.system.mount.document as |mount|}}
+            {{log ../document}}
+                <div class="mount-data {{#if ../document.system.mount.dismounted}}inactive{{/if}}" data-uuid="{{mount.uuid}}">
+                    <div class="token">
+                        <img src="{{mount.prototypeToken.texture.src}}">
+                    </div>
+                    <div class="details">
+                        <a data-action="editEmbedded">{{mount.name}}</a>
+                    </div>
+                    <div class="controls">
+                        {{#if ../document.system.mount.dismounted}}
+                        <a data-action="toggleProperty" data-document="this" data-path="system.mount.dismounted" data-tooltip="{{localize 'TOW.Sheet.Mount'}}"><i class="fas fa-arrow-up"></i></a>
+                        {{else}}
+                        <a data-action="toggleProperty" data-document="this" data-path="system.mount.dismounted" data-tooltip="{{localize 'TOW.Sheet.Dismount'}}"><i class="fas fa-arrow-down"></i></a>
+                        {{/if}}
+                        <a data-action="unset" data-document="this" data-path="system.mount" data-tooltip="{{localize 'TOW.Sheet.RemoveMount'}}"><i class="fas fa-times"></i></a>
+
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each ../document.system.mount.items}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}" data-action="useMountItem">
+                                    <a class="label" data-action="toggleSummary" >{{this.name}}</a>
+                                </div>
+                            </div>
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                {{/with}}
+            {{else}}
+            <div class="droppable mount-drop">
+                <span>Mount</span>
+            </div>
+            {{/if}}
+            
+        </div>
+    </div>
