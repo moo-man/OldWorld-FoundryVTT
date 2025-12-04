@@ -373,7 +373,9 @@
             "FavouredBy" : "Favoured by {name}",
             "MiracleOf" : "Miracle of {name}",
             "Experience" : "Experience",
-            "Receive" : "Receive"
+            "Receive" : "Receive",
+
+            "BuySuccessful" : "<p>Bought <strong>{item}</strong> ({cost})</p>"
         },
         
         "WoundHealing" : {
@@ -441,7 +443,9 @@
             "Experience" : "Experience values must be numeric",
             "ActorsXP" : "Target tokens to give experience to",
             "CharAssigned" : "No character assigned. See the player configuration menu to assign a character.",
-            "NoSpellsToCast" : "No Spells available to Cast"
+            "NoSpellsToCast" : "No Spells available to Cast",
+            "NoCoin" : "You do not have the coin to buy this Item!",
+            "NoACtorBuyItem" : "No assigned Actor to buy this Item."
         }
     },
 

@@ -16,13 +16,12 @@ export class BaseItemModel extends BaseWarhammerItemModel
      */
     async summaryData()
     {
-        let summary = {description : this.description.public};
-
-        if (game.user.isGM)
-        {
-            summary.description += this.description.gm;
+        let item = this.parent;
+        let enriched = {
+            public : await foundry.applications.ux.TextEditor.enrichHTML(item.system.description.public, {async: true, relativeTo: item, secrets : false}),
+            gm : await foundry.applications.ux.TextEditor.enrichHTML(item.system.description.gm, {async: true, relativeTo: item, secrets : false})
         }
 
-        return summary;
+        return {noImage : ["icons/svg/item-bag.svg", "modules/warhammer-lib/assets/blank.png"].includes(item.img), enriched, item }
     }
 }

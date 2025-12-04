@@ -104,6 +104,13 @@ body:not(.no-theme) {
                 font-family: var(--font-text);
             }
         }
+        
+        .item-post {
+            button {
+                
+                @include tow-button;
+            }
+        }
     }
 
     .item-summary {

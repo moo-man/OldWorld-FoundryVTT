@@ -227,4 +227,8 @@
         box-shadow: 0 0 10px var(--tow-darkred) inset;
     }
 
+    .post-loot:not(.icon) {
+        @include tow-button;
+    }
+
 }

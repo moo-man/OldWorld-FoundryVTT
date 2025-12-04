@@ -30,4 +30,25 @@
         }
 
     }
+
+        .item-post {
+            .item-drag {
+
+                border: 2px dotted black;
+                cursor: move;
+                &:hover {
+                    box-shadow: 0px 0px 10px black inset;
+                }
+            }
+
+            button {
+                width: 70%;
+                margin: 5px auto;
+            }
+        }
+
+    .cost {
+        text-align: center;
+        font-size: var(--font-size-20);
+    }
 }

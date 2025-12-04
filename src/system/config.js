@@ -44,7 +44,6 @@ const OLDWORLD = {
         brass : "TOW.StatusName.Brass",
         silver : "TOW.StatusName.Silver",
         gold : "TOW.StatusName.Gold",
-
     },
 
     range : {

@@ -293,8 +293,7 @@
 
 
 
-    {{#unless (or actor.isToken actor.prototypeToken.actorLink)}}
-    {{> choiceDisplay label="Token Choices" path="choices" display=system.choices.textDisplay}}
-    {{/unless}}
+    {{> choiceDisplay label="Loot" path="loot" display=system.loot.textDisplay}}
+    <button class="post-loot" data-action="postLoot" type="button">Post Loot</button>
 
 </section>

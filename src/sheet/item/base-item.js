@@ -5,10 +5,16 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
   static DEFAULT_OPTIONS = {
     classes: ["whtow"],
     window: {
+      controls: [          {
+        icon : 'fa-solid fa-comment',
+        label : "Post to Chat",
+        action : "post"
+      }]
     },
     actions: {
       configureModifiers: this._onConfigureModifiers,
-      toggleCondition: this._onToggleCondition
+      toggleCondition: this._onToggleCondition,
+      post: this._onPostToChat
 
     },
     defaultTab: "description"
@@ -57,10 +63,47 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
     return conditions;
   }
 
+  _getContextMenuOptions()
+  { 
+    let getParent = this._getParent.bind(this);
+    return [
+      {
+        name: "Edit",
+        icon: '<i class="fas fa-edit"></i>',
+        condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
+        callback: async li => {
+          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+          const document = await fromUuid(uuid);
+          document.sheet.render(true);
+        }
+      },
+      {
+        name: "Duplicate",
+        icon: '<i class="fa-solid fa-copy"></i>',
+        condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
+        callback: async li => 
+        {
+            let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+            const document = await fromUuid(uuid);
+            this.item.createEmbeddedDocuments("ActiveEffect", [document.toObject()]);
+        }
+      },
+      {
+        name: "Remove",
+        icon: '<i class="fas fa-times"></i>',
+        condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
+        callback: async li => 
+        {
+          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+          const document = await fromUuid(uuid);
+          document.delete();
+        }
+      }
+    ];
+  }
 
   _addEventListeners() {
     super._addEventListeners();
-
   }
 
 
@@ -82,5 +125,10 @@ export default class BaseOldWorldItemSheet extends WarhammerItemSheetV2 {
       this.document.removeCondition(key)
     else
       this.document.addCondition(key)
+  }
+
+  static _onPostToChat(ev, target)
+  {
+    this.document.post();
   }
 }

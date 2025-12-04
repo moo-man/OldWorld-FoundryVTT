@@ -9,7 +9,8 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
         actions: {
           toggleEdit : this._onToggleEdit,
           configureMount: this._onConfigureMount,
-          stepWounds: {handler: this._onStepWounds, buttons:[0, 2]}
+          stepWounds: {handler: this._onStepWounds, buttons:[0, 2]},
+          postLoot: this._onPostLoot
         },
         position : {
           height: 700
@@ -162,6 +163,14 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
       else 
       {
         this.actor.itemTypes.wound[0].delete();
+      }
+    }
+
+    static async _onPostLoot(ev, target)
+    {
+      for(let item of await this.actor.system.loot.promptDecision(this.document))
+      {
+        item.post({flavor: "Loot", speaker: {alias: this.document.name}});
       }
     }
 

@@ -81,7 +81,8 @@
     "ChatMessage": {
       "test" : {},
       "opposed" : {},
-      "xp" : {}
+      "xp" : {},
+      "item" : {}
     }
   },
   "primaryTokenAttribute": null,

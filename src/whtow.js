@@ -52,6 +52,7 @@ import EndeavourJournalSheet from "./sheet/journal/endeavour";
 import OldWorldUtility from "./system/utility";
 import { ActionUse } from "./system/tests/action-use";
 import { AbilityAttackTest } from "./system/tests/ability-attack";
+import { PostedItemMessageModel } from "./model/message/item";
 
 Hooks.once("init", () => 
 {
@@ -114,6 +115,7 @@ Hooks.once("init", () =>
     CONFIG.ChatMessage.dataModels["test"] = OldWorldTestMessageModel;
     CONFIG.ChatMessage.dataModels["opposed"] = OldWorldOpposedMessageModel;
     CONFIG.ChatMessage.dataModels["xp"] = XPMessageModel;
+    CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
 
     game.oldworld = {
         config : OLDWORLD,

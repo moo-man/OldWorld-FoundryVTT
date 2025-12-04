@@ -26,7 +26,7 @@ export class NPCModel extends StandardActorModel {
         schema.resilience.fields.useItems = new fields.BooleanField({}, { name : "useItems", parent: schema.resilience });
         schema.resilience.fields.descriptor = new fields.StringField({}, { name : "descriptor", parent: schema.resilience });
 
-        schema.choices = new fields.EmbeddedDataField(ChoiceModel);
+        schema.loot = new fields.EmbeddedDataField(ChoiceModel);
 
         schema.mountData = new fields.SchemaField({
             items : new fields.EmbeddedDataField(DocumentReferenceListModel),
