@@ -83,4 +83,29 @@ body:not(.no-theme) {
         }
     }
 
+    .controls-dropdown,
+    #context-menu {
+
+        --text-color: var(--tow-grey);
+        --hover-text-color: black;
+        --group-separator: var(--tow-blue);
+        --hover-entry-border: var(--tow-bluegrey);
+        --hover-entry-background: var(--tow-bluegrey-half);
+
+        .header-control button {
+            --button-text-color: var(--tow-grey);
+            --button-hover-border-color: var(--tow-bluegrey);
+            --button-hover-background-color: var(--tow-bluegrey-half);
+            --button-hover-text-color: black;
+        }
+
+
+        background: url("./assets/ui/parchment-bg.webp");
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        @include form-border;
+        border-image-outset: 4px;
+        box-shadow: 0 0 10px black inset,  0 0 20px black;
+    }
+
 }

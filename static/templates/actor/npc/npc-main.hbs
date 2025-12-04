@@ -63,6 +63,10 @@
 
     {{#if woundBreakdown}}
         <div class="flexrow wound-breakdown" data-tooltip="{{items.wound.length}} Wounds" data-tooltip-direction="LEFT">
+            <div class="wound-controls attribute-box">
+                <div class="label" style="grid-column: 1 / span 12">W</div>
+                <div class="field" style="grid-column: 1 / span 12"><a data-action="stepWounds">{{items.wound.length}}</a></div>
+            </div>
             <div class="attribute-box">
                 <div class="label {{#if woundBreakdown.unwounded.active}}active{{/if}}" style="grid-column: 1 / span 12">{{woundBreakdown.unwounded.range}}</div>
 

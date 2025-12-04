@@ -1,4 +1,7 @@
 .whtow.application.advancement{
+
+    --pip: var(--color--cool-3);
+
     nav.sheet-tabs > [data-tab] {
         padding: 0.5rem;
     }
@@ -42,10 +45,10 @@
             .pip {
                 flex: 1 0 1rem;
                 height: 0.5rem;
-                border: 1px solid var(--color-cool-3);
+                border: 1px solid var(--pip);
                 border-radius: 5px;
                 &.active {
-                    background-color: var(--color-cool-3);
+                    background-color: var(--pip);
                 }
                 &.unavailable {
                     border-style: dashed;

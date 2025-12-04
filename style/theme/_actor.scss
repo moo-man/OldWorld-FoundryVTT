@@ -44,6 +44,7 @@
 
         .advancement,
         .miscast-controls, 
+        .miscast-steps, 
         [data-tab=corruption] {
             button 
             {
@@ -53,7 +54,7 @@
     }
 
     .controls-dropdown {
-        top: 0rem;
+        top: 1rem;
     }
 
     .sheet-header {
@@ -91,6 +92,7 @@
 
     .actions {
         button {
+            font-family: var(--font-text);
         }
     }
 
@@ -152,6 +154,11 @@
         //     top: 0px;
         //     filter: drop-shadow(0 0 0px black);
         // }
+    }
+
+    .coins {
+        background: var(--tow-bluegrey-half);
+        border-color: var(--tow-bluegrey);
     }
 
     // background: url("./assets/ui/character-bg.png");    

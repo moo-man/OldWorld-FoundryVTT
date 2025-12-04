@@ -8,7 +8,8 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
         classes: ["npc"],
         actions: {
           toggleEdit : this._onToggleEdit,
-          configureMount: this._onConfigureMount
+          configureMount: this._onConfigureMount,
+          stepWounds: {handler: this._onStepWounds, buttons:[0, 2]}
         },
         position : {
           height: 700
@@ -150,6 +151,18 @@ export default class ActorSheetOldWorldNPC extends StandardOldWorldActorSheet
     static async _onConfigureMount()
     {
       new MountConfig(this.document).render({force: true});
+    }
+
+    static async _onStepWounds(ev, target)
+    {
+      if (ev.button == 0)
+      {
+        this.actor.system.addWound({roll: false});
+      }
+      else 
+      {
+        this.actor.itemTypes.wound[0].delete();
+      }
     }
 
 }

@@ -4,6 +4,12 @@
 
 #region-legend,
 .application.warhammer {
+
+    
+    --list-header: var(--tow-bluegrey-half);
+    --list-header-border: var(--tow-blue);
+    --list-row-alternate: #8b979566;
+    
     // background: url("./assets/ui/blue-bg.webp");
     --background: rgba(0, 69, 94, 0.9);
 
@@ -46,6 +52,36 @@
             .active {
                 background: var(--tab-color);
                 color: var(--tow-cream);
+            }
+        }
+
+        .sheet-list {
+            .row-content {
+
+            }
+        }
+        select,
+        input[type=text],
+        input[type=number] {
+            background: #8b979533;
+            border: none;
+            outline: none;
+            &:focus {
+                outline: 2px solid var(--tow-bluegrey);
+                transition:none;
+            }
+
+            optgroup {
+                background: var(--tow-blue);
+            }
+        }
+
+        .form-footer {
+            button {
+                @include tow-button;
+                font-weight: bold;
+                font-family: var(--font-header);
+                font-size: var(--font-size-16);
             }
         }
     }
@@ -204,6 +240,18 @@
     }
 }
 
+.active-effect-config.warhammer {
+    .script-list {
+        .script {
+            background: var(--tow-bluegrey-half);
+        }
+        button {
+            background: var(--tow-bluegrey-half);
+            border-color: var(--tow-bluegrey);
+        }
+    }
+}
+
 
 .image-popout {
     background: url("./assets/ui/npc-bg.webp");    
@@ -302,5 +350,14 @@
 
     button {
         font-size: var(--font-size-18);
+    }
+}
+
+.whtow.application.advancement {
+    --pip : var(--tow-bluegrey);
+    .improvement {
+        button {
+            @include tow-button;
+        }
     }
 }

@@ -138,7 +138,7 @@ Hooks.once("init", () =>
         let actor = await fromUuid(data.uuid);
         if (actor)
         {
-            actor.addCondition(data.condition);
+            actor.addCondition(data.condition, {fromTest: game.messages.get(data.fromTest)?.system?.test, opposed: game.messages.get(data.opposed)?.system });
         }
     }
 

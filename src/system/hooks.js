@@ -1,11 +1,13 @@
 
 import chat from "./hooks/chat";
 import commands from "./hooks/commands";
+import init from "./hooks/init";
 import token from "./hooks/token";
 
 
 export default function() 
 {
+    init();
     chat();
     commands();
     token();

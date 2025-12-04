@@ -13,6 +13,12 @@
                 {{/each}}
             </div>
         </div>
+        {{#if (isGM)}}
+        <div class="miscast-steps">
+            <button type="button" data-action="stepProperty" data-path="system.magic.miscasts"><i class="fas fa-plus"></i></button>
+            <button type="button" data-action="stepProperty" data-path="system.magic.miscasts" data-reversed="true"><i class="fas fa-minus"></i></button>
+        </div>
+        {{/if}}
         <div class="miscast-controls">
             <button type="button" data-action="disposeMiscast" {{#unless actor.system.magic.miscasts}}disabled{{/unless}}>{{localize "TOW.Sheet.Dispose"}}</button>
             <button type="button" data-action="rollMiscast" {{#unless actor.system.magic.miscasts}}disabled{{/unless}}>{{localize "TOW.Sheet.Miscast"}}</button>

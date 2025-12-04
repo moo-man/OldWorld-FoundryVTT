@@ -41,6 +41,13 @@
     }
 
     .wound-breakdown {
+        .wound-controls {
+            flex: 0 0 40px;
+            a {
+                text-align: center;
+                width: 100%;
+            }
+        }
         .field {
             text-overflow: hidden;
             justify-content: left;

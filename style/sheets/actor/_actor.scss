@@ -46,8 +46,15 @@
     .miscast-container {
         display: flex;
         gap: 0.5rem;
+        min-height: 100px;
         .miscast-controls {
             flex: 0 0 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .miscast-steps {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -62,6 +69,7 @@
         border: 1px solid var(--border);
         .dice {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
             justify-content: center;
             margin: 0.5rem;

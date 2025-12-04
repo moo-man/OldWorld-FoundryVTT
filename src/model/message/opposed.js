@@ -1,6 +1,6 @@
 import { OldWorldTest } from "../../system/tests/test";
 
-export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel 
+export class OldWorldOpposedMessageModel extends WarhammerMessageModel 
 {
     static get actions() {
         return foundry.utils.mergeObject(super.actions, {
@@ -116,7 +116,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
     async onRender(html)
     {
         // Remove response buttons if not owner of the defendering actor
-        if (!this.defenderToken.actor.isOwner)
+        if (!this.defenderToken?.actor?.isOwner)
         {
             html.querySelector(".responses")?.remove();
         }

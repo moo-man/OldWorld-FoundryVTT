@@ -146,16 +146,23 @@ export class StandardActorModel extends BaseActorModel
         }
     }
 
-    async addWound({fromTest, opposed, diceModifier=0}={})
+    async addWound({fromTest, opposed, diceModifier=0, roll=true}={})
     {
         let args = {test: fromTest, opposed, diceModifier, actor : this.parent}
         await Promise.all(this.parent.runScripts("receiveWound", args) || [])
         await Promise.all(fromTest?.actor.runScripts("inflictWound", args) || [])
         await Promise.all(fromTest?.item.runScripts("inflictWound", args) || [])
 
-        let wounds = this.parent.itemTypes.wound.filter(i => !i.system.treated);
-        let formula = `${Math.max(1, wounds.length + 1 + args.diceModifier)}d10`;
-        return game.oldworld.tables.rollTable("wounds",  formula);
+        if (roll)
+        {
+            let wounds = this.parent.itemTypes.wound.filter(i => !i.system.treated);
+            let formula = `${Math.max(1, wounds.length + 1 + args.diceModifier)}d10`;
+            return game.oldworld.tables.rollTable("wounds",  formula);
+        }
+        else 
+        {
+            this.parent.createEmbeddedDocuments("Item", [{type : "wound", name : "Wound"}])
+        }
     }
 
     async giveGround({flavor="", fromTest, opposed}={})
