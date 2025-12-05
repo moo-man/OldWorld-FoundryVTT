@@ -1,5 +1,6 @@
 @use "./mixins" as *;
-.journal-sheet {
+body.whtow-theme {
+    .journal-sheet {
     
     @include window-header;
 
@@ -31,6 +32,16 @@
         }
 
 
+        input[type=search] {
+            background: var(--tow-bluegrey-half);
+            outline-color: var(--tow-gold);
+            color: var(--tow-cream);
+            &::placeholder { 
+                color: var(--tow-cream-half) 
+            };
+        }
+    
+
         .action-buttons {
             button {
                 @include tow-button;
@@ -54,4 +65,5 @@
             filter: drop-shadow(0 0 2px black);
         }
     }
+}
 }

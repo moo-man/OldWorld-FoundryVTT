@@ -111,9 +111,14 @@ export class OldWorldTest extends WarhammerTestBase
      * @param {Array} rerolls Indices of any dice that are rerolls, if empty, all dice are active, if contains numbers, only dice with at those indices are being rerolled
      * @returns 
      */
-    async _rollDice(dice, target, rerolls=[])
+    async _rollDice(dice, target, rerolls=[], {showDSN=false}={})
     {
         let roll = await new Roll(`${dice}d10cs<=${target}`).roll();
+        if (showDSN && game.dice3d)
+        {
+            await game.dice3d.showForRoll(roll, game.user, true);
+        }
+        this._roll = roll;
         let result = roll.dice[0].results.map((d, index) => {
             return {
                 success: d.success,
@@ -187,6 +192,7 @@ export class OldWorldTest extends WarhammerTestBase
                 type : "test",
                 system : {...this},
                 content,
+                rolls: [this._roll],
                 speaker : this.context.speaker
             }
             ChatMessage.create(ChatMessage.applyRollMode(chatData, this.context.rollMode), {keepId: true});
@@ -381,7 +387,7 @@ export class OldWorldTest extends WarhammerTestBase
 
     async reroll(label="Reroll", diceIndices=[], compute=true)
     {
-        this.result.rerolls.push({label, dice : await this._rollDice(this.testData.dice, this.testData.target, diceIndices)});
+        this.result.rerolls.push({label, dice : await this._rollDice(this.testData.dice, this.testData.target, diceIndices, {showDSN: true})});
         if (compute)
         {
             this.computeResult();

@@ -1,5 +1,6 @@
 @use "./mixins" as *;
-.application.warhammer.item {
+body.whtow-theme {
+    .application.warhammer.item {
 
     @include window-frame;
     padding: 20px;
@@ -96,4 +97,5 @@
         --attribute-border: var(--tow-bluegrey);
     }
 
+}
 }

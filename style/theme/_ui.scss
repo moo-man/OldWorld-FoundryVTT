@@ -1,24 +1,13 @@
 @use "./mixins" as *;
 
-body:not(.no-theme) {
-    --color-shadow-primary: var(--tow-gold);
-    
+body.whtow-theme {
+    --color-shadow-primary: var(--tow-gold);    
 
     .inline-control {
         --button-hover-background-color: var(--tow-gold);
         --button-focus-outline-color: var(--tow-gold);
         --button-focus-outline-color: var(--tow-gold);
 
-    }
-
-
-    input[type=search] {
-        background: var(--tow-bluegrey-half);
-        outline-color: var(--tow-gold);
-        color: var(--tow-cream);
-        &::placeholder { 
-            color: var(--tow-cream-half) 
-        };
     }
 
 

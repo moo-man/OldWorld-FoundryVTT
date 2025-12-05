@@ -1,363 +1,387 @@
 @use "./mixins" as *;
 @use "../mixins/border" as border;
 
+body.whtow-theme {
 
-#region-legend,
-.application.warhammer {
+    #region-legend,
+    .application.warhammer {
 
-    
-    --list-header: var(--tow-bluegrey-half);
-    --list-header-border: var(--tow-blue);
-    --list-row-alternate: #8b979566;
-    
-    // background: url("./assets/ui/blue-bg.webp");
-    --background: rgba(0, 69, 94, 0.9);
 
-    background-size:contain;
+        --list-header: var(--tow-bluegrey-half);
+        --list-header-border: var(--tow-blue);
+        --list-row-alternate: #8b979566;
 
-    --tab-color: var(--tow-bluegrey-half);
+        // background: url("./assets/ui/blue-bg.webp");
+        --background: rgba(0, 69, 94, 0.9);
 
-    .window-content {
-        --color-scrollbar: var(--tow-gold);
-        --color-fieldset-border: var(--tow-yellow);
+        background-size: contain;
+
+        --tab-color: var(--tow-bluegrey-half);
+
+        .window-content {
+            --color-scrollbar: var(--tow-gold);
+            --color-fieldset-border: var(--tow-yellow);
+
+            select,
+            input {
+
+                // --input-background-color: var(--tow-bluegrey-half);
+                --input-focus-outline-color: var(--tow-gold);
+                --input-text-color: var(--tow-cream);
+                --input-placeholder-color: var(--tow-cream-half);
+                --checkbox-checked-color: var(--tow-gold);
+
+                option {
+                    color: var(--tow-cream);
+                    background: var(--tow-blue);
+                }
+            }
+        }
+
+        @include window-header;
+
+        .window-content {
+            button.icon {
+                @include tow-button;
+            }
+
+            nav.sheet-tabs {
+                gap: 0px;
+                border-color: var(--tab-color);
+
+                a[data-tab] {
+                    flex: 1;
+                }
+
+                .active {
+                    background: var(--tab-color);
+                    color: var(--tow-cream);
+                }
+            }
+
+            .sheet-list {
+                .row-content {}
+            }
+
+            select,
+            input[type=text],
+            input[type=number] {
+                background: #8b979533;
+                border: none;
+                outline: none;
+
+                &:focus {
+                    outline: 2px solid var(--tow-bluegrey);
+                    transition: none;
+                }
+
+                optgroup {
+                    background: var(--tow-blue);
+                }
+            }
+
+            input[type=search] {
+                background: var(--tow-bluegrey-half);
+                outline-color: var(--tow-gold);
+                color: var(--tow-cream);
+                &::placeholder { 
+                    color: var(--tow-cream-half) 
+                };
+            }
+        
+
+            .form-footer {
+                button {
+                    @include tow-button;
+                    font-weight: bold;
+                    font-family: var(--font-header);
+                    font-size: var(--font-size-16);
+                }
+            }
+        }
+    }
+
+
+    .application.actor.warhammer,
+    .application.item.warhammer {
+        --color-text-primary: var(--color-dark-3);
+        --color-text-secondary: var(--color-dark-4);
+        font-family: var(--font-text);
+
+
+        --color-shadow-primary: var(--tow-gold);
+
+        --color-fieldset-border: var(--color-dark-5);
+
+        --color-form-hint: var(--color-dark-4);
+        --color-form-hint-hover: var(--color-dark-4);
+        --color-form-label: var(--color-dark-3);
+        --color-form-label-hover: var(--color-dark-3);
+        --color-select-option-bg: transparent;
+
+        --attribute-input: transparent;
+        --attribute-input-border: rgba(0, 0, 0, 0.1);
+        --attribute-border: rgba(0, 0, 0, 0.1);
+        --attribute-title: var(--tow-bluegrey) --attribute-title-color: black;
+        --fieldset-border: var(--color-dark-5);
+        --attribute-locked-input: rgba(0, 0, 0, 0.1);
+        --attribute-locked-border: rgba(0, 0, 0, 0.1);
+        --attribute-label: var(--tow-bluegrey-half);
+        --attribute-field: transparent;
+        --form-label: var(--tow-bluegrey-half);
+        --form-input: rgba(0, 0, 0, 0.1);
+        --form-input-border: transparent;
+        --form-group-border: rgba(0, 0, 0, 0.1);
+        --name-label: var(--tow-bluegrey-half);
+        --name-border: var(--tow-bluegrey);
+        --name-bg: var(--tow-blue-half);
+        --editor-header: var(--tow-bluegrey-half);
+        --editor-header-border: transparent;
+        --hover-bg: transparent;
+        --tab-color: var(--tow-blue-half);
+
+        --list-header: var(--tow-bluegrey-half);
+        --list-header-border: var(--tow-blue);
+        --list-row-alternate: #8b979566;
+
+        --table-header-bg-color: var(--tow-bluegrey-half);
+        --table-header-border-color: var(--tow-bluegrey);
+
+
         select,
         input {
-
-            // --input-background-color: var(--tow-bluegrey-half);
-            --input-focus-outline-color: var(--tow-gold);
-            --input-text-color: var(--tow-cream);
-            --input-placeholder-color: var(--tow-cream-half);
+            --input-background-color: rgba(0, 0, 0, 0.05);
+            --input-border-color: transparent;
+            --input-text-color: var(--color-dark-2);
+            --input-focus-outline-color: var(--tow-blue);
             --checkbox-checked-color: var(--tow-gold);
-            option {
-                color: var(--tow-cream);
-                background: var(--tow-blue);
-            }
-        }
-    }
 
-    @include window-header;
-
-    .window-content {
-        button.icon {
-            @include tow-button;
         }
 
-        nav.sheet-tabs {
-            gap: 0px;
-            border-color: var(--tab-color);
-            a[data-tab]
-            {
-                flex: 1;
-            }   
-            .active {
-                background: var(--tab-color);
-                color: var(--tow-cream);
+
+        select:disabled,
+        input:disabled {
+            --input-background-color: rgba(0, 0, 0, 0.1);
+            --input-border-color: transparent;
+            --input-text-color: var(--color-dark-2);
+            --input-focus-outline-color: var(--tow-blue);
+            --checkbox-checked-color: var(--tow-gold);
+
+        }
+
+        select:focus,
+        input:focus {
+            --input-focus-outline-color: var(--tow-lightblue);
+
+            &::selection {
+                background-color: var(--tow-bluegrey);
             }
         }
 
-        .sheet-list {
-            .row-content {
-
-            }
-        }
-        select,
-        input[type=text],
-        input[type=number] {
-            background: #8b979533;
-            border: none;
-            outline: none;
-            &:focus {
-                outline: 2px solid var(--tow-bluegrey);
-                transition:none;
-            }
-
-            optgroup {
-                background: var(--tow-blue);
-            }
+        section[data-tab] {
+            --color-scrollbar: var(--tow-blue);
         }
 
-        .form-footer {
-            button {
-                @include tow-button;
-                font-weight: bold;
-                font-family: var(--font-header);
-                font-size: var(--font-size-16);
-            }
-        }
-    }
-}
-
-
-.application.actor.warhammer,
-.application.item.warhammer {
-    --color-text-primary: var(--color-dark-3);
-    --color-text-secondary: var(--color-dark-4);
-    font-family: var(--font-text);
-
-    
-    --color-shadow-primary: var(--tow-gold);
-
-    --color-fieldset-border: var(--color-dark-5);
-
-    --color-form-hint: var(--color-dark-4);
-    --color-form-hint-hover: var(--color-dark-4);
-    --color-form-label: var(--color-dark-3);
-    --color-form-label-hover: var(--color-dark-3);
-    --color-select-option-bg: transparent;
-
-    --attribute-input: transparent;
-    --attribute-input-border: rgba(0, 0, 0, 0.1);
-    --attribute-border: rgba(0, 0, 0, 0.1);
-    --attribute-title: var(--tow-bluegrey)
-    --attribute-title-color: black;
-    --fieldset-border: var(--color-dark-5);
-    --attribute-locked-input: rgba(0, 0, 0, 0.1);
-    --attribute-locked-border: rgba(0, 0, 0, 0.1);
-    --attribute-label: var(--tow-bluegrey-half);
-    --attribute-field: transparent;
-    --form-label: var(--tow-bluegrey-half);
-    --form-input: rgba(0, 0, 0, 0.1);
-    --form-input-border: transparent;
-    --form-group-border: rgba(0, 0, 0, 0.1);
-    --name-label: var(--tow-bluegrey-half);
-    --name-border: var(--tow-bluegrey);
-    --name-bg: var(--tow-blue-half);
-    --editor-header: var(--tow-bluegrey-half);
-    --editor-header-border: transparent;
-    --hover-bg: transparent;
-    --tab-color: var(--tow-blue-half);
-
-    --list-header: var(--tow-bluegrey-half);
-    --list-header-border: var(--tow-blue);
-    --list-row-alternate: #8b979566;
-
-    --table-header-bg-color: var(--tow-bluegrey-half);
-    --table-header-border-color: var(--tow-bluegrey);
-
-
-    select,
-    input {
-        --input-background-color: rgba(0, 0, 0, 0.05);
-        --input-border-color: transparent;
-        --input-text-color: var(--color-dark-2);
-        --input-focus-outline-color: var(--tow-blue);
-        --checkbox-checked-color: var(--tow-gold);
-
-    }
-
-    
-    select:disabled,
-    input:disabled {
-        --input-background-color: rgba(0, 0, 0, 0.1);
-        --input-border-color: transparent;
-        --input-text-color: var(--color-dark-2);
-        --input-focus-outline-color: var(--tow-blue);
-        --checkbox-checked-color: var(--tow-gold);
-
-    }
-
-    select:focus,
-    input:focus
-    {
-        --input-focus-outline-color: var(--tow-lightblue);
-        &::selection {
-            background-color: var(--tow-bluegrey);
-        }
-    }
-
-    section[data-tab] {
-        --color-scrollbar: var(--tow-blue);
-    }
-
-    .form-group label {
-        font-family: var(--font-header);
-        font-weight: bold;
-        font-size: var(--font-size-16);
-    }
-    .attribute-box .label {
-        color: var(color-dark-3);
-        font-weight: bold;
-    }
-
-    nav.tabs [data-tab] {
-        font-family: var(--font-header);
-        font-variant: small-caps;
-        &:hover {
-            color: var(--tow-gold);
-        }
-    }
-
-    .window-content {
-        backdrop-filter: none;
-        background: none;
-
-        prose-mirror {
-            @include editor-text();
-            button.icon {
-                @include tow-control;
-            }
-        }
-    }
-
-    
-    .conditions {
-        .condition {
-            --border: var(--tow-bluegrey);
-            --condition-active: var(--tow-bluegrey-half);
-        }
-    }
-
-    h2.sheet-divider {
-        color: var(--tow-grey);
-        @include border.gradient-border(var(--tow-blue));
-    }
-    
-    h3.divider {
-        color: var(--tow-grey);
-        font-family: var(--font-header);
-        &::before,
-        &::after {
-            border-color: var(--tow-lightblue);
+        .form-group label {
+            font-family: var(--font-header);
+            font-weight: bold;
+            font-size: var(--font-size-16);
         }
 
-    };
-
-    .name-list {
-        .list-element {
-            a {
-                color: var(--tow-cream);
-            }
-            .floating {
-                background: var(--tow-blue);
-            }
-        }
-    }
-
-    .characteristics {
-        table {
-            background: none;
-        }
-    }
-}
-
-.active-effect-config.warhammer {
-    .script-list {
-        .script {
-            background: var(--tow-bluegrey-half);
-        }
-        button {
-            background: var(--tow-bluegrey-half);
-            border-color: var(--tow-bluegrey);
-        }
-    }
-}
-
-
-.image-popout {
-    background: url("./assets/ui/npc-bg.webp");    
-    @include window-header;
-
-    .window-content {
-        padding: 0px;
-        box-shadow: 0 0 30px black inset;
-
-        figure {
-            padding: 0px;
-        }
-    }
-}
-
-.whtow.application.test-dialog {
-    background: url("./assets/ui/npc-bg.webp");    
-    --color-text-primary: black;
-    font-family: var(--font-text);
-    --modifier-bg : var(--tow-bluegrey-half);
-    
-    .window-content {
-        @include window-frame;
-        padding: 30px;
-        backdrop-filter: none;
-    }
-
-    .window-header {
-        background: url("./assets/ui/blue-bg-seamless.webp");
-        --header-height: 2rem;
-
-        
-        .window-title {
-            color: white;
-            text-align: center;
-            font-size: var(--font-size-18);
+        .attribute-box .label {
+            color: var(color-dark-3);
             font-weight: bold;
         }
 
-        .header-control {
-            --button-hover-background-color: var(--tow-gold);
-            --button-text-color: var(--color-light-2);
-            --button-hover-text-color: var(--tow-blue);
+        nav.tabs [data-tab] {
+            font-family: var(--font-header);
+            font-variant: small-caps;
 
-            --button-size: 1.5rem;
-            font-size: var(--font-size-14);
+            &:hover {
+                color: var(--tow-gold);
+            }
         }
 
-    }
+        .window-content {
+            backdrop-filter: none;
+            background: none;
 
-    input[type="number"], 
-    input[type="text"], 
-    select {
-        background: var(--tow-bluegrey-half);
-        border: var(--tow-bluegrey);
-        color: black;
-    }
+            prose-mirror {
+                @include editor-text();
 
-    .dialog-modifiers {
-        @include form-border;
-        border-image-outset: 5px;
+                button.icon {
+                    @include tow-control;
+                }
+            }
+        }
 
-        .modifier.active {
-            color: black;
-            a {
-                color: black;
-                
+
+        .conditions {
+            .condition {
+                --border: var(--tow-bluegrey);
+                --condition-active: var(--tow-bluegrey-half);
+            }
+        }
+
+        h2.sheet-divider {
+            color: var(--tow-grey);
+            @include border.gradient-border(var(--tow-blue));
+        }
+
+        h3.divider {
+            color: var(--tow-grey);
+            font-family: var(--font-header);
+
+            &::before,
+            &::after {
+                border-color: var(--tow-lightblue);
+            }
+
+        }
+
+        ;
+
+        .name-list {
+            .list-element {
+                a {
+                    color: var(--tow-cream);
+                }
+
+                .floating {
+                    background: var(--tow-blue);
+                }
+            }
+        }
+
+        .characteristics {
+            table {
+                background: none;
             }
         }
     }
 
-    a {
-        color: var(--tow-blue);
-    }
+    .active-effect-config.warhammer {
+        .script-list {
+            .script {
+                background: var(--tow-bluegrey-half);
+            }
 
-
-    .form-group {
-        label {
-            color: black;
+            button {
+                background: var(--tow-bluegrey-half);
+                border-color: var(--tow-bluegrey);
+            }
         }
     }
 
-    .target {
-        div {
+
+    .image-popout {
+        background: url("./assets/ui/npc-bg.webp");
+        @include window-header;
+
+        .window-content {
+            padding: 0px;
+            box-shadow: 0 0 30px black inset;
+
+            figure {
+                padding: 0px;
+            }
+        }
+    }
+
+    .whtow.application.test-dialog {
+        background: url("./assets/ui/npc-bg.webp");
+        --color-text-primary: black;
+        font-family: var(--font-text);
+        --modifier-bg: var(--tow-bluegrey-half);
+
+        .window-content {
+            @include window-frame;
+            padding: 30px;
+            backdrop-filter: none;
+        }
+
+        .window-header {
+            background: url("./assets/ui/blue-bg-seamless.webp");
+            --header-height: 2rem;
+
+
+            .window-title {
+                color: white;
+                text-align: center;
+                font-size: var(--font-size-18);
+                font-weight: bold;
+            }
+
+            .header-control {
+                --button-hover-background-color: var(--tow-gold);
+                --button-text-color: var(--color-light-2);
+                --button-hover-text-color: var(--tow-blue);
+
+                --button-size: 1.5rem;
+                font-size: var(--font-size-14);
+            }
+
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
             background: var(--tow-bluegrey-half);
             border: var(--tow-bluegrey);
+            color: black;
         }
-    }
 
-    .dialog-modifiers {
-        label {
-            padding-top: 2px;
-            background: var(--tow-bluegrey-half)
+        .dialog-modifiers {
+            @include form-border;
+            border-image-outset: 5px;
+
+            .modifier.active {
+                color: black;
+
+                a {
+                    color: black;
+
+                }
+            }
         }
-    }
 
-    button {
-        font-size: var(--font-size-18);
-    }
-}
+        a {
+            color: var(--tow-blue);
+        }
 
-.whtow.application.advancement {
-    --pip : var(--tow-bluegrey);
-    .improvement {
+
+        .form-group {
+            label {
+                color: black;
+            }
+        }
+
+        .target {
+            div {
+                background: var(--tow-bluegrey-half);
+                border: var(--tow-bluegrey);
+            }
+        }
+
+        .dialog-modifiers {
+            label {
+                padding-top: 2px;
+                background: var(--tow-bluegrey-half)
+            }
+        }
+
         button {
-            @include tow-button;
+            font-size: var(--font-size-18);
+        }
+    }
+
+    .whtow.application.advancement {
+        --pip: var(--tow-bluegrey);
+
+        .improvement {
+            button {
+                @include tow-button;
+            }
         }
     }
 }

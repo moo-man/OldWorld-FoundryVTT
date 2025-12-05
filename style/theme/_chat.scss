@@ -1,5 +1,5 @@
 @use "./mixins" as *;
-body:not(.no-theme) {
+body.whtow-theme {
 
     #chat-message {
         background: url("./assets/ui/parchment-quote.webp");    
