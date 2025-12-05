@@ -1,7 +1,7 @@
 {
   "id": "whtow",
-  "title": "Warhammer: The Old World Roleplaying Game (Beta)",
-  "description": "",
+  "title": "Warhammer: The Old World Roleplaying Game",
+  "description": "Welcome to the World of Legend",
   "version": "0.7.1",
   "compatibility" : {
     "minimum" : 13,

@@ -318,6 +318,7 @@
 
         "TableSetting.wounds" : "Wounds",
         "TableSetting.miscast" : "Miscast",
+        "TableSetting.faults" : "Miscast",
 
         "Setting.TableSettings" : "Table Settings",
         "Setting.TableConfigure" : "Configure Tables",

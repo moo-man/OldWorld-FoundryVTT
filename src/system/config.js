@@ -122,11 +122,16 @@ const OLDWORLD = {
         rider : "WH.TransferType.Rider"
     },
 
+    
+    transferDocumentTypes : {
+        "Actor" : "Actor",
+        "Item" : "Item"
+    },
+
     placeholderItemData : {
         type : "trapping",
         img : "modules/warhammer-lib/assets/blank.png"
-    },
-
+    }, 
     conditions : {
         ablaze : {
             img: "systems/whtow/assets/icons/conditions/ablaze.svg",
@@ -686,6 +691,11 @@ const OLDWORLD = {
     effectKeysTemplate : "systems/whtow/templates/apps/effect-key-options.hbs",
     avoidTestTemplate : "systems/whtow/templates/apps/effect-avoid-test.hbs",
     effectScripts : {},
+
+    triggerMapping : {
+
+    },
+
     
     logFormat : [`%OLD WORLD` + `%c @MESSAGE`, "color: #DDD;background: #065c63;font-weight:bold", "color: unset"],
     
@@ -700,7 +710,32 @@ const OLDWORLD = {
     
     premiumModules : {
         "whtow" : "Old World System",
-    }
+        "tow-core" : "Old World Core Module"
+    },
+
+    syncTriggers: [],
+
+    badgeInfo : {
+        img : "systems/whtow/assets/ui/badge.webp",
+        notes : "https://github.com/moo-man/OldWorld-FoundryVTT/releases",
+        issues : "https://github.com/moo-man/OldWorld-FoundryVTT/issues",
+        wiki : "https://moo-man.github.io/OldWorld-FoundryVTT/pages/home.html",
+    },
+
+    
+    copyrightText : `Warhammer: the Old World Roleplaying Game © Copyright Games Workshop Limited 2026. Warhammer: the Old World, Citadel, Forge World, Games Workshop, GW, Warhammer, the ‘winged-hammer’ Warhammer logo, and all associated logos, ilustrations, images, names, creatures, races, vehicles, locations, weapons, characters, and the distinctive likenesses thereof, are either ® or TM, and/or © Games Workshop Limited, variaously registered around the world and used under licence. Cubicle 7 Entertainment and the Cubicle 7 Entertainment logo are trademarks of Cubicle 7 Entertainment Limited. All rights reserved. 
+    
+    <div style="display: flex; justify-content: space-around;">
+        <img src="modules/warhammer-lib/assets/c7.png" height=50 width=50/>   
+        <img src="modules/warhammer-lib/assets/warhammer.png" height=50 width=50/>
+    </div>
+
+    <ul>
+        <li>Published by: <strong>Cubicle 7 Entertainment Ltd</strong></li>
+        <li>Foundry Edition by <strong>@AUTHORS@</strong></li>
+        <li>Special thanks to: <strong>Games Workshop, Fatshark</strong></li>
+    </ul>
+    `,
     
 };
 
@@ -793,7 +828,6 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
 
 ]);
 
-foundry.utils.mergeObject(OLDWORLD, defaultWarhammerConfig)
 OLDWORLD.scriptTriggers = {
     manual : "WH.Trigger.Manual",
     immediate : "WH.Trigger.Immediate",

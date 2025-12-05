@@ -44,7 +44,7 @@ export default class OldWorldTables
                 let document = await fromUuid(result.documentUuid);
                 if (document) // Assumed item
                 {
-                    document.postItem();
+                    document.post();
                 }
                 else 
                 {

@@ -11,7 +11,7 @@ export class PostedItemMessageModel extends WarhammerMessageModel
 
     static async postItem(item, chatData={})
     {
-        let summary = await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", await item.system.summaryData());
+        let summary = await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", foundry.utils.mergeObject(await item.system.summaryData(), {expanded: true}));
         let content = await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-post.hbs", {name : item.name, img : item.img, summary, item});
         ChatMessage.create(foundry.utils.mergeObject({
             content,

@@ -192,8 +192,9 @@ Hooks.once("init", () =>
     registerSettings();
     registerHandlebars();
     
-    foundry.utils.mergeObject(CONFIG, TOW_CONFIG);
 
+    foundry.utils.mergeObject(CONFIG, TOW_CONFIG);
+    foundry.utils.mergeObject(game.oldworld.config.badgeInfo, defaultWarhammerConfig.badgeInfo, {overwrite: false});
 });
 
 // FoundryOverrides();
