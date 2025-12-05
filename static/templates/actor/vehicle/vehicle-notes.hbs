@@ -1,0 +1,14 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{#if (isGM)}}
+        <div class="editor-section">
+            <div class="header">{{localize "GM Notes"}}</div>
+            {{formInput fields.description.fields.gm value=source.system.description.gm enriched=enriched.system.description.gm toggled=true}}
+        </div>
+    {{/if}}
+
+    <div class="editor-section">
+        <div class="header">{{localize "Biography"}}</div>
+            {{formInput fields.description.fields.public value=source.system.description.public enriched=enriched.system.description.public toggled=true}}
+    </div>
+
+</section>

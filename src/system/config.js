@@ -105,6 +105,11 @@ const OLDWORLD = {
         champion : "TOW.NPC.Champion",
         monstrosity : "TOW.NPC.Monstrosity",
     },
+    
+    vehicleType : {
+        land: "TOW.Vehicle.Land",
+        water: "TOW.Vehicle.Water",
+    },
 
     effectScripts : {},
 

@@ -94,7 +94,8 @@ export class StandardActorModel extends BaseActorModel
     async applyDamage(damage, {ignoreArmour, opposed, item, test})
     {
         let resilience = this.resilience.value;
-        let args = {actor: this.parent, attacker: test?.actor, resilience, ignoreArmour, opposed, test}
+        let text = [];
+        let args = {actor: this.parent, attacker: test?.actor, resilience, ignoreArmour, opposed, test, text}
         await Promise.all(this.parent.runScripts("preTakeDamage", args));
         await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
         if (ignoreArmour)
@@ -327,13 +328,38 @@ export class StandardActorModel extends BaseActorModel
         ChatMessage.create(foundry.utils.mergeObject({content, speaker: {alias: this.parent.name}}, messageData))
     }
 
+    async useItem(item, context = {}, options) {
+        if (typeof item == "string") {
+            if (item.includes(".")) {
+                item = await fromUuid(item);
+            }
+            else {
+                item = actor.items.get(item);
+            }
+        }
+
+        context.item = item;
+
+        if (item.type == "lore")
+        {
+            return this.parent.setupSkillTest("recall", context, options);
+        }
+
+        else if (item.system.test?.self && item.system.test?.skill) {
+            this.parent.setupSkillTest(item.system.test.skill, context, options)
+        }
+        else {
+            ItemUse.fromItem(item, this.parent, context);
+        }
+    }
+
     async castSpell(spell, potency, fromTest)
     {
         if (fromTest)
         {
             await this.clearCasting()
         }
-        this.parent.useItem(spell, {potency, targets: fromTest ? fromTest?.context.targetSpeakers : null})
+        this.useItem(spell, {potency, targets: fromTest ? fromTest?.context.targetSpeakers : null})
     }
 
     clearCasting()

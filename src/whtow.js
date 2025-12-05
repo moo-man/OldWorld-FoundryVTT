@@ -53,6 +53,8 @@ import OldWorldUtility from "./system/utility";
 import { ActionUse } from "./system/tests/action-use";
 import { AbilityAttackTest } from "./system/tests/ability-attack";
 import { PostedItemMessageModel } from "./model/message/item";
+import ActorSheetOldWorldVehicle from "./sheet/actor/vehicle-sheet";
+import { VehicleActorModel } from "./model/actor/vehicle";
 
 Hooks.once("init", () => 
 {
@@ -71,7 +73,7 @@ Hooks.once("init", () =>
 
     Actors.registerSheet("whtow", ActorSheetOldWorldCharacter, { types: ["character"], makeDefault: true });
     Actors.registerSheet("whtow", ActorSheetOldWorldNPC, { types: ["npc"], makeDefault: true });
-    // Actors.registerSheet("whtow", ActorSheetOldWorldVehicle, { types: ["vehicle"], makeDefault: true });
+    Actors.registerSheet("whtow", ActorSheetOldWorldVehicle, { types: ["vehicle"], makeDefault: true });
 
     Items.registerSheet("whtow", WeaponSheet, {types : ["weapon"], makeDefault: true });
     Items.registerSheet("whtow", TalentSheet, {types : ["talent"], makeDefault: true });
@@ -94,6 +96,7 @@ Hooks.once("init", () =>
 
     CONFIG.Actor.dataModels["character"] = CharacterModel;
     CONFIG.Actor.dataModels["npc"] = NPCModel;
+    CONFIG.Actor.dataModels["vehicle"] = VehicleActorModel;
 
     CONFIG.Item.dataModels["weapon"] = WeaponModel;
     CONFIG.Item.dataModels["talent"] = TalentModel;

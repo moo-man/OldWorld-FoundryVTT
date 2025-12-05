@@ -29,35 +29,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
     }
 
     async useItem(item, context = {}, options) {
-        if (typeof item == "string") {
-            if (item.includes(".")) {
-                item = await fromUuid(item);
-            }
-            else {
-                item = actor.items.get(item);
-            }
-        }
-
-        context.item = item;
-
-        if (item.type == "lore")
-        {
-            return this.setupSkillTest("recall", context, options);
-        }
-
-        // else if (item.system.isAttack)
-        // {
-        //     this.setupAbilityTest(item, context, options);
-        // }
-
-        else if (item.system.test?.self && item.system.test?.skill) {
-            this.setupSkillTest(item.system.test.skill, context, options)
-        }
-        else {
-            let use = await ItemUse.fromItem(item, this, context);
-            use.roll();
-            use.sendToChat();
-        }
+        this.system.useItem(item, context, options);
     }
 
     async useMountItem(item, context = {}, options) {
@@ -89,8 +61,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             this.setupSkillTest(item.system.test.skill, context, options)
         }
         else {
-            let use = await ItemUse.fromItem(item, this, context);
-            use.sendToChat();
+            ItemUse.fromItem(item, this, context);
         }
     }
 
@@ -104,9 +75,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
 
         context.itemUuid = blessing.uuid;
 
-        let use = await BlessingUse.fromItem(blessing, type, this, context);
-        use.roll();
-        use.sendToChat();
+        BlessingUse.fromItem(blessing, type, this, context);
     }
 
     
@@ -200,7 +169,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         }
 
         // Add specified mount effects
-        if (this.system.mount.isMounted)
+        if (this.system.mount?.isMounted)
         {
             for(let effect of this.system.mount.items.reduce((prev, current) => prev.concat(current.effects.contents.filter(e => e.system.transferData.type == "rider")), []))
             {

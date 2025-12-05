@@ -29,6 +29,7 @@ export class ItemUse extends OldWorldTest
 
        await use.roll();
        use.sendToChat();
+       return use;
     }
 
 

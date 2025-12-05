@@ -123,7 +123,7 @@ export default class WeaponDialog extends TestDialog
 
         context.itemUuid = weapon.uuid;
         
-        let dialogData = super.setupData(skill, actor, context, options);
+        let dialogData = await super.setupData(skill, actor, context, options);
         
         dialogData.data.weapon = weapon;
         dialogData.data.scripts = dialogData.data.scripts.concat(weapon?.getScripts("dialog").filter(s => !s.options.defending) || [])

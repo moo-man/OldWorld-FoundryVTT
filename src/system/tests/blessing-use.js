@@ -11,7 +11,7 @@ export class BlessingUse extends ItemUse
             actor = item.actor;
         }
         context.blessingType = type;
-        await super.fromItem(item, actor, context)
+        return await super.fromItem(item, actor, context)
     }
 
 

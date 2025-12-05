@@ -199,7 +199,7 @@ export class OldWorldTest extends WarhammerTestBase
 
     async formatItemSummary()
     {
-        return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", item.system.summaryData());
+        return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", await this.item.system.summaryData());
     }
 
     async formatActionSummary()
@@ -442,7 +442,7 @@ export class OldWorldTest extends WarhammerTestBase
 
     get token()
     {
-        return this.actor.getActiveTokens()[0]?.document
+        return this.actor.getActiveTokens()[0]?.document || this.actor.prototypeToken
     }
 
     get targets() 

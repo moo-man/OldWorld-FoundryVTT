@@ -118,7 +118,7 @@ export default class AbilityAttackDialog extends TestDialog
 
         context.itemUuid = ability.uuid;
         
-        let dialogData = super.setupData(skill, actor, context, options);
+        let dialogData = await super.setupData(skill, actor, context, options);
         
         dialogData.data.ability = ability;
         dialogData.data.scripts = dialogData.data.scripts.concat(ability?.getScripts("dialog").filter(s => !s.options.defending) || [])

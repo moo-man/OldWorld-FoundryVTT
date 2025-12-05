@@ -205,14 +205,13 @@ export default class TestDialog extends WarhammerRollDialogV2 {
         return breakdown;
     }
 
-
     /**
      *
      * @param {object} actor Actor performing the test
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(skill, actor, context={}, options={})
+    static async setupData(skill, actor, context={}, options={})
     {
 
         let dialogData = super._baseDialogData(actor, context)

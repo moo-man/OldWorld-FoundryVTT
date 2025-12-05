@@ -134,7 +134,7 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
             await this.parent.update({"system.result" : this.attackerMessage.system.test.computeOpposedResult(this.defenderMessage?.system.test)})
         }
         let chatData = {
-            attacker : this.attackerToken,
+            attacker : this.attackerToken,// || this.attackerTest.actor.prototypeToken,
             defender : this.parent.system.defenderMessage?.system.test.token ?? this.defenderToken,
             result : this.parent.system.result
         }

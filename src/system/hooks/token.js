@@ -7,7 +7,7 @@ export default function()
         if (game.user.id == user)
         {
             let actor = token.actor
-            if (!actor.system.mount.isMounted)
+            if (!actor.system.mount?.isMounted)
             {
                 return
             }
@@ -37,7 +37,7 @@ export default function()
             if (game.user.id == user)
             {
                 let actor = token.actor
-                if (!actor.system.mount.isMounted)
+                if (!actor.system.mount?.isMounted)
                 {
                     return
                 }

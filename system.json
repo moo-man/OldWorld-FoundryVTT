@@ -60,7 +60,8 @@
   "documentTypes": {
     "Actor": {
       "character": { "htmlFields": [] },
-      "npc": { "htmlFields": [] }
+      "npc": { "htmlFields": [] },
+      "vehicle": { "htmlFields": [] }
     },
     "Item": {
       "weapon" : {},

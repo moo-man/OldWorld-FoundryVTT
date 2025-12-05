@@ -1,0 +1,42 @@
+.application.whtow.actor.vehicle {
+
+    [data-tab=main]
+    {
+
+        .sheet-list {
+            .list-header {
+                .list-name {
+                    justify-content: space-between;
+                }
+                input {
+                    padding-top: 2px;
+                }
+                .ooccupancy {
+                    flex: 1;
+                }
+            }
+            .occupancy {
+                margin: 0px 1rem;
+                input {
+                    width: 2rem;
+                }
+            }
+
+            .droppable {
+                height: 2rem;
+                text-align: center;
+                border: 1px dotted black;
+                border-top: 0px;
+                i {
+                    margin: auto auto;
+                }
+
+                &.hover {
+                    box-shadow: 0 0 5px black inset;
+                }
+            }
+        }
+    }
+
+  
+}

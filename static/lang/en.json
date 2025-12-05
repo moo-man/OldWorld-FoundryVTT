@@ -113,6 +113,11 @@
             "Monstrosity" : "Monstrosity"
         },
 
+        "Vehicle": {
+            "Land" : "Land",
+            "Water" : "Water"
+        },
+
         "Sheet" : {
             "Tab" : {
                 "Description" : "Description",
@@ -288,7 +293,17 @@
 
             "Mount": "Mount",
             "Dismount": "Dismount",
-            "RemoveMount" : "Remove Mount"
+            "RemoveMount" : "Remove Mount",
+
+            "Faults" : "Faults",
+            "Occupants" : "Occupants",
+            "Animals" : "Animals",
+
+            "RowCrew" : "Row Crew",
+            "SailCrew" : "Row Crew",
+
+            "SpeedRow" : "Speed (Row)",
+            "SpeedSail" : "Speed (Sail)"
 
         },
 
@@ -360,8 +375,10 @@
             "ApplyNumDamage" : "Apply {damage} Damage",
             "Potency" : "Potency",
 
+            "SuffersFault" : "<p><strong>{name}</strong> suffers a Fault!</p>",
             "TakesWound" : "<p><strong>{name}</strong> takes a Wound!</p>",
             "GainsStaggered" : "<p><strong>{name}</strong> gets Staggered!</p>",
+            "NoEffect" : "No Effect!",
             "AppliedDamage" : "Applied Damage",
 
             "DisposingMiscasts" : "Disposing Miscasts",

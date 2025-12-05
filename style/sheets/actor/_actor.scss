@@ -4,6 +4,11 @@
     --border: var(--color-cool-3);
     --condition-active: var(--color-warm-2);
 
+    .attribute-row {
+        display: flex;
+        gap: 0.5rem;
+    }
+
     .effect-lists {
         display: flex;
         flex-direction: column;
