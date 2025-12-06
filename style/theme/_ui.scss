@@ -1,5 +1,12 @@
 @use "./mixins" as *;
 
+
+body {
+    background: url("./assets/ui/background.webp");
+    background-size: 100%;
+    box-shadow: 0 0 100px black inset;
+}
+
 body.whtow-theme {
     --color-shadow-primary: var(--tow-gold);    
 

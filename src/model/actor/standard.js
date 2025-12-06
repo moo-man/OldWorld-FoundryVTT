@@ -311,7 +311,7 @@ export class StandardActorModel extends BaseActorModel
 
         if (diff < 0)
         {
-            this.addWound({diceModifier : Math.abs(diff)})
+            this.addWound({diceModifier : Math.max(1, Math.abs(diff) - 1)})
         }
     }
 

@@ -1,0 +1,32 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="form-group">
+        <label for="{{rootId}}-{{basePath}}.cover">{{localize "TOW.Zone.Cover"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="{{basePath}}.cover" {{checked traits.cover}}>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{rootId}}-{{basePath}}.difficultTerrain">{{localize "TOW.Zone.DifficultTerrain"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="{{basePath}}.difficultTerrain" {{checked traits.difficultTerrain}}>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{rootId}}-{{basePath}}.obscured">{{localize "TOW.Zone.Hazard"}}</label>
+        <div class="form-fields">
+            <input type="number" name="{{basePath}}.hazard" value="{{traits.hazard}}">
+            <select name="{{basePath}}.hazardSkill">
+                {{selectOptions (config "skills") selected=(fallback traits.hazardSkill "endurance")}}
+            </select>
+        </div>
+    </div>
+
+    {{!-- <div class="form-group" data-tooltip="Comma separated list">
+        <label for="{{rootId}}-{{basePath}}.tags">{{localize "ZONE.TAGS"}}</label>
+        <div class="form-fields">
+            <input type="text" name="{{basePath}}.tags" value="{{traits.tags}}" id="{{rootId}}-{{basePath}}.tags">
+        </div>
+    </div> --}}
+</section>

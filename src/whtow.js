@@ -55,6 +55,7 @@ import { AbilityAttackTest } from "./system/tests/ability-attack";
 import { PostedItemMessageModel } from "./model/message/item";
 import ActorSheetOldWorldVehicle from "./sheet/actor/vehicle-sheet";
 import { VehicleActorModel } from "./model/actor/vehicle";
+import ZoneConfig from "./apps/zone-config";
 
 Hooks.once("init", () => 
 {
@@ -199,5 +200,7 @@ Hooks.once("init", () =>
 
 // FoundryOverrides();
 registerHooks();
+ZoneConfig.addRegionControls();
+
 // loadScripts();
 // tokenHelpers()

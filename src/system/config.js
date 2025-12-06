@@ -671,6 +671,60 @@ const OLDWORLD = {
                 }
             },
     },
+
+    zoneEffects : {
+        cover : {
+            img: "icons/svg/aura.svg",
+            name : "TOW.Zone.CoverConcealment",
+            id : "cover",
+            statuses : ["cover"],
+            system : {
+                scriptData: [
+                    {
+                        label: "Shooting Attack Penalty",
+                        script: "args.fields.penalty++;",
+                        trigger: "dialog",
+                        options: {
+                                hideScript: `return !args.attack || args.attack?.system.isMelee;`,
+                                activateScript: `return args.attack.system.isRanged;`,
+                                targeter: true
+                        }
+                    }
+
+                ]
+            }
+        },
+        difficultTerrain : {
+            img: "icons/svg/aura.svg",
+            name : "TOW.Zone.DifficultTerrain",
+            id : "difficultTerrain",
+            statuses : ["difficultTerrain"],
+        },
+        hazard : {
+            img: "icons/svg/aura.svg",
+            name : "TOW.Zone.Hazard",
+            id : "hazard",
+            statuses : ["hazard"],
+            system : {
+                    scriptData: [
+                        {
+                            label: "Hazard Damage",
+                            script: `this.actor.system.rollHazard?.(this.effect.getFlag("whtow", "skill") || "endurance", this.effect.specifier || 1, {appendTitle: " - " + this.effect.sourceZone.name})`,
+                            trigger: "immediate",
+                            options : {
+                                    deleteEffect : false
+                            }
+                        },
+                        {
+                            label: "Hazard Damage",
+                            script: `this.actor.system.rollHazard?.(this.effect.getFlag("whtow", "skill") || "endurance", this.effect.specifier || 1, {appendTitle: " - " + this.effect.sourceZone.name})`,
+                            trigger: "startTurn"
+                        }
+                    ]
+                
+            }
+        },
+    },
     
     // foundry.utils.mergeObject(scriptTriggers, {
     
@@ -737,6 +791,44 @@ const OLDWORLD = {
     </ul>
     `,
     
+    getZoneTraitEffects : (region) => 
+        {
+            let effects = [];
+            let zoneEffects = foundry.utils.deepClone(game.oldworld.config.zoneEffects);
+            let flags = region.flags.whtow || {};
+        
+            let cover = flags.traits?.cover || flags.effects?.map(i => i.system.transferData.zone.traits.cover).some(i => i);
+            let hazard = flags.traits?.hazard;
+            let difficult = [flags.traits?.difficultTerrain].concat(flags.effects?.map(i => i.system.transferData.zone.traits.difficultTerrain)).some(i => i);
+
+            let hazardSkill = flags.traits?.hazardSkill;
+            let highestHazard = hazard || 0
+            flags.effects?.filter(i => i.system.transferData.zone.traits.hazard).forEach(e => {
+                if (e.system.transferData.zone.traits.hazard >= highestHazard)
+                {
+                    highestHazard = e.system.transferData.zone.traits.hazard;
+                    hazardSkill = e.system.transferData.zone.traits.hazardSkill;
+                }
+            })
+        
+            if (cover)
+            {
+                effects.push(zoneEffects.cover);
+            }
+            if (difficult)
+            {
+                effects.push(zoneEffects.difficultTerrain);
+            }
+            if (highestHazard > 0)
+            {
+                let effect = zoneEffects.hazard;
+                effect.name += " (" + highestHazard + ")";
+                foundry.utils.setProperty(effect, "flags.whtow.skill", hazardSkill);
+                effects.push(effect);
+            }
+            
+            return effects;
+        },
 };
 
 

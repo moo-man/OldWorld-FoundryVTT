@@ -464,6 +464,13 @@
             "NoSpellsToCast" : "No Spells available to Cast",
             "NoCoin" : "You do not have the coin to buy this Item!",
             "NoACtorBuyItem" : "No assigned Actor to buy this Item."
+        },
+
+        "Zone" : {
+            "Cover" : "Cover",
+            "CoverConcealment" : "Cover / Concealment",
+            "DifficultTerrain" : "Difficult Terrain",
+            "Hazard" : "Hazard"
         }
     },
 
