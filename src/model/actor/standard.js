@@ -98,6 +98,8 @@ export class StandardActorModel extends BaseActorModel
         let args = {actor: this.parent, attacker: test?.actor, resilience, ignoreArmour, opposed, test, text}
         await Promise.all(this.parent.runScripts("preTakeDamage", args));
         await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
+        await Promise.all(test?.item?.runScripts("preApplyDamage", args) || []);
+
         if (ignoreArmour)
         {
             resilience = this.resilience.base;
@@ -105,6 +107,23 @@ export class StandardActorModel extends BaseActorModel
         let message = ""
 
         await this.parent.applyEffect({effects: test?.damageEffects || []});
+
+
+        // Not ideal but not sure how else to do it
+        if (test?.damageEffects.find(e => e.statuses.has("staggered")))
+        {
+            await Promise.all(this.parent.runScripts("receiveStaggered", {test, opposed, actor : this.parent}) || [])
+            await Promise.all(test?.actor.runScripts("inflictStaggered", {test, opposed, actor : this.parent}) || [])
+            await Promise.all(test?.item?.runScripts("inflictStaggered", {test, opposed, actor : this.parent}) || [])
+        }
+
+        if (test?.damageEffects.find(e => e.statuses.has("prone")))
+        {
+            await Promise.all(this.parent.runScripts("receiveProne", {test, opposed, actor : this.parent}) || [])
+            await Promise.all(test?.actor.runScripts("inflictProne", {test, opposed, actor : this.parent}) || [])
+            await Promise.all(test?.item?.runScripts("inflictProne", {test, opposed, actor : this.parent}) || [])
+        }
+
         if (damage > resilience)
         {
             await this.addWound({fromTest: test, opposed});
@@ -121,6 +140,7 @@ export class StandardActorModel extends BaseActorModel
 
         await Promise.all(this.parent.runScripts("takeDamage", args));
         await Promise.all(test?.actor.runScripts("applyDamage", args) || []);
+        await Promise.all(test?.item?.runScripts("applyDamage", args) || []);
 
         if (opposed)
         {
@@ -154,11 +174,16 @@ export class StandardActorModel extends BaseActorModel
         await Promise.all(fromTest?.actor.runScripts("inflictWound", args) || [])
         await Promise.all(fromTest?.item.runScripts("inflictWound", args) || [])
 
+        if (args.abort)
+        {
+            return;
+        }
+
         if (roll)
         {
             let wounds = this.parent.itemTypes.wound.filter(i => !i.system.treated);
             let formula = `${Math.max(1, wounds.length + 1 + args.diceModifier)}d10`;
-            return game.oldworld.tables.rollTable("wounds",  formula);
+            return game.oldworld.tables.rollTable("wounds",  formula, {chatData: {speaker: {alias: this.parent.name}}});
         }
         else 
         {
@@ -184,12 +209,6 @@ export class StandardActorModel extends BaseActorModel
     async inflictStaggered({fromTest, opposed}={})
     {
         await this.parent.addCondition("staggered", {fromTest, opposed});
-        if (this.parent.hasCondition("staggered"))
-        {
-            await Promise.all(this.parent.runScripts("receiveStaggered", {test: fromTest, opposed, actor : this.parent}) || [])
-            await Promise.all(fromTest?.actor.runScripts("inflictStaggered", {test: fromTest, opposed, actor : this.parent}) || [])
-            await Promise.all(fromTest?.item.runScripts("inflictStaggered", {test: fromTest, opposed, actor : this.parent}) || [])
-        }
     }
 
     async fallProne({flavor="", fromTest, opposed}={})

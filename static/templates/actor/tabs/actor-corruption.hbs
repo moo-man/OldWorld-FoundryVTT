@@ -10,12 +10,11 @@
                 {{/if}}
             </div>
             {{#unless (eq system.corruption.state "none")}}
-{{!-- 
                 {{#if system.corruption.document}}
                     <select style="flex: 0 0 7rem" data-action="editProperty" data-uuid="{{system.corruption.document.uuid}}" data-path="system.level">
                         {{selectOptions system.corruption.document.system.schema.fields.level.options.choices selected=system.corruption.document.system.level localize=true}}
                     </select>
-                {{/if}} --}}
+                {{/if}}
             {{/unless}}
         </div>
     </div>

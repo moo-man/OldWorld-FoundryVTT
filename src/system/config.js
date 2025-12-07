@@ -148,7 +148,12 @@ const OLDWORLD = {
                 scriptData: [{
                     label: "Hazard",
                     trigger: "endTurn",
-                    script: "this.actor.system.rollHazard('endurance', 2, {appendTitle : ` - ${this.effect.name}`})"
+                    script: "this.actor.system.rollHazard('endurance', this.effect.specifier || 2, {appendTitle : ` - ${this.effect.name}`})"
+                },
+                {
+                    label: "Name",
+                    trigger: "immediate",
+                    script: "this.effect.updateSource({name: this.effect.setSpecifier(this.effect.getFlag('whtow', 'hazard') || 2)})"
                 }]
             }
         },
@@ -330,6 +335,12 @@ const OLDWORLD = {
             description : "You are battered, bruised, or otherwise reeling from an enemy attack.",
             statuses : ["staggered"],
             name: "TOW.ConditionName.Staggered"
+        },
+        dead : {
+            img: "systems/whtow/assets/icons/conditions/dead.svg",
+            description : "You are dead.",
+            statuses : ["dead"],
+            name: "TOW.ConditionName.Dead"
         }
     },
 
@@ -912,6 +923,13 @@ const TOW_CONFIG = {
             statuses : ["staggered"],
             name: "TOW.ConditionName.Staggered"
         },
+        {
+            img: "systems/whtow/assets/icons/conditions/dead.svg",
+            id: "dead",
+            description : "You are dead.",
+            statuses : ["dead"],
+            name: "TOW.ConditionName.Dead"
+        },
     ]
 };
 
@@ -960,9 +978,16 @@ OLDWORLD.scriptTriggers = {
     takeDamage : "Take Damage",
     applyDamage : "Apply Damage",
 
+    computeOwnedItem : "WH.Trigger.ComputeOwnedItem",
+    
     // IN LIBRARY
     preUpdateDocument : "WH.Trigger.PreUpdateDocument",
     prepareBaseData : "WH.Trigger.PrepareBaseData",
+    prepareDerivedData : "WH.Trigger.PrepareDerivedData",
+    prepareOwnedItemDerivedData : "WH.Trigger.PrepareOwnedItemDerivedData",
+    prepareOwnedData : "WH.Trigger.PrepareOwnedData",
+    prepareOwnedItemBaseData : "WH.Trigger.PrepareOwnedItemBaseData",
+    prepareOwnedItemDerivedData : "WH.Trigger.PrepareOwnedItemDerivedData",
 
 
 };

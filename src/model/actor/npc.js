@@ -2,6 +2,8 @@ import { StandardActorModel } from "./standard";
 let fields = foundry.data.fields;
 
 export class NPCModel extends StandardActorModel {
+    static preventItemTypes = ["blessing", "corruption", "lore"]
+    
     static defineSchema() {
         let schema = super.defineSchema();
 
@@ -164,6 +166,13 @@ export class NPCModel extends StandardActorModel {
         this.mountData.items.relative = this.parent.items;
         // this.mountData.effects.relative = this.parent.effects;
     }
+
+    
+    async addWound({fromTest, opposed, diceModifier=0, roll=true}={})
+    {
+        return super.addWound({fromTest, opposed, diceModifier, roll: (this.hasThresholds ? false : roll)})
+    }
+
 
     async toEmbed(config, options)
     {

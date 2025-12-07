@@ -52,6 +52,9 @@ class CrewDataModel extends DocumentReferenceListModel {
  */
 export class VehicleActorModel extends BaseActorModel 
 {
+
+    static preventItemTypes = ["blessing", "spell", "talent", "lore", "wound", "career", "corruption", "talent"]
+
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -191,6 +194,7 @@ export class VehicleActorModel extends BaseActorModel
         let args = {actor: this.parent, attacker: test?.actor, resilience, ignoreArmour, opposed, test, text}
         await Promise.all(this.parent.runScripts("preTakeDamage", args));
         await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
+        await Promise.all(test?.item?.runScripts("preApplyDamage", args) || []);
 
         if (ignoreArmour)
         {
@@ -216,6 +220,7 @@ export class VehicleActorModel extends BaseActorModel
 
         await Promise.all(this.parent.runScripts("takeDamage", args));
         await Promise.all(test?.actor.runScripts("applyDamage", args) || []);
+        await Promise.all(test?.item?.runScripts("applyDamage", args) || []);
 
         if (opposed)
         {

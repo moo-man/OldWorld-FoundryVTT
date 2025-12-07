@@ -252,6 +252,7 @@
             "Potency" : "Potency",
 
             "Self" : "Self",
+            "Opposed" : "Opposed",
             "Dice" : "Dice",
 
             "BlessedBy" : "Blessed By",
@@ -303,7 +304,9 @@
             "SailCrew" : "Row Crew",
 
             "SpeedRow" : "Speed (Row)",
-            "SpeedSail" : "Speed (Sail)"
+            "SpeedSail" : "Speed (Sail)",
+
+            "PreventStaggeredOption" : "Prevent Staggered Option"
 
         },
 
@@ -422,7 +425,8 @@
             "Distracted" : "Distracted",
             "Drained" : "Drained",
             "Prone" : "Prone",
-            "Staggered" : "Staggered"
+            "Staggered" : "Staggered",
+            "Dead" : "Dead"
         },
 
         "Dialog" : {
@@ -475,6 +479,10 @@
     },
 
     "WH" : {
+
+        "Trigger" : {
+            "ComputeOwnedItem" : "Compute Owned Item"
+        },
 
         "TransferType" : {
             "Rider" : "Rider"

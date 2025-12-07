@@ -34,10 +34,10 @@ export class OldWorldEffect extends WarhammerActiveEffect
 
         if (!transferData.avoidTest.reversed)
         {
-            // If the avoid test is marked as opposed, it has to win, not just succeed
+            // If th eavoid test is marked as opposed, it has to win, not just succeed
             if (transferData.avoidTest.opposed && this.sourceTest)
             {
-                return test.result.successes > this.sourceTest.result.successes;
+                return test.result.successes >= this.sourceTest.context.potency || this.sourceTest.result.successes;
             }
             else 
             {
@@ -49,7 +49,7 @@ export class OldWorldEffect extends WarhammerActiveEffect
             // If the avoid test is marked as opposed, it has to win, not just succeed
             if (transferData.avoidTest.opposed && this.sourceTest)
             {
-                return test.result.successes < this.sourceTest.result.successes;
+                return test.result.successes < this.sourceTest.context.potency || this.sourceTest.result.successes;
             }
             else 
             {

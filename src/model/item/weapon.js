@@ -63,6 +63,7 @@ export class WeaponModel extends EquippableItem
     computeOwned(actor) 
     {
         this.damage.compute(actor);
+        super.computeOwned(actor);
     }
 
     getOtherEffects()

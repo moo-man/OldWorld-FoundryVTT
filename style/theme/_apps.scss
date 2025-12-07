@@ -213,6 +213,10 @@ body.whtow-theme {
                     @include tow-control;
                 }
             }
+
+            .editor-section {
+                    @include editor-text;
+            }
         }
 
 

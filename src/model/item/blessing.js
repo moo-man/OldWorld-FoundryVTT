@@ -26,6 +26,7 @@ export class BlessingModel extends BaseItemModel {
     }
 
     _addModelProperties() {
+        this.favour.effect.relative = this.parent.effects;
         for(let prayer of this.prayers.list)
         {
             prayer.effect.relative = this.parent.effects;
@@ -43,11 +44,13 @@ export class BlessingModel extends BaseItemModel {
             return this.level >= 1;
         }
 
-        this.prayers.list.forEach(p => {
-            if (p.effect.id == effect.id) {
+        for(let p of this.prayers.list)
+        {
+            if (p.effect.id == effect.id) 
+            {
                 return this.level >= 2
             }
-        })
+        }
 
         return true;
 

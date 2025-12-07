@@ -127,7 +127,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         return this.setupSkillTest(skill, context, options);
     }
 
-    async addCondition(condition, {fromTest, opposed}={}) {
+    async addCondition(condition, {flags={}, fromTest, opposed}={}) {
         let owner = warhammer.utility.getActiveDocumentOwner(this);
 
         if (game.user.id != owner.id) {
@@ -135,8 +135,18 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
             return this.hasCondition(condition);
         }
 
-        if (!this.hasCondition(condition)) {
-            return this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
+        // ALL forms of adding staggered end up here
+        if (condition == "staggered")
+        {
+            await Promise.all(this.runScripts("receiveStaggered", {test: fromTest, opposed, actor : this}) || [])
+            await Promise.all(fromTest?.actor.runScripts("inflictStaggered", {test: fromTest, opposed, actor : this}) || [])
+            await Promise.all(fromTest?.item.runScripts("inflictStaggered", {test: fromTest, opposed, actor : this}) || [])
+        }
+
+        if (!this.hasCondition(condition)) 
+        {
+            let effectData = foundry.utils.deepClone(game.oldworld.config.conditions[condition]);
+            return this.createEmbeddedDocuments("ActiveEffect", [foundry.utils.mergeObject(effectData, {flags})], { condition: true })
         }
         else if (this.hasCondition(condition) && condition == "staggered") {
             return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions.concat(opposed?.result?.damage?.excludeStaggeredOptions || []), fromTest, opposed });

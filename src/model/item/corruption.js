@@ -23,6 +23,45 @@ export class CorruptionModel extends BaseItemModel {
         return schema;
     }
 
+    async _preUpdate(data, options, user)
+    {
+        await super._preUpdate(data, options, user);
+
+        if (this.parent.isOwned)
+        {
+            let newLevel = foundry.utils.getProperty(options, "changed.system.level")
+            if (newLevel > this.level)
+            {
+                if (newLevel == 1 && this.tarnished.effect.document)
+                {
+                    options.runCorruptionEffect = "tarnished";
+                }
+                if (newLevel == 2 && this.tainted.effect.document)
+                {
+                    options.runCorruptionEffect = "tainted";
+                }
+                if (newLevel == 3 && this.damned.effect.document)
+                {
+                    options.runCorruptionEffect = "damned";
+                }
+            }
+        }
+    }
+
+    async _onUpdate(data, options, user)
+    {
+        if (options.runCorruptionEffect)
+        {
+            this[options.runCorruptionEffect].effect.document.handleImmediateScripts(data, options, user);
+        }
+    }
+
+    _addModelProperties() {
+        this.tarnished.effect.relative = this.parent.effects;
+        this.tainted.effect.relative = this.parent.effects;
+        this.damned.effect.relative = this.parent.effects;
+    }
+
 
     effectIsActive(effect) {
 

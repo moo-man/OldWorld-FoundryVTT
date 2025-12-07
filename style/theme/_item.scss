@@ -87,6 +87,16 @@ body.whtow-theme {
         .name {
             height: 4rem;
         }
+
+        input[name=name] {
+            @include form-border;
+            background: var(--tow-brown-half);
+            font-family: var(--font-header-alt);
+            font-weight: bold;
+            height: 2.5rem;
+            font-size: 1.5rem;
+        }
+
     }
 
     .name-list .list-content {

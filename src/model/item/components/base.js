@@ -24,4 +24,11 @@ export class BaseItemModel extends BaseWarhammerItemModel
 
         return {noImage : ["icons/svg/item-bag.svg", "modules/warhammer-lib/assets/blank.png"].includes(item.img), enriched, item }
     }
+
+    
+    computeOwned(actor) 
+    {
+        super.computeOwned(actor);
+        actor.runScripts("computeOwnedItem", {item: this.parent, actor})
+    }
 }

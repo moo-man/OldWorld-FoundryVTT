@@ -44,14 +44,6 @@ export class WeaponTest extends OldWorldTest
     {
         let result = await super.computeOpposedResult(test);
 
-        if (result.success && result.computed)
-        {
-            result.damage = {
-                value : this.testData.damage + (this.weapon.system.damage.successes ? result.successes : 0),
-                ignoreArmour : this.weapon.system.damage.ignoreArmour,
-            }
-        }
-
         if (this.weapon.system.isMelee && !result.success && !this.actor.hasCondition("staggered"))
         {
             this.actor.addCondition("staggered");

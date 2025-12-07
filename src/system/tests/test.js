@@ -357,6 +357,19 @@ export class OldWorldTest extends WarhammerTestBase
         
     }
 
+    // Helper for scripts
+    successfullyOpposes(successes)
+    {
+        if (successes == 0)
+        {
+            return true; // If attacker has no successes, "successfully" opposes
+        }
+        else 
+        {
+            return this.result.successes > successes
+        }
+    }
+
     update(data)
     {
         this.message.update({system : data}).then(foundry.utils.mergeObject(this, data));

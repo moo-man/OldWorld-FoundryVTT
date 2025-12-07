@@ -108,6 +108,14 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
         {
           options.push({id : weapon.id, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${weapon.name})`, icon : "fa-shield"});
         }
+
+        let abilities = actor.itemTypes.ability.filter(i => i.system.isMelee);
+        for(let ability of abilities)
+        {
+            options.push({id : ability.id, ability: true, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${ability.name})`, icon : "fa-shield"});
+        }
+
+
       }
   
       return options;
@@ -203,7 +211,14 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
             case "athletics":
                 return actor.setupSkillTest(type)
             default: 
-                return actor.setupWeaponTest(type)
+                if (target.classList.has("ability"))
+                {
+                    return actor.setupAbilityTest(type)
+                }
+                else 
+                {
+                    return actor.setupWeaponTest(type)
+                }
 
         }
     }

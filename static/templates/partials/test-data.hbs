@@ -6,6 +6,12 @@
         {{formInput fields.self value=value.self}}
     </div>
     {{/unless}}
+    {{#unless (or value.self hideOpposed)}}
+    <label>{{localize "TOW.Sheet.Opposed"}}</label>
+    <div class="form-fields" style="flex: 1">
+        {{formInput fields.opposed value=value.opposed}}
+    </div>
+    {{/unless}}
     <label>{{localize "TOW.Sheet.Skill"}}</label>
     <div class="form-fields">
         {{formInput fields.skill value=value.skill choices=(config "skills")}}

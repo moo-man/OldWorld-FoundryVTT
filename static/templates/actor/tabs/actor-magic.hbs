@@ -36,7 +36,7 @@
                 <a class="list-name"  data-action="rollTest" data-type="cast" data-lore="{{@key}}">{{this.label}} <i class="fa-solid fa-dice-d10"></i></a>
                 {{/if}}
                 {{#if this.progress}}
-                    <div class="flex progress">Accumulated Power: {{this.progress}} <a data-action="clearLore"><i class="fa-regular fa-xmark"></i></a></div>
+                    <div class="flex progress">Accumulated Power: <a data-action="stepProperty" data-path="system.magic.casting.progress">{{this.progress}}</a> <a data-action="clearLore"><i class="fa-regular fa-xmark"></i></a></div>
                 {{/if}}
             </div>
             <div class="list-header row-content">
