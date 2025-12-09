@@ -1,8 +1,8 @@
 {
   "id": "whtow",
-  "title": "Warhammer: The Old World Roleplaying Game (Beta)",
-  "description": "",
-  "version": "0.7.2",
+  "title": "Warhammer: The Old World Roleplaying Game",
+  "description": "Welcome to the World of Legend",
+  "version": "1.0.0",
   "compatibility" : {
     "minimum" : 13,
     "verified" : 13,
@@ -42,10 +42,10 @@
     "requires": [{
       "id": "warhammer-lib",
       "type": "module",
-      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.7.0/module.json",
+      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/2.8.0/module.json",
       "compatibility": {
-        "minimum" : "2.7.0",
-        "verified": "2.7.0"
+        "minimum" : "2.8.0",
+        "verified": "2.8.0"
       }
     }]
   },
@@ -60,7 +60,8 @@
   "documentTypes": {
     "Actor": {
       "character": { "htmlFields": [] },
-      "npc": { "htmlFields": [] }
+      "npc": { "htmlFields": [] },
+      "vehicle": { "htmlFields": [] }
     },
     "Item": {
       "weapon" : {},
@@ -81,7 +82,8 @@
     "ChatMessage": {
       "test" : {},
       "opposed" : {},
-      "xp" : {}
+      "xp" : {},
+      "item" : {}
     }
   },
   "primaryTokenAttribute": null,
@@ -89,7 +91,7 @@
   "url": "https://github.com/moo-man/OldWorld-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/0.7.2/whtow.zip",
+  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/1.0.0/whtow.zip",
   "license": "LICENSE.txt"
 }
 

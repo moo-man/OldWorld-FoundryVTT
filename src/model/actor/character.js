@@ -81,6 +81,13 @@ export class CharacterModel extends StandardActorModel
     async _onUpdate(data, options, user) {
         await super._onUpdate(data, options, user);
 
+        let unusedBlessings = this.parent.itemTypes.blessing.filter(i => i.id != this.blessed.id);
+
+        if (unusedBlessings.length)
+        {
+            this.parent.deleteEmbeddedDocuments("Item", unusedBlessings.map(i => i.id));
+        }
+
         // If XP received from message award, add
         if (options.fromMessage && game.users.activeGM.id == game.user.id)
         {
@@ -92,6 +99,18 @@ export class CharacterModel extends StandardActorModel
     {
         this.origin.relative = this.parent.items;
         this.career.relative = this.parent.items;
+    }
+
+    computeBase()
+    {
+        super.computeBase();
+        if (this.origin.document)
+        {
+            for(let c in this.characteristics)
+            {
+                this.characteristics[c].max = this.origin.document.system.maxCharacteristics[c];
+            }
+        }
     }
 
     computeDerived()
@@ -123,13 +142,6 @@ export class CharacterModel extends StandardActorModel
 
         this.xp.spent = spent;
         this.xp.available = this.xp.total - spent;
-    }
-
-    addWound()
-    {
-        let wounds = this.parent.itemTypes.wound.filter(i => !i.system.treated);
-        let formula = `${wounds.length + 1}d10`;
-        game.oldworld.tables.rollTable("wounds",  formula);
     }
 
     addXPOffset(amount, description)

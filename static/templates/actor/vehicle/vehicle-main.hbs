@@ -1,0 +1,280 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="attribute-row">
+        {{#if (eq system.type "land")}}
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "TOW.Sheet.Speed"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 12">{{formInput fields.speed.fields.land.fields.value value=system.speed.land.value choices=(config "speed") blank=true}}</div>
+        </div>
+        {{else if (eq system.type "water")}}
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "TOW.Sheet.SpeedRow"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 12">{{formInput fields.speed.fields.row.fields.value value=system.speed.row.value choices=(config "speed") blank=""}}</div>
+        </div>
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "TOW.Sheet.SpeedSail"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 12">{{formInput fields.speed.fields.sail.fields.value value=system.speed.sail.value choices=(config "speed") blank=""}}</div>
+        </div>
+        {{/if}}
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12">{{localize "TOW.Sheet.Resilience"}}</div>
+            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.resilience.value" value="{{system.resilience.value}}"></div>
+            <div class="field" style="grid-column: 7 / span 6">Armour <input type="checkbox" name="system.resilience.armoured" {{checked system.resilience.armoured}}></div>
+        </div>
+        <div class="attribute-box">
+            <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "TOW.Sheet.Faults"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.faults.value" value="{{system.faults.value}}"></div>
+            <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.faults.max" value="{{system.faults.max}}"></div>
+        </div>
+    </div>
+
+     {{#if items.ability.length}}
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "TOW.Sheet.Abilities"}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="createItem" data-type="ability">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each items.ability}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}" data-action="useItem">
+                                    <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-control context-menu"><i
+                                            class="fa-regular fa-ellipsis-vertical"></i></a>
+                                </div>
+                            </div>
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        {{/if}}
+
+    <div class="sheet-list" data-path="system.occupants">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.Occupants"}}                 
+                <div class="occupancy" data-tooltip="Total | Max" data-tooltip-direction="RIGHT">
+                    <input type="number" name="system.occupants.total" value="{{system.occupants.total}}" disabled>
+                    <input type="number" name="system.occupants.max" value="{{system.occupants.max}}">
+                </div>
+            </div>
+            <div class="small">Qty.</div>
+            <div>Driver</div>
+            <div class="list-controls">
+                +
+                <input type="number" name="system.occupants.value" value="{{system.occupants.value}}" data-tooltip="Adds extra value ontop of number of Actors." data-tooltip-direction="RIGHT">
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each system.occupants.list}}
+            {{#with this.document}}
+                <div class="list-row prevent-context" data-uuid="{{this.uuid}}" data-index="{{@key}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img  data-action="rollTest" src="{{this.prototypeToken.texture.src}}">
+                            <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                        </div>
+                        <div class="small">
+                            {{#if this.prototypeToken.actorLink}}
+                                <input type="number" value="1" disabled>
+                                {{else}}
+                                <input type="number" value="{{../number}}" data-document="this" data-action="editList" data-ipath="number">
+                            {{/if}}
+                        </div>
+                        <div>
+                                {{#if (eq ../../system.driver.id this.id)}}
+                                    <a data-action="setDriver"><i class="fa-regular fa-circle-check"></i></a>
+                                {{else}}
+                                    <a data-action="setDriver"><i class="fa-regular fa-circle"></i></a>
+                                {{/if}}
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control" data-document="this" data-action="listDelete"><i class="fas fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {{/with}}
+            {{/each}}
+            <div class="list-row droppable">
+                <i class="fas fa-plus inactive"></i>
+            </div>
+        </div>
+    </div>
+
+    {{#if (eq system.type "land")}}
+    <div class="sheet-list" data-path="system.animals">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.Animals"}}
+                <div class="occupancy" data-tooltip="Total | Max" data-tooltip-direction="RIGHT">
+                    <input type="number" name="system.animals.total" value="{{system.animals.total}}" disabled>
+                    <input type="number" name="system.animals.required" value="{{system.animals.required}}">
+                </div>
+            </div>
+            <div class="small">Qty.</div>
+            <div></div>
+            <div class="list-controls">
+                +
+                <input type="number" name="system.animals.value" value="{{system.animals.value}}" data-tooltip="Adds extra value ontop of number of Actors." data-tooltip-direction="RIGHT">
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each system.animals.list}}
+            {{#with this.document}}
+
+                <div class="list-row prevent-context" data-uuid="{{this.uuid}}" data-index="{{@key}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img data-action="rollTest"  src="{{this.prototypeToken.texture.src}}">
+                            <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                        </div>
+                        <div class="small">
+                            {{#if this.prototypeToken.actorLink}}
+                                <input type="number" value="1" disabled>
+                                {{else}}
+                                <input type="number" value="{{../number}}" data-document="this" data-action="editList" data-ipath="number">
+                            {{/if}}
+                        </div>
+                        <div></div>
+
+                        <div class="list-controls">
+                            <a class="list-control" data-document="this" data-action="listDelete"><i class="fas fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/with}}
+            {{/each}}
+            <div class="list-row droppable">
+                <i class="fas fa-plus inactive"></i>
+            </div>
+        </div>
+    </div>
+    {{else if (eq system.type "water")}}
+        <div class="sheet-list" data-path="system.crew.row">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.RowCrew"}}
+                <div class="occupancy" data-tooltip="Total | Max" data-tooltip-direction="RIGHT">
+                    <input type="number" name="system.crew.row.total" value="{{system.crew.row.total}}" disabled>
+                    <input type="number" name="system.crew.row.required" value="{{system.crew.row.required}}">
+                </div>
+            </div>
+            <div class="small">Qty.</div>
+            <div></div>
+            <div class="list-controls">
+                +
+                <input type="number" name="system.crew.row.value" value="{{system.crew.row.value}}" data-tooltip="Adds extra value ontop of number of Actors." data-tooltip-direction="RIGHT">
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each system.crew.row.list}}
+            {{#with this.document}}
+
+                <div class="list-row prevent-context" data-uuid="{{this.uuid}}" data-index="{{@key}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img data-action="rollTest"  src="{{this.prototypeToken.texture.src}}">
+                            <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                        </div>
+                        <div class="small">
+                            {{#if this.prototypeToken.actorLink}}
+                                <input type="number" value="1" disabled>
+                                {{else}}
+                                <input type="number" value="{{../number}}" data-document="this" data-action="editList" data-ipath="number">
+                            {{/if}}
+                        </div>
+                        <div></div>
+
+                        <div class="list-controls">
+                            <a class="list-control" data-document="this" data-action="listDelete"><i class="fas fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/with}}
+            {{/each}}
+            <div class="list-row droppable">
+                <i class="fas fa-plus inactive"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sheet-list" data-path="system.crew.sail">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "TOW.Sheet.SailCrew"}}
+                <div class="occupancy" data-tooltip="Total | Max" data-tooltip-direction="RIGHT">
+                    <input type="number" name="system.crew.sail.total" value="{{system.crew.sail.total}}" disabled>
+                    <input type="number" name="system.crew.sail.required" value="{{system.crew.sail.required}}">
+                </div>
+            </div>
+            <div class="small">Qty.</div>
+            <div></div>
+            <div class="list-controls">
+                +
+                <input type="number" name="system.crew.sail.value" value="{{system.crew.sail.value}}" data-tooltip="Adds extra value ontop of number of Actors." data-tooltip-direction="RIGHT">
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each system.crew.sail.list}}
+            {{#with this.document}}
+
+                <div class="list-row prevent-context" data-uuid="{{this.uuid}}" data-index="{{@key}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img data-action="rollTest"  src="{{this.prototypeToken.texture.src}}">
+                            <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                        </div>
+                        <div class="small">
+                            {{#if this.prototypeToken.actorLink}}
+                                <input type="number" value="1" disabled>
+                                {{else}}
+                                <input type="number" value="{{../number}}" data-document="this" data-action="editList" data-ipath="number">
+                            {{/if}}
+                        </div>
+                        <div></div>
+
+                        <div class="list-controls">
+                            <a class="list-control" data-document="this" data-action="listDelete"><i class="fas fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/with}}
+            {{/each}}
+            <div class="list-row droppable">
+                <i class="fas fa-plus inactive"></i>
+            </div>
+        </div>
+    </div>
+
+    {{/if}}
+
+    <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Effects"}}</div>
+                <div class="flex">{{localize "TOW.Sheet.Source"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createEffect">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each document.effects.contents}}
+                    <div class="list-row {{#if this.disabled}}inactive{{/if}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            {{> listEffect effect=this}}
+                        </div>
+                        {{> sheetButtons document=this}}
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+</section>

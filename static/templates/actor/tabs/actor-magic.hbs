@@ -13,9 +13,15 @@
                 {{/each}}
             </div>
         </div>
+        {{#if (isGM)}}
+        <div class="miscast-steps">
+            <button type="button" data-action="stepProperty" data-path="system.magic.miscasts"><i class="fas fa-plus"></i></button>
+            <button type="button" data-action="stepProperty" data-path="system.magic.miscasts" data-reversed="true"><i class="fas fa-minus"></i></button>
+        </div>
+        {{/if}}
         <div class="miscast-controls">
-            <button data-action="disposeMiscast" {{#unless actor.system.magic.miscasts}}disabled{{/unless}}>{{localize "TOW.Sheet.Dispose"}}</button>
-            <button data-action="rollMiscast" {{#unless actor.system.magic.miscasts}}disabled{{/unless}}>{{localize "TOW.Sheet.Miscast"}}</button>
+            <button type="button" data-action="disposeMiscast" {{#unless actor.system.magic.miscasts}}disabled{{/unless}}>{{localize "TOW.Sheet.Dispose"}}</button>
+            <button type="button" data-action="rollMiscast" {{#unless actor.system.magic.miscasts}}disabled{{/unless}}>{{localize "TOW.Sheet.Miscast"}}</button>
         </div>
     </div>
 
@@ -30,7 +36,7 @@
                 <a class="list-name"  data-action="rollTest" data-type="cast" data-lore="{{@key}}">{{this.label}} <i class="fa-solid fa-dice-d10"></i></a>
                 {{/if}}
                 {{#if this.progress}}
-                    <div class="flex progress">Accumulated Power: {{this.progress}} <a data-action="clearLore"><i class="fa-regular fa-xmark"></i></a></div>
+                    <div class="flex progress">Accumulated Power: <a data-action="stepProperty" data-path="system.magic.casting.progress">{{this.progress}}</a> <a data-action="clearLore"><i class="fa-regular fa-xmark"></i></a></div>
                 {{/if}}
             </div>
             <div class="list-header row-content">

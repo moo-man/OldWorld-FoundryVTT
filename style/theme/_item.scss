@@ -1,0 +1,111 @@
+@use "./mixins" as *;
+body.whtow-theme {
+    .application.warhammer.item {
+
+    @include window-frame;
+    padding: 20px;
+
+    background: url("./assets/ui/item-bg.webp");    
+    background-position-x: 15%;
+    backdrop-filter: none;
+    overflow: visible;
+
+
+    &::before {
+        content: "";
+        position: absolute;
+        background: url(./assets/ui/item-header.webp);
+        background-size: cover;
+        height: 90px;
+        width: 360px;
+        z-index: 0;
+        right: 50%;
+        top: -41px;
+        margin-right: -180px;
+        filter: drop-shadow(0 0 0.2rem black);
+    }
+    
+    .window-content {
+        padding: 0px; // border width of app acts as padding
+
+        --form-border : var(--tow-bluegrey-half);
+        --form-bg : var(--tow-bluegrey-half);   
+        --char-border: var(--tow-bluegrey);
+        --selected: var(--tow-blue-half);
+        --selected-text: white;
+
+        button[data-action] {
+            @include tow-button;
+        }
+    }
+
+    &.minimized {
+        .window-header {
+            padding-left: 0px;
+        }
+    }
+
+    .window-header {
+        --header-height: 36px;
+
+        background: none;
+        border: none;
+        top: -32px;
+        padding-left: 4.5rem;
+        padding-right: 0px;
+        box-shadow: none;
+
+        .window-title {
+            text-align: center;
+            position: relative;
+            font-size: var(--font-size-24);
+            font-variant: small-caps;
+            font-family: var(--font-header);
+            color: var(--tow-blue) ;
+        }
+
+        button.header-control {
+
+            outline: none;
+
+            background: url(./assets/ui/button-square.webp);
+            background-size: contain;
+            color: black;
+            --button-size: 1.5rem;
+            font-size: var(--font-size-14);
+
+        }
+
+    }
+
+    .controls-dropdown {
+        top: 1rem;
+    }
+
+    .sheet-header {
+
+        .name {
+            height: 4rem;
+        }
+
+        input[name=name] {
+            @include form-border;
+            background: var(--tow-brown-half);
+            font-family: var(--font-header-alt);
+            font-weight: bold;
+            height: 2.5rem;
+            font-size: 1.5rem;
+        }
+
+    }
+
+    .name-list .list-content {
+        --name-border: var(--tow-bluegrey);
+    }
+
+    .choice-group .choice-text {
+        --attribute-border: var(--tow-bluegrey);
+    }
+
+}
+}

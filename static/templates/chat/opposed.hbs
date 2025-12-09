@@ -20,15 +20,14 @@
             {{#if result.damage}}
                 {{#if result.damage.applied}}
                 <div class="applied">{{{localize result.damage.message name=defender.name}}}</div>
-                {{else}}
-                <button data-action="applyDamage"><i class="fa-solid fa-user-minus"></i> {{localize "TOW.Chat.ApplyNumDamage" damage=result.damage.value}}</button>
                 {{/if}}
+                <button type="button" data-action="applyDamage"><i class="fa-solid fa-user-minus"></i> {{localize "TOW.Chat.ApplyNumDamage" damage=result.damage.value}}</button>
             {{/if}}
         </div>
     {{else}}
         <div class="responses">
             {{#each responseOptions}}
-                <button data-action="opposedResponse" data-type="{{this.id}}" data-tooltip="{{this.tooltip}}"><i
+                <button type="button {{#if this.ability}}ability{{/if}}" data-action="opposedResponse" data-type="{{this.id}}" data-tooltip="{{this.tooltip}}"><i
                         class="fa-solid {{this.icon}}"></i></button>
             {{/each}}
         </div>

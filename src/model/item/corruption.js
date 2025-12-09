@@ -23,6 +23,45 @@ export class CorruptionModel extends BaseItemModel {
         return schema;
     }
 
+    async _preUpdate(data, options, user)
+    {
+        await super._preUpdate(data, options, user);
+
+        if (this.parent.isOwned)
+        {
+            let newLevel = foundry.utils.getProperty(options, "changed.system.level")
+            if (newLevel > this.level)
+            {
+                if (newLevel == 1 && this.tarnished.effect.document)
+                {
+                    options.runCorruptionEffect = "tarnished";
+                }
+                if (newLevel == 2 && this.tainted.effect.document)
+                {
+                    options.runCorruptionEffect = "tainted";
+                }
+                if (newLevel == 3 && this.damned.effect.document)
+                {
+                    options.runCorruptionEffect = "damned";
+                }
+            }
+        }
+    }
+
+    async _onUpdate(data, options, user)
+    {
+        if (options.runCorruptionEffect)
+        {
+            this[options.runCorruptionEffect].effect.document.handleImmediateScripts(data, options, user);
+        }
+    }
+
+    _addModelProperties() {
+        this.tarnished.effect.relative = this.parent.effects;
+        this.tainted.effect.relative = this.parent.effects;
+        this.damned.effect.relative = this.parent.effects;
+    }
+
 
     effectIsActive(effect) {
 
@@ -51,5 +90,25 @@ export class CorruptionModel extends BaseItemModel {
 
     shouldTransferEffect(effect) {
         return this.effectIsActive(effect);
+    }
+
+    async toEmbed(config, options)
+    {
+        let html = `<h3>@UUID[${this.parent.uuid}]{${this.parent.name}}</h3>
+        ${this.description.public}
+        <h4 data-no-toc="true">Vulnerable</h4>
+        ${this.vulnerable}
+        <h4 data-no-toc="true">Tarnished</h4>
+        ${this.tarnished.description}
+        <h4 data-no-toc="true">Tainted</h4>
+        ${this.tainted.description}
+        <h4 data-no-toc="true">Damned</h4>
+        ${this.damned.description}
+        `;
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
     }
 }

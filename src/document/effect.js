@@ -7,7 +7,7 @@ export class OldWorldEffect extends WarhammerActiveEffect
         bracket : ["(", ")"]
     };
 
-    async resistEffect()
+    async resistEffect(skill)
     {
         let result = await super.resistEffect();
         if (result === false || result === true)
@@ -18,26 +18,26 @@ export class OldWorldEffect extends WarhammerActiveEffect
         let transferData = this.system.transferData;
 
         let test;
-        let options = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest, fields: {}};
+        let context = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest, fields: {}};
         if (this.sourceTest && this.sourceTest.result?.test)
         {
             // transferData.avoidTest.dn = this.sourceTest.result.test.dn;
         }
         if (transferData.avoidTest.value == "item")
         {
-            test = await this.actor.setupTestFromItem(this.item, options);
+            test = await this.actor.setupTestFromItem(this.item, context);
         }
         else if (transferData.avoidTest.value == "custom")
         {
-            test = await this.actor.setupTestFromData(transferData.avoidTest, options);
+            test = await this.actor.setupTestFromData(transferData.avoidTest, context);
         }
 
         if (!transferData.avoidTest.reversed)
         {
-            // If the avoid test is marked as opposed, it has to win, not just succeed
+            // If th eavoid test is marked as opposed, it has to win, not just succeed
             if (transferData.avoidTest.opposed && this.sourceTest)
             {
-                return test.result.successes > this.sourceTest.result.successes;
+                return test.result.successes >= this.sourceTest.context.potency || this.sourceTest.result.successes;
             }
             else 
             {
@@ -49,7 +49,7 @@ export class OldWorldEffect extends WarhammerActiveEffect
             // If the avoid test is marked as opposed, it has to win, not just succeed
             if (transferData.avoidTest.opposed && this.sourceTest)
             {
-                return test.result.successes < this.sourceTest.result.successes;
+                return test.result.successes < this.sourceTest.context.potency || this.sourceTest.result.successes;
             }
             else 
             {

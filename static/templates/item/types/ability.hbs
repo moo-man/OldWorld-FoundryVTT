@@ -1,5 +1,38 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
     {{> itemTest fields=fields.test.fields value=source.system.test}}
-    {{> itemDamage}}
+    {{> itemDamage hidePotency=true}}
+    {{> staggeredOptions}}
+
+    
+    {{formGroup system.schema.fields.attack.fields.skill value=source.system.attack.skill localize=true disabled=(or source.system.attack.dice source.system.attack.target)}}
+    <div class="form-group">
+        <label>Attack Dice/Target</label>
+        <div class="form-fields">
+            {{formInput system.schema.fields.attack.fields.dice value=source.system.attack.dice}}
+            {{formInput system.schema.fields.attack.fields.target value=source.system.attack.target}}
+        </div>
+    </div>
+    {{#if system.isAttack}}
+        {{#if system.isRanged}}
+            <div class="form-group">
+                <label>{{localize "TOW.Sheet.OptimumRange"}}</label>
+                <div class="form-fields">
+                    <select name="system.attack.range.min">
+                        {{selectOptions (config "range") selected=source.system.attack.range.min}}
+                    </select>
+                    -
+                    <select name="system.attack.range.max">
+                        {{selectOptions (config "range") selected=source.system.attack.range.max}}
+                    </select>
+                </div>
+            </div>
+        {{else}}
+            {{formGroup system.schema.fields.attack.fields.range.fields.melee value=source.system.attack.range.melee blank=false localize=true label="TOW.Sheet.Range"}}
+        {{/if}}
+            {{formGroup system.schema.fields.attack.fields.grip value=source.system.attack.grip}}
+
+            {{formGroup system.schema.fields.attack.fields.traits value=source.system.attack.traits}}
+            <button type="button" data-action="configureModifiers">Configure Modifiers <i class="fa-solid fa-gear"></i></button>
+    {{/if}}
 
 </section>

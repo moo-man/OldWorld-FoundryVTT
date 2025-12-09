@@ -1,14 +1,42 @@
 <div class="form-group">
     <label>{{localize "TOW.Sheet.Damage"}}</label>
     <div class="form-fields">
-        <input type="text" name="system.damage.formula" value="{{source.system.damage.formula}}" style="flex: 0 0 2rem" >
+        <input type="text" name="system.damage.formula" value="{{source.system.damage.formula}}">
+        {{#unless hideCharacteristic}}
         +
-        <select name="system.damage.characteristic">
+        <select name="system.damage.characteristic" style="flex: 5" >
             {{selectOptions system.schema.fields.damage.fields.characteristic.choices selected=source.system.damage.characteristic localize=true}}
         </select>
+        {{/unless}}
+    </div>
+</div>
+
+<div class="form-group">
+    <label>{{localize "TOW.Sheet.DamageModifiers"}}</label>
+    <div class="form-fields">
+    {{#unless hideIgnoreArmour}}
         <input type="checkbox" name="system.damage.ignoreArmour" {{checked source.system.damage.ignoreArmour}}>
         <span style="font-size: var(--font-size-12)">
         Ignore Armour
         </span>
+    {{/unless}}
+    {{#unless hideMagical}}
+        <input type="checkbox" name="system.damage.magical" {{checked source.system.damage.magical}}>
+        <span style="font-size: var(--font-size-12)">
+        {{localize "TOW.Sheet.Magical"}}
+        </span>
+    {{/unless}}
+    {{#unless hidePotency}}
+        <input type="checkbox" name="system.damage.potency" {{checked source.system.damage.potency}}>
+        <span style="font-size: var(--font-size-12)">
+        +{{localize "TOW.Sheet.Potency"}}
+        </span>
+    {{/unless}}
+    {{#unless hideSuccesses}}
+        <input type="checkbox" name="system.damage.successes" {{checked source.system.damage.successes}}>
+        <span style="font-size: var(--font-size-12)">
+        +{{localize "TOW.Sheet.Successes"}}
+        </span>
+    {{/unless}}
     </div>
 </div>

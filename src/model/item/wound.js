@@ -12,4 +12,57 @@ export class WoundModel extends BaseItemModel
         return schema;
     }
 
+    async _preCreate(data, options, user)
+    {
+        await super._preCreate(data, options, user);
+        if (this.parent.isOwned)
+        {
+            this.parent.actor.removeCondition("staggered");
+
+            if (this.parent.actor.system.hasThresholds)
+            {
+                let actor = this.parent.actor;
+
+                if (actor.system.wounds.current == "defeated")
+                {
+                    return
+                }
+
+                let currentThreshold = actor.system.wounds.current;
+                let nextThreshold = actor.system.thresholdAtWounds(actor.itemTypes.wound.length + 1)
+
+                if (currentThreshold != "defeated" && nextThreshold != currentThreshold)
+                {
+                    actor.system.wounds[nextThreshold].effect?.document?.handleImmediateScripts(data, options, user)
+                }
+                
+                if (nextThreshold == "defeated")
+                {
+                    actor.addCondition("dead");
+                }
+            }
+
+        }
+    }
+    
+    async _onCreate(data, options, user)
+    {
+        await super._onCreate(data, options, user);
+
+        if (this.parent.isOwned)
+        {
+            TokenHelpers.displayScrollingText("+" + this.parent.name, this.parent.actor, {fill: "0xFF0000", direction : CONST.TEXT_ANCHOR_POINTS.TOP, fontSize: 24,});
+        }
+    }
+
+    async _onDelete(data, options, user)
+    {
+        await super._onDelete(data, options, user);
+
+        if (this.parent.isOwned)
+        {
+            TokenHelpers.displayScrollingText("–" + this.parent.name, this.parent.actor, {fill: "0x00FF00", direction : CONST.TEXT_ANCHOR_POINTS.TOP, fontSize: 24,});
+        }
+    }
+
 }

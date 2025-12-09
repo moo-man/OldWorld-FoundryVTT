@@ -1,0 +1,13 @@
+<div class="sheet-header">
+    {{!-- <button type="button" class="edit-toggle floating" data-tooltip="TOW.Sheet.ToggleEditing" data-action="toggleEdit"><i class="fas fa-edit"></i></button> --}}
+    <img data-action="editImage" data-edit="img" src="{{actor.img}}" height="100" width="100">
+    <div class="header-details">
+        <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize " Name"}}">
+        <div class="header-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "TOW.Sheet.Type"}}</label></div>
+                <div class="field" style="grid-column: 1 / span 12">{{formInput fields.type value=system.type choices=(config "vehicleType")}}</div>
+            </div>
+        </div>
+    </div>
+</div>

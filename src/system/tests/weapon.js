@@ -7,6 +7,7 @@ export class WeaponTest extends OldWorldTest
     {
         let separated = super._separateDialogData(data);
         separated.testData.damage = data.damage;
+        separated.context.charging = data.charging;
 
         return foundry.utils.mergeObject(separated, {context : {rollClass : "WeaponTest"}});
     }
@@ -35,21 +36,18 @@ export class WeaponTest extends OldWorldTest
         return this.item;
     }
 
+    get attack()
+    {
+        return true;
+    }
+
    /**
     * Computes damage ontop of normal opposed test evaluation
     * @inheritdoc
     */
-    computeOpposedResult(test)
+    async computeOpposedResult(test)
     {
-        let result = super.computeOpposedResult(test);
-
-        if (result.success && result.computed)
-        {
-            result.damage = {
-                value : this.testData.damage + result.successes,
-                ignoreArmour : this.weapon.system.damage.ignoreArmour
-            }
-        }
+        let result = await super.computeOpposedResult(test);
 
         if (this.weapon.system.isMelee && !result.success && !this.actor.hasCondition("staggered"))
         {
@@ -58,4 +56,15 @@ export class WeaponTest extends OldWorldTest
 
         return result;
     }
+
+
+    computeOpposedDamage(result, test)
+    {
+        return {
+            value : this.testData.damage + (this.weapon.system.damage.successes ? result.successes : 0),
+            ignoreArmour : this.weapon.system.damage.ignoreArmour,
+            excludeStaggeredOptions : this.testData.excludeStaggeredOptions
+        }
+    }
 }
+

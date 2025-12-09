@@ -28,6 +28,16 @@ export default class WeaponDialog extends TestDialog
         });
     }
 
+    get isAttack()
+    {
+        return true;
+    }
+    
+    get attack()
+    {
+        return this.weapon;
+    }
+
     get weapon()
     {
         return this.data.weapon;
@@ -113,7 +123,7 @@ export default class WeaponDialog extends TestDialog
 
         context.itemUuid = weapon.uuid;
         
-        let dialogData = super.setupData(skill, actor, context, options);
+        let dialogData = await super.setupData(skill, actor, context, options);
         
         dialogData.data.weapon = weapon;
         dialogData.data.scripts = dialogData.data.scripts.concat(weapon?.getScripts("dialog").filter(s => !s.options.defending) || [])

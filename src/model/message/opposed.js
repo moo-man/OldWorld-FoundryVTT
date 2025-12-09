@@ -1,6 +1,6 @@
 import { OldWorldTest } from "../../system/tests/test";
 
-export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel 
+export class OldWorldOpposedMessageModel extends WarhammerMessageModel 
 {
     static get actions() {
         return foundry.utils.mergeObject(super.actions, {
@@ -52,6 +52,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
             damage : new fields.SchemaField({
                 value : new fields.NumberField({nullable : true, initial: null}),
                 ignoreArmour : new fields.BooleanField(),
+                excludeStaggeredOptions : new fields.ArrayField(new fields.StringField()),
                 applied : new fields.BooleanField(),
                 message : new fields.StringField()
             }, {nullable : true})
@@ -107,6 +108,14 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
         {
           options.push({id : weapon.id, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${weapon.name})`, icon : "fa-shield"});
         }
+
+        let abilities = actor.itemTypes.ability.filter(i => i.system.isMelee);
+        for(let ability of abilities)
+        {
+            options.push({id : ability.id, ability: true, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${ability.name})`, icon : "fa-shield"});
+        }
+
+
       }
   
       return options;
@@ -115,7 +124,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
     async onRender(html)
     {
         // Remove response buttons if not owner of the defendering actor
-        if (!this.defenderToken.actor.isOwner)
+        if (!this.defenderToken?.actor?.isOwner)
         {
             html.querySelector(".responses")?.remove();
         }
@@ -133,7 +142,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
             await this.parent.update({"system.result" : this.attackerMessage.system.test.computeOpposedResult(this.defenderMessage?.system.test)})
         }
         let chatData = {
-            attacker : this.attackerToken,
+            attacker : this.attackerToken,// || this.attackerTest.actor.prototypeToken,
             defender : this.parent.system.defenderMessage?.system.test.token ?? this.defenderToken,
             result : this.parent.system.result
         }
@@ -158,7 +167,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
         let responseData = {
             defenderMessage : test.message, 
             defender: test.context.speaker, 
-            result : this.attackerMessage.system.test.computeOpposedResult(test)
+            result : await this.attackerMessage.system.test.computeOpposedResult(test)
         }
         await this.parent.update({system : responseData})
         this.renderResult();
@@ -176,7 +185,7 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
         }
 
         let responseData = {
-            result : this.attackerMessage.system.test.computeOpposedResult(),
+            result : await this.attackerMessage.system.test.computeOpposedResult(),
             unopposed : true
         }
         await this.defenderToken.actor?.system.clearOpposed();
@@ -202,7 +211,14 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
             case "athletics":
                 return actor.setupSkillTest(type)
             default: 
-                return actor.setupWeaponTest(type)
+                if (target.classList.has("ability"))
+                {
+                    return actor.setupAbilityTest(type)
+                }
+                else 
+                {
+                    return actor.setupWeaponTest(type)
+                }
 
         }
     }
@@ -210,6 +226,6 @@ export class OldWorldOpposedMessageModel extends WarhammerTestMessageModel
     static async  _onApplyDamage(ev, target)
     {
         let actor = ChatMessage.getSpeakerActor(this.defender);
-        actor.system.applyDamage(this.result.damage.value, {opposed : this, item : this.attackerTest.item})
+        actor.system.applyDamage(this.result.damage.value, {opposed : this, item : this.attackerTest.item, test : this.attackerMessage.system.test})
     }
 }

@@ -34,10 +34,13 @@ export default class ModifierConfig extends WHFormApplication
         context.conditions = {
             staggered : "Staggered",
             armoured : "Armoured",
+            prone : "Prone",
             mounted : "Mounted"
         }
 
         context.system = this.document.system;
+        context.path = options.path;
+        context.modifiers = foundry.utils.getProperty(this.document, options.path);
         return context;
     }
 

@@ -7,12 +7,13 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
   static DEFAULT_OPTIONS = {
     actions : {
           rollTest : this._onRollTest,
-      toggleCondition: this._onToggleCondition,
-      disposeMiscast : this._onDisposeMiscast,
-      rollMiscast : this._onRollMiscast,
-      useBlessing : this._onUseBlessing,
-      regainMiracle : this._onRegainMiracle,
-      clearLore : this._onClearLore
+          toggleCondition: this._onToggleCondition,
+          disposeMiscast : this._onDisposeMiscast,
+          rollMiscast : this._onRollMiscast,
+          useBlessing : this._onUseBlessing,
+          regainMiracle : this._onRegainMiracle,
+          clearLore : this._onClearLore,
+          doAction : this._onDoAction
     },
   }
   
@@ -43,6 +44,23 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
     // context.miscasts = context.miscasts.concat(new Array(this.actor.system.magic.miscasts));
     return context;
   }
+
+  async _onDropActor(data, ev)
+  {
+    let actor = await Actor.implementation.fromDropData(data);
+    if (actor.type != "npc" || actor.pack)
+    {
+      return ui.notifications.error("Must use an imported NPC as a mount")
+    }
+    if (!actor.testUserPermission(game.user, "OWNER"))
+    {
+      return ui.notifications.error("Must have Owner permission on the Mount")
+    }
+    if (ev.target.closest(".mount-drop"))
+    {
+      this.document.update(this.document.system.mount.set(actor));
+    }
+  }
   
   static async  _onRollTest(ev, target)
   {
@@ -53,6 +71,14 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
     else if (target.dataset.type == "weapon")
     {
       this.actor.setupWeaponTest(this._getUUID(ev));
+    }
+    else if (target.dataset.type == "weapon")
+    {
+      this.actor.setupWeaponTest(this._getUUID(ev));
+    }
+    else if (target.dataset.type == "ability")
+    {
+      this.actor.setupAbilityTest(this._getUUID(ev));
     }
     else if (target.dataset.type == "cast")
     {
@@ -109,6 +135,12 @@ export default class StandardOldWorldActorSheet extends BaseOldWorldActorSheet
   static _onClearLore(ev, target)
   {
     this.actor.update({"system.magic.casting" : {lore : "", progress: 0}})
+  }
+
+  static _onDoAction(ev, target)
+  {
+    let action = target.dataset.key;
+    this.actor.system.doAction(action);
   }
 
 }

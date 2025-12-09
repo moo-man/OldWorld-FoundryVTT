@@ -35,9 +35,9 @@
             {{{system.blessed.document.system.miracles.description}}}
         </div>
         {{#if system.blessed.document.system.miracles.used}}
-            <button data-action="regainMiracle">{{localize "TOW.Sheet.RegainMiracle"}}</button>
+            <button type="button" data-action="regainMiracle">{{localize "TOW.Sheet.RegainMiracle"}}</button>
         {{else}}
-            <button data-action="useBlessing" data-type="miracle">{{localize "TOW.Sheet.PerformMiracle"}}</button>
+            <button type="button" data-action="useBlessing" data-type="miracle">{{localize "TOW.Sheet.PerformMiracle"}}</button>
         {{/if}}
     {{/if}}
     </div>

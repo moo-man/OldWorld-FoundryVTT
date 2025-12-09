@@ -7,6 +7,7 @@ export class TestModel extends foundry.abstract.DataModel
         schema.skill = new fields.StringField();
         schema.dice = new fields.NumberField();
         schema.self = new fields.BooleanField();
+        schema.opposed = new fields.BooleanField();
         return schema;
     }
 

@@ -10,20 +10,4 @@ export default function()
     {
         OldWorldChatMessage.addTestContextOptions(options);
     });
-
-    // Hooks.on("renderChatLog", (app, html) => 
-    // {
-    //     ImpMalChatMessage.chatListeners(html);
-    //     ChatHelpers.addOpposedHighlightListeners(html);
-    // });
-
-    // Hooks.on("renderChatMessage", (app, html) => 
-    // {
-    //     ImpMalItem.itemPostListeners(html);
-    //     ChatHelpers.removeGMOnlyElements(html);
-    //     if (!app.isAuthor && !app.isOwner)
-    //     {
-    //         ChatHelpers.removeNonOwnerElements(html);
-    //     }
-    // });
 }

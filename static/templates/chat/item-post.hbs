@@ -1,0 +1,8 @@
+<div class="item-post">
+<div class="item-drag">
+    {{{summary}}}
+</div>
+{{#if item.system.isPhysical}}
+    <button type="button" data-action="buyItem">Buy ({{configLookup "status" item.system.cost}})</button>
+{{/if}}
+</div>

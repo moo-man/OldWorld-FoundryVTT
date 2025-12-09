@@ -45,8 +45,11 @@
         gap: 0.5rem;
         .condition {
             display: flex;
+            align-items: center;
             border: 1px solid var(--border);
             border-radius: 10px;
+            height: 1.5rem;
+            line-height: 1.5rem;
             padding: 0.2rem 0.5rem;
             gap: 0.5rem;
             img {
@@ -63,5 +66,15 @@
                 }
             }
         }
+    }
+
+    .sheet-list {
+        .list-name input {
+            padding: 0px 0.2rem;
+        }
+    }
+
+    .foundry-note {
+        margin: 10px
     }
 }

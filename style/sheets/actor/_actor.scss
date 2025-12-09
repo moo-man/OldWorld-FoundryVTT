@@ -4,6 +4,11 @@
     --border: var(--color-cool-3);
     --condition-active: var(--color-warm-2);
 
+    .attribute-row {
+        display: flex;
+        gap: 0.5rem;
+    }
+
     .effect-lists {
         display: flex;
         flex-direction: column;
@@ -46,7 +51,15 @@
     .miscast-container {
         display: flex;
         gap: 0.5rem;
+        min-height: 100px;
         .miscast-controls {
+            flex: 0 0 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .miscast-steps {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -61,6 +74,7 @@
         border: 1px solid var(--border);
         .dice {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
             justify-content: center;
             margin: 0.5rem;
@@ -144,6 +158,64 @@
     {
         .weapon-properties {
             gap: 0.5rem;
+        }
+    }
+
+    .tab[data-tab=effects] 
+    {
+        .source {
+            flex: 1;
+            i {
+                margin-right: 0.2rem;
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .mount-section {
+        .mount-drop {
+            height: 60px;
+            border: 1px dotted var(--border);
+            border-top: none;
+            text-align: center;
+            font-size: var(--font-size-20);
+            line-height: 50px;
+            span {
+                opacity: 0.5;
+            }
+
+            &.hover {
+                box-shadow: 0px 0px 5px black inset;
+            }
+        }
+
+        .mount-data {
+            display: flex;
+            height: 60px;
+            align-items: center;
+            img {
+                height: 50px;
+                flex: 0 0 50px;
+            }
+            .details {
+                text-align: center;
+                font-weight: bold;
+                flex: 1;
+                align-items: center;
+                margin: auto;
+            }
+            .controls 
+            {
+                margin: auto;
+                flex: 0 0 50px;
+                display: flex;
+                justify-content: space-around;
+            }
         }
     }
 }

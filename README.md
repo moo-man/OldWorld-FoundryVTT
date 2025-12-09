@@ -1,11 +1,13 @@
-# Warhammer: The Old World Roleplaying Game (ALPHA)
-The **work-in-progress** system for playing *Warhammer: The Old World Roleplaying  Game* on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
+# Warhammer: The Old World Roleplaying Game
+The **official** system for playing in *The World of Legend* on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
 
-<!-- ![](https://img.shields.io/github/v/release/moo-man/OldWorld-FoundryVTT?label=Latest%20Version)
+![splash](https://github.com/user-attachments/assets/47bbdaec-46e7-41d6-bcda-6c8f29d8cae2)
+
+![](https://img.shields.io/github/v/release/moo-man/OldWorld-FoundryVTT?label=Latest%20Version)
 
 ![](https://img.shields.io/github/downloads/moo-man/OldWorld-FoundryVTT/latest/whtow.zip?label=Downloads%20%28Latest%20Version%29)
 
-![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V13-orange) -->
+![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V13-orange)
 
 ## Install
 1. Go to the setup page and choose **Game Systems**.

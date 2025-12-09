@@ -1,10 +1,12 @@
 import OldWorldTables from "../../system/tables";
+import { ActionUse } from "../../system/tests/action-use";
 import { ItemUse } from "../../system/tests/item-use";
 import { BaseActorModel } from "./base";
 import { BlessedDataModel } from "./components/blessed";
 import { CharacteristicsModel } from "./components/characteristics";
 import { CorruptionDataModel } from "./components/corruption";
 import { MagicDataModel } from "./components/magic";
+import { MountDataModel } from "./components/mount";
 import { NPCCharacteristicsModel } from "./components/npc-characteristics";
 import { NPCSkillsModel } from "./components/npc-skills";
 import { SkillsModel } from "./components/skills";
@@ -37,6 +39,8 @@ export class StandardActorModel extends BaseActorModel
         schema.magic = new fields.EmbeddedDataField(MagicDataModel)
         schema.blessed = new fields.EmbeddedDataField(BlessedDataModel)
         schema.corruption = new fields.EmbeddedDataField(CorruptionDataModel)
+
+        schema.mount = new fields.EmbeddedDataField(MountDataModel)
         return schema;
     }
 
@@ -87,27 +91,57 @@ export class StandardActorModel extends BaseActorModel
         super._addModelProperties();
     }
 
-    applyDamage(damage, {ignoreArmour, opposed, item, test})
+    async applyDamage(damage, {ignoreArmour, opposed, item, test})
     {
         let resilience = this.resilience.value;
+        let text = [];
+        let args = {actor: this.parent, attacker: test?.actor, resilience, ignoreArmour, opposed, test, text}
+        await Promise.all(this.parent.runScripts("preTakeDamage", args));
+        await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
+        await Promise.all(test?.item?.runScripts("preApplyDamage", args) || []);
+
         if (ignoreArmour)
         {
             resilience = this.resilience.base;
         }
         let message = ""
 
-        this.parent.applyEffect({effects: test?.damageEffects || []});
+        await this.parent.applyEffect({effects: test?.damageEffects || []});
+
+
+        // Not ideal but not sure how else to do it
+        if (test?.damageEffects.find(e => e.statuses.has("staggered")))
+        {
+            await Promise.all(this.parent.runScripts("receiveStaggered", {test, opposed, actor : this.parent}) || [])
+            await Promise.all(test?.actor.runScripts("inflictStaggered", {test, opposed, actor : this.parent}) || [])
+            await Promise.all(test?.item?.runScripts("inflictStaggered", {test, opposed, actor : this.parent}) || [])
+        }
+
+        if (test?.damageEffects.find(e => e.statuses.has("prone")))
+        {
+            await Promise.all(this.parent.runScripts("receiveProne", {test, opposed, actor : this.parent}) || [])
+            await Promise.all(test?.actor.runScripts("inflictProne", {test, opposed, actor : this.parent}) || [])
+            await Promise.all(test?.item?.runScripts("inflictProne", {test, opposed, actor : this.parent}) || [])
+        }
 
         if (damage > resilience)
         {
-            this.addWound();
+            await this.addWound({fromTest: test, opposed});
             message = `TOW.Chat.TakesWound`
+            args.result = "wound";
+            
         }
-        else 
+        else  if (damage > 0)
         {
-            this.parent.addCondition("staggered");
+            await this.inflictStaggered({fromTest: test, opposed})
             message = `TOW.Chat.GainsStaggered`
+            args.result = "staggered";
         }
+
+        await Promise.all(this.parent.runScripts("takeDamage", args));
+        await Promise.all(test?.actor.runScripts("applyDamage", args) || []);
+        await Promise.all(test?.item?.runScripts("applyDamage", args) || []);
+
         if (opposed)
         {
             let owner = warhammer.utility.getActiveDocumentOwner(opposed.parent)
@@ -133,14 +167,31 @@ export class StandardActorModel extends BaseActorModel
         }
     }
 
-    addWound()
+    async addWound({fromTest, opposed, diceModifier=0, roll=true}={})
     {
-        let wounds = this.parent.itemTypes.wound;
-        let formula = `${wounds.length + 1}d10`;
-        return game.oldworld.tables.rollTable("wounds",  formula);
+        let args = {test: fromTest, opposed, diceModifier, actor : this.parent}
+        await Promise.all(this.parent.runScripts("receiveWound", args) || [])
+        await Promise.all(fromTest?.actor.runScripts("inflictWound", args) || [])
+        await Promise.all(fromTest?.item.runScripts("inflictWound", args) || [])
+
+        if (args.abort)
+        {
+            return;
+        }
+
+        if (roll)
+        {
+            let wounds = this.parent.itemTypes.wound.filter(i => !i.system.treated);
+            let formula = `${Math.max(1, wounds.length + 1 + args.diceModifier)}d10`;
+            return game.oldworld.tables.rollTable("wounds",  formula, {chatData: {speaker: {alias: this.parent.name}}});
+        }
+        else 
+        {
+            this.parent.createEmbeddedDocuments("Item", [{type : "wound", name : "Wound"}])
+        }
     }
 
-    giveGround({flavor=""}={})
+    async giveGround({flavor="", fromTest, opposed}={})
     {
         ChatMessage.implementation.create({
             content : "<strong>Give Ground!</strong>: Must retreat to an adjacent Zone.",
@@ -149,9 +200,31 @@ export class StandardActorModel extends BaseActorModel
             },
             flavor : flavor || game.i18n.localize("TOW.Dialog.Staggered")
         })
+
+        ActiveEffect.implementation.create({
+            name: "Give Ground",
+            img: "systems/whtow/assets/icons/give-ground.svg",
+            statuses: ["give"],
+            system: {
+                scriptData: [{
+                    label: "Delete",
+                    trigger: "endRound",
+                    script: "this.effect.delete()"
+                }]
+            }
+        }, {parent: this.parent});
+
+        await Promise.all(this.parent.runScripts("receiveGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
+        await Promise.all(fromTest?.actor.runScripts("inflictGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
+        await Promise.all(fromTest?.item.runScripts("inflictGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
     }
 
-    async fallProne({flavor=""}={})
+    async inflictStaggered({fromTest, opposed}={})
+    {
+        await this.parent.addCondition("staggered", {fromTest, opposed});
+    }
+
+    async fallProne({flavor="", fromTest, opposed}={})
     {
         ChatMessage.implementation.create({
             content : "<strong>Falls Prone!</strong>",
@@ -161,10 +234,16 @@ export class StandardActorModel extends BaseActorModel
             flavor : flavor || game.i18n.localize("TOW.Dialog.Staggered")
         })
         await this.parent.addCondition("prone");
+        if (this.parent.hasCondition("prone"))
+        {
+            await Promise.all(this.parent.runScripts("receiveProne", {test: fromTest, opposed, actor : this.parent}) || [])
+            await Promise.all(fromTest?.actor.runScripts("inflictProne", {test: fromTest, opposed, actor : this.parent}) || [])
+            await Promise.all(fromTest?.item.runScripts("inflictProne", {test: fromTest, opposed, actor : this.parent}) || [])
+        }
 
     }
 
-    async promptStaggeredChoice({excludeOptions=[], user}={})
+    async promptStaggeredChoice({excludeOptions=[], user, fromTest, opposed}={})
     {
             let buttons = [
                 {
@@ -179,7 +258,7 @@ export class StandardActorModel extends BaseActorModel
                     action : "give",
                     label : "Give Ground"
                 }                               // Must always have the option to a least take a wound
-            ].filter(i => i.action == "wound" || !excludeOptions.includes(i.acton))
+            ].filter(i => i.action == "wound" || !excludeOptions.includes(i.action))
 
             let choice = await foundry.applications.api.Dialog.wait({
                 window : {title : `${this.parent.name} - ${game.i18n.localize("TOW.Dialog.Staggered")}`},
@@ -190,18 +269,64 @@ export class StandardActorModel extends BaseActorModel
             switch (choice)
             {
                 case "give" :
-                    await this.giveGround();
+                    await this.giveGround({fromTest, opposed});
                     break;
                 case "wound" :
-                    await this.addWound();
-                    this.parent.removeCondition("staggered");
+                    await this.addWound({fromTest, opposed});
                     break;
                 case "prone" :
-                    await this.fallProne()
+                    await this.fallProne({fromTest, opposed})
                     break;
             }
 
             return choice;
+    }
+
+    async doAction(action, subAction)
+    {
+        let actionData = foundry.utils.deepClone(game.oldworld.config.actions[action]);
+        let subActionData = actionData.subActions?.[subAction];
+
+        // Always prioritize subaction, if specified.
+        let actionDataToUse = subActionData || actionData;
+
+        if (actionDataToUse)
+        {
+            // If a script, ignore everything else and execute
+            if (actionDataToUse.script)
+            {
+                actionDataToUse.script(this.parent);
+            }
+            // If test defined, perform test, add effect to actor if test is succeeded
+            else if (!foundry.utils.isEmpty(actionDataToUse.test))
+            {
+                let skill = actionDataToUse.test.skill;
+                if (actionDataToUse.test.chooseSkill)
+                {
+                    skill = await game.oldworld.utility.skillDialog({title : actionDataToUse.label, defaultValue: skill})
+                }
+                let test = await this.parent.setupSkillTest(skill, {action, subAction})
+                if (actionDataToUse.effect && test.succeeded)
+                {
+                    this.parent.applyEffect({effectData : actionDataToUse.effect})
+                }
+            }
+            // No test or script defined, just add effect to actor
+            else if (actionDataToUse.effect)
+            {
+                this.parent.applyEffect({effectData : actionDataToUse.effect})
+            }
+
+            else if (!subAction && actionData.subActions)
+            {
+                let subActions = Object.keys(actionData.subActions).map(i => {return {id : i, name : actionData.subActions[i].label}});
+                let chosenSubAction = (await ItemDialog.create(subActions, 1, {title : actionData.label, text : "Choose Action"}))[0].id;
+                return this.doAction(action, chosenSubAction)
+            }
+            else {
+                ActionUse.fromAction(action, this.parent, {subAction});
+            }
+        }
     }
 
     rollMiscast()
@@ -210,13 +335,63 @@ export class StandardActorModel extends BaseActorModel
         this.parent.update({"system.magic.miscasts" : 0})
     }
 
+    async rollHazard(skill, rating=1, context={})
+    {
+        let test = await this.parent.setupSkillTest(skill, context);
+        let diff = test.result.successes - rating;
+
+        if (diff < 0)
+        {
+            this.addWound({diceModifier : Math.max(1, Math.abs(diff) - 1)})
+        }
+        return test;
+    }
+
+
+    modifyMiscasts(value, messageData)
+    {
+        if (value == 0 || this.magic.miscasts == 0)
+        {
+            return;
+        }
+        this.parent.update({"system.magic.miscasts" : this.magic.miscasts + value});
+
+        let content = (value > 0 ? "Added " : "Removed ") + Math.abs(value) + " Miscast " + (Math.abs(value) > 1 ? " Dice" : " Die");
+        ChatMessage.create(foundry.utils.mergeObject({content, speaker: {alias: this.parent.name}}, messageData))
+    }
+
+    async useItem(item, context = {}, options) {
+        if (typeof item == "string") {
+            if (item.includes(".")) {
+                item = await fromUuid(item);
+            }
+            else {
+                item = actor.items.get(item);
+            }
+        }
+
+        context.item = item;
+
+        if (item.type == "lore")
+        {
+            return this.parent.setupSkillTest("recall", context, options);
+        }
+
+        else if (item.system.test?.self && item.system.test?.skill) {
+            this.parent.setupSkillTest(item.system.test.skill, context, options)
+        }
+        else {
+            ItemUse.fromItem(item, this.parent, context);
+        }
+    }
+
     async castSpell(spell, potency, fromTest)
     {
         if (fromTest)
         {
             await this.clearCasting()
         }
-        this.parent.useItem(spell, {potency, targets: fromTest ? fromTest.context.targetSpeakers : null})
+        this.useItem(spell, {potency, targets: fromTest ? fromTest?.context.targetSpeakers : null})
     }
 
     clearCasting()
@@ -262,17 +437,26 @@ export class StandardActorModel extends BaseActorModel
         return lores;
     }
 
+    get isStandard()
+    {
+        return true;
+    }
+
     get isArmoured() 
     {
         return this.resilience.armoured;
     }
     get isStaggered() 
     {
-        return this.parent.statuses.includes("staggered");
+        return this.parent.statuses.has("staggered");
+    }
+    get isProne() 
+    {
+        return this.parent.statuses.has("prone");
     }
     get isMounted() 
     {
-
+        return this.mount.isMounted;
     }
 }
 

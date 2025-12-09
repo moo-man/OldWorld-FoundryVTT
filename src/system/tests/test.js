@@ -27,7 +27,9 @@ export class OldWorldTest extends WarhammerTestBase
             target : data.target,
             dice : data.dice += (data.bonus - data.penalty),
             state : data.state,
-            rerolls : [] // 2D array
+            rerolls : [], // 2D array
+            loseTies: data.loseTies,
+            excludeStaggeredOptions: [],
         };
         let context = foundry.utils.mergeObject({
             actor : data.actor.uuid,
@@ -35,6 +37,8 @@ export class OldWorldTest extends WarhammerTestBase
             rollMode : data.rollMode,
             skill: data.skill,
             endeavour : data.context.endeavour || false,
+            action : data.context.action,
+            subAction : data.context.subAction,
             speaker : data.speaker,
             itemUuid : data.context.itemUuid,
             messageId : null,
@@ -55,8 +59,10 @@ export class OldWorldTest extends WarhammerTestBase
     async roll()
     {
         await this.preRollOperations();
+        await this.runPreEffects();
         this.result = {
-            rerolls : []
+            rerolls : [],
+            loseTies : this.testData.loseTies
         };
         this.result.initialDice = (await this._rollDice(this.testData.dice, this.testData.target)).sort((a, b) => {
             let aResult = a.result == 0 ? 10 : a.result;
@@ -76,8 +82,25 @@ export class OldWorldTest extends WarhammerTestBase
             await this.grimReroll(false);
         }
         this.computeResult();
+        await this.runPostEffects();
         await this.postRollOperations();
     }
+
+    async runPreEffects() {
+          await Promise.all(this.actor.runScripts("preRollTest", { test: this }))
+          if (this.item instanceof Item)
+          {
+            await Promise.all(this.item.runScripts("preRollTest", { test: this }))
+          }
+      }
+    
+      async runPostEffects() {
+          await Promise.all(this.actor.runScripts("rollTest", { test: this }))
+          if (this.item instanceof Item)
+          {
+            await Promise.all(this.item.runScripts("rollTest", { test: this }))
+          }
+      }
 
 
     
@@ -88,9 +111,14 @@ export class OldWorldTest extends WarhammerTestBase
      * @param {Array} rerolls Indices of any dice that are rerolls, if empty, all dice are active, if contains numbers, only dice with at those indices are being rerolled
      * @returns 
      */
-    async _rollDice(dice, target, rerolls=[])
+    async _rollDice(dice, target, rerolls=[], {showDSN=false}={})
     {
         let roll = await new Roll(`${dice}d10cs<=${target}`).roll();
+        if (showDSN && game.dice3d)
+        {
+            await game.dice3d.showForRoll(roll, game.user, true);
+        }
+        this._roll = roll;
         let result = roll.dice[0].results.map((d, index) => {
             return {
                 success: d.success,
@@ -149,6 +177,10 @@ export class OldWorldTest extends WarhammerTestBase
         {
             this.itemSummary = await this.formatItemSummary()
         }
+        else if (this.context.action)
+        {
+            this.itemSummary = await this.formatActionSummary()       
+        }
         let content = await foundry.applications.handlebars.renderTemplate(this.constructor.testTemplate, this);
         
         if (!this.message || newMessage)
@@ -160,6 +192,7 @@ export class OldWorldTest extends WarhammerTestBase
                 type : "test",
                 system : {...this},
                 content,
+                rolls: [this._roll],
                 speaker : this.context.speaker
             }
             ChatMessage.create(ChatMessage.applyRollMode(chatData, this.context.rollMode), {keepId: true});
@@ -172,14 +205,16 @@ export class OldWorldTest extends WarhammerTestBase
 
     async formatItemSummary()
     {
-        let item = this.item;
-        let enriched = {
-            public : await foundry.applications.ux.TextEditor.enrichHTML(item.system.description.public, {async: true, relativeTo: item, secrets : false}),
-            gm : await foundry.applications.ux.TextEditor.enrichHTML(item.system.description.gm, {async: true, relativeTo: item, secrets : false})
-        }
-        return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item });
+        return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/item-summary.hbs", await this.item.system.summaryData());
     }
 
+    async formatActionSummary()
+    {
+        let actionData = game.oldworld.config.actions[this.context.action]
+        let subActionData = actionData.subActions?.[this.context.subAction]
+
+        return await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/action-summary.hbs", {name : actionData.label + (subActionData ? ` - ${subActionData.label}` : ""), description : subActionData?.description || actionData.description });
+    }
 
     /**
      * Checks targets and creates opposed messages for any targets that don't have them
@@ -228,7 +263,7 @@ export class OldWorldTest extends WarhammerTestBase
      * 
      * @param {OldWorldTest} test Test defending against this test, undefined if unopposed
      */
-    computeOpposedResult(test)
+    async computeOpposedResult(test)
     {
         let successes // Opposing test successes
 
@@ -242,13 +277,34 @@ export class OldWorldTest extends WarhammerTestBase
             successes = test.result.successes;
         }
         let opposed = {
-            outcome : this.result.successes >= successes ? "success" : "failure",
+            outcome : (this.result.successes >= successes && this.result.successes) ? "success" : "failure",
             successes : this.result.successes - successes,
-            success : this.result.successes >= successes,
+            success : this.result.loseTies ? this.result.successes > successes : this.result.successes >= successes,
             description : "",
             unopposed : !test,
+            text: [],
             computed : true
         }
+
+        // Need to define some things early for scripts to use
+        if (this.result.successes == 0 && successes == 0)
+        {
+            opposed.outcome == "tie";
+        }
+
+        if (opposed.success && opposed.computed)
+        {
+            opposed.damage = this.computeOpposedDamage(opposed, test)
+        }
+
+
+        let args = {opposed, attackerTest: this, defenderTest: test, attacker: this.actor, defender: this.targets[0]}; // defender is useful if unopposed (no test provided)
+        await Promise.all(this.actor.runScripts("computeOpposedAttacker", args));
+        await Promise.all(this.item?.runScripts("computeOpposedAttacker", args) || []);
+
+        // Note: These scripts may cause permission issues if a player attacks a GM actor
+        await Promise.all(test?.actor?.runScripts("computeOpposedDefender", args) || []);
+        await Promise.all(test?.item?.runScripts("computeOpposedDefender", args) || []); 
 
         // If the result of THIS test is 0 successes, that means both tests had 0, no one wins
         if (opposed.success)
@@ -291,9 +347,32 @@ export class OldWorldTest extends WarhammerTestBase
         else 
         {
             opposed.description = "TOW.Chat.Failure"
+            
+            if (this.result.loseTies && this.result.successes == successes)
+            {
+                opposed.text.push("Lose Ties")
+            }
         }
 
         return opposed;
+    }
+
+    computeOpposedDamage(result, test)
+    {
+        
+    }
+
+    // Helper for scripts
+    successfullyOpposes(successes)
+    {
+        if (successes == 0)
+        {
+            return true; // If attacker has no successes, "successfully" opposes
+        }
+        else 
+        {
+            return this.result.successes > successes
+        }
     }
 
     update(data)
@@ -326,7 +405,7 @@ export class OldWorldTest extends WarhammerTestBase
 
     async reroll(label="Reroll", diceIndices=[], compute=true)
     {
-        this.result.rerolls.push({label, dice : await this._rollDice(this.testData.dice, this.testData.target, diceIndices)});
+        this.result.rerolls.push({label, dice : await this._rollDice(this.testData.dice, this.testData.target, diceIndices, {showDSN: true})});
         if (compute)
         {
             this.computeResult();
@@ -387,7 +466,7 @@ export class OldWorldTest extends WarhammerTestBase
 
     get token()
     {
-        return this.actor.getActiveTokens()[0]?.document
+        return this.actor.getActiveTokens()[0]?.document || this.actor.prototypeToken
     }
 
     get targets() 

@@ -22,4 +22,9 @@ export class EquippableItem extends PhysicalItem
     {
         return true;
     }
+
+    shouldTransferEffect(effect)
+    {
+        return super.shouldTransferEffect(effect) && (!effect.system.transferData.equipTransfer || this.isEquipped)
+    }
 }

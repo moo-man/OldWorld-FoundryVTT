@@ -111,4 +111,47 @@ export class CareerModel extends BaseItemModel {
             }
         }
     }
+
+    async toEmbed(config, options)
+    {
+        let originString = this.origins.list.length ? this.origins.list.map(i => i.name).join(", ") : "All";
+        let charString = Object.keys(this.characteristics).filter(i => this.characteristics[i]).map(i => game.oldworld.config.characteristics[i]).join(", ")
+
+        let skills = Object.keys(this.skills.choices).filter(i => this.skills.choices[i]).map(i => game.oldworld.config.skills[i]).join(", ")
+        let skillString = `+1 to ${this.skills.bonus.value} of the following: ${skills}`;
+
+        let careerTalent = await this.talent.document;
+
+        let html = `
+        <div class="header">
+            <label class="title"><a data-link data-uuid="${this.parent.uuid}">${this.parent.name}</a></label>
+            <span class="status">~ ${game.oldworld.config.status[this.status]} ~</span>
+        </div>
+
+        <div class="table">
+            <div class="property-header stacked blue" style="grid-column: 1 / span 3">Origins</div>
+            <div class="property-header stacked blue" style="grid-column: 4 / span 3">Favoured Characteristics</div>
+            <div class="property-value stacked" style="grid-column: 1 / span 3">${originString}</div>
+            <div class="property-value stacked" style="grid-column: 4 / span 3">${charString}</div>
+            <div class="property-header" style="grid-column: 1 / span 1">Skill Bonuses</div>
+            <div class="property-value" style="grid-column: 2 / span 5">${skillString}</div>
+            <div class="property-header blue" style="grid-column: 1 / span 1">Lore</div>
+            <div class="property-value" style="grid-column: 2 / span 2"><p>${this.lore.textDisplay.replaceAll("OR", "<em>or</em>")}</p></div>
+            <div class="property-header blue" style="grid-column: 4 / span 1">Trappings</div>
+            <div class="property-value" style="grid-column: 5 / span 2"><p>${this.trappings.textDisplay.replaceAll("OR", "<em>or</em>")}</p></div>
+            <div class="property-header" style="grid-column: 1 / span 1">Assets</div>
+            <div class="property-value" style="grid-column: 2 / span 2"><p>${this.assets.textDisplay.replaceAll("OR", "<em>or</em>")}</p></div>
+            <div class="property-header" style="grid-column: 4 / span 1">Contacts</div>
+            <div class="property-value" style="grid-column: 5 / span 2">${this.contacts.list.map(i => i.name).join(", ")}</div>
+            <div class="property-header blue" style="grid-column: 1 / span 1">Career Talents</div>
+            <div class="property-value" style="grid-column: 2 / span 5"><p>@UUID[${careerTalent.uuid}]{${careerTalent.name}}: ${careerTalent.system.description.public.replace("<p>", "")}</div>
+        </div>
+
+        `
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
 }

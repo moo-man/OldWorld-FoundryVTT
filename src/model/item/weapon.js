@@ -45,6 +45,11 @@ export class WeaponModel extends EquippableItem
         return !this.requiresLoading || this.reload.current >= this.reload.value;
     }
 
+    get isMagical()
+    {
+        return this.damage.magical;
+    }
+
     rollReloadTest(actor)  
     {
         return actor.setupSkillTest("dexterity", {reload: this.parent, appendTitle: ` - Reloading ${this.parent.name}`});
@@ -58,13 +63,14 @@ export class WeaponModel extends EquippableItem
     computeOwned(actor) 
     {
         this.damage.compute(actor);
+        super.computeOwned(actor);
     }
 
     getOtherEffects()
     {
         let scripts = this.modifiers.createScripts();
 
-        if (scripts.length)
+        if (scripts.length && this.isEquipped)
         {
             return [new ActiveEffect.implementation({
                 name : this.parent.name,
@@ -80,10 +86,11 @@ export class WeaponModel extends EquippableItem
 
     async toEmbed(config, options)
     {
+        let html;
         if (config.row)
         {
 
-            let html = `
+            html = `
                 <div style>
                     @UUID[${this.parent.uuid}]{${this.parent.name}}
                 </div>
@@ -111,10 +118,62 @@ export class WeaponModel extends EquippableItem
             div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
             return div;
         }
-        else 
+        else if (config.stats)
         {
-            return "";
+
+            html = `
+            <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+            ${this.description.public}
+            <section class="tow-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>
+                            <p style="text-align: center">${this.isRanged ? "Optimum Range" : "Max Range"}</p>
+                        </th>
+                        <th>
+                            <p style="text-align: center">Damage</p>
+                        </th>
+                        <th>
+                            <p style="text-align: center">1H/2H</p>
+                        </th>
+                        <th>
+                            <p>Traits</p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p style="text-align: center">${this.isRanged ? `${game.oldworld.config.range[this.range.min]} - ${game.oldworld.config.range[this.range.max]}` : game.oldworld.config.range[this.range.melee]}</p>
+                        </td>
+                        <td>
+                            <p style="text-align: center">${this.damage.formula} ${this.damage.characteristic ? "+" + this.damage.characteristic : ""}</p>
+                        </td>
+                        <td>
+                            <p style="text-align: center">${this.grip}</p>
+                        </td>
+                        <td>
+                            <p>${this.traits}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        `;
         }
+        else {
+            html = `
+            <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+            ${this.description.public}
+        `;
+    
+        }
+
+
+        
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
 
     }
 }

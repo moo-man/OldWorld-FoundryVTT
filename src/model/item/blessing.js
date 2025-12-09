@@ -26,6 +26,7 @@ export class BlessingModel extends BaseItemModel {
     }
 
     _addModelProperties() {
+        this.favour.effect.relative = this.parent.effects;
         for(let prayer of this.prayers.list)
         {
             prayer.effect.relative = this.parent.effects;
@@ -43,11 +44,13 @@ export class BlessingModel extends BaseItemModel {
             return this.level >= 1;
         }
 
-        this.prayers.list.forEach(p => {
-            if (p.effect.id == effect.id) {
+        for(let p of this.prayers.list)
+        {
+            if (p.effect.id == effect.id) 
+            {
                 return this.level >= 2
             }
-        })
+        }
 
         return true;
 
@@ -60,5 +63,22 @@ export class BlessingModel extends BaseItemModel {
 
     shouldTransferEffect(effect) {
         return this.effectIsActive(effect);
+    }
+
+    async toEmbed(config, options)
+    {
+        let html = `<h4>@UUID[${this.parent.uuid}]{${config.label || this.parent.name + 's Favour'}}</h4>
+        <p>${this.favour.description}</p>
+        <h4>Prayers of ${this.parent.name}</h4>
+        ${this.prayers.list.map(i => {
+            return `<h5>${i.name}</h5><p>${i.description}</p>`
+        }).join("")}
+        <h4>Miracles of ${this.parent.name}</h4><p>${this.miracles.description}</p>
+        `;
+    
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
     }
 }

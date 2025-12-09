@@ -136,21 +136,35 @@
     {{> documentReference document=system.talents.table path="system.talents.table" label="TOW.Sheet.Table" classes="talents"}}
 
     {{formGroup fields.talents.fields.rolls value=source.system.talents.rolls}}
-    {{formGroup fields.talents.fields.keep value=source.system.talents.keep}}
+    <div class="swaps">
 
-            <div class="name-list droppable replacement">
-        <label>{{localize "TOW.Sheet.Replacements"}}</label>
-        <div class="list-content">
-            {{#each system.talents.replacements.list}}
-                <div class="list-element" data-index="{{@key}}" data-uuid="{{this.uuid}}">
-                    <a data-action="editEmbedded">{{this.name}}</a>
-                    <a class="floating" data-document="this" data-action="listDelete"
-                        data-path="system.talents.replacements"><i class="fa-solid fa-xmark"></i></a>
-                </div>
-            {{/each}}
+        <div class="name-list droppable replacement">
+            <label>{{localize "TOW.Sheet.RequiredSwaps"}}</label>
+            <div class="list-content">
+                {{#each system.talents.replacements.list}}
+                    <div class="list-element" data-index="{{@key}}" data-uuid="{{this.uuid}}">
+                        <a data-action="editEmbedded">{{this.name}}</a>
+                        <a class="floating" data-document="this" data-action="listDelete"
+                            data-path="system.talents.replacements"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        
+        <div class="name-list droppable optional">
+            <label>{{localize "TOW.Sheet.OptionalSwaps"}}</label>
+            <div class="list-content">
+                {{#each system.talents.optional.list}}
+                    <div class="list-element" data-index="{{@key}}" data-uuid="{{this.uuid}}">
+                        <a data-action="editEmbedded">{{this.name}}</a>
+                        <a class="floating" data-document="this" data-action="listDelete"
+                            data-path="system.talents.optional"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                {{/each}}
+            </div>
         </div>
     </div>
 
 
-    {{!-- </fieldset> --}}
 </section>

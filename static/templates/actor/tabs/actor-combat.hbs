@@ -4,6 +4,12 @@
         {{> defendingAgainst test=system.opposed.system.test}}
     {{/if}}
 
+    <div class="actions">
+        {{#each (config "actions")}}
+            <button type="button" data-action="doAction" data-key="{{@key}}">{{this.label}}</button>
+        {{/each}}
+    </div>
+
     <div class="attribute-row flexrow">
         <div class="attribute-box single">
             <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Resilience"}}</label></div>
@@ -12,7 +18,7 @@
 
         <div class="attribute-box single">
             <div class="label" style="grid-column: 1 / span 8"><label>{{localize "TOW.Sheet.Speed"}}</label></div>
-            <div class="field" style="grid-column: 9 / span 4"><input type="text" data-tooltip="" value="{{localize (configLookup " speed" system.speed.value)}}" disabled></div>
+            <div class="field" style="grid-column: 9 / span 4"><input type="text" data-tooltip="" value="{{localize (configLookup "speed" system.speed.value)}}" disabled></div>
         </div>
     </div>
 
@@ -28,9 +34,9 @@
                 {{#if (and this.system.isMelee this.system.isEquipped)}}
                     <div class="list-row combat" data-uuid="{{this.uuid}}">
                         <div class="row-content">
-                            <div class="list-name">
+                            <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                                 <img src="{{this.img}}">
-                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                                <a class="label">{{this.name}}</a>
                             </div>
                             <div>{{this.system.damage.value}}</div>
                             <div class="large">{{configLookup "range" this.system.range.melee}}</div>
@@ -63,9 +69,9 @@
                 {{#if (and this.system.isRanged this.system.isEquipped)}}
                     <div class="list-row combat" data-uuid="{{this.uuid}}">
                         <div class="row-content">
-                            <div class="list-name">
+                            <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                                 <img src="{{this.img}}">
-                                <a class="label" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                                <a class="label">{{this.name}}</a>
                             </div>
                             <div>{{this.system.damage.value}}</div>
                             <div class="large">{{configLookup "range" this.system.range.min}} - {{configLookup "range" this.system.range.max}}</div>
@@ -75,11 +81,11 @@
                                 {{this.system.grip}}
                             </div>
                             {{#if this.system.requiresLoading}}
-                            <div class="fit">
-                                {{#unless this.system.isLoaded}}
-                                    <a data-action="stepProperty" data-path="system.reload.current" class="prevent-context">Not Loaded ({{this.system.reload.current}} / {{this.system.reload.value}})</a>
-                                {{/unless}}
-                            </div>
+                                <div class="fit">
+                                    {{#unless this.system.isLoaded}}
+                                        <a data-action="stepProperty" data-path="system.reload.current" class="prevent-context">Not Loaded ({{this.system.reload.current}} / {{this.system.reload.value}})</a>
+                                    {{/unless}}
+                                </div>
                             {{/if}}
                             <div class="fit traits">
                                 {{this.system.traits}}
@@ -94,6 +100,45 @@
             {{/each}}
         </div>
     </div>
+
+    {{#if attacks.length}}
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Abilities"}}</div>
+                <div>{{localize "TOW.Sheet.Damage"}}</div>
+                <div class="large">{{localize "TOW.Sheet.Range"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each attacks}}
+                    <div class="list-row combat" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name rollable" data-action="rollTest" data-type="ability">
+                                <img src="{{this.img}}">
+                                <a class="label">{{this.name}}</a>
+                            </div>
+                            <div>{{this.system.damage.value}}</div>
+                            {{#if this.system.isMelee}}
+                                <div class="large">{{configLookup "range" this.system.range.melee}}</div>
+                            {{else}}
+                                <div class="large">{{configLookup "range" this.system.range.min}} - {{configLookup "range" this.system.range.max}}</div>
+                            {{/if}}
+                        </div>
+                        {{#if this.system.traits}}
+                            <div class="row-content weapon-properties">
+                                <div class="fit traits">
+                                    {{this.system.traits}}
+                                </div>
+                            </div>
+                        {{/if}}
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "TOW.Sheet.Armour"}}</div>
@@ -106,7 +151,7 @@
                         <div class="row-content">
                             <div class="list-name">
                                 <img src="{{this.img}}">
-                                <div>{{this.name}}</div>
+                                <div><span class="label">{{this.name}}</span></div>
                             </div>
                             <div>{{this.system.resilience}}</div>
                         </div>
@@ -163,4 +208,6 @@
             {{/each}}
         </div>
     </div>
+
+    {{> mountSection}}
 </section>

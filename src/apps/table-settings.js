@@ -34,8 +34,9 @@ export default class TableSettings extends HandlebarsApplicationMixin(Applicatio
     };
 
     static #schema = new foundry.data.fields.SchemaField({
-        wounds : new foundry.data.fields.StringField({initial : "", label : "TOW.TableSetting.wounds"}),
-        miscast : new foundry.data.fields.StringField({initial : "", label : "TOW.TableSetting.miscast"}),
+        wounds : new foundry.data.fields.StringField({initial : "hJmCDyavNp7vWbnp", label : "TOW.TableSetting.wounds"}),
+        miscast : new foundry.data.fields.StringField({initial : "9EnFHo3JyaHkyYmp", label : "TOW.TableSetting.miscast"}),
+        faults : new foundry.data.fields.StringField({initial : "ZIke3HaxR7veRZsQ", label : "TOW.TableSetting.faults"}),
     })
 
     static get schema()

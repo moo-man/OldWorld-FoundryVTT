@@ -35,6 +35,14 @@ export default class CareerSheet extends BaseOldWorldItemSheet {
           this.document.update(this.document.system.talent.set(item));
         }
       }
+
+      async _onDropRollTable(data, ev)
+      {
+        let table = await RollTable.implementation.fromDropData(data);
+
+        this.document.update(this.document.system.contacts.add(table));
+
+      }
     
     
   }

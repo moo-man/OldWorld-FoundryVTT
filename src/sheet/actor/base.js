@@ -3,32 +3,24 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
 
   static DEFAULT_OPTIONS = {
     classes: ["whtow"],
-    window: {
-      controls: [
-        {
-          icon: 'fa-solid fa-gear',
-          label: "Actor Settings",
-          action: "configureActor"
-        }
-      ]
-    },
     actions: {
       removeOpposed : this._onRemoveOpposed,
       useItem : this._onUseItem,
+      useMountItem : this._onUseMountItem,
       toggleSummary : this._onToggleSummary
     },
     defaultTab: "main"
+  }
+
+  get title()
+  {
+    return this.actor.name;
   }
 
   async _prepareContext(options) {
     let context = await super._prepareContext(options);
     context.conditions = this.formatConditions();
     return context;
-  }
-
-
-  _addEventListeners() {
-    super._addEventListeners();
   }
   
 
@@ -42,7 +34,28 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
       return conditions;
   }
 
+  _addEventListeners()
+  {
+      super._addEventListeners();
 
+      this.element.querySelectorAll(".rollable").forEach(element => {
+          element.addEventListener("mouseenter", ev => {
+          let img = ev.target.matches("img") ? ev.target : ev.target.querySelector("img") ;
+          if (img)
+          {
+              this._icon = img.src;
+              img.src = "systems/whtow/assets/dice/d10.svg";
+          }
+          })
+          element.addEventListener("mouseleave", ev => {
+          let img = ev.target.matches("img") ? ev.target : ev.target.querySelector("img") ;
+          if (img)
+          {
+              img.src = this._icon;
+          }
+          })
+      });
+  }
 
   async _handleEnrichment() {
     let enrichment = {}
@@ -57,33 +70,6 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
     let getParent = this._getParent.bind(this);
     return [
       {
-        name: "Clear Progress",
-        icon: '<i class="fa-solid fa-broom-wide"></i>',
-        condition: li => {
-          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
-          if (uuid)
-          {
-            let parsed = foundry.utils.parseUuid(uuid);
-            if (parsed.type == "Item")
-            {
-              let item = this.actor.items.get(parsed.id);
-              if (item?.type == "spell" && item.system.progress)
-              return true;
-            }
-            else
-            {
-              return false;
-            }
-          }
-          else return false
-        },
-        callback: async li => {
-          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-          let parsed = foundry.utils.parseUuid(uuid);
-          this.actor.update({[`system.magic.casting.-=${parsed.id}`] : null});
-        }
-      },
-      {
         name: "Edit",
         icon: '<i class="fas fa-edit"></i>',
         condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
@@ -91,6 +77,44 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
           let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
           const document = await fromUuid(uuid);
           document.sheet.render(true);
+        }
+      },
+      {
+        name: "Post to Chat",
+        icon: '<i class="fas fa-comment"></i>',
+        condition: li => {
+          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+          if (uuid)
+          {
+            let parsed = foundry.utils.parseUuid(uuid);
+            return parsed.type == "Item"; // Can only post Items to chat
+          }
+          else return false;
+        },
+        callback: async li => 
+        {
+          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+          const document = await fromUuid(uuid);
+          document.post();
+        }
+      },
+      {
+        name: "Duplicate",
+        icon: '<i class="fa-solid fa-copy"></i>',
+        condition: li => {
+          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+          if (uuid && !uuid.includes("Compendium"))
+          {
+            let doc = fromUuidSync(uuid);
+            return doc?.documentName == "Item" && doc.system.isPhysical; // Can only duplicate physical items
+          }
+          else return false;
+        },
+        callback: async li => 
+        {
+            let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+            const document = await fromUuid(uuid);
+            this.actor.createEmbeddedDocuments("Item", [document.toObject()]);
         }
       },
       {
@@ -131,6 +155,11 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
   static _onUseItem(ev, target)
   {
     this.actor.useItem(this._getUUID(ev));
+  }
+
+  static _onUseMountItem(ev, target)
+  {
+    this.actor.useMountItem(this._getUUID(ev));
   }
 
   static async _onToggleSummary(ev, target)

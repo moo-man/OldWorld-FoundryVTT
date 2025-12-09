@@ -1,5 +1,6 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
 
-    {{> itemTest fields=fields.test.fields value=source.system.test}}
+    {{formGroup fields.equippable value=source.system.equippable}}
+    {{> itemTest fields=fields.test.fields value=source.system.test hideOpposed=true}}
 
 </section>

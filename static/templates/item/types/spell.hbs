@@ -27,16 +27,8 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label>{{localize "TOW.Sheet.Damage"}}</label>
-        <div class="form-fields">
-            {{formInput system.schema.fields.damage.fields.formula value=source.system.damage.formula}}
-            {{formInput system.schema.fields.damage.fields.ignoreArmour value=source.system.damage.ignoreArmour}}
-            {{localize "TOW.Sheet.IgnoreArmour"}}
-            {{formInput system.schema.fields.damage.fields.potency value=source.system.damage.potency}}
-            +{{localize "TOW.Sheet.Potency"}}
-        </div>
-    </div>
+    {{> itemDamage hideMagical=true hideCharacteristic=true hideSuccesses=true}}
+
 
     {{> itemTest fields=fields.test.fields value=source.system.test hideSelf=true}}
 

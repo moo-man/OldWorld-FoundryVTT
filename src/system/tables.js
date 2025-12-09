@@ -1,6 +1,6 @@
 export default class OldWorldTables 
 {
-    static async rollTable(key, formula, {showRoll=true}={})
+    static async rollTable(key, formula, {showRoll=true, chatData={}}={})
     {
         let id = game.settings.get("whtow", "tableSettings")[key];
         let table = game.tables.get(id);
@@ -24,7 +24,7 @@ export default class OldWorldTables
 
         if (showRoll)
         {
-            let msg = await dice.toMessage({flavor : table?.name, speaker : ChatMessage.getSpeaker()});
+            let msg = await dice.toMessage(foundry.utils.deepClone({flavor : table?.name, speaker : ChatMessage.getSpeaker()}, chatData));
             if (game.dice3d)
             {
                 await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
@@ -44,7 +44,7 @@ export default class OldWorldTables
                 let document = await fromUuid(result.documentUuid);
                 if (document) // Assumed item
                 {
-                    document.postItem();
+                    document.post(chatData);
                 }
                 else 
                 {

@@ -1,3 +1,4 @@
+import { PostedItemMessageModel } from "../model/message/item";
 import OldWorldDocumentMixin from "./mixin";
 
 export class OldWorldItem extends OldWorldDocumentMixin(WarhammerItem)
@@ -10,5 +11,15 @@ export class OldWorldItem extends OldWorldDocumentMixin(WarhammerItem)
 
     async removeCondition(condition) {
         this.hasCondition(condition)?.delete();
+    }
+
+    post(chatData)
+    {
+        PostedItemMessageModel.postItem(this, chatData)
+    }
+
+    getTestData()
+    {
+        return this.system.test.toObject();
     }
 }

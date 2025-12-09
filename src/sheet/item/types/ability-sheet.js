@@ -1,3 +1,4 @@
+import ModifierConfig from "../../../apps/modifier-config";
 import BaseOldWorldItemSheet from "../base-item"
 
 export default class AbilitySheet extends BaseOldWorldItemSheet {
@@ -6,6 +7,9 @@ export default class AbilitySheet extends BaseOldWorldItemSheet {
 
     static DEFAULT_OPTIONS = {
       classes: [this.type],
+      actions: {
+        configureModifiers: this._onConfigureModifiers
+      }
     }  
 
     static PARTS = {
@@ -15,5 +19,10 @@ export default class AbilitySheet extends BaseOldWorldItemSheet {
         details: { scrollable: [""], template: `systems/whtow/templates/item/types/${this.type}.hbs` },
         effects: { scrollable: [""], template: 'systems/whtow/templates/item/item-effects.hbs' },
       }
+
+      static _onConfigureModifiers(ev, target) {
+        new ModifierConfig(this.document).render({ force: true, path : "system.attack.modifiers" });
+      }
+    
   }
   

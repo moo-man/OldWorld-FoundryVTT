@@ -1,0 +1,58 @@
+@use "./mixins" as *;
+
+body.whtow-theme {
+    #chat {
+        --color-scrollbar: var(--tow-gold);
+    }
+    .sidebar-tab {
+        input[type=search] {
+            background: var(--tow-bluegrey-half);
+            outline-color: var(--tow-gold);
+            color: var(--tow-cream);
+            &::placeholder { 
+                color: var(--tow-cream-half) 
+            };
+        }
+    
+        background: url("./assets/ui/blue-bg-seamless.webp");
+        background-size: contain;
+        font-family: var(--font-text);
+        --sidebar-folder-color: var(--tow-bluegrey-half);
+
+        .window-header {
+            background: none;
+            border: none;
+        }
+
+        .window-content {
+        backdrop-filter: none;
+        }
+
+        &.settings-sidebar button,
+        &.settings-sidebar a.button,
+        .combat-control-lg,
+        .action-buttons button {
+            @include tow-button(var(--font-header));
+        }
+
+        .directory-list {
+            --color-scrollbar: var(--tow-gold);
+        }
+
+
+
+
+        h3.divider,
+        h4.divider {
+            color: var(--tow-cream);
+
+            &::before,
+            &::after {
+                border-color: var(--tow-gold);
+            }
+
+        }
+
+        ;
+    }
+}

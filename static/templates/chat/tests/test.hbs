@@ -41,7 +41,7 @@
     {{> effectButtons}}
 
     {{#if showChatTest}}
-        <button data-action="chatTest" data-uuid="{{item.uuid}}">{{item.system.test.label}}</button>
+        <button type="button" data-action="chatTest" data-uuid="{{item.uuid}}">{{item.system.test.label}}</button>
     {{/if}}
 
     {{#if targetTokens.length}}

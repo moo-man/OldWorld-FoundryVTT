@@ -1,0 +1,69 @@
+@use "./mixins" as *;
+body.whtow-theme {
+    .journal-sheet {
+    
+    @include window-header;
+
+    .journal-entry-content {
+        @include editor-text();
+        background: url("./assets/ui/parchment-bg.webp");
+        --color-scrollbar: var(--tow-blue);
+
+        button {
+            @include tow-button;
+        }
+    }
+
+    .journal-sidebar {
+        --color-scrollbar: var(--tow-gold);
+        background: url("./assets/ui/blue-bg-seamless.webp");
+        background-size:contain;
+        font-family: var(--font-text);
+        .page-index {
+            color: var(--tow-gold);
+        }
+        .toc li.page.active:last-of-type {
+            border-bottom-color: var(--tow-gold);
+        }
+        .toc li.page.active:first-of-type,
+        .toc li.page.active + :not(.active),
+        .toc li.page:not(.active) + .active {
+            border-top-color: var(--tow-gold);
+        }
+
+
+        input[type=search] {
+            background: var(--tow-bluegrey-half);
+            outline-color: var(--tow-gold);
+            color: var(--tow-cream);
+            &::placeholder { 
+                color: var(--tow-cream-half) 
+            };
+        }
+    
+
+        .action-buttons {
+            button {
+                @include tow-button;
+            }
+        }
+    }
+
+
+    .journal-header {
+        .title {
+            background: none;
+            color: var(--tow-blue);
+
+            border-image: url("./assets/ui/journal-title.webp");
+            border-image-slice: 41 258 62 255 fill;
+            border-image-width: 20px 100px 20px 100px; 
+            height: 100px;
+            outline: none;
+            font-family: var(--font-header);
+            font-variant: small-caps;
+            filter: drop-shadow(0 0 2px black);
+        }
+    }
+}
+}

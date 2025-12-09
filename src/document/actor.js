@@ -1,6 +1,8 @@
+import AbilityAttackDialog from "../apps/test-dialog/ability-dialog";
 import CastingDialog from "../apps/test-dialog/cast-dialog";
 import TestDialog from "../apps/test-dialog/test-dialog";
 import WeaponDialog from "../apps/test-dialog/weapon-dialog";
+import { AbilityAttackTest } from "../system/tests/ability-attack";
 import { BlessingUse } from "../system/tests/blessing-use";
 import { CastingTest } from "../system/tests/cast";
 import { ItemUse } from "../system/tests/item-use";
@@ -22,7 +24,15 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         return await this._setupTest(CastingDialog, CastingTest, data, context, options)
     }
 
+    async setupAbilityTest(ability, context, options) {
+        return await this._setupTest(AbilityAttackDialog, AbilityAttackTest, ability, context, options)
+    }
+
     async useItem(item, context = {}, options) {
+        this.system.useItem(item, context, options);
+    }
+
+    async useMountItem(item, context = {}, options) {
         if (typeof item == "string") {
             if (item.includes(".")) {
                 item = await fromUuid(item);
@@ -33,21 +43,28 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         }
 
         context.item = item;
+        context.mount = true;
 
-        if (item.type == "lore")
+        if (item.system.isAttack)
         {
-            return this.setupSkillTest("recall", context, options);
+            if (item.type == "weapon")
+            {
+                this.system.mount.document.setupWeaponTest(item, context, options)
+            }
+            else 
+            {
+                this.system.mount.document.setupAbilityTest(item, context, options);
+            }
         }
 
-        if (item.system.test.self && item.system.test.skill) {
+        else if (item.system.test?.self && item.system.test?.skill) {
             this.setupSkillTest(item.system.test.skill, context, options)
         }
         else {
-            let use = await ItemUse.fromItem(item, this, context);
-            use.roll();
-            use.sendToChat();
+            ItemUse.fromItem(item, this, context);
         }
     }
+
 
     async useBlessing(type, context = {}, options) {
 
@@ -58,9 +75,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
 
         context.itemUuid = blessing.uuid;
 
-        let use = await BlessingUse.fromItem(blessing, type, this, context);
-        use.roll();
-        use.sendToChat();
+        BlessingUse.fromItem(blessing, type, this, context);
     }
 
     
@@ -112,19 +127,29 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         return this.setupSkillTest(skill, context, options);
     }
 
-    async addCondition(condition) {
+    async addCondition(condition, {flags={}, fromTest, opposed}={}) {
         let owner = warhammer.utility.getActiveDocumentOwner(this);
 
         if (game.user.id != owner.id) {
-            await owner.query("addCondition", { uuid: this.uuid, condition })
+            await owner.query("addCondition", { uuid: this.uuid, condition, fromTest: fromTest.message.id, opposed: opposed.parent.id})
             return this.hasCondition(condition);
         }
 
-        if (!this.hasCondition(condition)) {
-            return this.createEmbeddedDocuments("ActiveEffect", [game.oldworld.config.conditions[condition]], { condition: true })
+        // ALL forms of adding staggered end up here
+        if (condition == "staggered")
+        {
+            await Promise.all(this.runScripts("receiveStaggered", {test: fromTest, opposed, actor : this}) || [])
+            await Promise.all(fromTest?.actor.runScripts("inflictStaggered", {test: fromTest, opposed, actor : this}) || [])
+            await Promise.all(fromTest?.item.runScripts("inflictStaggered", {test: fromTest, opposed, actor : this}) || [])
+        }
+
+        if (!this.hasCondition(condition)) 
+        {
+            let effectData = foundry.utils.deepClone(game.oldworld.config.conditions[condition]);
+            return this.createEmbeddedDocuments("ActiveEffect", [foundry.utils.mergeObject(effectData, {flags})], { condition: true })
         }
         else if (this.hasCondition(condition) && condition == "staggered") {
-            return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions });
+            return await this.system.promptStaggeredChoice({ excludeOptions: this.system.excludeStaggeredOptions.concat(opposed?.result?.damage?.excludeStaggeredOptions || []), fromTest, opposed });
         }
     }
 
@@ -133,26 +158,33 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         existing?.delete();
     }
 
-    // /** Override to exclude effects if NPC and wound threshold hasn't been met
-    //  * 
-    //  * @override
-    //  * @param {boolean} includeItemEffects Include Effects that are intended to be applied to Items, see getScriptsApplyingToItem, this does NOT mean effects that come from items
-    //  * @yields {WarhammerActiveEffect} applicable active effect
-    //  */
-    // *allApplicableEffects(includeItemEffects = false) 
-    // {
-    //     let effect = super.allApplicableEffects(includeItemEffects);
+    async maintainCondition(condition, effect)
+    {
+        let existing = this.hasCondition(condition)
+        if (!existing)
+        {
+            if (effect)
+            {
+                ui.notifications.info(`<strong>${effect.name}</strong>: Added  ${game.oldworld.config.conditions[condition].name}`);
+            }
+            return await this.addCondition(condition);
+        }
+    }
 
-    //     if (this.actor.type == "npc" && ["brute", "monstrosity"].includes(this.actor.system.type))
-    //     {
-    //         if (this.actor.system.effectIsActive(effect))
-    //         {
-    //             yield effect;
-    //         }
-    //     }
-    //     else 
-    //     {
-    //         yield effect;
-    //     }
-    // }
+    *allApplicableEffects(includeItemEffects=false)
+    {
+        for(let effect of Array.from(super.allApplicableEffects(includeItemEffects)))
+        {
+            yield effect
+        }
+
+        // Add specified mount effects
+        if (this.system.mount?.isMounted)
+        {
+            for(let effect of this.system.mount.document?.items.reduce((prev, current) => prev.concat(current.effects.contents.filter(e => e.system.transferData.type == "rider")), []))
+            {
+                yield effect;
+            }
+        }
+    }
 }

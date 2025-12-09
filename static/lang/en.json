@@ -96,6 +96,7 @@
 
         "Modifier" : "Modifier",
         "ModifierConfig" : "Modifier Config",
+        "MountConfig" : "Mount Config",
 
         "MagicLevel" : "Magic Level",
 
@@ -110,6 +111,11 @@
             "Brute" : "Brute",
             "Champion" : "Champion",
             "Monstrosity" : "Monstrosity"
+        },
+
+        "Vehicle": {
+            "Land" : "Land",
+            "Water" : "Water"
         },
 
         "Sheet" : {
@@ -164,9 +170,12 @@
             "Cost" : "Cost",
 
             "Damage" : "Damage",
+            "DamageModifiers" : "Damage Modifiers",
             "IgnoreArmour" : "Ignore Armour",
             "Range" : "Range",
             "OptimumRange" : "Optimum Range",
+            "Magical": "Magical",
+            "Successes" : "Successes",
 
             "Favour" : "Favour",
             "Prayers" : "Prayers",
@@ -243,6 +252,7 @@
             "Potency" : "Potency",
 
             "Self" : "Self",
+            "Opposed" : "Opposed",
             "Dice" : "Dice",
 
             "BlessedBy" : "Blessed By",
@@ -265,14 +275,53 @@
             "XWounds" : "{wounds} Wounds",
             "XYWounds" : "{x}-{y} Wounds",
 
-            "ToggleEditing" : "Toggle Edit Mode"
+            "ToggleEditing" : "Toggle Editing",
+
+            "ChooseSkill" : "Choose Skill",
+            "SkillOptions" : "Skill Options",
+            
+            "RequiredSwaps" : "Required Swaps",
+            "OptionalSwaps" : "Optional Swaps",
+            "Identifier" : "Identifier",
+
+            "ExcludeStaggeredOptions" : "Exclude Staggered Options",
+            "FallProne" : "Fall Prone",
+            "GiveGround" : "Give Ground",
+            "TakeWound" : "Take Wound",
+
+            "AddedItems" : "Added Items",
+            "AddedEffects" : "Added Effects",
+
+            "Mount": "Mount",
+            "Dismount": "Dismount",
+            "RemoveMount" : "Remove Mount",
+
+            "Faults" : "Faults",
+            "Occupants" : "Occupants",
+            "Animals" : "Animals",
+
+            "RowCrew" : "Row Crew",
+            "SailCrew" : "Sail Crew",
+
+            "SpeedRow" : "Speed (Row)",
+            "SpeedSail" : "Speed (Sail)",
+
+            "PreventStaggeredOption" : "Prevent Staggered Option"
 
         },
 
+        "Action" : {
+            "Aim" : "Aim",
+            "Help" : "Help",
+            "Improvise" : "Improvise",
+            "Manoeuvre" : "Manoeuvre",
+            "Recover" : "Recover"
+        },
 
 
         "TableSetting.wounds" : "Wounds",
         "TableSetting.miscast" : "Miscast",
+        "TableSetting.faults" : "Miscast",
 
         "Setting.TableSettings" : "Table Settings",
         "Setting.TableConfigure" : "Configure Tables",
@@ -288,7 +337,9 @@
             "Battle" : "Battle",
             "Elementalism" : "Elementalism",
             "Illusion" : "Illusion",
-            "Necromancy" : "Necromancy"
+            "Necromancy" : "Necromancy",
+            "Daemonology" : "Daemonology",
+            "Other" : "Other"
         },
 
         "TargetType" : {
@@ -330,8 +381,10 @@
             "ApplyNumDamage" : "Apply {damage} Damage",
             "Potency" : "Potency",
 
+            "SuffersFault" : "<p><strong>{name}</strong> suffers a Fault!</p>",
             "TakesWound" : "<p><strong>{name}</strong> takes a Wound!</p>",
             "GainsStaggered" : "<p><strong>{name}</strong> gets Staggered!</p>",
+            "NoEffect" : "No Effect!",
             "AppliedDamage" : "Applied Damage",
 
             "DisposingMiscasts" : "Disposing Miscasts",
@@ -343,7 +396,9 @@
             "FavouredBy" : "Favoured by {name}",
             "MiracleOf" : "Miracle of {name}",
             "Experience" : "Experience",
-            "Receive" : "Receive"
+            "Receive" : "Receive",
+
+            "BuySuccessful" : "<p>Bought <strong>{item}</strong> ({cost})</p>"
         },
         
         "WoundHealing" : {
@@ -372,7 +427,8 @@
             "Distracted" : "Distracted",
             "Drained" : "Drained",
             "Prone" : "Prone",
-            "Staggered" : "Staggered"
+            "Staggered" : "Staggered",
+            "Dead" : "Dead"
         },
 
         "Dialog" : {
@@ -411,11 +467,29 @@
             "Experience" : "Experience values must be numeric",
             "ActorsXP" : "Target tokens to give experience to",
             "CharAssigned" : "No character assigned. See the player configuration menu to assign a character.",
-            "NoSpellsToCast" : "No Spells available to Cast"
+            "NoSpellsToCast" : "No Spells available to Cast",
+            "NoCoin" : "You do not have the coin to buy this Item!",
+            "NoACtorBuyItem" : "No assigned Actor to buy this Item."
+        },
+
+        "Zone" : {
+            "Cover" : "Cover",
+            "CoverConcealment" : "Cover / Concealment",
+            "DifficultTerrain" : "Difficult Terrain",
+            "Hazard" : "Hazard"
         }
     },
 
     "WH" : {
+
+        "Trigger" : {
+            "ComputeOwnedItem" : "Compute Owned Item"
+        },
+
+        "TransferType" : {
+            "Rider" : "Rider"
+        },
+
         "Models" : {
             "weapon"  : {
                 "FIELDS" : {
@@ -431,6 +505,23 @@
                     "reload.value" : {
                         "label" : "Successes to Reload" 
                     }
+                }
+            },
+            "ability"  : {
+                "FIELDS" : {
+                    "attack" : {
+                        "skill" : {
+                            "label" : "Attack Skill"
+                        },
+                        "traits" : {
+                            "label" : "Traits"
+                        },
+                        "grip:" : {
+                            "label" : "Grip"
+                        }
+
+                    }
+
                 }
             },
             "talent"  : {
@@ -517,7 +608,11 @@
                 }
             },
             "trapping"  : {
-                "FIELDS" : {}
+                "FIELDS" : {
+                    "equippable" : {
+                        "label": "Equippable"
+                    }
+                }
             },
             "asset"  : {
                 "FIELDS" : {

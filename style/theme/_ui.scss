@@ -1,0 +1,107 @@
+@use "./mixins" as *;
+
+
+body {
+    background: url("./assets/ui/background.webp");
+    background-size: 100%;
+    box-shadow: 0 0 100px black inset;
+}
+
+body.whtow-theme {
+    --color-shadow-primary: var(--tow-gold);    
+
+    .inline-control {
+        --button-hover-background-color: var(--tow-gold);
+        --button-focus-outline-color: var(--tow-gold);
+        --button-focus-outline-color: var(--tow-gold);
+
+    }
+
+
+    // #sidebar-tabs {
+
+    //     .ui-control {
+    //         background: url(./assets/ui/button-square.webp);
+    //         background-size: contain;
+    //         color: black;
+    //         border: none;
+    //         &.active {
+    //             color: var(--tow-darkred);
+    //         }
+    //     }
+    // }
+
+    .ui-control {
+        @include tow-control;
+    }
+
+    #players-inactive,
+    #players-active {
+        --player-name-self-color: var(--tow-gold);
+
+        background: url("./assets/ui/blue-bg-seamless.webp");
+        font-family: var(--font-text);
+        background-size: contain;
+        border: 2px solid var(--tow-darkyellow);
+
+    }
+
+    #hotbar {
+        .slot {
+            --key-bg-color-full: var(--tow-bluegrey-half);
+            --key-bg-color-empty: var(--tow-bluegrey-half);
+            background: url("./assets/ui/blue-bg-seamless.webp");
+            font-family: var(--font-text);
+            background-size: contain;
+            border: 2px solid var(--tow-darkyellow);
+            &:hover {
+                border-color: var(--tow-lightblue);
+
+            }
+        }
+    }
+
+    #menu {
+        background: url("./assets/ui/box-bg.webp");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+
+        @include window-frame;
+
+        border-radius: 0px;
+        box-shadow: 0 0 35px black inset;
+        filter: drop-shadow(0 0 0.5rem black);
+
+        h2,
+        li {
+            color: var(--tow-blue)
+        }
+    }
+
+    .controls-dropdown,
+    #context-menu {
+
+        --text-color: var(--tow-grey);
+        --hover-text-color: black;
+        --group-separator: var(--tow-blue);
+        --hover-entry-border: var(--tow-bluegrey);
+        --hover-entry-background: var(--tow-bluegrey-half);
+
+        .header-control button {
+            --button-text-color: var(--tow-grey);
+            --button-hover-border-color: var(--tow-bluegrey);
+            --button-hover-background-color: var(--tow-bluegrey-half);
+            --button-hover-text-color: black;
+        }
+
+
+        background: url("./assets/ui/parchment-bg.webp");
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        @include form-border;
+        border-image-outset: 4px;
+        box-shadow: 0 0 10px black inset,  0 0 20px black;
+    }
+
+}

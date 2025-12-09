@@ -7,13 +7,13 @@ export class CastingTest extends OldWorldTest
 
     static _separateDialogData(data)
     {
-        return foundry.utils.mergeObject(super._separateDialogData(data), {context : {lore: data.context.lore, preventOpposed : true, rollClass : "CastingTest"}});
+        return foundry.utils.mergeObject(super._separateDialogData(data), {context : {lore: data.context.lore, mixing: data.mixing, preventOpposed : true, rollClass : "CastingTest"}});
     }
 
     computeResult()
     {
         super.computeResult(); 
-        this.result.miscasts = this.result.dice.filter(i => i.miscast).length;
+        this.result.miscasts = this.result.dice.filter(i => i.miscast).length + (this.context.mixing || 0);
         
         this.result.potency = this.result.successes
 
@@ -47,7 +47,7 @@ export class CastingTest extends OldWorldTest
         }
         else if (this.result.miscasts)
         {
-            this.actor.update({"system.magic.miscasts" : this.actor.system.magic.miscasts + this.result.miscasts})
+            this.actor.update({"system.magic.miscasts" : this.actor.system.magic.miscasts + this.result.miscasts});
             this.result.miscastsAdded = this.result.miscasts;
         }   
 
@@ -70,6 +70,11 @@ export class CastingTest extends OldWorldTest
         // }
     }
 
+    get casting() 
+    {
+        return true;
+    }
+    
     get spell()
     {
         return this.item;

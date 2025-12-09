@@ -7,6 +7,10 @@
 @use "./chat/message";
 @use "./apps/advancement";
 @use "./foundry/tooltip";
+@use "./apps/journal";
+@use "./theme/theme";
+@use "./apps/mount-config";
+@use "./sheets/actor/vehicle";
 
 @font-face {
     font-family: "OnlySkulls";

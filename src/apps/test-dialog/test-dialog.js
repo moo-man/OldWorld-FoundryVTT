@@ -1,20 +1,22 @@
-export default class TestDialog extends WarhammerRollDialogV2
-{
+export default class TestDialog extends WarhammerRollDialogV2 {
     static DEFAULT_OPTIONS = {
         classes: ["test-dialog", "whtow"],
-        tag : "form",
-        form : {
+        tag: "form",
+        form: {
             handler: this.submit,
             closeOnSubmit: true
         },
         actions: {
-            inc : this._onInc,
-            dec : this._onDec
+            inc: this._onInc,
+            dec: this._onDec
 
         },
-        window : {
-            resizable : true
-          },
+        window: {
+            resizable: true
+        },
+        position: {
+            width: 550
+        }
     };
 
 
@@ -130,7 +132,7 @@ export default class TestDialog extends WarhammerRollDialogV2
 
     async computeInitialFields()
     {
-        this.data.dice = this.actor.system.characteristics[this.data.characteristic].value;
+        this.data.dice = this.actor.system.characteristics[this.data.characteristic]?.value;
     }
 
     computeState()
@@ -203,20 +205,19 @@ export default class TestDialog extends WarhammerRollDialogV2
         return breakdown;
     }
 
-
     /**
      *
      * @param {object} actor Actor performing the test
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(skill, actor, context={}, options={})
+    static async setupData(skill, actor, context={}, options={})
     {
 
         let dialogData = super._baseDialogData(actor, context)
 
         dialogData.data.skill = skill;
-        dialogData.data.characteristic = actor.system.skills[skill].characteristic;
+        dialogData.data.characteristic = actor.system.skills[skill]?.characteristic;
 
         context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill: game.oldworld.config.skills[skill]});
         context.title += context.appendTitle || "";
@@ -229,8 +230,13 @@ export default class TestDialog extends WarhammerRollDialogV2
         if (context.item)
         {
             dialogData.context.itemUuid = context.item.uuid;
+            dialogData.data.scripts = dialogData.data.scripts.concat(context.item?.getScripts("dialog").filter(s => !s.options.defending) || [])
         }
-        dialogData.fields.target = actor.system.skills[skill].value;
+        if (context.reload)
+        {
+            dialogData.data.scripts = dialogData.data.scripts.concat(context.reload?.getScripts("dialog").filter(s => !s.options.defending) || [])
+        }
+        dialogData.fields.target = actor.system.skills[skill]?.value;
 
 
 

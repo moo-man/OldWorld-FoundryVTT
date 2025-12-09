@@ -5,7 +5,7 @@
     <p>{{result.miscasts}} Miscast Dice Added</p>
 {{/if}}
 {{#if result.miscasted}}
-    <button data-action="rollMiscast">Miscast!</button>
+    <button type="button" data-action="rollMiscast">Miscast!</button>
 {{/if}}
 </div>
 
@@ -17,7 +17,7 @@
 
 
 {{#if (gt result.progress 0)}}
-    <button data-action="castSpell">Cast Spell</button>
+    <button type="button" data-action="castSpell">Cast Spell</button>
 {{/if}}
 
 

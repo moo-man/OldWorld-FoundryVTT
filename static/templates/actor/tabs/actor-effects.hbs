@@ -11,7 +11,7 @@
         <div class="sheet-list">
             <div class="list-header row-content">
                 <div class="list-name">{{localize "TOW.Sheet.TemporaryEffects"}}</div>
-                <div>{{localize "TOW.Sheet.Source"}}</div>
+                <div class="flex">{{localize "TOW.Sheet.Source"}}</div>
                 <div class="list-controls">
                     <a class="list-control" data-action="createEffect" data-category="temporary">
                         <i class="fas fa-plus"></i>
@@ -22,7 +22,7 @@
                 {{#each effects.temporary}}
                     <div class="list-row" data-uuid="{{this.uuid}}">
                         <div class="row-content">
-                            {{> listEffect effect=this}}
+                            {{> listEffect effect=this fromMount=(eq this.actor.uuid ../document.system.mount.document.uuid)}}
                         </div>
                         {{> sheetButtons document=this}}
                         <div class="dropdown-content collapsed">
@@ -37,7 +37,7 @@
         <div class="sheet-list">
             <div class="list-header row-content">
                 <div class="list-name">{{localize "TOW.Sheet.PassiveEffects"}}</div>
-                <div>{{localize "TOW.Sheet.Source"}}</div>
+                <div class="flex">{{localize "TOW.Sheet.Source"}}</div>
                 <div class="list-controls">
                     <a class="list-control" data-action="createEffect" data-category="passive">
                         <i class="fas fa-plus"></i>
@@ -48,7 +48,7 @@
                 {{#each effects.passive}}
                     <div class="list-row" data-uuid="{{this.uuid}}">
                         <div class="row-content">
-                            {{> listEffect effect=this}}
+                            {{> listEffect effect=this fromMount=(eq this.actor.uuid ../document.system.mount.document.uuid)}}
                         </div>
                         {{> sheetButtons document=this}}
                     </div>
@@ -59,14 +59,14 @@
         <div class="sheet-list">
             <div class="list-header row-content">
                 <div class="list-name">{{localize "TOW.Sheet.DisabledEffects"}}</div>
-                <div>{{localize "TOW.Sheet.Source"}}</div>
+                <div class="flex">{{localize "TOW.Sheet.Source"}}</div>
                 <div class="list-controls"></div>
             </div>
             <div class="list-content">
                 {{#each effects.disabled}}
                     <div class="list-row" data-uuid="{{this.uuid}}">
                         <div class="row-content inactive">
-                            {{> listEffect effect=this}}
+                            {{> listEffect effect=this fromMount=(eq this.actor.uuid ../document.system.mount.document.uuid)}}
                         </div>
                     </div>
                 {{/each}}

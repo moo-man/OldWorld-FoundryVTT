@@ -48,6 +48,14 @@ import ActorSheetOldWorldNPC from "./sheet/actor/npc-sheet";
 import { AbilityModel } from "./model/item/ability";
 import AbilitySheet from "./sheet/item/types/ability-sheet";
 import { XPMessageModel } from "./model/message/xp";
+import EndeavourJournalSheet from "./sheet/journal/endeavour";
+import OldWorldUtility from "./system/utility";
+import { ActionUse } from "./system/tests/action-use";
+import { AbilityAttackTest } from "./system/tests/ability-attack";
+import { PostedItemMessageModel } from "./model/message/item";
+import ActorSheetOldWorldVehicle from "./sheet/actor/vehicle-sheet";
+import { VehicleActorModel } from "./model/actor/vehicle";
+import ZoneConfig from "./apps/zone-config";
 
 Hooks.once("init", () => 
 {
@@ -66,7 +74,7 @@ Hooks.once("init", () =>
 
     Actors.registerSheet("whtow", ActorSheetOldWorldCharacter, { types: ["character"], makeDefault: true });
     Actors.registerSheet("whtow", ActorSheetOldWorldNPC, { types: ["npc"], makeDefault: true });
-    // Actors.registerSheet("whtow", ActorSheetOldWorldVehicle, { types: ["vehicle"], makeDefault: true });
+    Actors.registerSheet("whtow", ActorSheetOldWorldVehicle, { types: ["vehicle"], makeDefault: true });
 
     Items.registerSheet("whtow", WeaponSheet, {types : ["weapon"], makeDefault: true });
     Items.registerSheet("whtow", TalentSheet, {types : ["talent"], makeDefault: true });
@@ -85,9 +93,11 @@ Hooks.once("init", () =>
     // Items.registerSheet("whtow", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
 
     DocumentSheetConfig.registerSheet(ActiveEffect, "whtow", OldWorldActiveEffectConfig, {makeDefault : true});
+    DocumentSheetConfig.registerSheet(CONFIG.JournalEntryPage.documentClass, "whtow", EndeavourJournalSheet, {label : "Endeavour Journal Page"}) 
 
     CONFIG.Actor.dataModels["character"] = CharacterModel;
     CONFIG.Actor.dataModels["npc"] = NPCModel;
+    CONFIG.Actor.dataModels["vehicle"] = VehicleActorModel;
 
     CONFIG.Item.dataModels["weapon"] = WeaponModel;
     CONFIG.Item.dataModels["talent"] = TalentModel;
@@ -109,10 +119,11 @@ Hooks.once("init", () =>
     CONFIG.ChatMessage.dataModels["test"] = OldWorldTestMessageModel;
     CONFIG.ChatMessage.dataModels["opposed"] = OldWorldOpposedMessageModel;
     CONFIG.ChatMessage.dataModels["xp"] = XPMessageModel;
+    CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
 
     game.oldworld = {
         config : OLDWORLD,
-        // utility : OldWorldUtility,
+        utility : OldWorldUtility,
         tables : OldWorldTables,
         // migration : Migration,
         // testClasses : {
@@ -124,14 +135,16 @@ Hooks.once("init", () =>
         "OldWorldTest" : OldWorldTest,
         "WeaponTest" : WeaponTest,
         "CastingTest" : CastingTest,
-        "ItemUse" : ItemUse
+        "AbilityAttackTest" : AbilityAttackTest,
+        "ItemUse" : ItemUse,
+        "ActionUse" : ActionUse
     }
 
     CONFIG.queries.addCondition = async (data) => {
         let actor = await fromUuid(data.uuid);
         if (actor)
         {
-            actor.addCondition(data.condition);
+            actor.addCondition(data.condition, {fromTest: game.messages.get(data.fromTest)?.system?.test, opposed: game.messages.get(data.opposed)?.system });
         }
     }
 
@@ -159,14 +172,36 @@ Hooks.once("init", () =>
         fromUuid(data.uuid).then(actor => actor.system.corruption.receiveTemptation(data));
     }
 
+
+    CONFIG.fontDefinitions.CaslonPro = {editor : true, fonts : []}
+
+    CONFIG.canvasTextStyle = new PIXI.TextStyle({
+      fontFamily: "CaslonPro",
+      fontSize: 36,
+      fill: "#FFFFFF",
+      stroke: '#111111',
+      strokeThickness: 1,
+      dropShadow: true,
+      dropShadowColor: "#000000",
+      dropShadowBlur: 4,
+      dropShadowAngle: 0,
+      dropShadowDistance: 0,
+      align: "center",
+      wordWrap: false
+    })
+
     registerSettings();
     registerHandlebars();
     
-    foundry.utils.mergeObject(CONFIG, TOW_CONFIG);
 
+    foundry.utils.mergeObject(CONFIG, TOW_CONFIG);
+    foundry.utils.mergeObject(game.oldworld.config.badgeInfo, defaultWarhammerConfig.badgeInfo, {overwrite: false});
+    warhammer.utility.registerPremiumModuleInitialization()
 });
 
 // FoundryOverrides();
 registerHooks();
+ZoneConfig.addRegionControls();
+
 // loadScripts();
 // tokenHelpers()

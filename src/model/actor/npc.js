@@ -2,6 +2,8 @@ import { StandardActorModel } from "./standard";
 let fields = foundry.data.fields;
 
 export class NPCModel extends StandardActorModel {
+    static preventItemTypes = ["blessing", "corruption", "lore"]
+    
     static defineSchema() {
         let schema = super.defineSchema();
 
@@ -25,6 +27,14 @@ export class NPCModel extends StandardActorModel {
         schema.type = new fields.StringField({ initial: "minion" });
         schema.resilience.fields.useItems = new fields.BooleanField({}, { name : "useItems", parent: schema.resilience });
         schema.resilience.fields.descriptor = new fields.StringField({}, { name : "descriptor", parent: schema.resilience });
+
+        schema.loot = new fields.EmbeddedDataField(ChoiceModel);
+
+        schema.mountData = new fields.SchemaField({
+            items : new fields.EmbeddedDataField(DocumentReferenceListModel),
+            effects : new fields.EmbeddedDataField(DocumentReferenceListModel)
+        })
+
         return schema;
     }
 
@@ -36,7 +46,7 @@ export class NPCModel extends StandardActorModel {
         }
     }
 
-    addWound()
+    rollWound(dice)
     {
         if (this.hasThresholds)
         {
@@ -44,13 +54,35 @@ export class NPCModel extends StandardActorModel {
         }
         else 
         {
-            super.addWound();
+            super.rollWound(dice);
         }
+    }
+
+
+    get hasChoices()
+    {
+        return !this.parent.prototypeToken.actorLink && this.choices.options.length > 1
     }
 
     get hasThresholds()
     {
         return ["brute", "monstrosity"].includes(this.type)
+    }
+
+    thresholdAtWounds(wounds)
+    {
+        if (this.wounds.unwounded.range[1] >= wounds)
+        {
+            return "unwounded";
+        }
+        if (this.wounds.wounded.range[0] <= wounds && this.wounds.wounded.range[1] >= wounds)
+        {
+            return "wounded";
+        }
+        if (this.wounds.defeated.range[0] <= wounds)
+        {
+            return "defeated";
+        }
     }
 
     computeWoundThresholds()
@@ -83,17 +115,26 @@ export class NPCModel extends StandardActorModel {
         if (numberOfWounds >= wounds.unwounded.range[0]  && numberOfWounds <= wounds.unwounded.range[1])
         {
             wounds.unwounded.active = true;
+            wounds.current = "unwounded";
         }
         
         else if (numberOfWounds >= wounds.wounded.range[0]  && numberOfWounds <= wounds.wounded.range[1])
         {
             wounds.wounded.active = true;
+            wounds.current = "wounded";
         }
 
         else if (numberOfWounds >= wounds.defeated.range[0]  && numberOfWounds <= wounds.defeated.range[1])
         {
             wounds.defeated.active = true;
+            wounds.current = "defeated";
         }
+    }
+
+    async makeChoices()
+    {
+        let choices = await this.choices.promptDecision(this.parent, {window: {title : "Token Decision"}});
+        this.parent.deleteEmbeddedDocuments("Item", this.parent.items.filter(i => !choices.find(c => c.id == i.id)).map(i => i.id));
     }
 
     effectIsActive(effect)
@@ -120,6 +161,108 @@ export class NPCModel extends StandardActorModel {
     _addModelProperties() {
         this.wounds.unwounded.effect.relative = this.parent.effects;
         this.wounds.wounded.effect.relative = this.parent.effects;
+        this.wounds.defeated.effect.relative = this.parent.effects;
+
+        this.mountData.items.relative = this.parent.items;
+        // this.mountData.effects.relative = this.parent.effects;
+    }
+
+    
+    async addWound({fromTest, opposed, diceModifier=0, roll=true}={})
+    {
+        return super.addWound({fromTest, opposed, diceModifier, roll: (this.hasThresholds ? false : roll)})
+    }
+
+
+    async toEmbed(config, options)
+    {
+
+        if (config.table)
+        {
+            let html = `
+            <div class="npc-table">
+                
+                <div class="header">
+                    <label class="title"><a data-link data-uuid="${this.parent.uuid}">${config.label || this.parent.name}</a></label>
+                </div>
+
+                <div class="details">
+                    <div class="property-header" style="padding-top: 20px; grid-column: 1 / span 1">WS</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 2 / span 1">BS</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 3 / span 1">S</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 4 / span 1">T</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 5 / span 1">I</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 6 / span 1">Ag</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 7 / span 1">Re</div>
+                    <div class="property-header" style="padding-top: 20px; grid-column: 8 / span 1">Fel</div>
+
+                    <div class="property" style="grid-column: 1 / span 1">${this.characteristics.ws.value}</div>
+                    <div class="property" style="grid-column: 2 / span 1">${this.characteristics.bs.value}</div>
+                    <div class="property" style="grid-column: 3 / span 1">${this.characteristics.s.value}</div>
+                    <div class="property" style="grid-column: 4 / span 1">${this.characteristics.t.value}</div>
+                    <div class="property" style="grid-column: 5 / span 1">${this.characteristics.i.value}</div>
+                    <div class="property" style="grid-column: 6 / span 1">${this.characteristics.ag.value}</div>
+                    <div class="property" style="grid-column: 7 / span 1">${this.characteristics.re.value}</div>
+                    <div class="property" style="grid-column: 8 / span 1">${this.characteristics.fel.value}</div>
+
+                    <div class="property-header" style="grid-column: 1 / span 3">Speed</div>
+                    <div class="property-header" style="grid-column: 4 / span 3">Resilience</div>
+                    <div class="property-header" style="grid-column: 7 / span 2">Type</div>
+
+                    <div class="property" style="grid-column: 1 / span 3">${game.oldworld.config.speed[this.speed.value]}</div>
+                    <div class="property" style="grid-column: 4 / span 3">${this.resilience.value} ${this.resilience.armoured ? "(armoured)" : ""}</div>
+                    <div class="property" style="grid-column: 7 / span 2">${game.oldworld.config.npcType[this.type]}</div>
+
+                    ${
+                        ["brute", "monstrosity"].includes(this.type) ?
+                        `<div class="property-header" style="grid-column: 1 / span 3">${this.wounds.unwounded.range[0]} ${this.wounds.unwounded.range[0] != this.wounds.unwounded.range[0] ? "-" + this.wounds.unwounded.range[1] : ""} Wounds</div>
+                        <div class="property-header" style="grid-column: 4 / span 3">${this.wounds.wounded.range[0]} ${this.wounds.wounded.range[0] != this.wounds.wounded.range[0] ? "-" + this.wounds.wounded.range[1] : ""} Wounds</div>
+                        <div class="property-header" style="grid-column: 7 / span 2">${this.wounds.defeated.range[0]} ${this.wounds.defeated.range[0] != this.wounds.defeated.range[0] ? "-" + this.wounds.defeated.range[1] : ""} Wounds</div>
+            
+                        <div class="property" style="grid-column: 1 / span 3">${this.wounds.unwounded.description || this.wounds.unwounded.effect.document?.name || "–"}</div>
+                        <div class="property" style="grid-column: 4 / span 3">${this.wounds.wounded.description || this.wounds.wounded.effect.document?.name || "–"}</div>
+                        <div class="property" style="grid-column: 7 / span 2">Defeated</div>`
+                        :
+                        ""
+                    }
+
+
+
+                    <div class="text alt-row" style="grid-column: 1 / span 8">
+                        <p><strong>Skills</strong>: ${Object.keys(this.skills).map(i => {
+                            return `${game.oldworld.config.skills[i]} ${this.skills[i].value}`
+                        }).join(", ")}</p>
+
+                        <p><strong>Attacks</strong>: ${this.parent.itemTypes.ability.filter(a => a.system.isAttack).map(ability => {
+                            return `@UUID[${ability.uuid}]{${ability.name}}`
+                        }).join(", ")}</p>
+                    </div>
+
+                    <div class="traits" style="grid-column: 1 / span 8">
+                    ${this.parent.itemTypes.ability.filter(a => !a.system.isAttack).map(ability => {
+                        return `<p>@UUID[${ability.uuid}]{${ability.name}}:  ${ability.system.description.public.replace("<p>", "")}`
+                    }).join("")}
+                    </div>
+
+                    <div class="trappings alt-row   " style="grid-column: 1 / span 8">
+                        <p><strong>Typical Trappings</strong>: ${this.parent.itemTypes.weapon.concat(this.parent.itemTypes.trapping).concat(this.parent.itemTypes.armour).map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ")}
+                    </div>
+
+                </div>
+            </div>
+
+            `
+
+            if (config.image)
+            {
+                html = `<div class="npc-image"><img src="${this.parent.img}"></div>` + html;
+            }
+
+            let div = document.createElement("div");
+            div.style = config.style;
+            div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`${html}`, {relativeTo : this, async: true, secrets : options.secrets})
+            return div;
+        }
     }
 
 }

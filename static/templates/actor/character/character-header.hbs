@@ -5,12 +5,13 @@
         <div class="header-row">
             <div class="origin">
 
-                <label>{{localize "TOW.Sheet.Origin"}}</label>
+                <div class="label">
+                    {{localize "TOW.Sheet.Origin"}}
+                </div>
                 {{#if actor.system.origin.document}}
                     <div class="like-input" data-uuid="{{system.origin.document.uuid}}">
-                        <span class="control" ></span>
-                        <a type="text" data-action="editEmbedded"
-                            name="actor.system.origin.name">{{system.origin.name}}</a>
+                        <span class="control"></span>
+                        <a type="text" data-action="editEmbedded" name="actor.system.origin.name">{{system.origin.name}}</a>
                         <a class="control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
                     </div>
                 {{else}}
@@ -19,12 +20,13 @@
             </div>
 
             <div class="career">
-                <label>{{localize "TOW.Sheet.Career"}}</label>
+                <div class="label">
+                    {{localize "TOW.Sheet.Career"}}
+                </div>
                 {{#if actor.system.career.document}}
                     <div class="like-input" data-uuid="{{actor.system.career.document.uuid}}">
-                        <span class="control" ></span>
-                        <a type="text" data-action="editEmbedded"
-                            name="actor.system.career.name">{{actor.system.career.name}}</a>
+                        <span class="control"></span>
+                        <a type="text" data-action="editEmbedded" name="actor.system.career.name">{{actor.system.career.name}}</a>
                         <a class="control" data-action="deleteEmbedded"><i class="fas fa-xmark"></i></a>
                     </div>
                 {{else}}
@@ -32,8 +34,10 @@
                 {{/if}}
             </div>
             <div class="status">
-            <label>{{localize "TOW.Sheet.Status"}}</label>
-            <input type="text" disabled value="{{configLookup "status" system.career.document.system.status}}">
+                <div class="label">
+                    {{localize "TOW.Sheet.Status"}}
+                </div>
+                <input type="text" disabled value="{{configLookup "status" system.career.document.system.status}}">
             </div>
         </div>
     </div>

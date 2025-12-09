@@ -1,0 +1,27 @@
+<div class="test">
+
+    {{#if itemSummary}}
+        {{{itemSummary}}}
+    {{/if}}
+
+    {{> effectButtons}}
+
+    {{#if targetTokens.length}}
+        <div class="targets">
+            <p class="header">Targets <i class="fa-solid fa-crosshairs"></i></p>
+            <div class="target-list">
+                {{#each targetTokens}}
+                    <div class="token" data-id="{{this.id}}">
+                        <img src="{{this.texture.src}}">
+                        <p>{{this.name}}</p>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
+
+    {{!-- <div class="result {{#if this.result.succeeded}}succeeded{{else}}failed{{/if}}"> --}}
+    {{!-- {{#if this.result.succeeded}}Success!{{else}}Failure!{{/if}} --}}
+    {{!-- </div> --}}
+</div>

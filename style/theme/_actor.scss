@@ -1,0 +1,254 @@
+@use "./mixins" as *;
+
+
+body.whtow-theme {
+    .application.warhammer.actor {
+        overflow: visible;
+        padding: 20px;
+        @include window-frame;
+
+        background: url("./assets/ui/npc-bg.webp");
+        background-position-x: 15%;
+        backdrop-filter: none;
+
+
+        .window-header {
+            --header-height: 36px;
+            background: none;
+            border: none;
+            top: -32px;
+            padding-left: 4.5rem;
+            padding-right: 0px;
+            box-shadow: none;
+            margin-bottom: -25px;
+
+            button.header-control {
+
+                outline: none;
+
+                background: url(./assets/ui/button-square.webp);
+                background-size: contain;
+                color: black;
+                --button-size: 1.5rem;
+                font-size: var(--font-size-14);
+
+            }
+        }
+
+        .window-content {
+            padding: 0px; // border width of app acts as padding
+
+            button[data-action] {
+                @include tow-button-minimal;
+            }
+
+            .advancement,
+            .miscast-controls,
+            .miscast-steps,
+            [data-tab=corruption] {
+                button {
+                    @include tow-button;
+                }
+            }
+        }
+
+        .controls-dropdown {
+            top: 1rem;
+        }
+
+        .sheet-header {
+
+            input[name=name] {
+                @include form-border;
+                background: var(--tow-brown-half);
+                font-family: var(--font-header-alt);
+                font-weight: bold;
+                height: 2.5rem;
+                font-size: 1.5rem;
+            }
+
+            .header-row {
+                >* {
+                    @include form-border;
+
+                    .label {
+                        padding-top: 0.5rem;
+                        background: var(--tow-brown-half);
+                    }
+
+                    .like-input,
+                    input {
+                        background: none
+                    }
+                }
+            }
+        }
+
+        .miscast-pool {
+            @include form-border;
+            background: var(--tow-brown-half);
+            font-family: var(--font-header);
+            padding: 0.5rem;
+        }
+
+        .actions {
+            button {
+                font-family: var(--font-text);
+            }
+        }
+
+        .sheet-effect-buttons
+        {
+            gap: 0.5rem;
+        }
+
+        .list-row .description {
+            @include editor-text;
+        }
+
+
+    }
+
+    .application.warhammer.actor.character {
+
+
+        --input-background-color: var(--tow-brown-half);
+        --attribute-title: var(--tow-brown) --attribute-label: var(--tow-brown-half);
+        --editor-header: var(--tow-brown-half);
+        --list-header: var(--tow-brown-half);
+        --list-header-border: var(--tow-brown);
+        --border: var(--tow-brown);
+        --condition-active: var(--tow-brown-half);
+        --list-row-alternate: var(--tow-brown-half);
+
+
+        .window-header {
+            .window-title {
+                visibility: hidden;
+            }
+        }
+
+
+
+        .characteristics {
+            position: relative;
+            @include form-border;
+            padding: 5px;
+
+            input {
+                border: 1px solid var(--tow-brown);
+            }
+
+            .ch-data {
+                input {
+                    font-weight: bold;
+                }
+            }
+
+            label {
+                font-family: var(--font-header-alt);
+                font-weight: bold;
+            }
+
+            // &::before {
+            //     content: "";
+            //     position: absolute;
+            //     background: url(./assets/ui/border-corner.png);
+            //     background-size: contain;
+            //     background-repeat: no-repeat;
+            //     height: 100px;
+            //     width: 100px;
+            //     z-index: 0;
+            //     left: 0px;
+            //     top: 0px;
+            //     filter: drop-shadow(0 0 0px black);
+            // }
+        }
+
+        .coins {
+            background: var(--tow-bluegrey-half);
+            border-color: var(--tow-bluegrey);
+        }
+
+        // background: url("./assets/ui/character-bg.png");    
+    }
+
+
+    .application.warhammer.actor.npc {
+
+
+        &::before {
+            content: "";
+            position: absolute;
+            background: url(./assets/ui/statblock-header.webp);
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 60px;
+            width: 500px;
+            z-index: 0;
+            right: 50%;
+            top: -20px;
+            margin-right: -280px;
+            filter: drop-shadow(0 0 0.2rem black);
+        }
+
+
+        &.minimized {
+            .window-header {
+                padding-left: 0px;
+            }
+        }
+
+        .window-header {
+
+
+            .window-title {
+                margin-top: 8px;
+                text-align: center;
+                position: relative;
+                font-size: var(--font-size-24);
+                font-variant: small-caps;
+                font-family: var(--font-header);
+                color: var(--tow-blue);
+
+
+            }
+        }
+
+        .skills,
+        .characteristics {
+            input {
+                border: 1px solid var(--tow-brown);
+            }
+        }
+
+        .characteristics {
+            th {
+                font-family: var(--font-header-alt);
+                font-weight: bold;
+                font-size: var(--font-size-20);
+                padding-bottom: 0px;
+            }
+        }
+
+        .wound-breakdown .label.active {
+            background: var(--tow-bluegrey-half);
+            box-shadow: 0 0 10px var(--tow-darkred) inset;
+        }
+
+        .post-loot:not(.icon) {
+            @include tow-button;
+        }
+
+    }
+
+    .application.warhammer.actor.vehicle {
+        .window-header {
+            .window-title {
+                visibility: hidden;
+            }
+        }
+    }
+
+}
+

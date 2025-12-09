@@ -39,9 +39,9 @@ export class OriginModel extends BaseItemModel {
         schema.talents = new fields.SchemaField({
             table: new fields.EmbeddedDataField(DocumentReferenceModel),
             rolls: new fields.NumberField({ initial: 2 }),
-            keep: new fields.NumberField({ initial: 0 }),
             gain: new fields.EmbeddedDataField(DocumentReferenceListModel),
-            replacements: new fields.EmbeddedDataField(DocumentReferenceListModel)
+            replacements: new fields.EmbeddedDataField(DocumentReferenceListModel),
+            optional: new fields.EmbeddedDataField(DocumentReferenceListModel)
         })
 
         schema.lores = ListModel.createListModel(new fields.SchemaField({
@@ -50,7 +50,7 @@ export class OriginModel extends BaseItemModel {
             group: new fields.NumberField({ nullable: true, required: false, blank: true })
         }))
         schema.careers = new fields.EmbeddedDataField(DocumentReferenceModel),
-            schema.fate = new fields.NumberField({ min: 0 });
+        schema.fate = new fields.NumberField({ min: 0 });
         return schema;
     }
 
@@ -171,7 +171,10 @@ export class OriginModel extends BaseItemModel {
         let talents = (await Promise.all(this.talents.gain.documents)).map(i => i.toObject());
 
         // The Talents that will be swapped for some rolled talents
-        let replacementTalents = await Promise.all(this.talents.replacements.documents);
+        let requiredTalents = await Promise.all(this.talents.replacements.documents);
+
+        // The Talents that may be swapped for some rolled talents
+        let optionalTalents = await Promise.all(this.talents.optional.documents);
 
         // All rolled table talents
         let tableTalents = [];
@@ -198,18 +201,38 @@ export class OriginModel extends BaseItemModel {
             ui.notifications.error("No Table found for Talents")
         }
 
-        // Choose what rolled talents to keep
-        let chosenTalents = []
 
-        if (this.talents.keep != tableTalents.length) {
-            chosenTalents = await ItemDialog.create(tableTalents, this.talents.keep, { title: this.parent.name, text: `Choose ${this.talents.keep} Talents to keep, replacing the others with ${replacementTalents.map(i => i.name).join(", ")}` })
+        let requiredSwaps = []
+        if (requiredTalents.length) {
+            for(let talent of requiredTalents)
+            {
+                let swap = await ItemDialog.create(tableTalents, 1, { title: this.parent.name, text: `You must replace a Talent for ${talent.name}.`})
+                if (swap[0])
+                {
+                    // Add to swapped array if choice is made 
+                    requiredSwaps.push(talent);
+                    tableTalents = tableTalents.filter(i => i.name != swap[0].name); // Remove talent swapped
+                }
+            }
         }
-        else {
-            chosenTalents = tableTalents;
+        
+        // Array of talents swapped for (not the rolled talents that were swapped)
+        let optionalSwaps = []
+        if (optionalTalents.length) {
+            for(let talent of optionalTalents)
+            {
+                let swap = await ItemDialog.create(tableTalents, 1, { title: this.parent.name, text: `Optionally replace a Talent for ${talent.name}, or close to skip.`})
+                if (swap[0])
+                {
+                    // Add to swapped array if choice is made 
+                    optionalSwaps.push(talent);
+                    tableTalents = tableTalents.filter(i => i.name != swap[0].name); // Remove talent swapped
+                }
+            }
         }
 
         // Combine rolled and kept talents with replacement talents and automatically gained talents
-        talents = talents.concat(chosenTalents.map(i => i.toObject())).concat(replacementTalents.map(i => i.toObject()));
+        talents = talents.concat(requiredSwaps.concat(optionalSwaps.concat(tableTalents)).map(i =>  i.toObject()));
 
         await actor.createEmbeddedDocuments("Item", talents.concat(lores));
 
@@ -231,5 +254,136 @@ export class OriginModel extends BaseItemModel {
         }
 
         await actor.update({ "system.skills": actorSkills, "system.fate.max": this.fate });
+    }
+
+    async toEmbed(config, options)
+    {
+        let  table  =   await  this.talents.table.document;
+
+        let tableHTML = `
+        <table>
+            <tr>
+                <th>d10</th>
+                <th>Random Talent</th>
+                <th>d10</th>
+                <th>Random Talent</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1:result</td>
+                <td>6</td>
+                <td>6:result</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2:result</td>
+                <td>7</td>
+                <td>7:result</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3:result</td>
+                <td>8</td>
+                <td>8:result</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>4:result</td>
+                <td>9</td>
+                <td>9:result</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>5:result</td>
+                <td>10</td>
+                <td>10:result</td>
+            </tr>
+        </table>
+        `
+
+        let tableInstructions = `Roll ${this.talents.rolls} ${this.talents.rolls == 1 ? "time" : "times, rerolling duplicates"}.`
+
+        if (this.talents.replacements.list.length)
+        {
+            tableInstructions += `You must swap ${this.talents.replacements.list.length} of these Talents for ${this.talents.replacements.list.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(" and ")}.`
+        }
+
+        if (this.talents.optional.list.length)
+        {
+            tableInstructions += `You may swap ${this.talents.optional.list.length} of these Talents for ${this.talents.optional.list.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(" and ")}.`
+        }
+
+        if (this.talents.gain.list.length)
+        {
+            tableInstructions += `You also gain ${this.talents.gain.list.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(" and ")}.`
+        }
+
+        for(let result of table.results.contents)
+        {
+            tableHTML = tableHTML.replace(`${result.range[0]}:result`, `@UUID[${result.documentUuid}]{${result.name}}`)
+        }
+
+
+        let start = this.skills.list.find(i => !i.skill)?.value || 2;
+        let choices = this.skills.list.filter(i => i.skill == "*");
+        let skills = this.skills.list.filter(i => i.skill && i.skill != "*");
+
+        let skillText = `Your skills begin at ${start}. `
+        if (choices.length)
+        {
+            if (skills.length)
+            {
+                skillText += `Raise ${skills.map(c => game.oldworld.config.skills[c.skill]).join(", ")} and ${choices.length} other skills of your choice to ${skills[0].value}`
+            }
+            else 
+            {
+                skillText += `Raise any ${choices.length} skills of your choice to ${choices[0].value}`
+            }
+        }
+        else 
+        {
+            skillText += `Raise ${skills.map(c => game.oldworld.config.skills[c.skill]).join(", ")} to ${skills[0].value}`
+        }
+
+
+        let loreText = `${this.lores.list.filter(i => !i.group).map(i => i.name)}. `;
+        let groups = []
+        this.lores.list.forEach(i => {
+            if (i.group)
+            {
+                if (!groups.includes(i.group))
+                {
+                    groups.push(i.group);
+                }
+            }
+        })
+
+        for(let group of groups)
+        {
+            loreText += `${this.lores.list.filter(i => i.group == group).map(i => i.name).join(" or ")}.`
+        }
+
+
+        let html = `
+        <div class="header">
+            <label class="title"><a data-link data-uuid="${this.parent.uuid}">${config.label || this.parent.name}</a></label>
+        </div>
+        <div class="origin-data">
+            <div  class="table">
+                ${tableHTML}
+                <p class="instructions">${tableInstructions}</p>
+            </div>
+            <div class="details">
+                <p><strong>Skill Ratings:</strong> ${skillText}</p>
+                <p><strong>Lores:</strong> ${loreText}</p>
+                <p><strong>Fate:</strong> ${this.fate}</p>
+                ${config.text || ""}
+            </div>
+        </div>`
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(`<div style="${config.style || ""}">${html}</div>`, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
     }
 }
