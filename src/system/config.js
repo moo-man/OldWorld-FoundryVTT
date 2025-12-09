@@ -64,7 +64,9 @@ const OLDWORLD = {
         battle : "TOW.MagicLore.Battle",
         elementalism : "TOW.MagicLore.Elementalism",
         illusion : "TOW.MagicLore.Illusion",
-        necromancy : "TOW.MagicLore.Necromancy"
+        necromancy : "TOW.MagicLore.Necromancy",
+        daemonology : "TOW.MagicLore.Daemonology",
+        other : "TOW.MagicLore.Other"
     },
 
     target : {
@@ -607,7 +609,9 @@ const OLDWORLD = {
 
                     if (choice == "recover")
                     {
+                        
                         let target = Array.from(game.user.targets)[0]?.actor;
+                        actor.runScripts("doAction", {action: "recover", target})
 
                         if (actor.system.isStaggered)
                         {

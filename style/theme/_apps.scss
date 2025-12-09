@@ -232,6 +232,7 @@ body.whtow-theme {
             @include border.gradient-border(var(--tow-blue));
         }
 
+        h2.divider,
         h3.divider {
             color: var(--tow-grey);
             font-family: var(--font-header);

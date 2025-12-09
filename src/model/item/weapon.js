@@ -86,10 +86,11 @@ export class WeaponModel extends EquippableItem
 
     async toEmbed(config, options)
     {
+        let html;
         if (config.row)
         {
 
-            let html = `
+            html = `
                 <div style>
                     @UUID[${this.parent.uuid}]{${this.parent.name}}
                 </div>
@@ -117,10 +118,10 @@ export class WeaponModel extends EquippableItem
             div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
             return div;
         }
-        else 
+        else if (config.stats)
         {
 
-            let html = `
+            html = `
             <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
             ${this.description.public}
             <section class="tow-table">
@@ -158,13 +159,21 @@ export class WeaponModel extends EquippableItem
             </table>
         </section>
         `;
-
-            let div = document.createElement("div");
-            div.style = config.style;
-            div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
-            return div;
-
         }
+        else {
+            html = `
+            <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+            ${this.description.public}
+        `;
+    
+        }
+
+
+        
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
 
     }
 }

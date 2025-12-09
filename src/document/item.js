@@ -17,4 +17,9 @@ export class OldWorldItem extends OldWorldDocumentMixin(WarhammerItem)
     {
         PostedItemMessageModel.postItem(this, chatData)
     }
+
+    getTestData()
+    {
+        return this.system.test.toObject();
+    }
 }

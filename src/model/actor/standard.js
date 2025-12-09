@@ -201,6 +201,19 @@ export class StandardActorModel extends BaseActorModel
             flavor : flavor || game.i18n.localize("TOW.Dialog.Staggered")
         })
 
+        ActiveEffect.implementation.create({
+            name: "Give Ground",
+            img: "systems/whtow/assets/icons/give-ground.svg",
+            statuses: ["give"],
+            system: {
+                scriptData: [{
+                    label: "Delete",
+                    trigger: "endRound",
+                    script: "this.effect.delete()"
+                }]
+            }
+        }, {parent: this.parent});
+
         await Promise.all(this.parent.runScripts("receiveGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
         await Promise.all(fromTest?.actor.runScripts("inflictGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
         await Promise.all(fromTest?.item.runScripts("inflictGiveGround", {test: fromTest, opposed, actor : this.parent}) || [])
@@ -260,7 +273,6 @@ export class StandardActorModel extends BaseActorModel
                     break;
                 case "wound" :
                     await this.addWound({fromTest, opposed});
-                    this.parent.removeCondition("staggered");
                     break;
                 case "prone" :
                     await this.fallProne({fromTest, opposed})
@@ -323,15 +335,16 @@ export class StandardActorModel extends BaseActorModel
         this.parent.update({"system.magic.miscasts" : 0})
     }
 
-    async rollHazard(skill, rating=1, options={})
+    async rollHazard(skill, rating=1, context={})
     {
-        let test = await this.parent.setupSkillTest(skill, options);
+        let test = await this.parent.setupSkillTest(skill, context);
         let diff = test.result.successes - rating;
 
         if (diff < 0)
         {
             this.addWound({diceModifier : Math.max(1, Math.abs(diff) - 1)})
         }
+        return test;
     }
 
 
@@ -424,6 +437,11 @@ export class StandardActorModel extends BaseActorModel
         return lores;
     }
 
+    get isStandard()
+    {
+        return true;
+    }
+
     get isArmoured() 
     {
         return this.resilience.armoured;
@@ -438,7 +456,7 @@ export class StandardActorModel extends BaseActorModel
     }
     get isMounted() 
     {
-
+        return this.mount.isMounted;
     }
 }
 

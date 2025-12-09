@@ -15,27 +15,33 @@ export class WoundModel extends BaseItemModel
     async _preCreate(data, options, user)
     {
         await super._preCreate(data, options, user);
-        if (this.parent.isOwned && this.parent.actor.system.hasThresholds)
+        if (this.parent.isOwned)
         {
-            let actor = this.parent.actor;
+            this.parent.actor.removeCondition("staggered");
 
-            if (actor.system.wounds.current == "defeated")
+            if (this.parent.actor.system.hasThresholds)
             {
-                return
+                let actor = this.parent.actor;
+
+                if (actor.system.wounds.current == "defeated")
+                {
+                    return
+                }
+
+                let currentThreshold = actor.system.wounds.current;
+                let nextThreshold = actor.system.thresholdAtWounds(actor.itemTypes.wound.length + 1)
+
+                if (currentThreshold != "defeated" && nextThreshold != currentThreshold)
+                {
+                    actor.system.wounds[nextThreshold].effect?.document?.handleImmediateScripts(data, options, user)
+                }
+                
+                if (nextThreshold == "defeated")
+                {
+                    actor.addCondition("dead");
+                }
             }
 
-            let currentThreshold = actor.system.wounds.current;
-            let nextThreshold = actor.system.thresholdAtWounds(actor.itemTypes.wound.length + 1)
-
-            if (currentThreshold != "defeated" && nextThreshold != currentThreshold)
-            {
-                actor.system.wounds[nextThreshold].effect?.document?.handleImmediateScripts(data, options, user)
-            }
-            
-            if (nextThreshold == "defeated")
-            {
-                actor.addCondition("dead");
-            }
         }
     }
     

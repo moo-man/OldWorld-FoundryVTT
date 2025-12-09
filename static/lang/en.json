@@ -301,7 +301,7 @@
             "Animals" : "Animals",
 
             "RowCrew" : "Row Crew",
-            "SailCrew" : "Row Crew",
+            "SailCrew" : "Sail Crew",
 
             "SpeedRow" : "Speed (Row)",
             "SpeedSail" : "Speed (Sail)",
@@ -337,7 +337,9 @@
             "Battle" : "Battle",
             "Elementalism" : "Elementalism",
             "Illusion" : "Illusion",
-            "Necromancy" : "Necromancy"
+            "Necromancy" : "Necromancy",
+            "Daemonology" : "Daemonology",
+            "Other" : "Other"
         },
 
         "TargetType" : {
@@ -508,7 +510,6 @@
             "ability"  : {
                 "FIELDS" : {
                     "attack" : {
-
                         "skill" : {
                             "label" : "Attack Skill"
                         },
@@ -607,7 +608,11 @@
                 }
             },
             "trapping"  : {
-                "FIELDS" : {}
+                "FIELDS" : {
+                    "equippable" : {
+                        "label": "Equippable"
+                    }
+                }
             },
             "asset"  : {
                 "FIELDS" : {

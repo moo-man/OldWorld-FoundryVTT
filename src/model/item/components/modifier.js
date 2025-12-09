@@ -59,7 +59,7 @@ export class ModifiersModel extends foundry.abstract.DataModel
                 trigger : "dialog",
                 script : this.attacking.value > 0 ? `args.fields.bonus += ${this.attacking.value}` : `args.fields.penalty += ${Math.abs(this.attacking.value)}`,
                 options : {
-                    hideScript : "return args.actor.system.opposed || args.skill != this.item.system.skill"
+                    hideScript : "return args.actor.system.opposed || args.skill != (this.item.system.skill || this.item.system.attack?.skill)"
                 }
             };
 
@@ -77,7 +77,7 @@ export class ModifiersModel extends foundry.abstract.DataModel
                     attackingScript.options.activateScript += "args.target?"
                 }
 
-                attackingScript.options.activateScript += `.system.${conditionCode[this.attacking.condition]}` + " && args.weapon"
+                attackingScript.options.activateScript += `.system.${conditionCode[this.attacking.condition]}` + " && args.isAttack"
 
                 if (this.attacking.not)
                 {
@@ -165,7 +165,7 @@ export class ModifiersModel extends foundry.abstract.DataModel
                     damageScript.options.activateScript += "args.target?"
                 }
 
-                damageScript.options.activateScript += `.system.${conditionCode[this.damage.condition]}` + " && args.weapon"
+                damageScript.options.activateScript += `.system.${conditionCode[this.damage.condition]}` + " && args.isAttack"
 
                 if (this.damage.not)
                 {

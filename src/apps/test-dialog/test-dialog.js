@@ -132,7 +132,7 @@ export default class TestDialog extends WarhammerRollDialogV2 {
 
     async computeInitialFields()
     {
-        this.data.dice = this.actor.system.characteristics[this.data.characteristic].value;
+        this.data.dice = this.actor.system.characteristics[this.data.characteristic]?.value;
     }
 
     computeState()
@@ -217,7 +217,7 @@ export default class TestDialog extends WarhammerRollDialogV2 {
         let dialogData = super._baseDialogData(actor, context)
 
         dialogData.data.skill = skill;
-        dialogData.data.characteristic = actor.system.skills[skill].characteristic;
+        dialogData.data.characteristic = actor.system.skills[skill]?.characteristic;
 
         context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill: game.oldworld.config.skills[skill]});
         context.title += context.appendTitle || "";
@@ -236,7 +236,7 @@ export default class TestDialog extends WarhammerRollDialogV2 {
         {
             dialogData.data.scripts = dialogData.data.scripts.concat(context.reload?.getScripts("dialog").filter(s => !s.options.defending) || [])
         }
-        dialogData.fields.target = actor.system.skills[skill].value;
+        dialogData.fields.target = actor.system.skills[skill]?.value;
 
 
 

@@ -219,8 +219,8 @@ export class NPCModel extends StandardActorModel {
                         <div class="property-header" style="grid-column: 4 / span 3">${this.wounds.wounded.range[0]} ${this.wounds.wounded.range[0] != this.wounds.wounded.range[0] ? "-" + this.wounds.wounded.range[1] : ""} Wounds</div>
                         <div class="property-header" style="grid-column: 7 / span 2">${this.wounds.defeated.range[0]} ${this.wounds.defeated.range[0] != this.wounds.defeated.range[0] ? "-" + this.wounds.defeated.range[1] : ""} Wounds</div>
             
-                        <div class="property" style="grid-column: 1 / span 3">${this.wounds.unwounded.description || "–"}</div>
-                        <div class="property" style="grid-column: 4 / span 3">${this.wounds.wounded.description || "–"}</div>
+                        <div class="property" style="grid-column: 1 / span 3">${this.wounds.unwounded.description || this.wounds.unwounded.effect.document?.name || "–"}</div>
+                        <div class="property" style="grid-column: 4 / span 3">${this.wounds.wounded.description || this.wounds.wounded.effect.document?.name || "–"}</div>
                         <div class="property" style="grid-column: 7 / span 2">Defeated</div>`
                         :
                         ""
@@ -233,13 +233,13 @@ export class NPCModel extends StandardActorModel {
                             return `${game.oldworld.config.skills[i]} ${this.skills[i].value}`
                         }).join(", ")}</p>
 
-                        <p><strong>Attacks</strong>: ${this.parent.itemTypes.weapon.map(weapon => {
-                            return `@UUID[${weapon.uuid}]{${weapon.name}}`
+                        <p><strong>Attacks</strong>: ${this.parent.itemTypes.ability.filter(a => a.system.isAttack).map(ability => {
+                            return `@UUID[${ability.uuid}]{${ability.name}}`
                         }).join(", ")}</p>
                     </div>
 
                     <div class="traits" style="grid-column: 1 / span 8">
-                    ${this.parent.itemTypes.ability.map(ability => {
+                    ${this.parent.itemTypes.ability.filter(a => !a.system.isAttack).map(ability => {
                         return `<p>@UUID[${ability.uuid}]{${ability.name}}:  ${ability.system.description.public.replace("<p>", "")}`
                     }).join("")}
                     </div>

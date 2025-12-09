@@ -8,11 +8,11 @@
         {{else if (eq system.type "water")}}
         <div class="attribute-box">
             <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "TOW.Sheet.SpeedRow"}}</label></div>
-            <div class="field" style="grid-column: 1 / span 12">{{formInput fields.speed.fields.row.fields.value value=system.speed.row.value choices=(config "speed") blank=true}}</div>
+            <div class="field" style="grid-column: 1 / span 12">{{formInput fields.speed.fields.row.fields.value value=system.speed.row.value choices=(config "speed") blank=""}}</div>
         </div>
         <div class="attribute-box">
             <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "TOW.Sheet.SpeedSail"}}</label></div>
-            <div class="field" style="grid-column: 1 / span 12">{{formInput fields.speed.fields.sail.fields.value value=system.speed.sail.value choices=(config "speed") blank=true}}</div>
+            <div class="field" style="grid-column: 1 / span 12">{{formInput fields.speed.fields.sail.fields.value value=system.speed.sail.value choices=(config "speed") blank=""}}</div>
         </div>
         {{/if}}
         <div class="attribute-box">

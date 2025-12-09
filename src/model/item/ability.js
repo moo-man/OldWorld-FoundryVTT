@@ -13,6 +13,8 @@ export class AbilityModel extends BaseItemModel
         schema.test = new fields.EmbeddedDataField(TestModel);
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.attack = new fields.SchemaField({
+            dice: new fields.NumberField(),
+            target: new fields.NumberField(),
             skill : new fields.StringField({choices : {melee : "TOW.Melee", brawn : "TOW.Brawn", shooting : "TOW.Shooting", throwing : "TOW.Throwing"}, initial : "", blank: true}),
             range : new fields.SchemaField({
                 min : new fields.NumberField({choices : game.oldworld.config.range, initial : 0}),
@@ -28,12 +30,12 @@ export class AbilityModel extends BaseItemModel
 
     get isAttack()
     {
-        return !!this.attack.skill;
+        return !!this.attack.skill || (this.attack.dice && this.attack.target);
     }
     
     get isMelee()
     {
-        return ["melee", "brawn"].includes(this.attack.skill);
+        return ["melee", "brawn"].includes(this.attack.skill) || !this.isRanged;
     }
 
     get isRanged()

@@ -142,7 +142,7 @@ export class CareerModel extends BaseItemModel {
             <div class="property-header" style="grid-column: 1 / span 1">Assets</div>
             <div class="property-value" style="grid-column: 2 / span 2"><p>${this.assets.textDisplay.replaceAll("OR", "<em>or</em>")}</p></div>
             <div class="property-header" style="grid-column: 4 / span 1">Contacts</div>
-            <div class="property-value" style="grid-column: 5 / span 2">${""}</div>
+            <div class="property-value" style="grid-column: 5 / span 2">${this.contacts.list.map(i => i.name).join(", ")}</div>
             <div class="property-header blue" style="grid-column: 1 / span 1">Career Talents</div>
             <div class="property-value" style="grid-column: 2 / span 5"><p>@UUID[${careerTalent.uuid}]{${careerTalent.name}}: ${careerTalent.system.description.public.replace("<p>", "")}</div>
         </div>

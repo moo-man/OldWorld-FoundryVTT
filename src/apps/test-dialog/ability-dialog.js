@@ -57,6 +57,14 @@ export default class AbilityAttackDialog extends TestDialog
     async computeInitialFields()
     {
         await super.computeInitialFields();
+        if (this.ability.system.attack.dice)
+        {
+            this.data.dice = this.ability.system.attack.dice;
+        }
+        if (this.ability.system.attack.target)
+        {
+            this.fields.target = this.ability.system.attack.target;
+        }
         this.fields.damage = this.ability.system.damage.value;
         this.tooltips.set("damage", this.ability.system.damage.formula, this.ability.name);
         if (this.ability.system.damage.characteristic)
@@ -113,8 +121,15 @@ export default class AbilityAttackDialog extends TestDialog
             skill = "defence";
         }
 
-        context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill : game.oldworld.config.skills[skill]});
-        context.title += context.appendTitle || "";
+        if (skill)
+        {
+            context.title = context.title || game.i18n.format("TOW.Test.SkillTest", {skill : game.oldworld.config.skills[skill]});
+            context.title += context.appendTitle || "";
+        }
+        else 
+        {
+            context.title = ability.name;
+        }
 
         context.itemUuid = ability.uuid;
         

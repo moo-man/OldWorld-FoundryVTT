@@ -36,6 +36,11 @@ export class WeaponTest extends OldWorldTest
         return this.item;
     }
 
+    get attack()
+    {
+        return true;
+    }
+
    /**
     * Computes damage ontop of normal opposed test evaluation
     * @inheritdoc
@@ -58,6 +63,7 @@ export class WeaponTest extends OldWorldTest
         return {
             value : this.testData.damage + (this.weapon.system.damage.successes ? result.successes : 0),
             ignoreArmour : this.weapon.system.damage.ignoreArmour,
+            excludeStaggeredOptions : this.testData.excludeStaggeredOptions
         }
     }
 }

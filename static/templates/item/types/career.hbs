@@ -54,7 +54,25 @@
     </div>
     <div class="flexrow" style="gap: 0.5rem;">
         {{> choiceDisplay system.assets display=item.system.assets.textDisplay path="assets" label="TOW.Sheet.Assets"}}
-        {{> choiceDisplay system.contacts display=item.system.contacts.textDisplay path="contacts" label="TOW.Sheet.Contacts"}}
+        <div class="sheet-list" data-path="system.contacts">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "TOW.Sheet.Contacts"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each system.contacts.list}}
+                    <div class="list-row" data-uuid="{{this.uuid}}" data-index="{{@key}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                                <a class="list-control" data-action="listDelete" data-document="this"><i class="fas fa-xmark"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
     </div>
 
     {{> documentReference document=system.talent path="system.talent" label="TOW.Sheet.CareerTalent"}}

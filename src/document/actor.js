@@ -181,7 +181,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         // Add specified mount effects
         if (this.system.mount?.isMounted)
         {
-            for(let effect of this.system.mount.items.reduce((prev, current) => prev.concat(current.effects.contents.filter(e => e.system.transferData.type == "rider")), []))
+            for(let effect of this.system.mount.document?.items.reduce((prev, current) => prev.concat(current.effects.contents.filter(e => e.system.transferData.type == "rider")), []))
             {
                 yield effect;
             }

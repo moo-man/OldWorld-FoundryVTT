@@ -196,6 +196,7 @@ Hooks.once("init", () =>
 
     foundry.utils.mergeObject(CONFIG, TOW_CONFIG);
     foundry.utils.mergeObject(game.oldworld.config.badgeInfo, defaultWarhammerConfig.badgeInfo, {overwrite: false});
+    warhammer.utility.registerPremiumModuleInitialization()
 });
 
 // FoundryOverrides();

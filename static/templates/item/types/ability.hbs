@@ -3,11 +3,17 @@
     {{> itemDamage hidePotency=true}}
     {{> staggeredOptions}}
 
-    {{formGroup system.schema.fields.attack.fields.skill value=source.system.attack.skill localize=true}}
+    
+    {{formGroup system.schema.fields.attack.fields.skill value=source.system.attack.skill localize=true disabled=(or source.system.attack.dice source.system.attack.target)}}
+    <div class="form-group">
+        <label>Attack Dice/Target</label>
+        <div class="form-fields">
+            {{formInput system.schema.fields.attack.fields.dice value=source.system.attack.dice}}
+            {{formInput system.schema.fields.attack.fields.target value=source.system.attack.target}}
+        </div>
+    </div>
     {{#if system.isAttack}}
-        {{#if system.isMelee}}
-            {{formGroup system.schema.fields.attack.fields.range.fields.melee value=source.system.attack.range.melee blank=false localize=true label="TOW.Sheet.Range"}}
-        {{else if system.isRanged}}
+        {{#if system.isRanged}}
             <div class="form-group">
                 <label>{{localize "TOW.Sheet.OptimumRange"}}</label>
                 <div class="form-fields">
@@ -20,7 +26,8 @@
                     </select>
                 </div>
             </div>
-
+        {{else}}
+            {{formGroup system.schema.fields.attack.fields.range.fields.melee value=source.system.attack.range.melee blank=false localize=true label="TOW.Sheet.Range"}}
         {{/if}}
             {{formGroup system.schema.fields.attack.fields.grip value=source.system.attack.grip}}
 

@@ -56,13 +56,13 @@ export default class CastingDialog extends TestDialog
     {
         if (this.actor.itemTypes.armour.some(a => a.system.isEquipped))
         {
-            this.tooltips.add("grim", 1, "TOW.Tooltips.WearingArmour")
+            this.tooltips.add("grim", 1,  game.i18n.localize("TOW.Tooltips.WearingArmour"))
             this.fields.grim++;
         }
 
         this.tooltips.start(this)
         this.fields.bonus += (this.fields.mixing || 0)
-        this.tooltips.finish(this, "TOW.Tooltips.Mixing")
+        this.tooltips.finish(this, game.i18n.localize("TOW.Tooltips.Mixing"))
 
         await super.computeFields();
     }
@@ -101,12 +101,13 @@ export default class CastingDialog extends TestDialog
         }
 
         context.lore = lore;
-        // context.itemUuid = spell?.uuid;
+        context.itemUuid = spell?.uuid;
 
         context.appendTitle = context.appendTitle || ` - ${game.oldworld.config.magicLore[lore]}`;
 
         let dialogData = await super.setupData(skill, actor, context, options);
         dialogData.data.scripts = dialogData.data.scripts.concat(spell?.getScripts("dialog").filter(s => !s.options.defending) || [])
+        dialogData.data.spell = spell;
 
         return dialogData;
     }

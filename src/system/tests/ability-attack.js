@@ -23,6 +23,11 @@ export class AbilityAttackTest extends OldWorldTest
         return this.item;
     }
 
+    get attack()
+    {
+        return true;
+    }
+
    /**
     * Computes damage ontop of normal opposed test evaluation
     * @inheritdoc

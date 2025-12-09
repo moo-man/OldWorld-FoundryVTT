@@ -277,7 +277,7 @@ export class OldWorldTest extends WarhammerTestBase
             successes = test.result.successes;
         }
         let opposed = {
-            outcome : this.result.successes >= successes ? "success" : "failure",
+            outcome : (this.result.successes >= successes && this.result.successes) ? "success" : "failure",
             successes : this.result.successes - successes,
             success : this.result.loseTies ? this.result.successes > successes : this.result.successes >= successes,
             description : "",
@@ -286,6 +286,11 @@ export class OldWorldTest extends WarhammerTestBase
             computed : true
         }
 
+        // Need to define some things early for scripts to use
+        if (this.result.successes == 0 && successes == 0)
+        {
+            opposed.outcome == "tie";
+        }
 
         if (opposed.success && opposed.computed)
         {

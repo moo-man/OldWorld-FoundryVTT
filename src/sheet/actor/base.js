@@ -3,15 +3,6 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
 
   static DEFAULT_OPTIONS = {
     classes: ["whtow"],
-    window: {
-      controls: [
-        {
-          icon: 'fa-solid fa-gear',
-          label: "Actor Settings",
-          action: "configureActor"
-        }
-      ]
-    },
     actions: {
       removeOpposed : this._onRemoveOpposed,
       useItem : this._onUseItem,

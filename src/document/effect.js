@@ -18,18 +18,18 @@ export class OldWorldEffect extends WarhammerActiveEffect
         let transferData = this.system.transferData;
 
         let test;
-        let options = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest, fields: {}};
+        let context = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest, fields: {}};
         if (this.sourceTest && this.sourceTest.result?.test)
         {
             // transferData.avoidTest.dn = this.sourceTest.result.test.dn;
         }
         if (transferData.avoidTest.value == "item")
         {
-            test = await this.actor.setupTestFromItem(this.item, options);
+            test = await this.actor.setupTestFromItem(this.item, context);
         }
         else if (transferData.avoidTest.value == "custom")
         {
-            test = await this.actor.setupTestFromData(foundry.utils.mergeObject(transferData.avoidTest, {skill}), options);
+            test = await this.actor.setupTestFromData(transferData.avoidTest, context);
         }
 
         if (!transferData.avoidTest.reversed)
