@@ -70,8 +70,9 @@ export class OriginModel extends BaseItemModel {
             return;
         }
 
+        let characteristics = actor.system.characteristics.toObject()
         for (let characteristic in actor.system.characteristics) {
-            actor.system.characteristics[characteristic].base = this.characteristics[characteristic]
+            characteristics[characteristic].base = this.characteristics[characteristic]
         }
 
         let defaultSkill = this.skills.list.find(i => !i.skill)?.value || 2
@@ -253,7 +254,7 @@ export class OriginModel extends BaseItemModel {
             actorSkills[skill].base = bonus.value;
         }
 
-        await actor.update({ "system.skills": actorSkills, "system.fate.max": this.fate });
+        await actor.update({ "system.characteristics": characteristics, "system.skills": actorSkills, "system.fate.max": this.fate });
     }
 
     async toEmbed(config, options)
