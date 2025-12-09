@@ -1,0 +1,1 @@
+this.actor.applyEffect({effects: this.item.effects.contents[1]})

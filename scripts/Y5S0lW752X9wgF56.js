@@ -1,0 +1,1 @@
+return args.actor.itemTypes.weapon.filter(i => i.system.isEquipped).length == 1

@@ -1,0 +1,1 @@
+this.actor.addCondition("ablaze", {flags: {whtow: {hazard: this.effect.sourceTest.context.potency}}})

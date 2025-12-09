@@ -1,0 +1,1 @@
+this.actor.applyEffect({effects  : this.item.effects.getName("Lost Teeth")})

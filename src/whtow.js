@@ -56,6 +56,7 @@ import { PostedItemMessageModel } from "./model/message/item";
 import ActorSheetOldWorldVehicle from "./sheet/actor/vehicle-sheet";
 import { VehicleActorModel } from "./model/actor/vehicle";
 import ZoneConfig from "./apps/zone-config";
+import loadScripts from "../loadScripts";
 
 Hooks.once("init", () => 
 {
@@ -203,5 +204,5 @@ Hooks.once("init", () =>
 registerHooks();
 ZoneConfig.addRegionControls();
 
-// loadScripts();
+loadScripts();
 // tokenHelpers()

@@ -1,0 +1,1 @@
+return !args.weapon || !args.weapon.system.isMelee || args.actor.statuses.has("staggered");

@@ -1,0 +1,1 @@
+this.actor.useItem(this.actor.items.getName("Trample Attack"))

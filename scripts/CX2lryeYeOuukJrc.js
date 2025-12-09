@@ -1,0 +1,1 @@
+return !this.item.specifier || args.actor.system.opposedTest || ["charm", "recall", "endurance"].includes(args.skill)

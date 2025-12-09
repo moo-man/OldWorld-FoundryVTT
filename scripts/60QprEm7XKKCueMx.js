@@ -1,0 +1,1 @@
+return !args.isCasting || !this.effect.getFlag("whtow", "active")

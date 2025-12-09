@@ -1,0 +1,1 @@
+return args.actor.system.isMounted && args.fields.charging

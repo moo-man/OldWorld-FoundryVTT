@@ -1,0 +1,1 @@
+args.fields.bonus = 0; args.fields.grim = 0;

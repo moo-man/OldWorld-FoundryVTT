@@ -1,0 +1,1 @@
+this.item.system.damage.magical = true;

@@ -1,0 +1,1 @@
+return !args.target || !args.target.hasCondition("distracted")

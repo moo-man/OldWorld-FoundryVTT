@@ -1,0 +1,1 @@
+return args.actor.system.magic.miscasts > 0

@@ -1,0 +1,1 @@
+return args.target.items.getName("Fearsome") || args.target.items.getName("Terrifying");

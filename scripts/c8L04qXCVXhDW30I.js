@@ -1,0 +1,1 @@
+args.context.flags.wyrdstone = true;

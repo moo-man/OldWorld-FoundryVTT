@@ -1,0 +1,1 @@
+args.fields.bonus += args.actor.itemTypes.wound.length;

@@ -1,0 +1,1 @@
+this.actor.itemTypes.wound[0]?.delete();

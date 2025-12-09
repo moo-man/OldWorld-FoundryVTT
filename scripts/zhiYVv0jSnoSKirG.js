@@ -1,0 +1,1 @@
+return args.skill != "melee" && !args.actor.system.opposed;

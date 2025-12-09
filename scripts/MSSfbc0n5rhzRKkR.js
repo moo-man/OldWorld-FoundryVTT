@@ -1,0 +1,1 @@
+this.actor.addEffectItems("Item.ecyvwSml4DSlOBQl", this.effect, {name: `Honour Bound (${this.effect.name})`})

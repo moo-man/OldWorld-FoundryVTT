@@ -1,0 +1,1 @@
+args.data.dice = this.actor.system.characteristics.s.value;

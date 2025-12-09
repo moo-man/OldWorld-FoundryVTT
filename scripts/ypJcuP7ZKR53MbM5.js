@@ -1,0 +1,1 @@
+return !args.weapon || !["shooting", "melee"].includes(args.skill);

@@ -1,0 +1,1 @@
+args.actor.removeCondition("staggered");

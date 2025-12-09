@@ -1,0 +1,1 @@
+return !["melee", "brawn"].includes(args.skill)

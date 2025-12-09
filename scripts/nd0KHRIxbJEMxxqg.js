@@ -1,0 +1,1 @@
+return ["awareness", "survival", "toil", "shooting", "throwing", "stealth", "athletics"].includes(args.skill)

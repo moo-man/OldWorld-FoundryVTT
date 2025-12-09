@@ -1,0 +1,1 @@
+if (args.attack.system.isMelee) args.fields.bonus++; if (args.attack.system.isRanged) args.fields.penalty++;

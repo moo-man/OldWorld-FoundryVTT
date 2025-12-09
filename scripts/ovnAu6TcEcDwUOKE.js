@@ -1,0 +1,1 @@
+this.actor.system.rollHazard("willpower", 3, {appendTitle : ` - ${this.effect.name}`})

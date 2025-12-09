@@ -1,0 +1,1 @@
+return args.skill == "athletics" || args.actor.system.opposed

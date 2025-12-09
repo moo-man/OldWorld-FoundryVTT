@@ -1,0 +1,1 @@
+return !args.attack || args.attack.system.isRanged

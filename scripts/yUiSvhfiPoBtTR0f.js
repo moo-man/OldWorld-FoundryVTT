@@ -1,0 +1,1 @@
+return args.actor.uuid != this.effect.sourceItem.actor.uuid

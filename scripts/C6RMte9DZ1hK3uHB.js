@@ -1,0 +1,1 @@
+return args.target?.type != "character" && args.target?.system.type != "champion"

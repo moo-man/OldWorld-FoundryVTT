@@ -1,0 +1,1 @@
+return !args.actor.system.opposed || args.actor.system.opposed.test.context.skill != "melee"

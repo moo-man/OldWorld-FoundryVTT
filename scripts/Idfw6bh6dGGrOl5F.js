@@ -1,0 +1,1 @@
+return !args.actor.system.opposedTest || !this.effect.sourceActor?.itemTypes.weapon.some(i => i.system.isEquipped && i.system.range.melee == 1)

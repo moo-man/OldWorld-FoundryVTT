@@ -1,0 +1,1 @@
+this.actor.system.magic.level = Math.max(this.actor.system.magic.level, 2);

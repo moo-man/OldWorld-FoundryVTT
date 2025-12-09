@@ -1,0 +1,1 @@
+return !args.isAttack || (args.target && !args.target?.hasCondition("broken"));

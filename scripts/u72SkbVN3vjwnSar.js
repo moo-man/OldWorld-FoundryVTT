@@ -1,0 +1,1 @@
+this.item.system.damage.ignoreArmour = true;

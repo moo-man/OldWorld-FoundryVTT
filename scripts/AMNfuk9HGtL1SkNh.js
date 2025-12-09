@@ -1,0 +1,1 @@
+return args.skill != "shooting" || !args.weapon || !args.weapon.system.isRanged || !this.actor.statuses.has("aim")

@@ -1,0 +1,1 @@
+return !args.weapon || !args.fields.charging || !args.weapon.system.isMelee

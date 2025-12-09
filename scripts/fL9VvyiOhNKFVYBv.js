@@ -1,0 +1,1 @@
+args.fields.bonus += this.effect.sourceTest.context.potency;

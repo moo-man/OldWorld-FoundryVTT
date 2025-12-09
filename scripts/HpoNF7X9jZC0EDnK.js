@@ -1,0 +1,1 @@
+return !["survival", "endurance", "toil", "brawn", "awareness", "athletics"].includes(args.skill);

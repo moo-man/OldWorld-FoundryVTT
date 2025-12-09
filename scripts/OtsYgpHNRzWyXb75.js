@@ -1,0 +1,1 @@
+return args.actor.getActiveTokens()[0]?.combatant?.getFlag("whtow", "glamourweave")

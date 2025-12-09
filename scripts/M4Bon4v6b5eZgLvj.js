@@ -1,0 +1,1 @@
+return args.spell?.getFlag("whtow", "fromEffect") != this.effect.id

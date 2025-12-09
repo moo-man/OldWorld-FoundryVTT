@@ -1,0 +1,1 @@
+args.fields.penalty += this.effect.sourceTest.context.potency;

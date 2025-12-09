@@ -1,0 +1,1 @@
+return args.isAttack || args.isCasting || ["melee", "defence", "shooting", "throwing", "brawn", "endurance", "athletics", "stealth", "charm", "leadership"].includes(args.skill);
