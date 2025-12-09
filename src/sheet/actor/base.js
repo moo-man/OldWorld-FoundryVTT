@@ -166,7 +166,7 @@ export default class BaseOldWorldActorSheet extends WarhammerActorSheetV2 {
   {
     let document = this._getDocument(ev);
     let summaryData = await document.system.summaryData();
-    this._toggleDropdown(ev, summaryData.description);
+    this._toggleDropdown(ev, summaryData.enriched.public + summaryData.enriched.gm);
   }
 
 }
