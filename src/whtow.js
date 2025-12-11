@@ -57,6 +57,7 @@ import ActorSheetOldWorldVehicle from "./sheet/actor/vehicle-sheet";
 import { VehicleActorModel } from "./model/actor/vehicle";
 import ZoneConfig from "./apps/zone-config";
 import loadScripts from "../loadScripts";
+import OldWorldCombatant from "./system/combatant";
 
 Hooks.once("init", () => 
 {
@@ -71,6 +72,7 @@ Hooks.once("init", () =>
     CONFIG.ActiveEffect.documentClass = OldWorldEffect;
     CONFIG.ChatMessage.documentClass = OldWorldChatMessage;
     CONFIG.RollTable.documentClass = WarhammerRollTable;
+    CONFIG.Combatant.documentClass = OldWorldCombatant;
 
 
     Actors.registerSheet("whtow", ActorSheetOldWorldCharacter, { types: ["character"], makeDefault: true });

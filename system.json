@@ -2,7 +2,7 @@
   "id": "whtow",
   "title": "Warhammer: The Old World Roleplaying Game",
   "description": "Welcome to the World of Legend",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibility" : {
     "minimum" : 13,
     "verified" : 13,
@@ -49,7 +49,7 @@
       }
     }]
   },
-  "background" : "",
+  "background" : "modules/tow-core/assets/setup.webp",
   "initiative": "",
   "grid": {
     "distance": 1,
@@ -91,7 +91,7 @@
   "url": "https://github.com/moo-man/OldWorld-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/1.0.1/whtow.zip",
+  "download": "https://github.com/moo-man/OldWorld-FoundryVTT/releases/download/1.0.2/whtow.zip",
   "license": "LICENSE.txt"
 }
 
