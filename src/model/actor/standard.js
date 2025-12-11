@@ -73,8 +73,18 @@ export class StandardActorModel extends BaseActorModel
         try {
             this.parent.itemTypes.armour.filter(i => i.system.isEquipped).forEach(i => 
             {
-                this.resilience.armour += Number(i.system.resilience ? (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0) : 0)
-                this.resilience.armoured = true;
+                try {
+                    let armour = Number(i.system.resilience ? (Roll.safeEval(Roll.replaceFormulaData(i.system.resilience, this.parent)) || 0) : 0)
+                    if (armour > 0)
+                    {
+                        this.resilience.armoured = true;
+                        this.resilience.armour += armour;
+                    }
+                }
+                catch(e)
+                {
+                    console.error("Error evaluating armour " + i.name, i)
+                }
             })
 
             this.resilience.value += this.resilience.armour;

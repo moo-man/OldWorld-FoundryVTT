@@ -3,4 +3,4 @@ if (this.actor.system.resilience.armoured)
 {
   damage++;
 }
-this.actor.applyDamage(damage, {item : this.effect.sourceItem, test : this.effect.sourceTest})
+this.actor.system.applyDamage(damage, {item : this.effect.sourceItem, test : this.effect.sourceTest})
