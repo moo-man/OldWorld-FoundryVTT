@@ -37,11 +37,11 @@ export class OriginModel extends BaseItemModel {
         }))
 
         schema.talents = new fields.SchemaField({
-            table: new fields.EmbeddedDataField(DocumentReferenceModel),
+            table: new fields.EmbeddedDataField(DeferredReferenceModel),
             rolls: new fields.NumberField({ initial: 2 }),
-            gain: new fields.EmbeddedDataField(DocumentReferenceListModel),
-            replacements: new fields.EmbeddedDataField(DocumentReferenceListModel),
-            optional: new fields.EmbeddedDataField(DocumentReferenceListModel)
+            gain: new fields.EmbeddedDataField(DeferredReferenceListModel),
+            replacements: new fields.EmbeddedDataField(DeferredReferenceListModel),
+            optional: new fields.EmbeddedDataField(DeferredReferenceListModel)
         })
 
         schema.lores = ListModel.createListModel(new fields.SchemaField({
@@ -49,7 +49,7 @@ export class OriginModel extends BaseItemModel {
             category: new fields.StringField({}),
             group: new fields.NumberField({ nullable: true, required: false, blank: true })
         }))
-        schema.careers = new fields.EmbeddedDataField(DocumentReferenceModel),
+        schema.careers = new fields.EmbeddedDataField(DeferredReferenceModel),
         schema.fate = new fields.NumberField({ min: 0 });
         return schema;
     }

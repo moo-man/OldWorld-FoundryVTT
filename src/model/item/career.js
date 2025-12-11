@@ -47,11 +47,11 @@ export class CareerModel extends BaseItemModel {
         schema.lore = new fields.EmbeddedDataField(ChoiceModel, { restrictType: ["lore"] })
         schema.trappings = new fields.EmbeddedDataField(ChoiceModel, { restrictType: ["trapping", "weapon", "armour", "toolKit"] })
         schema.assets = new fields.EmbeddedDataField(ChoiceModel, { restrictType: ["asset"] })
-        schema.contacts = new fields.EmbeddedDataField(DocumentReferenceListModel)
+        schema.contacts = new fields.EmbeddedDataField(DeferredReferenceListModel)
 
-        schema.origins = new fields.EmbeddedDataField(DocumentReferenceListModel);
+        schema.origins = new fields.EmbeddedDataField(DeferredReferenceListModel);
 
-        schema.talent = new fields.EmbeddedDataField(DocumentReferenceModel);
+        schema.talent = new fields.EmbeddedDataField(DeferredReferenceModel);
 
         return schema;
     }
