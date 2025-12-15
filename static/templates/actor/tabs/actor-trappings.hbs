@@ -3,44 +3,23 @@
     <div class="coins">
         <div class="type brass">
             <label>{{localize "TOW.Sheet.Brass"}} ({{system.coins.brass}})</label>
-            <div class="pips">
-                {{#each coins.brass}}
-                <a class="pip" data-action="togglePip" data-index="{{@key}}" data-path="system.coins.brass">
-                    {{#if this.filled}}
-                    <i class="fa-solid fa-square"></i>
-                    {{else}}
-                    <i class="fa-regular fa-square"></i>
-                    {{/if}}
-                </a>
-                {{/each}}
+            <div class="controls">
+                <button type="button" data-action="stepProperty" data-path="system.coins.brass" data-reversed="true"><i class="fa-regular fa-minus"></i></button>
+                <button type="button" data-action="stepProperty" data-path="system.coins.brass"><i class="fa-regular fa-plus"></i></button>
             </div>
         </div>
         <div class="type silver">
             <label>{{localize "TOW.Sheet.Silver"}} ({{system.coins.silver}})</label>
-            <div class="pips">
-                {{#each coins.silver}}
-                <a class="pip" data-action="togglePip" data-index="{{@key}}" data-path="system.coins.silver">
-                    {{#if this.filled}}
-                    <i class="fa-solid fa-square"></i>
-                    {{else}}
-                    <i class="fa-regular fa-square"></i>
-                    {{/if}}
-                </a>
-                {{/each}}
+            <div class="controls">
+                <button type="button" data-action="stepProperty" data-path="system.coins.silver" data-reversed="true"><i class="fa-regular fa-minus"></i></button>
+                <button type="button" data-action="stepProperty" data-path="system.coins.silver"><i class="fa-regular fa-plus"></i></button>
             </div>
         </div>
         <div class="type gold">
             <label>{{localize "TOW.Sheet.Gold"}} ({{system.coins.gold}})</label>
-            <div class="pips">
-                {{#each coins.gold}}
-                <a class="pip" data-action="togglePip" data-index="{{@key}}" data-path="system.coins.gold">
-                    {{#if this.filled}}
-                    <i class="fa-solid fa-square"></i>
-                    {{else}}
-                    <i class="fa-regular fa-square"></i>
-                    {{/if}}
-                </a>
-                {{/each}}
+            <div class="controls">
+                <button type="button" data-action="stepProperty" data-path="system.coins.gold" data-reversed="true"><i class="fa-regular fa-minus"></i></button>
+                <button type="button" data-action="stepProperty" data-path="system.coins.gold"><i class="fa-regular fa-plus"></i></button>
             </div>
         </div>
     </div>

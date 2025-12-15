@@ -102,6 +102,7 @@ body.whtow-theme {
             gap: 0.5rem;
         }
 
+        .list-row .dropdown-content,
         .list-row .description {
             @include editor-text;
         }
@@ -168,6 +169,9 @@ body.whtow-theme {
         .coins {
             background: var(--tow-bluegrey-half);
             border-color: var(--tow-bluegrey);
+            button {
+                @include tow-button;
+            }
         }
 
         // background: url("./assets/ui/character-bg.png");    

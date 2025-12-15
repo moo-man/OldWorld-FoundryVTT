@@ -54,7 +54,7 @@ export default class CastingDialog extends TestDialog
 
     async computeFields() 
     {
-        if (this.actor.itemTypes.armour.some(a => a.system.isEquipped))
+        if (this.actor.system.resilience.armoured)
         {
             this.tooltips.add("grim", 1,  game.i18n.localize("TOW.Tooltips.WearingArmour"))
             this.fields.grim++;

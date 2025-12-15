@@ -112,18 +112,27 @@
         text-align: center;
         label {
             font-weight: bold;
+            font-size: var(--font-size-20);
+            font-family: var(--font-header);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            button {
+                --button-size: 1.5rem;
+                width: 1.5rem;
+            }
         }
 
         .gold {
-            color: gold;
         }
 
         .silver {
-            color: silver;
         }
 
         .brass {
-            color: orange;
         }
     }
 
