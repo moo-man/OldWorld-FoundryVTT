@@ -27,7 +27,7 @@
     {{else}}
         <div class="responses">
             {{#each responseOptions}}
-                <button type="button {{#if this.ability}}ability{{/if}}" data-action="opposedResponse" data-type="{{this.id}}" data-tooltip="{{this.tooltip}}"><i
+                <button type="button" class="{{#if this.ability}}ability{{/if}}" data-action="opposedResponse" data-type="{{this.id}}" data-tooltip="{{this.tooltip}}"><i
                         class="fa-solid {{this.icon}}"></i></button>
             {{/each}}
         </div>
