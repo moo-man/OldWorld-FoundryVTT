@@ -124,7 +124,7 @@ export class CareerModel extends BaseItemModel {
 
         let html = `
         <div class="header">
-            <label class="title"><a data-link data-uuid="${this.parent.uuid}">${this.parent.name}</a></label>
+            <label class="title"><a data-link draggable=true data-uuid="${this.parent.uuid}">${this.parent.name}</a></label>
             <span class="status">~ ${game.oldworld.config.status[this.status]} ~</span>
         </div>
 
