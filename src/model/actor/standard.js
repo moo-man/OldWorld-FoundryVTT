@@ -1,6 +1,7 @@
 import OldWorldTables from "../../system/tables";
 import { ActionUse } from "../../system/tests/action-use";
 import { ItemUse } from "../../system/tests/item-use";
+import { OldWorldTest } from "../../system/tests/test";
 import { BaseActorModel } from "./base";
 import { BlessedDataModel } from "./components/blessed";
 import { CharacteristicsModel } from "./components/characteristics";
@@ -105,6 +106,12 @@ export class StandardActorModel extends BaseActorModel
     {
         let resilience = this.resilience.value;
         let text = [];
+
+        if (test && !(test instanceof OldWorldTest))
+        {
+            test = game.messages.get(test.context.messageId)?.system?.test;
+        }
+
         let args = {actor: this.parent, attacker: test?.actor, resilience, ignoreArmour, opposed, test, text}
         await Promise.all(this.parent.runScripts("preTakeDamage", args));
         await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);

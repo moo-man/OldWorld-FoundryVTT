@@ -54,7 +54,14 @@ export class NPCModel extends StandardActorModel {
         }
         else 
         {
-            super.rollWound(dice);
+            if (this.type == "minion")
+            {
+                this.parent.addCondition("dead");
+            }
+            else 
+            {
+                super.rollWound(dice);
+            }
         }
     }
 
@@ -170,7 +177,18 @@ export class NPCModel extends StandardActorModel {
     
     async addWound({fromTest, opposed, diceModifier=0, roll=true}={})
     {
-        return super.addWound({fromTest, opposed, diceModifier, roll: (this.hasThresholds ? false : roll)})
+        if (this.type == "minion")
+        {
+            let args = {test: fromTest, opposed, diceModifier, actor : this.parent}
+            await Promise.all(this.parent.runScripts("receiveWound", args) || [])
+            await Promise.all(fromTest?.actor.runScripts("inflictWound", args) || [])
+            await Promise.all(fromTest?.item.runScripts("inflictWound", args) || [])
+            this.parent.addCondition("dead");
+        }
+        else 
+        {
+            return super.addWound({fromTest, opposed, diceModifier, roll: (this.hasThresholds ? false : roll)})
+        }
     }
 
 
