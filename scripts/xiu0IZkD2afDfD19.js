@@ -1,3 +1,6 @@
+// TODO Delete in a future update
+
+
 await this.actor.addCondition("defenceless", this.effect);
 if (!this.item.system.treated)
 {
