@@ -8,9 +8,42 @@ body {
 }
 
 body.whtow-theme {
+
+    #interface {
+        &.themed.theme-dark,
+        &.themed.theme-light {
+            --color-text-primary: var(--color-light-2);    
+            --sidebar-separator: 1px solid var(--tow-darkyellow);
+
+            --color-text-emphatic: var(--color-light-1);
+            --color-text-secondary: var(--color-light-3);
+            --color-text-subtle: var(--color-light-5);
+            --color-text-selection: var(--color-light-1);
+            --color-text-selection-bg: var(--color-cool-3);
+            --content-link-background: var(--color-cool-5-90);
+            --content-link-border-color: var(--color-light-6);
+            --content-link-icon-color: var(--color-light-4);
+            --content-link-text-color: var(--color-light-2);
+
+            button {
+                --button-text-color: var(--color-light-3);
+                --button-hover-text-color: var(--color-light-1);
+            }
+
+            #hotbar {
+                --slot-color: var(--color-cool-5-90);
+                --key-bg-color-empty: var(--color-cool-5);
+                --key-bg-color-full: var(--color-cool-5);
+                --key-text-color: var(--color-light-1);
+                --page-control-color: var(--color-cool-5);
+            }
+        }
+    }
+
     --color-shadow-primary: var(--tow-gold);    
 
     .inline-control {
+        
         --button-hover-background-color: var(--tow-gold);
         --button-focus-outline-color: var(--tow-gold);
         --button-focus-outline-color: var(--tow-gold);
