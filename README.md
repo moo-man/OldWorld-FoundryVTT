@@ -17,7 +17,8 @@ The **official** system for playing in *The World of Legend* on [Foundry VTT](ht
 See **Environment Setup** for instructions on how to build the project for development purposes.
 
 ## Official Modules
-- In Progress!
+
+- [Players' and GM's Guide](https://foundryvtt.com/packages/tow-core/) - Adds content from both the Players' and GM's guide books, providing a complete experience within The Old World
 
 ## Special Thanks
 - Cubicle 7
