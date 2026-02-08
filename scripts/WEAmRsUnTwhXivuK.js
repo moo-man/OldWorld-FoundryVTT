@@ -1,1 +1,1 @@
-return args.target?.uuid == this.effect.sourceActor.uuid
+return !args.target || args.actor.system.opposedTest || args.target?.uuid == this.effect.sourceActor.uuid

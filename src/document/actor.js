@@ -131,7 +131,7 @@ export class OldWorldActor extends OldWorldDocumentMixin(WarhammerActor)
         let owner = warhammer.utility.getActiveDocumentOwner(this);
 
         if (game.user.id != owner.id) {
-            await owner.query("addCondition", { uuid: this.uuid, condition, fromTest: fromTest.message.id, opposed: opposed.parent.id})
+            await owner.query("addCondition", { uuid: this.uuid, condition, fromTest: fromTest?.message.id, opposed: opposed?.parent.id})
             return this.hasCondition(condition);
         }
 
