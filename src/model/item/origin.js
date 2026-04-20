@@ -235,6 +235,8 @@ export class OriginModel extends BaseItemModel {
         // Combine rolled and kept talents with replacement talents and automatically gained talents
         talents = talents.concat(requiredSwaps.concat(optionalSwaps.concat(tableTalents)).map(i =>  i.toObject()));
 
+        talents.forEach(t => t.system.cost = 0);
+
         await actor.createEmbeddedDocuments("Item", talents.concat(lores));
 
         let actorSkills = actor.system.skills.toObject();

@@ -24,6 +24,9 @@
             {{formInput system.schema.fields.reload.fields.value value=source.system.reload.value}}
             Optional
             {{formInput system.schema.fields.reload.fields.optional value=source.system.reload.optional}}
+            {{#if source.system.reload.optional}}
+                {{formInput system.schema.fields.reload.fields.bonus value=source.system.reload.bonus placeholder="+d" dataset=(createObject tooltip="Reload Bonus")}}
+            {{/if}}
         </div>
     
     </div>

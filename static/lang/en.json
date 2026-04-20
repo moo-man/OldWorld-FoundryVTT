@@ -458,7 +458,10 @@
             "ChooseSkills" : "Choose Skills",
             "ChooseSkillsContent" : "Choose {number} Skills to receive +1",
             "ApplyCareer" : "Apply Career to this Actor?",
-            "ApplyOrigin" : "Apply Origin to this Actor?"
+            "ApplyOrigin" : "Apply Origin to this Actor?",
+
+            "UseReload" : "Use Reload?",
+            "UsingReload" : "Using Reload Bonus"
 
         },
 

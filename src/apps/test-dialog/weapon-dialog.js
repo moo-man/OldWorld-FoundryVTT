@@ -24,6 +24,7 @@ export default class WeaponDialog extends TestDialog
     {
         return foundry.utils.mergeObject(super._defaultFields(), {
             charging:  false,
+            useReload:  false,
             damage: 0,
         });
     }
@@ -50,6 +51,12 @@ export default class WeaponDialog extends TestDialog
         {
             this.fields.bonus++;
             this.tooltips.add("bonus", 1, game.i18n.localize("TOW.Dialog.Charging"));
+        }
+
+        if (this.fields.useReload)
+        {
+            this.fields.bonus += this.weapon.system.reload.bonus;
+            this.tooltips.add("bonus", this.weapon.system.reload.bonus, game.i18n.localize("TOW.Dialog.UsingReload"));
         }
 
     }

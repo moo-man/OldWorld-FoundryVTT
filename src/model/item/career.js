@@ -79,9 +79,9 @@ export class CareerModel extends BaseItemModel {
                 )
             })
 
-        let lores = await this.lore.promptDecision();
-        let trappings = await this.trappings.promptDecision();
-        let assets = await this.assets.promptDecision();
+        let lores = await this.lore.promptDecision(this.parent, {window: {title: "Lore"}});
+        let trappings = await this.trappings.promptDecision(this.parent, {window: {title: "Trappings"}});
+        let assets = await this.assets.promptDecision(this.parent, {window: {title: "Assets"}});
         // let contacts = await this.contacts.promptDecision();
 
         let talent = await this.talent.document;

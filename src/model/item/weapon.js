@@ -25,7 +25,8 @@ export class WeaponModel extends EquippableItem
         schema.reload = new fields.SchemaField({
             current : new fields.NumberField({min: 0, initial: 0}),
             value : new fields.NumberField({min: 0}),
-            optional : new fields.BooleanField()
+            optional : new fields.BooleanField(),
+            bonus: new fields.NumberField()
         })
         return schema;
     }

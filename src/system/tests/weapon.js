@@ -8,6 +8,7 @@ export class WeaponTest extends OldWorldTest
         let separated = super._separateDialogData(data);
         separated.testData.damage = data.damage;
         separated.context.charging = data.charging;
+        separated.context.useReload = data.useReload;
 
         return foundry.utils.mergeObject(separated, {context : {rollClass : "WeaponTest"}});
     }
@@ -24,7 +25,7 @@ export class WeaponTest extends OldWorldTest
     async postRollOperations()
     {
         await super.postRollOperations();
-        if (this.weapon.system.requiresLoading && !this.weapon.system.reload.optional)
+        if ((this.weapon.system.requiresLoading && !this.weapon.system.reload.optional) || this.context.useReload)
         {
             await this.weapon.update({"system.reload.current" : 0});
         }

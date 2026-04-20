@@ -12,4 +12,13 @@
             <input type="number" name="damage" value="{{fields.damage}}">
         </div>
     </div>
+    
+    {{#if data.weapon.system.reload.optional}}
+    <div class="form-group">
+        <label>{{localize "TOW.Dialog.UseReload"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="useReload" {{checked fields.useReload}}>
+        </div>
+    </div>
+    {{/if}}
 </div>

@@ -263,7 +263,7 @@ export class NPCModel extends StandardActorModel {
                     </div>
 
                     <div class="trappings alt-row   " style="grid-column: 1 / span 8">
-                        <p><strong>Typical Trappings</strong>: ${this.parent.itemTypes.weapon.concat(this.parent.itemTypes.trapping).concat(this.parent.itemTypes.armour).map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ")}
+                        <p><strong>Typical Trappings</strong>: ${this.parent.itemTypes.weapon.concat(this.parent.itemTypes.trapping).concat(this.parent.itemTypes.armour).concat(this.parent.itemTypes.toolKit).map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ")}
                     </div>
 
                 </div>

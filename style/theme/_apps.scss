@@ -389,4 +389,23 @@ body.whtow-theme {
             }
         }
     }
+    
+    .warhammer.application.choice-decision {
+
+        .tree-container {
+            .option {
+                border: 1px solid var(--tow-gold);
+            }
+    
+            .choice.chosen {
+                background-color: var(--tow-darkred);
+                border-color: var(--tow-gold);
+            }
+    
+            .choice.and,
+            .choice.or {
+                border: 2px solid var(--tow-cream-half)
+            }
+        }
+    }
 }
