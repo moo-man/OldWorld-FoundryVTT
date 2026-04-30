@@ -26,8 +26,11 @@ export class TrappingModel extends EquippableItem
 
     async toEmbed(config, options)
     {
+        let noToc = config.noToc ? "no-toc" : ""
+        let header = config.header || "h3"
+
         let html = `
-            <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+            <${header} class="${noToc}">@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</${header}>
             ${this.description.public}
         `;
     

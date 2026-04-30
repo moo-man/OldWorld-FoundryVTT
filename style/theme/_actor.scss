@@ -130,6 +130,15 @@ body.whtow-theme {
         --condition-active: var(--tow-brown-half);
         --list-row-alternate: var(--tow-brown-half);
 
+        border-image: url(./assets/ui/character-frame.webp);
+        border-image-slice: 66 66 66 66;
+        border-image-width: 15px;
+        border-image-outset: 3px;
+        border-image-repeat: repeat repeat;
+
+        
+        background: url("./assets/ui/background.webp");
+        background-position-x: 15%;
 
         .window-header {
             .window-title {

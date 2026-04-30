@@ -18,7 +18,6 @@ export class ToolKitModel extends PhysicalItem
     {
         if (config.row)
         {
-
             let html = `
                 <div style>
                     @UUID[${this.parent.uuid}]{${this.parent.name}}
@@ -46,7 +45,18 @@ export class ToolKitModel extends PhysicalItem
         }
         else 
         {
-            return "";
+            let noToc = config.noToc ? "no-toc" : ""
+            let header = config.header || "h3"
+    
+            let html = `
+                <${header} class="${noToc}">@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</${header}>
+                ${this.description.public}
+            `;
+        
+            let div = document.createElement("div");
+            div.style = config.style;
+            div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
+            return div;
         }
 
     }
