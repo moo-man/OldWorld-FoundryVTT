@@ -257,6 +257,90 @@ export class OriginModel extends BaseItemModel {
         }
 
         await actor.update({ "system.characteristics": characteristics, "system.skills": actorSkills, "system.fate.max": this.fate });
+
+        await this.handleCharacteristicBonuses(actor);
+
+    }
+
+
+    async handleCharacteristicBonuses(actor)
+    {
+
+        if (await foundry.applications.api.Dialog.confirm({content: "Roll Characteristic Bonuses?", window: {title: this.parent.name}}))
+        {
+            let options = {
+                1: {id: "system.characteristics.ws.base", name: "+1 Weapon Skill (WS)"},
+                2: {id: "system.characteristics.bs.base", name: "+1 Ballistic Skill (BS)"},
+                3: {id: "system.characteristics.s.base", name: "+1 Strength (S)"},
+                4: {id: "system.characteristics.t.base", name: "+1 Toughness (T)"},
+                5: {id: "system.characteristics.i.base", name: "+1 Initiative (I)"},
+                6: {id: "system.characteristics.ag.base", name: "+1 Agility (Ag)"},
+                7: {id: "system.characteristics.re.base", name: "+1 Reason (Re)"},
+                8: {id: "system.characteristics.fel.base", name: "+1 Fellowship (Fel)"},
+                9: {id: "system.fate.max", name: "+1 Fate"},
+                10:{id:  "choice", name: "+1 to a Characteristic of your choice"}
+            }
+
+            let bonuses = []
+            while (bonuses.length < 3)
+            {
+                let roll = Math.ceil(CONFIG.Dice.randomUniform() * 10);
+                let result = options[roll];
+
+                if (result.id == "choice" || !bonuses.find(i => i.id == result.id))
+                {
+                    bonuses.push(result);
+                    ChatMessage.create({content: `<strong>${roll}</strong>: ${result.name}`, flavor: "Characteristic Bonuses"})
+                }
+            }
+
+
+            let choices = bonuses.filter(i => i.id == "choice");
+
+            if (choices.length)
+            {
+                let availableChoices = Object.values(options).filter(i => !bonuses.find(b => b.id == i.id)); // Remove any characteristic bonuses already received (can't double up)
+                let chosen = await ItemDialog.create(availableChoices, choices.length, {text: `Choose ${choices.length} Characteristic to gain +1`, title: "Characteristic Bonuses"})
+                ChatMessage.create({content: `Chose ${chosen.map(i => i.name).join(", ")}`, flavor: "Characteristic Bonuses"})
+
+                // Remove choice options, add chosen values
+                bonuses = bonuses.filter(i => i.id != "choice").concat(chosen);
+            }
+
+            let actorData = actor.toObject();
+
+            let action = await foundry.applications.api.Dialog.wait({
+                content: `Accept Characteristic bonuses or choose your own?<ul>${bonuses.map(b => `<li>${b.name}</li>`).join("")}</ul>`, 
+                window: {title: this.parent.name},
+                buttons: [
+                    {
+                        action: "keep",
+                        label: "Keep (+1 XP)"
+                    },
+                    {
+                        action: "choose",
+                        label: "Choose"
+                    }
+                ]
+            })
+
+            if (action == "choose")
+            {
+                bonuses = await ItemDialog.create(Object.values(options).filter(i => i.id != "choice"), 3, {text: `Choose 3 Characteristics to gain +1`, title: "Characteristic Bonuses"})
+            }
+
+            else if (action == "keep")
+            {
+                actorData.system.xp.total++;
+            }
+
+            for(let bonus of bonuses)
+            {
+                foundry.utils.setProperty(actorData, bonus.id, foundry.utils.getProperty(actorData, bonus.id) + 1);
+            }
+
+            await actor.update(foundry.utils.mergeObject(actorData, actor.system.xp.log.add({reason : "Random Characteristic Bonuses", amount : 1, total : 1})), {skipXPCheck: true});
+        }
     }
 
     async toEmbed(config, options)
