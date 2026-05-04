@@ -58,7 +58,8 @@ export class OriginModel extends BaseItemModel {
     async _preCreate(data, options, user) {
         await super._preCreate(data, options, user);
 
-        if (this.parent.isOwned && (await foundry.applications.api.Dialog.confirm({ window: { title: this.parent.name }, content: game.i18n.localize("TOW.Dialog.ApplyOrigin") }))) {
+        if (this.parent.isOwned && (await foundry.applications.api.Dialog.confirm({ window: { title: this.parent.name }, content: game.i18n.localize("TOW.Dialog.ApplyOrigin") }))) 
+        {
             this.applyTo(this.parent.actor)
         }
     }
@@ -69,6 +70,12 @@ export class OriginModel extends BaseItemModel {
         {
             return;
         }
+
+        if (await foundry.applications.api.Dialog.confirm({content: "Add +1 XP for Random Origin?", window: {title: this.parent.name}}))
+        {
+            await actor.update(foundry.utils.mergeObject({"system.xp.total" : actor.system.xp.total + 1}, actor.system.xp.log.add({reason : "Random Origin", amount : 1, total : actor.system.xp.total + 1})), {skipXPCheck: true});
+        }
+
 
         let characteristics = actor.system.characteristics.toObject()
         for (let characteristic in actor.system.characteristics) {
@@ -260,6 +267,55 @@ export class OriginModel extends BaseItemModel {
 
         await this.handleCharacteristicBonuses(actor);
 
+        if (!actor.system.career.document && await foundry.applications.api.Dialog.confirm({content: "Roll Career?", window: {title: this.parent.name}}))
+        {
+            let table = await this.careers.document;
+            if (!table)
+            {
+                return ui.notifications.error("No Career table found on this Origin!")
+            }
+
+            let career = await fromUuid((await table.draw()).results[0]?.documentUuid);
+
+            if (career)
+            {
+                let action = await foundry.applications.api.Dialog.wait({
+                    content: `Keep ${career.name} or choose different Career?`, 
+                    window: {title: this.parent.name},
+                    buttons: [
+                        {
+                            action: "keep",
+                            label: "Keep (+1 XP)"
+                        },
+                        {
+                            action: "choose",
+                            label: "Choose"
+                        }
+                    ]
+                })
+
+                if (action == "keep")
+                {
+                    // Award +1 XP
+                    await actor.update(foundry.utils.mergeObject({"system.xp.total" : actor.system.xp.total + 1}, actor.system.xp.log.add({reason : "Random Career", amount : 1, total : actor.system.xp.total + 1})), {skipXPCheck: true});
+                }
+                else 
+                {
+                    career = await DragDialog.create({text: "Provide Career Item", title: "Career", filter: (item) => item.type == "career", onError: "Not a Career!" })
+                }
+            }
+            else 
+            {
+                return ui.notifications.error("No Career Item found in table result!")
+            }
+
+            if (career)
+            {
+                actor.createEmbeddedDocuments("Item", [career.toObject()], {skipApplication: true}).then(items => {
+                    items[0].system.applyTo(actor);
+                });
+            }
+        }
     }
 
 
@@ -339,7 +395,7 @@ export class OriginModel extends BaseItemModel {
                 foundry.utils.setProperty(actorData, bonus.id, foundry.utils.getProperty(actorData, bonus.id) + 1);
             }
 
-            await actor.update(foundry.utils.mergeObject(actorData, actor.system.xp.log.add({reason : "Random Characteristic Bonuses", amount : 1, total : 1})), {skipXPCheck: true});
+            await actor.update(foundry.utils.mergeObject(actorData, actor.system.xp.log.add({reason : "Random Characteristic Bonuses", amount : 1, total : actor.system.xp.total + 1})), {skipXPCheck: true});
         }
     }
 

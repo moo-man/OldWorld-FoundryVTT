@@ -59,8 +59,12 @@ export class CareerModel extends BaseItemModel {
     async _preCreate(data, options, user) {
         await super._preCreate(data, options, user);
 
-        if (this.parent.isOwned && (await foundry.applications.api.Dialog.confirm({ window: { title: this.parent.name }, content: game.i18n.localize("TOW.Dialog.ApplyCareer") }))) {
-            this.applyTo(this.parent.actor)
+        if (this.parent.isOwned)
+        {
+            if (!options.skipApplication && (await foundry.applications.api.Dialog.confirm({ window: { title: this.parent.name }, content: game.i18n.localize("TOW.Dialog.ApplyCareer") })))
+            {
+                this.applyTo(this.parent.actor)
+            }
         }
     }
 
@@ -87,9 +91,6 @@ export class CareerModel extends BaseItemModel {
         let talent = await this.talent.document;
 
         let items = lores.concat(trappings).concat(assets).concat(talent);
-        if (!actor.system.origin.document) {
-
-        }
 
         await actor.createEmbeddedDocuments("Item", items.filter(i => i));
         let actorSkills = actor.system.skills.toObject();
