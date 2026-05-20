@@ -36,7 +36,7 @@ export class AbilityAttackTest extends OldWorldTest
     {
         let result = await super.computeOpposedResult(test);
 
-        if (this.ability.system.isMelee && !result.success && !this.actor.hasCondition("staggered") && result.outcome != "tie")
+        if (this.ability.system.isMelee && !result.success && !this.actor.hasCondition("staggered") && result.outcome != "tie" && this.actor.system.type != "monstrosity")
         {
             this.actor.addCondition("staggered");
         }

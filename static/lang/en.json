@@ -486,7 +486,8 @@
     "WH" : {
 
         "Trigger" : {
-            "ComputeOwnedItem" : "Compute Owned Item"
+            "ComputeOwnedItem" : "Compute Owned Item",
+            "Targeted" : "Targeted"
         },
 
         "TransferType" : {

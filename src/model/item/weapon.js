@@ -51,6 +51,11 @@ export class WeaponModel extends EquippableItem
         return this.damage.magical;
     }
 
+    get isAttack()
+    {
+        return true;
+    }
+
     rollReloadTest(actor)  
     {
         return actor.setupSkillTest("dexterity", {reload: this.parent, appendTitle: ` - Reloading ${this.parent.name}`});
@@ -88,6 +93,9 @@ export class WeaponModel extends EquippableItem
     async toEmbed(config, options)
     {
         let html;
+        let noToc = config.noToc ? "no-toc" : ""
+        let header = config.header || "h3"
+
         if (config.row)
         {
 
@@ -122,8 +130,9 @@ export class WeaponModel extends EquippableItem
         else if (config.stats)
         {
 
+
             html = `
-            <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+            <${header} class="${noToc}">@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</${header}>
             ${this.description.public}
             <section class="tow-table">
             <table>
@@ -163,7 +172,7 @@ export class WeaponModel extends EquippableItem
         }
         else {
             html = `
-            <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+            <${header} class="${noToc}">@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</${header}>
             ${this.description.public}
         `;
     

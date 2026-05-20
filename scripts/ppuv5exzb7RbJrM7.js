@@ -1,0 +1,1 @@
+return Object.keys(game.oldworld.config.conditions).includes(args.context.resist[0]);

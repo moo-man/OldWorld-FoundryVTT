@@ -1,0 +1,1 @@
+return this.effect.getFlag("whtow", "uuid") == args.target.uuid;

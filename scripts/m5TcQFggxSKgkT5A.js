@@ -1,0 +1,1 @@
+this.actor.system.rollHazard('endurance', this.effect.specifier || 2, {appendTitle : ` - ${this.effect.name}`})

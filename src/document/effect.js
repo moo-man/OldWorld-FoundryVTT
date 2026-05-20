@@ -53,7 +53,7 @@ export class OldWorldEffect extends WarhammerActiveEffect
             }
             else 
             {
-                return test.result.failed;
+                return test.failed;
             }
         }
     }

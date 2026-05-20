@@ -36,7 +36,7 @@ export class WoundModel extends BaseItemModel
                     actor.system.wounds[nextThreshold].effect?.document?.handleImmediateScripts(data, options, user)
                 }
                 
-                if (nextThreshold == "defeated")
+                if (nextThreshold == "defeated" && !actor.system.wounds.defeated.effect.document)
                 {
                     actor.addCondition("dead");
                 }

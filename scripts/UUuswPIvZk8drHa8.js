@@ -1,0 +1,1 @@
+this.effect.updateSource({name: this.effect.setSpecifier(this.effect.getFlag('whtow', 'hazard') || 2)})

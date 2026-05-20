@@ -1,0 +1,1 @@
+return !args.target || !this.effect.getFlag("whtow", "uuid") || this.effect.getFlag("whtow", "uuid") != args.target.uuid;

@@ -48,4 +48,14 @@ export class BaseActorModel extends BaseWarhammerActorModel
             });
         }
     }
+
+    async _onUpdate(data, options, user)
+    {
+        // User might be GM instead of player, so only run for actual document owner
+        if (game.user.id == warhammer.utility.getActiveDocumentOwner(this.parent)?.id && data.system?.opposed && data.system.opposed != this.opposed)
+        {
+            let message = game.messages.get(data.system.opposed);
+            this.parent.runScripts("targeted", {test: message?.system?.test})
+        }
+    }
 }

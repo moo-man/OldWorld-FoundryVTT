@@ -50,7 +50,7 @@ export class WeaponTest extends OldWorldTest
     {
         let result = await super.computeOpposedResult(test);
 
-        if (this.weapon.system.isMelee && !result.success && !this.actor.hasCondition("staggered") && result.outcome != "tie")
+        if (this.weapon.system.isMelee && !result.success && !this.actor.hasCondition("staggered") && result.outcome != "tie" && this.actor.system.type != "monstrosity")
         {
             this.actor.addCondition("staggered");
         }

@@ -1,0 +1,1 @@
+return args.fields.penalty > 0;
