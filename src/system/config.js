@@ -136,7 +136,7 @@ const OLDWORLD = {
     }, 
     conditions : {
         ablaze : {
-            img: "systems/whtow/assets/icons/conditions/ablaze.svg",
+            img: "systems/whtow/assets/icons/conditions/ablaze.webp",
             description : "You are on fire, scorched by flames that burn your clothes and sear your flesh.",
             statuses : ["ablaze"],
             name: "TOW.ConditionName.Ablaze",
@@ -144,6 +144,7 @@ const OLDWORLD = {
                 transferData : {
                     avoidTest: {
                         prevention: false,
+                        value: "custom",
                         skill: "athletics"
                     }
                 },
@@ -160,7 +161,7 @@ const OLDWORLD = {
             }
         },
         blinded : {
-            img: "systems/whtow/assets/icons/conditions/blinded.svg",
+            img: "systems/whtow/assets/icons/conditions/blinded.webp",
             description : "You cannot see — you’re stumbling around in the dark, trying to orient yourself.",
             statuses : ["blinded", "blind"],
             name: "TOW.ConditionName.Blinded",
@@ -169,6 +170,7 @@ const OLDWORLD = {
 
                     avoidTest: {
                         prevention: false,
+                        value: "custom",
                         skill: "awareness"
                     }
                 },
@@ -183,7 +185,7 @@ const OLDWORLD = {
             }
         },
         broken : {
-            img: "systems/whtow/assets/icons/conditions/broken.svg",
+            img: "systems/whtow/assets/icons/conditions/broken.webp",
             description : "Your courage has failed, and all you can think of is retreating to a place of safety.",
             statuses : ["broken"],
             name: "TOW.ConditionName.Broken",
@@ -192,13 +194,14 @@ const OLDWORLD = {
 
                     avoidTest: {
                         prevention: false,
+                        value: "custom",
                         skill: "willpower"
                     }
                 }
             }
         },
         burdened : {
-            img: "systems/whtow/assets/icons/conditions/burdened.svg",
+            img: "systems/whtow/assets/icons/conditions/burdened.webp",
             description : "You are encumbered by heavy equipment, binding restraints, or an incapacitating injury.",
             statuses : ["burdened"],
             name: "TOW.ConditionName.Burdened",
@@ -207,13 +210,14 @@ const OLDWORLD = {
                     // TODO prevent manoeuvre action
                     avoidTest: {
                         prevention: false,
+                        value: "custom",
                         skill: "brawn"
                     }
                 }
             }
         },
         critical : {
-            img: "systems/whtow/assets/icons/conditions/critical.svg",
+            img: "systems/whtow/assets/icons/conditions/critical.webp",
             description : "Your wounds are so severe you might expire from blood loss, shock, or suffocation.",
             statuses : ["critical"],
             name: "TOW.ConditionName.CriticallyInjured",
@@ -222,6 +226,7 @@ const OLDWORLD = {
 
                     avoidTest: {
                         prevention: false,
+                        value: "custom",
                         skill: "recall"
                     }
                 },
@@ -247,7 +252,7 @@ const OLDWORLD = {
             }
         },
         deafened : {
-            img: "systems/whtow/assets/icons/conditions/deafened.svg",
+            img: "systems/whtow/assets/icons/conditions/deafened.webp",
             description : "You can’t hear anything, or are subjected to a loud noise that drowns out other sounds.",
             statuses : ["deafened"],
             name: "TOW.ConditionName.Deafened",
@@ -256,19 +261,20 @@ const OLDWORLD = {
                     // TODO prevent help action
                     avoidTest: {
                         prevention: false,
+                        value: "custom",
                         skill: "awareness"
                     }
                 }
             }
         },
         defenceless : {
-            img: "systems/whtow/assets/icons/conditions/defenceless.svg",
+            img: "systems/whtow/assets/icons/conditions/defenceless.webp",
             description : "You are entirely at your enemy’s mercy.",
             statuses : ["defenceless"],
             name: "TOW.ConditionName.Defenceless"
         },
         distracted : {
-            img: "systems/whtow/assets/icons/conditions/distracted.svg",
+            img: "systems/whtow/assets/icons/conditions/distracted.webp",
             description : "Your attention wanders to feelings of doubt, rage, shame, or desire, instead of focussing on the task at hand. ",
             statuses : ["distracted"],
             name: "TOW.ConditionName.Distracted",
@@ -277,6 +283,7 @@ const OLDWORLD = {
 
                     avoidTest: {
                         prevention: false,
+                        value: "custom",
                         skill: "willpower"
                     }
                 },
@@ -292,7 +299,7 @@ const OLDWORLD = {
             }
         },
         drained : {
-            img: "systems/whtow/assets/icons/conditions/drained.svg",
+            img: "systems/whtow/assets/icons/conditions/drained.webp",
             description : "Your concentration and fighting strength is compromised by sickness or exhaustion.",
             statuses : ["drained"],
             name: "TOW.ConditionName.Drained",
@@ -301,6 +308,7 @@ const OLDWORLD = {
 
                     avoidTest: {
                         prevention: false,
+                        value: "custom",
                         skill: "endurance"
                     }
                 },
@@ -315,7 +323,7 @@ const OLDWORLD = {
             }
         },
         prone : {
-            img: "systems/whtow/assets/icons/conditions/prone.svg",
+            img: "systems/whtow/assets/icons/conditions/prone.webp",
             description : "You are knocked flat, lying down, or kneeling on the floor.",
             statuses : ["prone"],
             name: "TOW.ConditionName.Prone",
@@ -333,7 +341,7 @@ const OLDWORLD = {
             }
         },
         staggered : {
-            img: "systems/whtow/assets/icons/conditions/staggered.svg",
+            img: "systems/whtow/assets/icons/conditions/staggered.webp",
             description : "You are battered, bruised, or otherwise reeling from an enemy attack.",
             statuses : ["staggered"],
             name: "TOW.ConditionName.Staggered"
@@ -342,7 +350,12 @@ const OLDWORLD = {
             img: "systems/whtow/assets/icons/conditions/dead.svg",
             description : "You are dead.",
             statuses : ["dead"],
-            name: "TOW.ConditionName.Dead"
+            name: "TOW.ConditionName.Dead",
+            flags: {
+                core: {
+                    overlay: true
+                }
+            }
         }
     },
 
@@ -676,7 +689,7 @@ const OLDWORLD = {
                         let choice = await ItemDialog.create(conditions, 1, {title: "Remove Condition", text: "Select Condition to Test against"});
                         if (choice[0])
                         {
-                            if (await choice.avoidTest())
+                            if (await choice[0].resistEffect())
                             {
                                 let content = `Removed ${choice[0].name}` (actor.uuid != target.uuid) ? ` on ${target.name}` : "";
                                 ChatMessage.create({content, speaker : {alias: actor.name}, flavor: "Remove Condition"});
@@ -850,77 +863,77 @@ const OLDWORLD = {
 const TOW_CONFIG = {
     statusEffects : [
         {
-            img: "systems/whtow/assets/icons/conditions/ablaze.svg",
+            img: "systems/whtow/assets/icons/conditions/ablaze.webp",
             id: "ablaze",
             description : "You are on fire, scorched by flames that burn your clothes and sear your flesh.",
             statuses : ["ablaze"],
             name: "TOW.ConditionName.Ablaze"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/blinded.svg",
+            img: "systems/whtow/assets/icons/conditions/blinded.webp",
             id: "blinded",
             description : "You cannot see — you’re stumbling around in the dark, trying to orient yourself.",
             statuses : ["blinded", "blind"],
             name: "TOW.ConditionName.Blinded"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/broken.svg",
+            img: "systems/whtow/assets/icons/conditions/broken.webp",
             id: "broken",
             description : "Your courage has failed, and all you can think of is retreating to a place of safety.",
             statuses : ["broken"],
             name: "TOW.ConditionName.Broken"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/burdened.svg",
+            img: "systems/whtow/assets/icons/conditions/burdened.webp",
             id: "burdened",
             description : "You are encumbered by heavy equipment, binding restraints, or an incapacitating injury.",
             statuses : ["burdened"],
             name: "TOW.ConditionName.Burdened"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/critical.svg",
+            img: "systems/whtow/assets/icons/conditions/critical.webp",
             id: "critical",
             description : "Your wounds are so severe you might expire from blood loss, shock, or suffocation.",
             statuses : ["critical"],
             name: "TOW.ConditionName.CriticallyInjured"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/deafened.svg",
+            img: "systems/whtow/assets/icons/conditions/deafened.webp",
             id: "deafened",
             description : "You can’t hear anything, or are subjected to a loud noise that drowns out other sounds.",
             statuses : ["deafened"],
             name: "TOW.ConditionName.Deafened"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/defenceless.svg",
+            img: "systems/whtow/assets/icons/conditions/defenceless.webp",
             id: "defenceless",
             description : "You are entirely at your enemy’s mercy.",
             statuses : ["defenceless"],
             name: "TOW.ConditionName.Defenceless"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/distracted.svg",
+            img: "systems/whtow/assets/icons/conditions/distracted.webp",
             id: "distracted",
             description : "Your attention wanders to feelings of doubt, rage, shame, or desire, instead of focussing on the task at hand. ",
             statuses : ["distracted"],
             name: "TOW.ConditionName.Distracted"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/drained.svg",
+            img: "systems/whtow/assets/icons/conditions/drained.webp",
             id: "drained",
             description : "Your concentration and fighting strength is compromised by sickness or exhaustion.",
             statuses : ["drained"],
             name: "TOW.ConditionName.Drained"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/prone.svg",
+            img: "systems/whtow/assets/icons/conditions/prone.webp",
             id: "prone",
             description : "You are knocked flat, lying down, or kneeling on the floor.",
             statuses : ["prone"],
             name: "TOW.ConditionName.Prone"
         },
         {
-            img: "systems/whtow/assets/icons/conditions/staggered.svg",
+            img: "systems/whtow/assets/icons/conditions/staggered.webp",
             id: "staggered",
             description : "You are battered, bruised, or otherwise reeling from an enemy attack.",
             statuses : ["staggered"],
@@ -931,7 +944,12 @@ const TOW_CONFIG = {
             id: "dead",
             description : "You are dead.",
             statuses : ["dead"],
-            name: "TOW.ConditionName.Dead"
+            name: "TOW.ConditionName.Dead",
+            flags: {
+                core: {
+                    overlay: true
+                }
+            }
         },
     ]
 };
@@ -982,6 +1000,8 @@ OLDWORLD.scriptTriggers = {
     applyDamage : "Apply Damage",
 
     computeOwnedItem : "WH.Trigger.ComputeOwnedItem",
+
+    targeted : "WH.Trigger.Targeted",
     
     // IN LIBRARY
     preUpdateDocument : "WH.Trigger.PreUpdateDocument",
