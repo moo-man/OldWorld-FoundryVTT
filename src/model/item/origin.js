@@ -240,10 +240,16 @@ export class OriginModel extends BaseItemModel {
         }
 
         // Combine rolled and kept talents with replacement talents and automatically gained talents
-        talents = talents.concat(requiredSwaps.concat(optionalSwaps.concat(tableTalents)).map(i =>  i.toObject()));
+        talents = talents.concat(requiredSwaps.concat(optionalSwaps.concat(tableTalents)));
 
-        talents.forEach(t => t.system.cost = 0);
+        ChatMessage.create({content: talents.map(i => `<p>@UUID[${i.uuid}]</p>`).join(""), flavor: "Random Talents", speaker: {alias: actor.name}})
 
+        talents = talents.map(t => {
+            let data = t.toObject?.() || t;
+            data.system.cost = 0;
+            return data;
+        })
+        
         await actor.createEmbeddedDocuments("Item", talents.concat(lores));
 
         let actorSkills = actor.system.skills.toObject();
@@ -311,11 +317,132 @@ export class OriginModel extends BaseItemModel {
 
             if (career)
             {
-                actor.createEmbeddedDocuments("Item", [career.toObject()], {skipApplication: true}).then(items => {
-                    items[0].system.applyTo(actor);
-                });
+                let items = await actor.createEmbeddedDocuments("Item", [career.toObject()], {skipApplication: true});
+                await items[0].system.applyTo(actor);
             }
+
+            this.finalSteps(actor);
         }
+    }
+
+    async finalSteps(actor)
+    {
+        let final = await foundry.applications.api.Dialog.wait({
+            window: {title: "Final Steps"},
+            content: `
+            <ul>
+                <li>Increase a Skill from 3 to 4, or two Skills from 2 to 3</li>
+                <li>Gain another Origin Talent</li>
+                <li>Roll Random Asset</li>
+            </ul>
+            `,
+            buttons: [
+                {
+                    action: "oneSkill",
+                    label: "One Skill"
+                },
+                {
+                    action: "twoSkill",
+                    label: "Two Skills"
+                },
+                {
+                    action: "talent",
+                    label: "Talent"
+                },
+                {
+                    action: "asset",
+                    label: "Asset"
+                }
+            ]
+        })
+
+        let skills = [];
+        let skillUpdate = {};
+        if (final == "oneSkill")
+        {
+            for(let s in actor.system.skills)
+            {
+                if (actor.system.skills[s].value == 3)
+                {
+                    skills.push(s)
+                }
+            }
+
+            let choice = await ItemDialog.create(skills.map(i => {return {id: i, name: game.oldworld.config.skills[i]}}), 1, { title: this.parent.name, text: "Select Skill to raise to 4"});
+
+            for (let skill of choice)
+            {
+                foundry.utils.setProperty(skillUpdate, `system.skills.${skill.id}.base`, actor.system.skills[skill.id].base + 1);
+            }
+
+            ChatMessage.create({content : `Increasing ${choice.map(i => i.name).join(", ")} to 4.`, flavor: "Final Steps - Skills", speaker: {alias: actor.name}})
+
+        }
+        else if (final == "twoSkill")
+        {
+            for(let s in actor.system.skills)
+            {
+                if (actor.system.skills[s].value == 2)
+                {
+                    skills.push(s)
+                }
+            }
+
+            let choice = await ItemDialog.create(skills.map(i => {return {id: i, name: game.oldworld.config.skills[i]}}), 2, { title: this.parent.name, text: "Select 2 Skills to raise to 3"});
+
+            for (let skill of choice)
+            {
+                foundry.utils.setProperty(skillUpdate, `system.skills.${skill.id}.base`, actor.system.skills[skill.id].base + 1);
+            }
+            ChatMessage.create({content : `Increasing ${choice.map(i => i.name).join(", ")} to 3.`, flavor: "Final Steps - Skills", speaker: {alias: actor.name}})
+
+        }
+        else if (final == "talent")
+        {
+            ChatMessage.create({content : `Gain another Origin Talent.`, flavor: "Final Steps - Talent", speaker: {alias: actor.name}})
+
+            let talent;
+            let table = await this.talents.table.document;
+            if (table) 
+            {
+                let _abortCounter = 0;
+                while (!talent) 
+                {
+                    let result = await table.draw();
+                    let talentItem = await fromUuid(result.results[0].documentUuid);
+                    if (actor.items.getName(talentItem.name)) 
+                    {
+                        _abortCounter++;
+                        if (_abortCounter > 10) {
+                            throw new Error("Talent Table resulted in too many rerolls, aborting")
+                        }
+                    }
+                    else {
+                        talent = talentItem;
+                    }
+                }
+
+                if (talent)
+                {
+                    actor.createEmbeddedDocuments("Item", [talent]);
+                }
+            }
+            else {
+                ui.notifications.error("No Table found for Talents")
+            }
+    
+        }
+        else if (final == "asset") 
+        {
+            ChatMessage.create({content : `Roll on the Random Asset table associated with your Status (${game.oldworld.config.status[actor.system.career.document.system.status]}). Alternatively spend 1 XP to roll one step higher.`, flavor: "Final Steps - Random Asset", speaker: {alias: actor.name}})
+        }
+
+
+        if (!foundry.utils.isEmpty(skillUpdate))
+        {
+            actor.update(skillUpdate);
+        }
+
     }
 
 

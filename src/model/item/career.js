@@ -97,7 +97,7 @@ export class CareerModel extends BaseItemModel {
         for (let s of skillChoices) {
             actorSkills[s.id].base++;
         }
-        await actor.update({ "system.skills": actorSkills });
+        return actor.update({ "system.skills": actorSkills });
     }
 
     computeBase() {
