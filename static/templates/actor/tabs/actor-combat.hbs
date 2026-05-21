@@ -149,10 +149,17 @@
                 {{#if this.system.isEquipped}}
                     <div class="list-row combat" data-uuid="{{this.uuid}}">
                         <div class="row-content">
+                            {{#if this.system.shield}}
+                            <div class="list-name rollable">
+                                <img data-action="rollTest" data-type="shield" src="{{this.img}}">
+                                <div><a class="label">{{this.name}}</a></div>
+                            </div>
+                            {{else}}
                             <div class="list-name">
                                 <img src="{{this.img}}">
                                 <div><span class="label">{{this.name}}</span></div>
                             </div>
+                            {{/if}}
                             <div>{{this.system.resilience}}</div>
                         </div>
                         {{#if this.system.traits}}

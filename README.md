@@ -19,6 +19,7 @@ See **Environment Setup** for instructions on how to build the project for devel
 ## Official Modules
 
 - [Players' and GM's Guide](https://foundryvtt.com/packages/tow-core/) - Adds content from both the Players' and GM's guide books, providing a complete experience within The Old World
+- [Starter Set & Gamemaster's Screen](https://foundryvtt.com/packages/tow-starter-set/) - Step into the shadows of a fractured Empire, where danger waits in every forest glade, beneath every crumbling ruin and behind every smiling face. Warhammer: the Old World Roleplaying Game Starter Set is your gateway to daring adventure and grim deeds, plunging you straight into the action with everything you need to begin your journey.
 
 ## Special Thanks
 - Cubicle 7

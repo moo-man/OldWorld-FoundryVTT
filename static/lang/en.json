@@ -553,6 +553,9 @@
                     },
                     "traits" : {
                         "label" : "Traits"
+                    },
+                    "shield" : {
+                        "label" : "Shield"
                     }
                 }
             },

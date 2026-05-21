@@ -204,6 +204,10 @@
         @include box-text();
     }
 
+    .sepia-filter {
+        filter: invert(25%) sepia(100%) saturate(250%) contrast(200%);
+    }
+
     table {
         background: none;
 

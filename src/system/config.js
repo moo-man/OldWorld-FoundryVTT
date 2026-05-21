@@ -791,7 +791,8 @@ const OLDWORLD = {
     
     premiumModules : {
         "whtow" : "Old World System",
-        "tow-core" : "Old World Core Module"
+        "tow-core" : "Old World Core Module",
+        "tow-starter-set" : "Starter Set"
     },
 
     syncTriggers: [],

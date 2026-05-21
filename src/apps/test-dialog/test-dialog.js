@@ -229,6 +229,18 @@ export default class TestDialog extends WarhammerRollDialogV2 {
         dialogData.data.item = context.item;
         if (context.item)
         {
+            if (typeof context.item == "string")
+            {
+                if (context.item.includes("."))
+                {
+                    context.item = await fromUuid(context.item);
+                }
+                else 
+                {
+                    context.item = actor.items.get(context.item);
+                }
+            }
+
             dialogData.context.itemUuid = context.item.uuid;
             dialogData.data.scripts = dialogData.data.scripts.concat(context.item?.getScripts("dialog").filter(s => !s.options.defending) || [])
         }

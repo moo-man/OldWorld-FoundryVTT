@@ -7,6 +7,7 @@ export class ArmourModel extends EquippableItem {
         let schema = super.defineSchema();
         schema.resilience = new fields.StringField({});
         schema.traits = new fields.StringField({});
+        schema.shield = new fields.BooleanField();
         return schema;
     }
 
@@ -20,13 +21,14 @@ export class ArmourModel extends EquippableItem {
                 <div>
                     ${this.cost ? game.oldworld.config.status[this.cost] : "n/a"}
                 </div>
+                ${config.description ? `<div>${this.description.public}</div` : `
                 <div>
                     T${this.resilience ? "+" + this.resilience : ""}
                 </div>
                 <div>
                     ${this.traits}
-                </div>
-            `;
+                </div>`
+                }`;
 
             let div = document.createElement("div");
             div.style = config.style;

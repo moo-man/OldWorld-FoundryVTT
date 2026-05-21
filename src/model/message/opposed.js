@@ -72,7 +72,7 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
         let chatData = {
             attacker : test.token,
             defender : targetToken,
-            responseOptions : this.getResponseOptions(targetToken.actor)
+            responseOptions : this.getResponseOptions(targetToken.actor, test)
         }
         
         let content = await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/opposed.hbs", chatData);
@@ -88,7 +88,7 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
         }})
     }
 
-    static getResponseOptions(actor)
+    static getResponseOptions(actor, attackerTest)
     {
       if (!actor)
       {
@@ -103,10 +103,25 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
       {
         // Use first weapon equipped
         let weapons = actor.itemTypes.weapon.filter(i => i.system.isMelee && i.system.isEquipped);
+        let shield = actor.itemTypes.armour.find(i => i.system.shield && i.system.isEquipped);
 
-        for(let weapon of weapons)
+        if (attackerTest.item?.system.isRanged)
         {
-          options.push({id : weapon.id, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${weapon.name})`, icon : "fa-shield"});
+            if (shield)
+            {
+                options.push({id : shield.id, shield: true, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${shield.name})`, icon : "fa-shield"});
+            }
+        }
+        else 
+        {
+            for(let weapon of weapons)
+            {
+                options.push({id : weapon.id, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${weapon.name})`, icon : "fa-shield"});
+            }
+            if (shield)
+            {
+                options.push({id : shield.id, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${shield.name})`, icon : "fa-shield"});
+            }
         }
 
         let abilities = actor.itemTypes.ability.filter(i => i.system.isAttack && i.system.isMelee);
@@ -216,6 +231,10 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
                 if (target.classList.contains("ability"))
                 {
                     return actor.setupAbilityTest(type)
+                }
+                if (target.classList.contains("shield"))
+                {
+                    return actor.setupSkillTest("defence", {item: type})
                 }
                 else 
                 {
