@@ -4,12 +4,19 @@ import copy from "rollup-plugin-copy-watch";
 import postcss from "rollup-plugin-postcss";
 import bakedEnv from 'rollup-plugin-baked-env';
 import simpleGit from 'simple-git';
+import yargs from 'yargs';
 
-let latest;
-simpleGit().tags((err, tags) => latest = tags.latest);
+let args = yargs(process.argv.slice(2)).parse();
+
+let latest = args.configLatest;
+if (!latest)
+{
+    latest = await new Promise(resolve => {
+        simpleGit({baseDir: process.cwd()}).tags((err, tags) => resolve(tags.latest));
+    })
+}
 
 let manifest = JSON.parse(fs.readFileSync("./system.json"));
-
 let systemPath = foundryPath(manifest.id, manifest.compatibility.verified);
 
 console.log("Setting Version " + latest)

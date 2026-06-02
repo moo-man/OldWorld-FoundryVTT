@@ -20,9 +20,13 @@ jobs:
           
       - name: Install node modules
         run: npm install
-        
+
+      - name: Get tag    
+        id: tag
+        uses: dawidd6/action-get-tag@v1.1.0
+
       - name: Build Project
-        run: npm run release
+        run: npm run release -- --configLatest=${{steps.tag.outputs.tag}}
         
       - name: Get System ID
         id: systemID
@@ -30,10 +34,6 @@ jobs:
         with: 
           path: 'system.json'
           prop_path: 'id'
-          
-      - name: Get tag    
-        id: tag
-        uses: dawidd6/action-get-tag@v1.1.0
 
       - name: Create ZIP
         run: |
