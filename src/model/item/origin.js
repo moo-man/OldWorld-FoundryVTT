@@ -424,7 +424,9 @@ export class OriginModel extends BaseItemModel {
 
                 if (talent)
                 {
-                    actor.createEmbeddedDocuments("Item", [talent]);
+                    let talentData = talent.toObject();
+                    talentData.system.cost = 0;
+                    actor.createEmbeddedDocuments("Item", [talentData]);
                 }
             }
             else {
