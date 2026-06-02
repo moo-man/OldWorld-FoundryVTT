@@ -1,1 +1,1 @@
-args.context.endeavour != "study";
+return args.context.endeavour != "study";

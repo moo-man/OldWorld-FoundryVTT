@@ -137,7 +137,15 @@ const OLDWORLD = {
     conditions : {
         ablaze : {
             img: "systems/whtow/assets/icons/conditions/ablaze.webp",
-            description : "You are on fire, scorched by flames that burn your clothes and sear your flesh.",
+            description : `<p><em>You are on fire, scorched by flames that burn your clothes and sear your flesh.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: At the end of each of your turns, Test Endurance to avoid a fire-based Hazard (2).</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Athletics Test to stop drop and roll; douse yourself in water.</p>
+                </div>
+            </div>`,
             statuses : ["ablaze"],
             name: "TOW.ConditionName.Ablaze",
             system: {
@@ -162,7 +170,15 @@ const OLDWORLD = {
         },
         blinded : {
             img: "systems/whtow/assets/icons/conditions/blinded.webp",
-            description : "You cannot see — you’re stumbling around in the dark, trying to orient yourself.",
+            description : `<p><em>You cannot see — you’re stumbling around in the dark, trying to orient yourself.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: Any Tests with a visual component (including attacks, Opposing attacks, movement, and Awareness) are Grim, and all Tests that rely on sight entirely fail.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Awareness Test to recover your wits; remove the blindfold or Wound that inflicted the condition.</p>
+                </div>
+            </div>`,
             statuses : ["blinded", "blind"],
             name: "TOW.ConditionName.Blinded",
             system: {
@@ -186,7 +202,15 @@ const OLDWORLD = {
         },
         broken : {
             img: "systems/whtow/assets/icons/conditions/broken.webp",
-            description : "Your courage has failed, and all you can think of is retreating to a place of safety.",
+            description : `<p><em>Your courage has failed, and all you can think of is retreating to a place of safety.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: You must spend your turn moving to a Zone without an enemy as fast as possible, undertaking Manoeuvres if necessary. Once you are in a Zone without an enemy, you may attempt to Recover.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Willpower Test to find your courage; another character’s Leadership Test to restore your discipline.</p>
+                </div>
+            </div>`,
             statuses : ["broken"],
             name: "TOW.ConditionName.Broken",
             system: {
@@ -202,7 +226,15 @@ const OLDWORLD = {
         },
         burdened : {
             img: "systems/whtow/assets/icons/conditions/burdened.webp",
-            description : "You are encumbered by heavy equipment, binding restraints, or an incapacitating injury.",
+            description : `<p><em>You are encumbered by heavy equipment, binding restraints, or an incapacitating injury.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: You cannot use the @UUID[.4Q47Q7jrVm0mxv1t#manoeuvre]{Manoeuvre} action.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Brawn Test to break free of the burden; reduce the weight you’re carrying.</p>
+                </div>
+            </div>`,
             statuses : ["burdened"],
             name: "TOW.ConditionName.Burdened",
             system: {
@@ -218,7 +250,16 @@ const OLDWORLD = {
         },
         critical : {
             img: "systems/whtow/assets/icons/conditions/critical.webp",
-            description : "Your wounds are so severe you might expire from blood loss, shock, or suffocation.",
+            description : `
+            <p><em>Your wounds are so severe you might expire from blood loss, shock, or suffocation.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: At the end of each of your turns, Test Endurance. If you fail, you gain the @UUID[.RHLBJHaBLkMaWLfo#defenceless]{Defenceless} condition. If you already have the @UUID[.RHLBJHaBLkMaWLfo#defenceless]{Defenceless} condition, you die.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Recall Test to treat your Wound.</p>
+                </div>
+            </div>`,
             statuses : ["critical"],
             name: "TOW.ConditionName.CriticallyInjured",
             system: {
@@ -253,7 +294,15 @@ const OLDWORLD = {
         },
         deafened : {
             img: "systems/whtow/assets/icons/conditions/deafened.webp",
-            description : "You can’t hear anything, or are subjected to a loud noise that drowns out other sounds.",
+            description : `<p><em>You can’t hear anything, or are subjected to a loud noise that drowns out other sounds.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: You cannot hear words, noises, or other sounds. You cannot use the Help action, automatically fail Tests that rely on hearing exclusively, and cannot be affected by abilities that depend on you hearing them.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Awareness Test to recover your wits; remove your earplugs, silence the drowning noise, or wait for your hearing to return.</p>
+                </div>
+            </div>`,
             statuses : ["deafened"],
             name: "TOW.ConditionName.Deafened",
             system: {
@@ -269,13 +318,29 @@ const OLDWORLD = {
         },
         defenceless : {
             img: "systems/whtow/assets/icons/conditions/defenceless.webp",
-            description : "You are entirely at your enemy’s mercy.",
+            description : `<p><em>You are entirely at your enemy’s mercy.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: You cannot move, take actions, or Oppose Tests. You can only make Tests when a condition or other debilitating effect prompts you to do so. If asleep or unconscious, you cannot talk. Any successful attack inflicts a Wound instead.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Variable — may be removed just by waking up, or may require an ally to treat your Wound.</p>
+                </div>
+            </div>`,
             statuses : ["defenceless"],
             name: "TOW.ConditionName.Defenceless"
         },
         distracted : {
             img: "systems/whtow/assets/icons/conditions/distracted.webp",
-            description : "Your attention wanders to feelings of doubt, rage, shame, or desire, instead of focussing on the task at hand. ",
+            description : `<p><em>Your attention wanders to feelings of doubt, rage, shame, or desire, instead of focussing on the task at hand.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: You take –1d on Tests (including Opposed Tests) focused on anyone or anything besides whatever you are distracted by.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: In battle, Test Willpower to refocus your attention; otherwise wait until the distracting character is defeated or out of sight. If you are Distracted again the original condition is replaced by the new one.</p>
+                </div>
+            </div>`,
             statuses : ["distracted"],
             name: "TOW.ConditionName.Distracted",
             system: {
@@ -300,7 +365,15 @@ const OLDWORLD = {
         },
         drained : {
             img: "systems/whtow/assets/icons/conditions/drained.webp",
-            description : "Your concentration and fighting strength is compromised by sickness or exhaustion.",
+            description : `<p><em>Your concentration and fighting strength is compromised by sickness or exhaustion.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: You cannot gain bonus dice on Tests. No Tests you make are Glorious, unless you spent Fate to make them so. Dice penalties and the Grim effect still apply as normal.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Test Endurance to recover from short-term debilities; rest and relax to recover from ongoing fatigue or illness.</p>
+                </div>
+            </div>`,
             statuses : ["drained"],
             name: "TOW.ConditionName.Drained",
             system: {
@@ -324,7 +397,15 @@ const OLDWORLD = {
         },
         prone : {
             img: "systems/whtow/assets/icons/conditions/prone.webp",
-            description : "You are knocked flat, lying down, or kneeling on the floor.",
+            description : `<p><em>You are knocked flat, lying down, or kneeling on the floor.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: Melee attacks against you gain the benefit of higher ground, adding +1d. Shooting attacks against you take –1d. If you are knocked Prone whilst mounted on a steed or vehicle, you are dismounted. You cannot move out of your Zone whilst Prone.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Take a Recover action; sacrifice you free move for the turn, so long as no enemies are in Close Range.</p>
+                </div>
+            </div>`,
             statuses : ["prone"],
             name: "TOW.ConditionName.Prone",
             system: {
@@ -342,7 +423,15 @@ const OLDWORLD = {
         },
         staggered : {
             img: "systems/whtow/assets/icons/conditions/staggered.webp",
-            description : "You are battered, bruised, or otherwise reeling from an enemy attack.",
+            description : `<p><em>You are battered, bruised, or otherwise reeling from an enemy attack.</em></p>
+            <div style="border:1px solid black">
+                <div style="border-bottom:1px solid black;background:rgba(0, 0, 0, 0.1);padding:0.5rem">
+                    <p style="margin: 0px"><strong>Effect</strong>: No effect by itself, but if you are Staggered again you must choose: Give Ground into an adjacent Zone (once per round); suffer the Prone condition; or suffer a Wound.</p>
+                </div>
+                <div style="padding:0.5rem">
+                    <p style="margin: 0px"><strong>Removal</strong>: Take a Recover action; suffer a Wound.</p>
+                </div>
+            </div>`,
             statuses : ["staggered"],
             name: "TOW.ConditionName.Staggered"
         },

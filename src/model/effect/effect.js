@@ -19,4 +19,17 @@ export class OldWorldActiveEffectModel extends WarhammerActiveEffectModel {
         schema.computed = new fields.BooleanField({initial: false})
         return schema
     }
+
+    
+    async summaryData()
+    {
+        let enriched = {
+            public : await foundry.applications.ux.TextEditor.enrichHTML(this.parent.description, {relativeTo: this.parent, secrets : false}),
+            gm : ""
+        }
+
+        return {enriched}
+    }
+
+
 }   
