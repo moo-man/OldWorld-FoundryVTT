@@ -120,7 +120,7 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
             }
             if (shield)
             {
-                options.push({id : shield.id, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${shield.name})`, icon : "fa-shield"});
+                options.push({id : shield.id, shield: true, tooltip : `${game.i18n.localize("TOW.SkillName.Defence")} (${shield.name})`, icon : "fa-shield"});
             }
         }
 
