@@ -114,9 +114,20 @@ export class OldWorldTest extends WarhammerTestBase
     async _rollDice(dice, target, rerolls=[], {showDSN=false}={})
     {
         let roll = await new Roll(`${dice}d10cs<=${target}`).roll();
+
         if (showDSN && game.dice3d)
         {
-            await game.dice3d.showForRoll(roll, game.user, true);
+            if (rerolls.length)
+            {
+                // Not necessarily the cleanest, but since all dice are rolled even for rerolls, remove any that don't matter before showing dice so nice
+                let rollJSON = roll.toJSON();
+                rollJSON.terms[0].results = rollJSON.terms[0].results.filter((_, index) => rerolls.includes(index));
+                await game.dice3d.showForRoll(Roll.fromData(rollJSON), game.user, true);
+            }
+            else 
+            {
+                await game.dice3d.showForRoll(roll, game.user, true);
+            }
         }
         this._roll = roll;
         let result = roll.dice[0].results.map((d, index) => {
