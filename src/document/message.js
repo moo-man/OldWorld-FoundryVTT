@@ -45,6 +45,16 @@ export class OldWorldChatMessage extends WarhammerChatMessage
                     let message = game.messages.get(li.dataset.messageId);
                     message.system.test.grimReroll();
                 }
+            },
+            {
+                name: game.i18n.localize("TOW.Test.AddTargets"),
+                icon: '<i class="fa-solid fa-crosshairs"></i>',
+                condition: () => game.user.targets.size > 0,
+                callback: li =>
+                {
+                    let message = game.messages.get(li.dataset.messageId);
+                    message.system.test.addTargets(Array.from(game.user.targets))
+                }
             }
         );
     }

@@ -166,7 +166,7 @@ export class OldWorldOpposedMessageModel extends WarhammerMessageModel
 
         if (!this.parent.system.result.computed)
         {
-            chatData.responseOptions = this.constructor.getResponseOptions(chatData.defender.actor);
+            chatData.responseOptions = this.constructor.getResponseOptions(chatData.defender.actor, this.attackerTest);
         }
         
         let content = await foundry.applications.handlebars.renderTemplate("systems/whtow/templates/chat/opposed.hbs", chatData);

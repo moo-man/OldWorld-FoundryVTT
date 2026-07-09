@@ -364,7 +364,8 @@
 
             "RerollGlorious" : "Reroll (Glorious)",
             "RerollGrim" : "Reroll (Grim)",
-            "Reroll" : "Reroll"
+            "Reroll" : "Reroll",
+            "AddTargets" : "Add Targets"
         },
 
         "Chat" : {

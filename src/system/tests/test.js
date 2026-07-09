@@ -257,6 +257,11 @@ export class OldWorldTest extends WarhammerTestBase
         this.update({"context.opposedIds" : opposedIds});        
     }
 
+    addTargets(tokens)
+    {
+        this.context.targetSpeakers = this.context.targetSpeakers.concat(tokens.filter(t => t.actor).map(t => t.actor.speakerData(t)));
+        return this.sendToChat();
+    }
 
     /** 
      * Retrieves the opposed test handler message and sets the provided test as defending
@@ -388,7 +393,7 @@ export class OldWorldTest extends WarhammerTestBase
 
     update(data)
     {
-        this.message.update({system : data}).then(foundry.utils.mergeObject(this, data));
+        return this.message.update({system : data}).then(foundry.utils.mergeObject(this, data));
     }
 
     /**
