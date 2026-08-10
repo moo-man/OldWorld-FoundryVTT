@@ -107,6 +107,11 @@ export class StandardActorModel extends BaseActorModel
         let resilience = this.resilience.value;
         let text = [];
 
+        if (ignoreArmour === undefined && item)
+        {
+            ignoreArmour = item.system.damage?.ignoreArmour;
+        }
+
         if (test && !(test instanceof OldWorldTest))
         {
             test = game.messages.get(test.context.messageId)?.system?.test;
