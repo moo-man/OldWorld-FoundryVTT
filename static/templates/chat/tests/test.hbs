@@ -18,11 +18,14 @@
     <div class="dice">
         <div class="dice-set">
             {{#each result.dice}}
-                <div data-action="toggleDie" data-index="{{@key}}"
+                <div data-action="toggleDie" data-index="{{this.index}}"
                     class="die {{#if this.success}}success{{else}}failure{{/if}}">
                     <span class="die-result">{{this.result}}</span>
                     {{#if this.rerolled}}
                         <span class="reroll-icon"><i class="fa-solid fa-rotate"></i></span>
+                    {{/if}}
+                    {{#if this.added}}
+                        <span class="added-icon"><i class="fa-solid fa-plus"></i></span>
                     {{/if}}
                     {{#if this.success}}
                         <img src="systems/whtow/assets/dice/d10-success.svg">

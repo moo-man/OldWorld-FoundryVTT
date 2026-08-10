@@ -47,6 +47,17 @@ export class OldWorldChatMessage extends WarhammerChatMessage
                 }
             },
             {
+                name: game.i18n.localize("TOW.Test.ModifyDice"),
+                icon: '<i class="fa-solid fa-dice-d10"></i>',
+                condition: hasTest,
+                callback: async li =>
+                {
+                    let value = Number(await ValueDialog.create({text: "Add or Subtract Dice from the Test", title: "Modify Dice"}));
+                    let message = game.messages.get(li.dataset.messageId);
+                    message.system.test.modifyDice(value);
+                }
+            },
+            {
                 name: game.i18n.localize("TOW.Test.AddTargets"),
                 icon: '<i class="fa-solid fa-crosshairs"></i>',
                 condition: () => game.user.targets.size > 0,

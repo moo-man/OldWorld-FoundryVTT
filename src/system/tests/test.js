@@ -64,11 +64,8 @@ export class OldWorldTest extends WarhammerTestBase
             rerolls : [],
             loseTies : this.testData.loseTies
         };
-        this.result.initialDice = (await this._rollDice(this.testData.dice, this.testData.target)).sort((a, b) => {
-            let aResult = a.result == 0 ? 10 : a.result;
-            let bResult = b.result == 0 ? 10 : b.result;
-            return aResult - bResult;
-        })
+        
+        this.result.initialDice = this._sortDice(await this._rollDice(this.testData.dice, this.testData.target))
 
         this.result.dice = this.result.initialDice;
 
@@ -406,12 +403,15 @@ export class OldWorldTest extends WarhammerTestBase
         let activeDice = foundry.utils.deepClone(this.result.initialDice);
         for(let i = 0; i < activeDice.length; i++)
         {
+            activeDice[i].index = i; // Need to store original index because we sort the dice for display
             for(let reroll of this.result.rerolls)
             {
-                if (reroll.dice[i].active)
+                if (reroll.dice[i]?.active)
                 {
                     activeDice[i] = reroll.dice[i];
                     activeDice[i].rerolled = true;
+                    activeDice[i].index = i; // Readd index 
+                    activeDice[i].added = this.result.initialDice[i].added;
                 }
             }
         }
@@ -456,6 +456,36 @@ export class OldWorldTest extends WarhammerTestBase
         {
             await this.reroll(game.i18n.localize("TOW.Grim"), indices, compute);
         }
+    }
+
+    async modifyDice(value, compute=true)
+    {
+        if (value > 0)
+        {
+            let dice = await this._rollDice(value, this.testData.target, [], {showDSN: true, save: false});
+            this.result.initialDice = this.result.initialDice.concat(dice.map(d => {d.added = true; return d}));
+            this.testData.dice += value;
+        }
+        else if (value < 0 && this.result.initialDice.length + value > 0)
+        {
+            this.result.initialDice = this.result.initialDice.slice(0, this.result.initialDice.length + value)
+            this.testData.dice += value;
+        }
+
+        if (compute)
+        {
+            this.computeResult();
+            this.sendToChat();
+        }
+    }
+
+    _sortDice(dice)
+    {
+        return dice.toSorted((a, b) => {
+            let aResult = a.result == 0 ? 10 : a.result;
+            let bResult = b.result == 0 ? 10 : b.result;
+            return aResult - bResult;
+        });
     }
 
     get succeeded() {
