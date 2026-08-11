@@ -36,6 +36,7 @@
         <div class="sheet-list">
             <div class="list-header row-content">
                 <div class="list-name">{{localize "TOW.Sheet.Effects"}}</div>
+                <div class="flex">{{localize "Type"}}</div>
                 <div class="list-controls">
                     <a class="list-control" data-action="createEffect">
                         <i class="fas fa-plus"></i>
@@ -50,6 +51,8 @@
                                 <img src="{{this.img}}">
                                 <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
                             </div>
+                            <div class="flex">{{this.system.typeDisplay}}</div>
+
 
                             <div class="list-controls">
                                 <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="far fa-check-circle"></i></a>
@@ -65,6 +68,8 @@
             <div class="sheet-list">
                 <div class="list-header row-content">
                     <div class="list-name">{{localize "TOW.Sheet.DisabledEffects"}}</div>
+                    <div class="flex">{{localize "Type"}}</div>
+
                 </div>
                 <div class="list-content inactive">
                     {{#each effects.disabled}}
@@ -74,6 +79,8 @@
                                     <img src="{{this.img}}">
                                     <a class="label" data-action="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
                                 </div>
+                                <div class="flex">{{this.system.typeDisplay}}</div>
+
 
                                 <div class="list-controls">
                                     <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="far fa-circle"></i></a>
