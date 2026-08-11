@@ -162,6 +162,8 @@
             "Speed" : "Speed",
             "SpeedModifier" : "Speed (Modifier)",
             "Fate" : "Fate",
+            "Current" : "Current",
+            "Max" : "Max",
 
             "DescriptionPublic" : "Description (Public)",
             "DescriptionGM" : "Description (GM)",

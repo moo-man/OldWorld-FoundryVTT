@@ -35,13 +35,22 @@
         {{/each}}
     </div>
     <div class="lists">
-        <div class="attribute-box top-label">
-            <div class="label" style="grid-column: 1 / span 12"><label
-                    class="centered">{{localize "TOW.Sheet.Fate"}}</label></div>
-            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.fate.current"
+        <div class="attribute-box top-label" style="--rows: 3">
+            <div class="label" style="grid-column: 1 / span 12; justify-content: space-between">
+                <a style="visibility: hidden"><i class="fa-solid fa-arrow-rotate-left"></i></a>
+                <label class="centered">{{localize "TOW.Sheet.Fate"}}</label> 
+                <a data-action="refreshFate"><i class="fa-solid fa-arrow-rotate-left"></i></a>
+            </div>
+
+            <div class="label" style="grid-column: 1 / span 4"><label class="centered">{{localize "TOW.Sheet.Current"}}</label></div>
+            <div class="label" style="grid-column: 5 / span 4"><label class="centered">{{localize "TOW.Sheet.Max"}}</label></div>
+            <div class="label" style="grid-column: 9 / span 4"><label class="centered">{{localize "TOW.Sheet.Starting"}}</label></div>
+
+            <div class="field" style="grid-column: 1 / span 4"><input type="number" name="system.fate.current"
                     value="{{system.fate.current}}"></div>
-            <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.fate.max"
+            <div class="field" style="grid-column: 5 / span 4"><input type="number" name="system.fate.max"
                     value="{{system.fate.max}}"></div>
+            <div class="field" style="grid-column: 9 / span 4"><input type="number" {{#unless (isGM)}}disabled{{/unless}} name="system.fate.starting" value="{{system.fate.starting}}"></div>
         </div>
         <div class="sheet-list">
             <div class="list-header row-content">
