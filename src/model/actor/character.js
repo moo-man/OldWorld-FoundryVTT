@@ -38,7 +38,8 @@ export class CharacterModel extends StandardActorModel
         })
         schema.fate = new fields.SchemaField({
             current : new fields.NumberField({initial : 0}),
-            max : new fields.NumberField({initial : 0})
+            max : new fields.NumberField({initial : 0}),
+            starting : new fields.NumberField({initial : 0})
         })
         schema.details = new fields.SchemaField({
             age : new fields.NumberField(),

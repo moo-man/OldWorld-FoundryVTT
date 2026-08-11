@@ -269,7 +269,7 @@ export class OriginModel extends BaseItemModel {
             actorSkills[skill].base = bonus.value;
         }
 
-        await actor.update({ "system.characteristics": characteristics, "system.skills": actorSkills, "system.fate.max": this.fate });
+        await actor.update({ "system.characteristics": characteristics, "system.skills": actorSkills, "system.fate": {current: this.fate, max: this.fate, starting: this.fate}});
 
         await this.handleCharacteristicBonuses(actor);
 

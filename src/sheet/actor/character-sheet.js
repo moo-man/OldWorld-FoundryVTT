@@ -20,7 +20,8 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
           advancement : this._onAdvancement,
           regainMiracle : this._onRegainMiracle,
           corruptionTest : this._onCorruptionTest,
-          offerTemptation : this._onOfferTemptation
+          offerTemptation : this._onOfferTemptation,
+          refreshFate: this._onRefreshFate
         },
         defaultTab : "main"
     }
@@ -173,5 +174,11 @@ export default class ActorSheetOldWorldCharacter extends StandardOldWorldActorSh
       static async _onOfferTemptation(ev, target)
       {
         this.actor.system.corruption.offerTemptation();
+      }
+
+      static async _onRefreshFate(ev, target)
+      {
+        this.actor.update({"system.fate.current" : this.actor.system.fate.max});
+        ChatMessage.create({content: "Restored Fate to " + this.actor.system.fate.max, speaker: {alias: this.actor.name}, flavor: "Fate"});
       }
 }
