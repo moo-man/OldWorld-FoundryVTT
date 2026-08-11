@@ -256,7 +256,11 @@ export class OldWorldTest extends WarhammerTestBase
 
     addTargets(tokens)
     {
+        let actors = tokens.filter(t => t.actor).map(t => t.actor);
         this.context.targetSpeakers = this.context.targetSpeakers.concat(tokens.filter(t => t.actor).map(t => t.actor.speakerData(t)));
+        actors.forEach(a => {
+            a.system.registerOpposed(this.message);
+        })
         return this.sendToChat();
     }
 

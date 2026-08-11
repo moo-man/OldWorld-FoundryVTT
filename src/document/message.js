@@ -11,14 +11,15 @@ export class OldWorldChatMessage extends WarhammerChatMessage
 
         let canEdit = li =>
         {
-            return hasTest(li) && game.user.isGM;
+            let message = game.messages.get(li.dataset.messageId);
+            return hasTest(li) && (message.isAuthor || message.isOwner)
         };
 
         options.unshift(
             {
                 name: game.i18n.localize("TOW.Test.Reroll"),
                 icon: '<i class="fa-solid fa-rotate-right"></i>',
-                condition: hasTest,
+                condition: canEdit,
                 callback: li =>
                 {
                     let message = game.messages.get(li.dataset.messageId);
@@ -29,7 +30,7 @@ export class OldWorldChatMessage extends WarhammerChatMessage
             {
                 name: game.i18n.localize("TOW.Test.RerollGlorious"),
                 icon: '<i class="fa-solid fa-rotate-right"></i>',
-                condition: hasTest,
+                condition: canEdit,
                 callback: li =>
                 {
                     let message = game.messages.get(li.dataset.messageId);
@@ -39,7 +40,7 @@ export class OldWorldChatMessage extends WarhammerChatMessage
             {
                 name: game.i18n.localize("TOW.Test.RerollGrim"),
                 icon: '<i class="fa-solid fa-rotate-right"></i>',
-                condition: hasTest,
+                condition: canEdit,
                 callback: li =>
                 {
                     let message = game.messages.get(li.dataset.messageId);
@@ -49,7 +50,7 @@ export class OldWorldChatMessage extends WarhammerChatMessage
             {
                 name: game.i18n.localize("TOW.Test.ModifyDice"),
                 icon: '<i class="fa-solid fa-dice-d10"></i>',
-                condition: hasTest,
+                condition: canEdit,
                 callback: async li =>
                 {
                     let value = Number(await ValueDialog.create({text: "Add or Subtract Dice from the Test", title: "Modify Dice"}));
@@ -60,11 +61,18 @@ export class OldWorldChatMessage extends WarhammerChatMessage
             {
                 name: game.i18n.localize("TOW.Test.AddTargets"),
                 icon: '<i class="fa-solid fa-crosshairs"></i>',
-                condition: () => game.user.targets.size > 0,
+                condition: (li) => canEdit(li) && game.user.targets.size > 0,
                 callback: li =>
                 {
-                    let message = game.messages.get(li.dataset.messageId);
-                    message.system.test.addTargets(Array.from(game.user.targets))
+                    if (game.user.isGM)
+                    {
+                        let message = game.messages.get(li.dataset.messageId);
+                        message.system.test.addTargets(Array.from(game.user.targets).map(i => i.document));
+                    }
+                    else
+                    {
+                        ui.notifications.error("Adding Targets must be done by the GM.")
+                    }
                 }
             }
         );
