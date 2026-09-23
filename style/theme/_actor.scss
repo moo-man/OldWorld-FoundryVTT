@@ -158,6 +158,13 @@ body.whtow-theme {
             }
         }
 
+        section.tab.main button[data-action=advancement]
+        {
+            @include tow-button;
+            margin-bottom: 0.5rem;
+        }
+    
+
 
 
         .characteristics {

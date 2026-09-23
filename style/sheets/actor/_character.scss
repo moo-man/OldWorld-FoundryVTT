@@ -7,6 +7,9 @@
             display: flex;
             flex-direction: row;
             gap: 1rem;
+            > * {
+                flex: 1;
+            }
         }
 
         .attribute-box {
@@ -21,13 +24,21 @@
                 flex: unset;
             }
         }
+
+        button[data-action=advancement]
+        {
+            --button-size: 1.5rem;
+            font-size: var(--font-size-12);
+            margin-top: 0.5rem;
+            margin: 0.5rem auto 0px auto;
+        }
     }
 
     .characteristics {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        width: 50%;
+        width: 100%;
         border: 1px solid var(--color-cool-3);
         height: 40rem;
         .characteristic {

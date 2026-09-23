@@ -1,22 +1,24 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
-    <div class="characteristics">
-        {{#each characteristics}}
-            <div class="characteristic">
-                <div class="characteristic-data">
-                    <div class="ch-data">
-                        <div data-tooltip="{{this.base}} (Base) + {{this.advances}} (Advances)" data-tooltip-direction="LEFT">
-                            <label>{{configLookup "characteristicAbbrev" @key}}</label>
-                            <input type="number" value="{{this.value}}" disabled>
+    <div>
+
+        <div class="characteristics">
+            {{#each characteristics}}
+                <div class="characteristic">
+                    <div class="characteristic-data">
+                        <div class="ch-data">
+                            <div data-tooltip="{{this.base}} (Base) + {{this.advances}} (Advances)" data-tooltip-direction="LEFT">
+                                <label>{{configLookup "characteristicAbbrev" @key}}</label>
+                                <input type="number" value="{{this.value}}" disabled>
+                            </div>
+                            <p>{{configLookup "characteristics" @key}}</p>
                         </div>
-                        <p>{{configLookup "characteristics" @key}}</p>
                     </div>
-                </div>
-                <div class="skills">
-                    {{#each this.skills}}
-                        <div class="skill">
-                            <input class="skill-value" type="number" disabled value="{{this.value}}" />
-                            <a data-action="rollTest"  data-type="skill" data-skill="{{@key}}"> {{configLookup "skills" @key}}</a>
-                            <!--
+                    <div class="skills">
+                        {{#each this.skills}}
+                            <div class="skill">
+                                <input class="skill-value" type="number" disabled value="{{this.value}}" />
+                                <a data-action="rollTest" data-type="skill" data-skill="{{@key}}"> {{configLookup "skills" @key}}</a>
+                                <!--
                         <div class="skill-pips" data-path="system.skills.{{@key}}.base">
                             {{#each this.pips}}
                                 {{#if this}}
@@ -28,11 +30,13 @@
                             {{/each}}
                         </div>
                         -->
-                        </div>
-                    {{/each}}
+                            </div>
+                        {{/each}}
+                    </div>
                 </div>
-            </div>
-        {{/each}}
+            {{/each}}
+        </div>
+        <button  type="button" data-action="advancement"><i class="fa-solid fa-chevrons-up"></i> {{localize "TOW.Advancement"}}</button>
     </div>
     <div class="lists">
         <div class="attribute-box top-label" style="--rows: 3">
