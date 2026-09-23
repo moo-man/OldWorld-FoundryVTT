@@ -309,7 +309,7 @@ export class OldWorldTest extends WarhammerTestBase
             opposed.outcome == "tie";
         }
 
-        if (opposed.success && opposed.computed)
+        if (opposed.success && opposed.computed && this.result.successes > 0)
         {
             opposed.damage = this.computeOpposedDamage(opposed, test)
         }
